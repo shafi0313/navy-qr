@@ -9,4 +9,11 @@ class Role extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by')->withDefault([
+            'name' => 'System'
+        ]);
+    }
 }

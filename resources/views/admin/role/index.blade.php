@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Section';
-    $folder = 'section';
+    $pageTitle = 'Role';
+    $folder = 'role';
     $route = $folder . 's';
 @endphp
 @section('title', $pageTitle)
@@ -29,9 +29,9 @@
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
-    @can($folder . '-add')
-        @include('admin.' . $folder . '.create', ['pageTitle' => $pageTitle, 'route' => $route])
-    @endcan
+
+    @include('admin.' . $folder . '.create', ['pageTitle' => $pageTitle, 'route' => $route])
+
     @push('scripts')
         <script>
             $(function() {
@@ -57,6 +57,11 @@
                             data: 'name',
                             name: 'name',
                             title: 'name'
+                        },
+                        {
+                            data: 'created_by.name',
+                            name: 'created_by.name',
+                            title: 'created by'
                         },
                         {
                             data: 'is_active',

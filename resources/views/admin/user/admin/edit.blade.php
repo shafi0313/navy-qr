@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editModalLabel">Add Admin User</h1>
+                <h1 class="modal-title fs-5" id="editModalLabel">Edit User</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form onsubmit="ajaxStoreModal(event, this, 'editModal')"
@@ -11,6 +11,15 @@
                 @csrf @method('PUT')
                 <div class="modal-body">
                     <div class="row gy-2">
+                        <div class="col-md-6">
+                            <label for="role_id" class="form-label required">Role </label>
+                            <select name="role_id" id="role_id" class="form-select" required>
+                                <option value="">Select</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}" @selected($role->id==$admin_user->role_id)>{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-md-6">
                             <label for="name" class="form-label required">Name </label>
                             <input type="text" name="name" value="{{ old('name') ?? $admin_user->name }}"
@@ -23,26 +32,16 @@
                         </div>
                         <div class="col-md-6">
                             <label for="user_name" class="form-label">user name </label>
-                            <input type="text" name="user_name" value="{{ old('name_name') ?? $admin_user->name_name }}"
+                            <input type="text" name="user_name" value="{{ old('name_name') ?? $admin_user->user_name }}"
                                 class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="phone" class="form-label required">Phone </label>
+                            <label for="phone" class="form-label">Phone </label>
                             <input type="text" name="phone" value="{{ old('phone') ?? $admin_user->phone }}"
                                 class="form-control" oninput="phoneIn(event)">
                         </div>
                         <div class="col-md-6">
-                            <label for="gender" class="form-label">Gender *</label>
-                            <select class="form-select" name="gender">
-                                <option selected disabled value="">Choose...</option>
-                                @foreach ($genders as $key => $gender)
-                                    <option value="{{ $key }}" @selected($key == $admin_user->gender)>
-                                        {{ $gender }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="address" class="form-label required">address </label>
+                            <label for="address" class="form-label">address </label>
                             <input type="text" name="address" value="{{ old('address') ?? $admin_user->address }}"
                                 class="form-control">
                         </div>

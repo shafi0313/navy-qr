@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
-@section('title', 'Admin User')
+@section('title', 'User')
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => ['Admin', 'Admin Users', 'Index']])
+    @include('admin.layouts.includes.breadcrumb', ['title' => ['Admin', 'Users', 'Index']])
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of Admin Users</h4>
+                        <h4 class="card-title">List of Users</h4>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                             <i class="fa-solid fa-plus"></i> Add New
                         </button>
@@ -24,9 +24,9 @@
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
-    @can('admin-user-add')
-        @include('admin.user.admin.create')
-    @endcan
+
+    @include('admin.user.admin.create')
+
     @push('scripts')
         <script>
             $(function() {
@@ -59,29 +59,24 @@
                             title: 'Email'
                         },
                         {
-                            data: 'phone',
-                            name: 'phone',
-                            title: 'Phone'
+                            data: 'role.name',
+                            name: 'role.name',
+                            title: 'Role'
                         },
                         {
-                            data: 'gender',
-                            name: 'gender',
-                            title: 'gender'
-                        },
-                        {
-                            data: 'permission',
-                            name: 'permission',
-                            title: 'Permission'
-                        },
-                        {
-                            data: 'is_active',
-                            name: 'is_active',
-                            title: 'Status'
+                            data: 'mobile',
+                            name: 'mobile',
+                            title: 'mobile',
                         },
                         {
                             data: 'image',
                             name: 'image',
                             title: 'Image'
+                        },
+                        {
+                            data: 'is_active',
+                            name: 'is_active',
+                            title: 'Status'
                         },
                         {
                             data: 'action',

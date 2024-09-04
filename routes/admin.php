@@ -3,19 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Setting\AppDbBackupController;
-use App\Http\Controllers\Setting\Permission\RoleController;
-use App\Http\Controllers\Setting\Permission\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-
-// Role & Permission
-Route::post('/role/permission/{role}', [RoleController::class, 'assignPermission'])->name('role.permission');
-Route::resource('/role', RoleController::class);
-Route::resource('/permission', PermissionController::class);
 
 // App DB Backup
 Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(function(){
@@ -28,6 +21,8 @@ Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(
     Route::post('/backup-delete/{name}/{ext}', 'deleteBackup')->name('backup.delete');
 });
 
+Route::resource('/roles', RoleController::class)->except(['show','create']);
+Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name('roles.is_active');
 
 Route::resource('/admin-users', AdminUserController::class)->except(['show','create']);
 Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'status'])->name('admin_users.is_active');

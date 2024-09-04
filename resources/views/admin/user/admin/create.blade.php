@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="createModalLabel">Add Admin User</h1>
+                <h1 class="modal-title fs-5" id="createModalLabel">Add User</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form onsubmit="ajaxStoreModal(event, this, 'createModal')" action="{{ route('admin.admin-users.store') }}"
@@ -10,6 +10,15 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row gy-2">
+                        <div class="col-md-6">
+                            <label for="role_id" class="form-label required">Role </label>
+                            <select name="role_id" id="role_id" class="form-select" required>
+                                <option value="">Select</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-md-6">
                             <label for="name" class="form-label required">Name </label>
                             <input type="text" name="name" class="form-control" required>
@@ -19,24 +28,15 @@
                             <input type="email" name="email" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="phone" class="form-label required">phone </label>
-                            <input type="text" name="phone" class="form-control" oninput="phoneIn(event)" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="gender" class="form-label">Gender *</label>
-                            <select class="form-select" name="gender">
-                                <option selected disabled value="">Choose...</option>
-                                @foreach (config('var.genders') as $key => $gender)
-                                    <option value="{{ $key }}">{{ $gender }}</option>
-                                @endforeach
-                            </select>
+                            <label for="phone" class="form-label">phone </label>
+                            <input type="text" name="phone" class="form-control" oninput="phoneIn(event)">
                         </div>
                         <div class="col-md-6">
                             <label for="image" class="form-label">image </label>
                             <input type="file" name="image" class="form-control">
                         </div>
-                        <div class="col-md-12">
-                            <label for="address" class="form-label required">address </label>
+                        <div class="col-md-6">
+                            <label for="address" class="form-label">address </label>
                             <input type="text" name="address" class="form-control">
                         </div>
                         <div class="col-md-6">

@@ -63,17 +63,23 @@
                 </a>
             </li>
 
-            <li class="side-nav-item">
+            @php
+                $admin = ['admin.admin-users.*', 'admin.role.*'];
+            @endphp
+            <li class="side-nav-item {{ activeNav($admin) }}">
                 <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin"
                     class="side-nav-link">
                     <i class="fa-solid fa-user-shield"></i>
                     <span> Admin </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="sidebarAdmin">
+                <div class="collapse {{ openNav($admin) }}" id="sidebarAdmin">
                     <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{ route('admin.admin-users.index') }}">Admin User</a>
+                        <li class="{{ activeNav('admin.roles.*') }}">
+                            <a href="{{ route('admin.roles.index') }}">User Role</a>
+                        </li>
+                        <li class="{{ activeNav('admin.admin-users.*') }}">
+                            <a href="{{ route('admin.admin-users.index') }}">User</a>
                         </li>
                     </ul>
                 </div>
@@ -90,9 +96,6 @@
                 </a>
                 <div class="collapse" id="sidebarSettings">
                     <ul class="side-nav-second-level">
-                        <li class="{{ activeNav('admin.permission.*') }}">
-                            <a href="{{ route('admin.role.index') }}">@lang('Roles & Permission')</a>
-                        </li>
                         <li class="{{ activeNav('admin.backup.*') }}">
                             <a href="{{ route('admin.backup.password') }}">@lang('App DB Backup')</a>
                         </li>
