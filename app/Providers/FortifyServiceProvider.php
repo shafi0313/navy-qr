@@ -16,7 +16,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Http\Responses\LoginResponse;
-use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+// use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -37,7 +37,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
-        $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+        // $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
@@ -82,7 +82,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function (Request $request) {
             $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
             $user = User::where($fieldType, $request->email)->first();
-            if ($user && $user->status == 'deactive') {
+            if ($user && $user->is_active == 0) {
                 return false;
 
                 return redirect()->route('login')->withErrors('Account is inactive');
