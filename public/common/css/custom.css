@@ -1,0 +1,105 @@
+.status_label {
+    margin-left: -28px;
+}
+#is_active_input {
+    margin-left: -26px;
+}
+
+/* Bootstrap Date Picker Start */
+.bDP {
+    position: relative !important;
+}
+
+.datepicker.dropdown-menu {
+    min-width: 220px !important;
+    top: 210px !important;
+    left: 50% !important;
+    right: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+/* Bootstrap Date Picker End */
+
+
+/* Form CSS Start */
+.required::after {
+    content: "*";
+    color: red;
+    font-weight: bold;
+}
+label {
+    text-transform: capitalize;
+}
+/* Form CSS End */
+
+/* Table Start */
+table thead tr th {
+    text-transform: capitalize;
+}
+
+.table-bold td {
+    font-weight: bold;
+}
+table .required::after {
+    content: "*";
+    color: red;
+    font-weight: bold;
+}
+/* Table End */
+
+/* Select2 Start */
+.select2-container {
+    width: 100% !important;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.select2-container {
+    display: block !important;
+    width: 100% !important;
+}
+/* Select2 End */
+
+.icon-btn{
+    display: inline-block;
+    font-size: 20px;
+    line-height: 1;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+/* Loading-overlay Start */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white background */
+    z-index: 9999; /* ensure the overlay appears on top of other content */
+    display: none; /* initially hidden */
+  }
+
+  .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #3498db; /* blue color for the spinner */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite; /* spin animation */
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+/* Loading-overlay End*/
