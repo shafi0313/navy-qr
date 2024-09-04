@@ -2,17 +2,17 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="editModalLabel">Edit Section</h1>
+                <h1 class="modal-title fs-5" id="editModalLabel">Edit Role</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form onsubmit="ajaxStoreModal(event, this, 'editModal')"
-                action="{{ route('admin.sections.update', $section->id) }}" method="POST">
+                action="{{ route('admin.roles.update', $role->id) }}" method="POST">
                 @csrf @method('PUT')
                 <div class="modal-body">
                     <div class="row gy-2">
                         <div class="col-md-6">
                             <label for="name" class="form-label required">Name </label>
-                            <input type="text" name="name" value="{{ $section->name }}" class="form-control"
+                            <input type="text" name="name" value="{{ $role->name }}" class="form-control"
                                 required>
                         </div>
                         <div class="col-md-4 form-check form-switch">

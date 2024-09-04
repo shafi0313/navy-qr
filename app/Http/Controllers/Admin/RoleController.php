@@ -53,12 +53,9 @@ class RoleController extends Controller
     public function store(StoreRoleRequest $request)
     {
         $data = $request->validated();
-        if ($request->hasFile('image')) {
-            $data['image'] = imgWebpStore($request->image, 'slider', [1920, 1080]);
-        }
 
         try {
-            Slider::create($data);
+            Role::create($data);
             return response()->json(['message' => 'The information has been inserted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -68,10 +65,10 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Role $role)
+    public function edit(Request $request, Role $role)
     {
         if ($request->ajax()) {
-            $modal = view('admin.slider.edit')->with(['slider' => $role])->render();
+            $modal = view('admin.role.edit')->with(['role' => $role])->render();
             return response()->json(['modal' => $modal], 200);
         }
         return abort(500);
@@ -82,11 +79,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $data = $role->validated();
-        $image = $role->image;
-        if ($request->hasFile('image')) {
-            $data['image'] = imgWebpUpdate($request->image, 'user', [1920, 1080], $image);
-        }
+        $data = $request->validated();
         try {
             $role->update($data);
             return response()->json(['message' => 'The information has been updated'], 200);
@@ -101,7 +94,6 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         try {
-            imgUnlink('slider', $role->image);
             $role->delete();
             return response()->json(['message' => 'The information has been deleted'], 200);
         } catch (\Exception $e) {
