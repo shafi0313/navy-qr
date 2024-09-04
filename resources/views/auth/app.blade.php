@@ -3,13 +3,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Log In | Jidox - Material Design Admin & Dashboard Template</title>
+    <title>Log In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta name="robots" content="noindex">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('backend/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ imagePath('logo', 'navy_fav.png') }}">
 
     <!-- Theme Config Js -->
     <script src="{{ asset('backend/js/config.js') }}"></script>
@@ -63,32 +62,22 @@
                         <div class="card-header pt-4 text-center">
                             <div class="auth-brand mb-0">
                                 <a href="{{ route('admin.dashboard') }}" class="logo-dark">
-                                    <span><img src="{{ asset('backend/images/logo-dark.png') }}" alt="dark logo"
-                                            height="28"></span>
+                                    <span><img src="{{ imagePath('logo', 'navy.png') }}" alt="dark logo"
+                                            height="80"></span>
                                 </a>
                                 <a href="{{ route('admin.dashboard') }}" class="logo-light">
-                                    <span><img src="{{ asset('backend/images/logo.png') }}" alt="logo"
-                                            height="28"></span>
+                                    <span><img src="{{ imagePath('logo', 'navy.png') }}" alt="logo"
+                                            height="80"></span>
                                 </a>
                             </div>
                         </div>
 
-                        <div class="card-body p-4">
+                        <div class="card-body p-4 pt-0">
 
                             @yield('content')
                         </div> <!-- end card-body -->
                     </div>
                     <!-- end card -->
-
-                    <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p class="text-white-50">Don't have an account? <a href="auth-register.html"
-                                    class="text-white ms-1 link-offset-3 text-decoration-underline"><b>Sign Up</b></a>
-                            </p>
-                        </div> <!-- end col -->
-                    </div>
-                    <!-- end row -->
-
                 </div> <!-- end col -->
             </div>
             <!-- end row -->
@@ -99,7 +88,10 @@
 
     <footer class="footer footer-alt">
         <span class="text-white-50">
-            Developed by <a href="{{ URL::to('https://softgiantbd.com/') }}" class="text-light">Soft Giant BD</a>
+            Developed by
+            <a href="{{ URL::to('//lscominc.com/') }}" class="text-light" target="_blank">
+                <img src="{{ imagePath('logo', 'ls.jpeg') }}" alt="LS COMMUNICATIONS" height="30px">
+            </a>
         </span>
     </footer>
     <!-- Vendor js -->
