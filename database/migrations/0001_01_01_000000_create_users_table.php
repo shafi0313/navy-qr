@@ -14,12 +14,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('role_id')->nullable()->constrained()->onDelete('set null');
             $table->string('name',100);
             $table->string('email', 64)->unique();
             $table->string('user_name', 32)->unique()->nullable();
-            $table->unsignedTinyInteger('role')->default(0)->comment('1:Admin');
             $table->unsignedTinyInteger('gender')->nullable();
-            $table->string('phone', 32)->nullable();
+            $table->string('mobile', 32)->nullable();
             $table->string('address')->nullable();
             $table->boolean('is_active', [IsActive::ACTIVE, IsActive::INACTIVE])->default(IsActive::ACTIVE);
             $table->boolean('removable')->default(1);
@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->softDeletes();
         });
 
