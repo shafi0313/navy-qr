@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\BaseController as BaseController;
-use App\Models\User;
+use App\Http\Controllers\Api\V1\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Validator;
-use Illuminate\Http\JsonResponse;
 
 class AuthController extends BaseController
 {

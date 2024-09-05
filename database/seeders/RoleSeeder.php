@@ -17,6 +17,22 @@ class RoleSeeder extends Seeder
                 'name' => 'admin',
                 'is_active' => 1,
             ],
+            [
+                'name' => 'Normal User',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Primary Medical',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Written',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Viva/Final Selection',
+                'is_active' => 1,
+            ],
         ];
 
         foreach ($roles as $role) {

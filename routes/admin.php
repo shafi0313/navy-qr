@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyProfileController;
-use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Setting\AppDbBackupController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
