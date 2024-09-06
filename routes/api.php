@@ -16,7 +16,9 @@ Route::prefix('v1')->group(function () {
         Route::post('login', 'login');
     });
 
-    // Route::middleware('auth:sanctum')->group(function () {
-        Route::apiResource('application-urls', ApplicationUrlController::class);;
-    // });
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::apiResource('application-urls', ApplicationUrlController::class);
+        Route::patch('/application-urls/medical-pass-status/{id}', [ApplicationUrlController::class, 'medicalPassStatus']);
+
+    });
 });

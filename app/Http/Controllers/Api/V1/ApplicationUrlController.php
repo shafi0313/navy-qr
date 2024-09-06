@@ -13,6 +13,39 @@ use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
 class ApplicationUrlController extends BaseController
 {
+    public function index()
+    {
+        // $applicationUrls = ApplicationUrl::with([
+        //     'application:id,application_url_id,post,batch,roll,name'
+        // ])->get();
+
+        if(user()->role_id == 1){ // Admin
+            $applicationUrls = ApplicationUrl::with([
+                'application:id,application_url_id,post,batch,roll,name'
+            ])->get();
+        }elseif(user()->role_id == 2){ // Normal User
+            $applicationUrls = ApplicationUrl::select('url')->get();
+        }elseif(user()->role_id == 3){ // Primary Medical
+            $applicationUrls = ApplicationUrl::with([
+                'application:id,application_url_id,post,batch,roll,name'
+            ])->select('id','url','is_medical_pass')->get();
+        }elseif(user()->role_id == 4){ // Written
+            $applicationUrls = ApplicationUrl::with([
+                'application:id,application_url_id,post,batch,roll,name'
+            ])->select('id','url','is_medical_pass','is_written_pass')->where('is_medical_pass',1)->get();
+        }elseif(user()->role_id == 5){ // Final
+            $applicationUrls = ApplicationUrl::with([
+                'application:id,application_url_id,post,batch,roll,name'
+            ])->select('id','url','is_written_pass','is_final_pass')->where('is_written_pass',1)->get();
+        }elseif(user()->role_id == 6){ // Viva
+            $applicationUrls = ApplicationUrl::with([
+                'application:id,application_url_id,post,batch,roll,name'
+            ])->where('is_final_pass',1)->get();
+        }
+
+        return $this->sendResponse(ApplicationUrlResource::collection($applicationUrls), 'Applicant list.');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -39,7 +72,7 @@ class ApplicationUrlController extends BaseController
 
             $data = [];
             $elements->each(function (Crawler $node) use (&$data) {
-                $data[] = $node->text();
+                $data[] = trim($node->text());
             });
             // return $data;
 
@@ -179,6 +212,15 @@ class ApplicationUrlController extends BaseController
         } catch (\Exception $e) {
             return $this->sendError('Validation Error.', $data->errors());
         }
+    }
+
+    public function medicalPassStatus($id)
+    {
+        $applicationUrl = ApplicationUrl::with([
+            'application:id,application_url_id,post,batch,roll,name'
+        ])->select('id', 'url', 'is_medical_pass')->findOrFail($id);
+        $applicationUrl->update(['is_medical_pass' => 1]);
+        return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Medical pass status updated.');
     }
 
     function processURL($url)

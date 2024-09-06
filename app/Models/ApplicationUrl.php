@@ -9,4 +9,9 @@ class ApplicationUrl extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function application()
+    {
+        return $this->hasOne(Application::class, 'application_url_id');
+    }
 }
