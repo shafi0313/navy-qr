@@ -14,4 +14,11 @@ class ApplicationUrl extends Model
     {
         return $this->hasOne(Application::class, 'application_url_id');
     }
+
+    // Scope a search query to only include users of a given name.
+    public function scopeSearch($query, $search)
+    {
+        return $query->application->where('name', 'like', '%' . $search . '%')
+            ->orWhere('roll', 'like', '%' . $search . '%');
+    }
 }

@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreApplicationUrlRequest;
 use App\Http\Requests\UpdateApplicationUrlRequest;
 
@@ -11,9 +14,95 @@ class ApplicationUrlController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // return $query = ApplicationUrl::with('application')->get();
+        if ($request->ajax()) {
+            $roleId = user()->role_id;
+            $query = ApplicationUrl::query();
+
+            switch ($roleId) {
+                case 1: // Admin
+                    $query->with([
+                        'application:id,application_url_id,post,batch,roll,name'
+                    ]);
+                    break;
+                case 2: // Normal User
+                    $query->select('url');
+                    break;
+                case 3: // Primary Medical
+                    $query->with([
+                        'application:id,application_url_id,post,batch,roll,name'
+                    ])->select('id', 'url', 'is_medical_pass');
+                    break;
+                case 4: // Written
+                    $query->with([
+                        'application:id,application_url_id,post,batch,roll,name'
+                    ])->select('id', 'url', 'is_medical_pass', 'is_written_pass')
+                        ->where('is_medical_pass', 1);
+                    break;
+                case 5: // Final
+                    $query->with([
+                        'application:id,application_url_id,post,batch,roll,name'
+                    ])->select('id', 'url', 'is_written_pass', 'is_final_pass')
+                        ->where('is_written_pass', 1);
+                    break;
+                case 6: // Viva
+                    $query->with([
+                        'application:id,application_url_id,post,batch,roll,name'
+                    ])->where('is_final_pass', 1);
+                    break;
+            }
+
+            $applications = $query;
+
+            return DataTables::eloquent($applications)
+                ->addIndexColumn()
+                // ->addColumn('roles', function ($row) {
+                //     $roles = '';
+                //     foreach ($row->roles as $role) {
+                //         $roles .= "<span class='badge text-bg-primary me-2'>" . ucfirst($role->name) . '</span>';
+                //     }
+                //     return $roles;
+                // })
+                ->addColumn('url', function ($row) {
+                    return "<a href='$row->url' target='_blank'>Form</a>";
+                })
+                ->addColumn('medical', function ($row) {
+                    return result($row->is_medical_pass);
+                })
+                ->addColumn('written', function ($row) {
+                    return result($row->is_written_pass);
+                })
+                ->addColumn('final', function ($row) {
+                    return result($row->is_final_pass);
+                })
+                ->addColumn('viva', function ($row) {
+                    return result($row->is_viva_pass);
+                })
+                // ->addColumn('action', function ($row) {
+                //     $btn = '';
+                //     if (userCan('admin-edit')) {
+                //         $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.admins.edit', $row->id), 'row' => $row]);
+                //     }
+                //     if (userCan('admin-delete')) {
+                //         $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.admins.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
+                //     }
+                //     return $btn;
+                // })
+                // ->filter(function ($query) use ($request) {
+                //     if ($request->has('gender') && $request->gender != '') {
+                //         $query->where('gender', $request->gender);
+                //     }
+                //     if ($search = $request->get('search')['value']) {
+                //         $query->search($search);
+                //     }
+                // })
+                ->rawColumns(['url','medical', 'written', 'final', 'viva', 'action'])
+                ->make(true);
+        }
+
+        return view('admin.application-url.index');
     }
 
     /**

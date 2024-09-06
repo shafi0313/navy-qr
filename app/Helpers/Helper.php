@@ -33,6 +33,16 @@ if (! function_exists('sqlDate')) {
         }
     }
 }
+if (! function_exists('result')) {
+    function result($data)
+    {
+        return match ($data) {
+            1 => '<span class="badge bg-success">Pass</span>',
+            0 => '<span class="badge bg-danger">Fail</span>',
+            default => '<span class="badge bg-warning">Pending</span>',
+        };
+    }
+}
 
 if (!function_exists('ageWithDays')) {
     function ageWithDays($d_o_b)

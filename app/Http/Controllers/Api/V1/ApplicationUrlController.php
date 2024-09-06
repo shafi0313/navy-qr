@@ -19,29 +19,71 @@ class ApplicationUrlController extends BaseController
         //     'application:id,application_url_id,post,batch,roll,name'
         // ])->get();
 
-        if(user()->role_id == 1){ // Admin
-            $applicationUrls = ApplicationUrl::with([
-                'application:id,application_url_id,post,batch,roll,name'
-            ])->get();
-        }elseif(user()->role_id == 2){ // Normal User
-            $applicationUrls = ApplicationUrl::select('url')->get();
-        }elseif(user()->role_id == 3){ // Primary Medical
-            $applicationUrls = ApplicationUrl::with([
-                'application:id,application_url_id,post,batch,roll,name'
-            ])->select('id','url','is_medical_pass')->get();
-        }elseif(user()->role_id == 4){ // Written
-            $applicationUrls = ApplicationUrl::with([
-                'application:id,application_url_id,post,batch,roll,name'
-            ])->select('id','url','is_medical_pass','is_written_pass')->where('is_medical_pass',1)->get();
-        }elseif(user()->role_id == 5){ // Final
-            $applicationUrls = ApplicationUrl::with([
-                'application:id,application_url_id,post,batch,roll,name'
-            ])->select('id','url','is_written_pass','is_final_pass')->where('is_written_pass',1)->get();
-        }elseif(user()->role_id == 6){ // Viva
-            $applicationUrls = ApplicationUrl::with([
-                'application:id,application_url_id,post,batch,roll,name'
-            ])->where('is_final_pass',1)->get();
+        // if(user()->role_id == 1){ // Admin
+        //     $applicationUrls = ApplicationUrl::with([
+        //         'application:id,application_url_id,post,batch,roll,name'
+        //     ])->get();
+        // }elseif(user()->role_id == 2){ // Normal User
+        //     $applicationUrls = ApplicationUrl::select('url')->get();
+        // }elseif(user()->role_id == 3){ // Primary Medical
+        //     $applicationUrls = ApplicationUrl::with([
+        //         'application:id,application_url_id,post,batch,roll,name'
+        //     ])->select('id','url','is_medical_pass')->get();
+        // }elseif(user()->role_id == 4){ // Written
+        //     $applicationUrls = ApplicationUrl::with([
+        //         'application:id,application_url_id,post,batch,roll,name'
+        //     ])->select('id','url','is_medical_pass','is_written_pass')->where('is_medical_pass',1)->get();
+        // }elseif(user()->role_id == 5){ // Final
+        //     $applicationUrls = ApplicationUrl::with([
+        //         'application:id,application_url_id,post,batch,roll,name'
+        //     ])->select('id','url','is_written_pass','is_final_pass')->where('is_written_pass',1)->get();
+        // }elseif(user()->role_id == 6){ // Viva
+        //     $applicationUrls = ApplicationUrl::with([
+        //         'application:id,application_url_id,post,batch,roll,name'
+        //     ])->where('is_final_pass',1)->get();
+        // }
+        $roleId = user()->role_id;
+        $query = ApplicationUrl::query();
+
+        switch ($roleId) {
+            case 1: // Admin
+                $query->with([
+                    'application:id,application_url_id,post,batch,roll,name'
+                ]);
+                break;
+
+            case 2: // Normal User
+                $query->select('url');
+                break;
+
+            case 3: // Primary Medical
+                $query->with([
+                    'application:id,application_url_id,post,batch,roll,name'
+                ])->select('id', 'url', 'is_medical_pass');
+                break;
+
+            case 4: // Written
+                $query->with([
+                    'application:id,application_url_id,post,batch,roll,name'
+                ])->select('id', 'url', 'is_medical_pass', 'is_written_pass')
+                    ->where('is_medical_pass', 1);
+                break;
+
+            case 5: // Final
+                $query->with([
+                    'application:id,application_url_id,post,batch,roll,name'
+                ])->select('id', 'url', 'is_written_pass', 'is_final_pass')
+                    ->where('is_written_pass', 1);
+                break;
+
+            case 6: // Viva
+                $query->with([
+                    'application:id,application_url_id,post,batch,roll,name'
+                ])->where('is_final_pass', 1);
+                break;
         }
+
+        $applicationUrls = $query->get();
 
         return $this->sendResponse(ApplicationUrlResource::collection($applicationUrls), 'Applicant list.');
     }

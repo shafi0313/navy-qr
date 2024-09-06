@@ -1,10 +1,10 @@
 <div class="leftside-menu">
-<style>
-    .logo-lg img{
-        width: 50px !important;
-        height: auto;
-    }
-</style>
+    <style>
+        .logo-lg img {
+            width: 50px !important;
+            height: auto;
+        }
+    </style>
     <!-- Brand Logo Light -->
     <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
         <span class="logo-lg">
@@ -83,6 +83,13 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{{ route('admin.application-urls.index') }}" class="side-nav-link">
+                    <i class="ri-calendar-2-fill"></i>
+                    <span> Applications </span>
+                </a>
             </li>
 
             <li class="side-nav-title mt-2">Settings</li>

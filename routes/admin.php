@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Setting\AppDbBackupController;
 
@@ -29,3 +30,5 @@ Route::resource('/admin-users', AdminUserController::class)->except(['show','cre
 Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'status'])->name('admin_users.is_active');
 
 Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit']);
+
+Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
