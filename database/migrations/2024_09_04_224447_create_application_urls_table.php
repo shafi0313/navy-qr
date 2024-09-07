@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('application_urls', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->nullable()->constrained()->onDelete('set null');
+            // $table->foreignId('role_id')->nullable()->constrained()->onDelete('set null');
             // $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string('url')->index();
             $table->boolean('is_medical_pass')->index()->nullable();
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('is_viva_pass')->index()->nullable();
             $table->boolean('is_info_taken')->default(false);
             $table->timestamps();
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 

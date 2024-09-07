@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Http\Resources\ApplicationUrlResource;
+use Illuminate\Validation\ValidationException;
 use App\Http\Requests\StoreApplicationUrlRequest;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
@@ -256,14 +257,31 @@ class ApplicationUrlController extends BaseController
         }
     }
 
-    public function medicalPassStatus($id)
+
+
+
+
+    public function medicalPassStatus(Request $request)
     {
+        $validator = \Validator::make($request->all(), [
+            'id' => 'required|exists:application_urls,id',
+            'is_medical_pass' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
         $applicationUrl = ApplicationUrl::with([
             'application:id,application_url_id,post,batch,roll,name'
-        ])->select('id', 'url', 'is_medical_pass')->findOrFail($id);
-        $applicationUrl->update(['is_medical_pass' => 1]);
-        return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Medical pass status updated.');
+        ])->select('id', 'url', 'is_medical_pass')->findOrFail($request->id);
+
+        $applicationUrl->update(['is_medical_pass' => $request->is_medical_pass]);
+
+        return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Primary medical pass status updated.');
     }
+
+
+
 
     function processURL($url)
     {
