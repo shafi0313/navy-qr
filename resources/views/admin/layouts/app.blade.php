@@ -29,10 +29,10 @@
     <link href="{{ asset('backend/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" />
 
-        {{-- summer note --}}
+    {{-- summer note --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css"
-    integrity="sha512-ZbehZMIlGA8CTIOtdE+M81uj3mrcgyrh6ZFeG33A4FHECakGrOsTPlPQ8ijjLkxgImrdmSVUHn1j+ApjodYZow=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-ZbehZMIlGA8CTIOtdE+M81uj3mrcgyrh6ZFeG33A4FHECakGrOsTPlPQ8ijjLkxgImrdmSVUHn1j+ApjodYZow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -78,7 +78,7 @@
     <link href="{{ asset('common/plugins/cute-alert/cute-alert.css') }}" rel="stylesheet">
     <script src="{{ asset('common/plugins/cute-alert/cute-alert.js') }}"></script>
     {{-- Select 2 --}}
-    <link src="{{ asset('common/plugins/select2/css/select2.min.css') }}">
+    <link href="{{ asset('common/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <script src="{{ asset('common/plugins/select2/js/select2.min.js') }}"></script>
 
     <script src="{{ asset('common/js/http.js') }}"></script>

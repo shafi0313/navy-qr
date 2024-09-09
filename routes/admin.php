@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\ApplicationUrlController;
+use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Setting\AppDbBackupController;
+use App\Http\Controllers\Admin\ApplicationUrlController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
@@ -32,3 +34,8 @@ Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'stat
 Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit']);
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
+Route::resource('/exam-marks', ExamMarkController::class)->except(['show']);
+
+// Global Ajax Route
+Route::get('select-2-ajax', [AjaxController::class, 'select2'])->name('select2');
+Route::post('response', [AjaxController::class, 'response'])->name('ajax');

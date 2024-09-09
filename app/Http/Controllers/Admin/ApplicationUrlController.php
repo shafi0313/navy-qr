@@ -16,6 +16,19 @@ class ApplicationUrlController extends Controller
      */
     public function index(Request $request)
     {
+        // $query = ApplicationUrl::query();
+        // return$query->with([
+        //     'application:id,application_url_id,post,batch,roll,name',
+        //     'application.examMark'
+        // ])->whereHas('application.examMark', function ($query) {
+        //     $query->where('bangla', '>', 8)
+        //           ->where('english', '>', 8)
+        //           ->where('math', '>', 8)
+        //           ->where('science', '>', 8)
+        //           ->where('general_knowledge', '>', 8);
+        // })
+        // ->select('id', 'url', 'is_written_pass', 'is_final_pass')
+        // ->get();
         // return $query = ApplicationUrl::with('application')->get();
         if ($request->ajax()) {
             $roleId = user()->role_id;
@@ -41,13 +54,20 @@ class ApplicationUrlController extends Controller
                     ])->select('id', 'url', 'is_medical_pass', 'is_written_pass')
                         ->where('is_medical_pass', 1);
                     break;
-                case 5: // Final
+                case 5: // Final Medical
                     $query->with([
-                        'application:id,application_url_id,post,batch,roll,name'
-                    ])->select('id', 'url', 'is_written_pass', 'is_final_pass')
-                        ->where('is_written_pass', 1);
+                        'application:id,application_url_id,post,batch,roll,name',
+                        'application.examMark'
+                    ])->whereHas('application.examMark', function ($query) {
+                        $query->where('bangla', '>', 8)
+                            ->where('english', '>', 8)
+                            ->where('math', '>', 8)
+                            ->where('science', '>', 8)
+                            ->where('general_knowledge', '>', 8);
+                    })
+                        ->select('id', 'url', 'is_written_pass', 'is_final_pass');
                     break;
-                case 6: // Viva
+                case 6: // Viva / Final Selection
                     $query->with([
                         'application:id,application_url_id,post,batch,roll,name'
                     ])->where('is_final_pass', 1);
@@ -58,13 +78,6 @@ class ApplicationUrlController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                // ->addColumn('roles', function ($row) {
-                //     $roles = '';
-                //     foreach ($row->roles as $role) {
-                //         $roles .= "<span class='badge text-bg-primary me-2'>" . ucfirst($role->name) . '</span>';
-                //     }
-                //     return $roles;
-                // })
                 ->addColumn('url', function ($row) {
                     return "<a href='$row->url' target='_blank'>Form</a>";
                 })
@@ -98,7 +111,7 @@ class ApplicationUrlController extends Controller
                 //         $query->search($search);
                 //     }
                 // })
-                ->rawColumns(['url','medical', 'written', 'final', 'viva', 'action'])
+                ->rawColumns(['url', 'medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
 

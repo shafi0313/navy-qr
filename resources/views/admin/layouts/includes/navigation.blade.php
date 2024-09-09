@@ -91,6 +91,12 @@
                     <span> Applications </span>
                 </a>
             </li>
+            <li class="side-nav-item">
+                <a href="{{ route('admin.exam-marks.create') }}" class="side-nav-link">
+                    <i class="ri-calendar-2-fill"></i>
+                    <span> Mark Entry </span>
+                </a>
+            </li>
 
             <li class="side-nav-title mt-2">Settings</li>
             {{-- settings --}}

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('written_marks', function (Blueprint $table) {
+        Schema::create('exam_marks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('application_id')->constrained()->cascadeOnDelete();
             $table->float('bangla');
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('math');
             $table->float('science');
             $table->float('general_knowledge');
+            $table->float('viva')->nullable();
             $table->timestamps();
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('written_marks');
+        Schema::dropIfExists('exam_marks');
     }
 };
