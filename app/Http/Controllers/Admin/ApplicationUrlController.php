@@ -47,7 +47,9 @@ class ApplicationUrlController extends Controller
                         ->orderBy('total_marks', 'desc');
                     break;
                 case 2: // Normal User
-                    $query->select('url');
+                    $query->with([
+                        'application:id,application_url_id,post,batch,roll,name',
+                    ])->select('id', 'url');
                     break;
                 case 3: // Primary Medical
                     $query->with([
@@ -155,8 +157,13 @@ class ApplicationUrlController extends Controller
                 ->addColumn('url', function ($row) {
                     return "<a href='$row->url' target='_blank'>Form</a>";
                 })
-                ->addColumn('medical', function ($row) {
-                    return result($row->is_medical_pass);
+                ->addColumn('medical', function ($row) use ($roleId) {
+                    if(in_array($roleId, [1, 3, 4, 5, 6])){
+                        return result($row->is_medical_pass);
+                    }else{
+                        return '';
+                    }
+
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 4, 5, 6]) && $row->application && $row->application->examMark) {
