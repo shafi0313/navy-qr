@@ -221,9 +221,23 @@ class ApplicationUrlController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function medicalPassStatus(Request $request)
     {
-        //
+        $validator = \Validator::make($request->all(), [
+            'id' => 'required|exists:application_urls,id',
+            'is_medical_pass' => 'required|boolean',
+        ]);
+
+        $applicationUrl = ApplicationUrl::with([
+            'application:id,application_url_id,post,batch,roll,name'
+        ])->select('id', 'url', 'is_medical_pass')->findOrFail($request->id);
+
+        try {
+            $applicationUrl->update(['is_medical_pass' => $request->is_medical_pass]);
+            return response()->json(['message' => 'The status has been updated'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
+        }
     }
 
     /**

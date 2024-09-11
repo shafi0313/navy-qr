@@ -16,71 +16,123 @@ class ApplicationUrlController extends BaseController
 {
     public function index()
     {
-        // $applicationUrls = ApplicationUrl::with([
-        //     'application:id,application_url_id,post,batch,roll,name'
-        // ])->get();
-
-        // if(user()->role_id == 1){ // Admin
-        //     $applicationUrls = ApplicationUrl::with([
-        //         'application:id,application_url_id,post,batch,roll,name'
-        //     ])->get();
-        // }elseif(user()->role_id == 2){ // Normal User
-        //     $applicationUrls = ApplicationUrl::select('url')->get();
-        // }elseif(user()->role_id == 3){ // Primary Medical
-        //     $applicationUrls = ApplicationUrl::with([
-        //         'application:id,application_url_id,post,batch,roll,name'
-        //     ])->select('id','url','is_medical_pass')->get();
-        // }elseif(user()->role_id == 4){ // Written
-        //     $applicationUrls = ApplicationUrl::with([
-        //         'application:id,application_url_id,post,batch,roll,name'
-        //     ])->select('id','url','is_medical_pass','is_written_pass')->where('is_medical_pass',1)->get();
-        // }elseif(user()->role_id == 5){ // Final
-        //     $applicationUrls = ApplicationUrl::with([
-        //         'application:id,application_url_id,post,batch,roll,name'
-        //     ])->select('id','url','is_written_pass','is_final_pass')->where('is_written_pass',1)->get();
-        // }elseif(user()->role_id == 6){ // Viva
-        //     $applicationUrls = ApplicationUrl::with([
-        //         'application:id,application_url_id,post,batch,roll,name'
-        //     ])->where('is_final_pass',1)->get();
-        // }
         $roleId = user()->role_id;
-        $query = ApplicationUrl::query();
+            $query = ApplicationUrl::query();
 
-        switch ($roleId) {
+            switch ($roleId) {
             case 1: // Admin
                 $query->with([
-                    'application:id,application_url_id,post,batch,roll,name'
-                ]);
+                    'application:id,application_url_id,post,batch,roll,name',
+                    'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+                ])->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                    ->selectRaw('
+                    (COALESCE(exam_marks.bangla, 0) +
+                    COALESCE(exam_marks.english, 0) +
+                    COALESCE(exam_marks.math, 0) +
+                    COALESCE(exam_marks.science, 0) +
+                    COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+                ')
+                    ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                    ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                    ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                    ->orderBy('total_marks', 'desc');
                 break;
-
             case 2: // Normal User
-                $query->select('url');
+                $query->with([
+                    'application:id,application_url_id,post,batch,roll,name',
+                ])->select('id', 'url');
                 break;
-
             case 3: // Primary Medical
                 $query->with([
-                    'application:id,application_url_id,post,batch,roll,name'
+                    'application:id,application_url_id,post,batch,roll,name',
+                    'application.examMark:id'
                 ])->select('id', 'url', 'is_medical_pass');
                 break;
-
             case 4: // Written
                 $query->with([
-                    'application:id,application_url_id,post,batch,roll,name'
-                ])->select('id', 'url', 'is_medical_pass', 'is_written_pass')
-                    ->where('is_medical_pass', 1);
+                    'application:id,application_url_id,post,batch,roll,name',
+                    'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+                ])
+                    ->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                    ->selectRaw('
+                    (COALESCE(exam_marks.bangla, 0) +
+                    COALESCE(exam_marks.english, 0) +
+                    COALESCE(exam_marks.math, 0) +
+                    COALESCE(exam_marks.science, 0) +
+                    COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+                ')
+                    ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                    ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                    ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                    ->orderBy('total_marks', 'desc');
                 break;
-
-            case 5: // Final
+            case 5: // Final Medical
                 $query->with([
-                    'application:id,application_url_id,post,batch,roll,name'
-                ])->select('id', 'url', 'is_written_pass', 'is_final_pass')
-                    ->where('is_written_pass', 1);
+                    'application:id,application_url_id,post,batch,roll,name',
+                    'application.examMark:id,application_id,bangla,english,math,science,general_knowledge'
+                ])
+                    ->whereHas('application.examMark', function ($query) {
+                        $query->where('bangla', '>=', 8)
+                            ->where('english', '>=', 8)
+                            ->where('math', '>=', 8)
+                            ->where('science', '>=', 8)
+                            ->where('general_knowledge', '>=', 8);
+                    })
+                    ->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                    ->selectRaw('
+                    (COALESCE(exam_marks.bangla, 0) +
+                    COALESCE(exam_marks.english, 0) +
+                    COALESCE(exam_marks.math, 0) +
+                    COALESCE(exam_marks.science, 0) +
+                    COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+                ')
+                    ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                    ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                    ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                    ->orderBy('total_marks', 'desc');
                 break;
-
-            case 6: // Viva
+            case 6: // Viva / Final Selection
                 $query->with([
-                    'application:id,application_url_id,post,batch,roll,name'
-                ])->where('is_final_pass', 1);
+                    'application:id,application_url_id,post,batch,roll,name',
+                    'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+                ])
+                    ->whereHas('application.examMark', function ($query) {
+                        $query->where('bangla', '>=', 8)
+                            ->where('english', '>=', 8)
+                            ->where('math', '>=', 8)
+                            ->where('science', '>=', 8)
+                            ->where('general_knowledge', '>=', 8);
+                    })
+                    ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                    ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                    ->select(
+                        'application_urls.id',
+                        'is_medical_pass',
+                        'is_final_pass',
+                        'applications.id as application_id'
+                    )
+                    ->selectRaw('
+                    (COALESCE(exam_marks.bangla, 0) +
+                    COALESCE(exam_marks.english, 0) +
+                    COALESCE(exam_marks.math, 0) +
+                    COALESCE(exam_marks.science, 0) +
+                    COALESCE(exam_marks.general_knowledge, 0)) as total_marks,
+                    COALESCE(exam_marks.viva, 0) as total_viva
+                ')
+                    ->groupBy(
+                        'application_urls.id',
+                        'applications.id',
+                        'is_medical_pass',
+                        'is_final_pass',
+                        'exam_marks.bangla',
+                        'exam_marks.english',
+                        'exam_marks.math',
+                        'exam_marks.science',
+                        'exam_marks.general_knowledge',
+                        'exam_marks.viva'
+                    )
+                    ->orderBy('total_viva', 'desc');
+
                 break;
         }
 
@@ -278,7 +330,7 @@ class ApplicationUrlController extends BaseController
 
         $applicationUrl->update(['is_medical_pass' => $request->is_medical_pass]);
 
-        return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Primary medical pass status updated.');
+        return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Primary medical status updated.');
     }
 
 
