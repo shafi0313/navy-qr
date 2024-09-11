@@ -1,5 +1,5 @@
 on: push
-name: 🚀 Deploy Peoples Vet Care
+name: 🚀 Deploy Navy QR Code
 jobs:
   web-deploy:
     name: 🎉 Deploy

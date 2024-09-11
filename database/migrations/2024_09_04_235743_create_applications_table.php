@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('permanent_address', 255)->nullable();
             $table->string('permanent_post', 12)->nullable();
             $table->string('parent_mobile', 32)->nullable();
-            $table->date('dob')->nullable();
+            $table->string('dob', 32)->nullable();
             $table->string('birth_place')->nullable();
             $table->string('nationality', 64)->nullable();
             $table->string('f_nationality', 64)->nullable();
@@ -94,10 +94,10 @@ return new class extends Migration
             $table->string('hobby')->nullable();
             $table->string('games')->nullable();
             $table->string('inter_board', 64)->nullable();
-            $table->date('inter_date')->nullable();
+            $table->string('inter_date',32)->nullable();
             $table->string('inter_result', 64)->nullable();
             $table->string('inter2_board', 64)->nullable();
-            $table->date('inter2_date')->nullable();
+            $table->string('inter2_date',32)->nullable();
             $table->string('inter2_result', 64)->nullable();
             $table->string('criminal', 64)->nullable();
             $table->string('freedom_fighter', 64)->nullable();
