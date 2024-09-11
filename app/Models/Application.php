@@ -17,6 +17,12 @@ class Application extends Model
 
     public function examMark()
     {
-        return $this->hasOne(ExamMark::class);
+        return $this->hasOne(ExamMark::class)->withDefault([
+            'bangla' => 0,
+            'english' => 0,
+            'math' => 0,
+            'science' => 0,
+            'general_knowledge' => 0
+        ]);
     }
 }

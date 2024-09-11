@@ -45,6 +45,7 @@ class ExamMarkController extends Controller
 
         try {
             ExamMark::updateOrCreate(['application_id'=> $request->application_id],$data);
+            // ExamMark::create($data);
             return response()->json(['message' => 'The information has been inserted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);

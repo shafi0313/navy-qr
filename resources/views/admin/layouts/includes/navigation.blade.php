@@ -87,13 +87,13 @@
 
             <li class="side-nav-item">
                 <a href="{{ route('admin.application-urls.index') }}" class="side-nav-link">
-                    <i class="ri-calendar-2-fill"></i>
+                    <i class="fa-solid fa-id-card"></i>
                     <span> Applications </span>
                 </a>
             </li>
             <li class="side-nav-item">
                 <a href="{{ route('admin.exam-marks.create') }}" class="side-nav-link">
-                    <i class="ri-calendar-2-fill"></i>
+                    <i class="fa-solid fa-list"></i>
                     <span> Mark Entry </span>
                 </a>
             </li>

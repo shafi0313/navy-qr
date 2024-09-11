@@ -75,13 +75,13 @@
                             searchable: false,
                         },
                         {
-                            data: 'application.roll',
-                            name: 'application.roll',
+                            data: 'roll',
+                            name: 'roll',
                             title: 'roll',
                         },
                         {
-                            data: 'application.name',
-                            name: 'application.name',
+                            data: 'name',
+                            name: 'name',
                             title: 'Name',
                         },
                         {
@@ -92,22 +92,26 @@
                         {
                             data: 'medical',
                             name: 'medical',
-                            title: 'medical',
+                            title: 'p. medical',
+                            className: 'text-center',
                         },
                         {
                             data: 'written',
                             name: 'written',
                             title: 'written',
+                            className: 'text-center',
                         },
                         {
                             data: 'final',
                             name: 'final',
-                            title: 'final',
+                            title: 'final m.',
+                            className: 'text-center',
                         },
                         {
                             data: 'viva',
                             name: 'viva',
                             title: 'viva',
+                            className: 'text-center',
                         },
                         // {
                         //     data: 'action',

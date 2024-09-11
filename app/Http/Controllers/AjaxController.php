@@ -2,20 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Size;
-use App\Models\Brand;
-use App\Models\Doctor;
-use App\Models\Vendor;
-use App\Models\Generic;
-use App\Models\Product;
-use App\Models\Upazila;
-use App\Models\Customer;
-use App\Models\District;
-use App\Models\Division;
-use App\Models\Supplier;
-use App\Constants\AccType;
-use App\Constants\AccNature;
-use App\Models\AccountChart;
 use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 
@@ -36,7 +22,7 @@ class AjaxController extends Controller
                         ->limit(100)
                         ->get()->map(function ($data) {
                             return [
-                                'id' => $data->id,
+                                'id' => $data->application->id,
                                 'text' => $data->application->name . ' (' . $data->application->roll . ')',
                             ];
                         })->toArray();

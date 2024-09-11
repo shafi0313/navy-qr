@@ -134,7 +134,7 @@ class ApplicationUrlController extends BaseController
                 'permanent_address'  => $data[9],
                 'permanent_post'     => $data[10],
                 'parent_mobile'      => $data[11],
-                'dob'                => sqlDate($data[12]),
+                'dob'                => sqlDate($data[12]) ?? null,
                 'birth_place'        => $data[13],
                 'nationality'        => $data[14],
                 'f_nationality'      => $data[16],
@@ -188,51 +188,52 @@ class ApplicationUrlController extends BaseController
                 'hsc_board'          => $data[64] ?? null,
             ];
 
-            if ($data[1] == 'Education Branch') {
-                $applicationData2 = [
-                    'honors'            => $data[65] ?? null,
-                    'honors_subject'    => $data[66] ?? null,
-                    'honors_year'       => $data[67] ?? null,
-                    'honors_gpa'        => $data[68] ?? null,
-                    'honors_ins'        => $data[69] ?? null,
-                    'masters'           => $data[70] ?? null,
-                    'masters_subject'   => $data[71] ?? null,
-                    'masters_year'      => $data[72] ?? null,
-                    'masters_gpa'       => $data[73] ?? null,
-                    'masters_ins'       => $data[74] ?? null,
-                    'phd'               => $data[75] ?? null,
-                    'phd_subject'       => $data[76] ?? null,
-                    'phd_year'          => $data[77] ?? null,
-                    'phd_gpa'           => $data[78] ?? null,
-                    'phd_ins'           => $data[79] ?? null,
-                    'hobby'             => $data[80] ?? null,
-                    'games'             => $data[81] ?? null,
-                    'inter_board'       => $data[82] ?? null,
-                    'inter_date'        => sqlDate($data[83] ?? null),
-                    'inter_result'      => $data[84] ?? null,
-                    'inter2_board'      => $data[85] ?? null,
-                    'inter2_date'       => sqlDate($data[86] ?? null),
-                    'inter2_result'     => $data[87] ?? null,
-                    'criminal'          => $data[88] ?? null,
-                    'freedom_fighter'   => $data[89] ?? null,
-                ];
-            } else {
-                $applicationData2 = [
-                    'hobby'             => $data[65] ?? null,
-                    'games'             => $data[66] ?? null,
-                    'inter_board'       => $data[67] ?? null,
-                    'inter_date'        => sqlDate($data[68] ?? null),
-                    'inter_result'      => $data[69] ?? null,
-                    'inter2_board'      => $data[70] ?? null,
-                    'inter2_date'       => sqlDate($data[71] ?? null),
-                    'inter2_result'     => $data[72] ?? null,
-                    'criminal'          => $data[73] ?? null,
-                    'freedom_fighter'   => $data[74] ?? null,
-                ];
-            }
+            // if ($data[1] == 'Education Branch') {
+            //     $applicationData2 = [
+            //         'honors'            => $data[65] ?? null,
+            //         'honors_subject'    => $data[66] ?? null,
+            //         'honors_year'       => $data[67] ?? null,
+            //         'honors_gpa'        => $data[68] ?? null,
+            //         'honors_ins'        => $data[69] ?? null,
+            //         'masters'           => $data[70] ?? null,
+            //         'masters_subject'   => $data[71] ?? null,
+            //         'masters_year'      => $data[72] ?? null,
+            //         'masters_gpa'       => $data[73] ?? null,
+            //         'masters_ins'       => $data[74] ?? null,
+            //         'phd'               => $data[75] ?? null,
+            //         'phd_subject'       => $data[76] ?? null,
+            //         'phd_year'          => $data[77] ?? null,
+            //         'phd_gpa'           => $data[78] ?? null,
+            //         'phd_ins'           => $data[79] ?? null,
+            //         'hobby'             => $data[80] ?? null,
+            //         'games'             => $data[81] ?? null,
+            //         'inter_board'       => $data[82] ?? null,
+            //         'inter_date'        => sqlDate($data[83] ?? null),
+            //         'inter_result'      => $data[84] ?? null,
+            //         'inter2_board'      => $data[85] ?? null,
+            //         'inter2_date'       => sqlDate($data[86] ?? null),
+            //         'inter2_result'     => $data[87] ?? null,
+            //         'criminal'          => $data[88] ?? null,
+            //         'freedom_fighter'   => $data[89] ?? null,
+            //     ];
+            // } else {
+            //     $applicationData2 = [
+            //         'hobby'             => $data[65] ?? null,
+            //         'games'             => $data[66] ?? null,
+            //         'inter_board'       => $data[67] ?? null,
+            //         'inter_date'        => sqlDate($data[68] ?? null),
+            //         'inter_result'      => $data[69] ?? null,
+            //         'inter2_board'      => $data[70] ?? null,
+            //         'inter2_date'       => sqlDate($data[71] ?? null),
+            //         'inter2_result'     => $data[72] ?? null,
+            //         'criminal'          => $data[73] ?? null,
+            //         'freedom_fighter'   => $data[74] ?? null,
+            //     ];
+            // }
+            // return $applicationData;
 
-            $applicationCreate = array_merge($applicationData, $applicationData2);
-            $application = Application::create($applicationCreate);
+            // $applicationCreate = array_merge($applicationData, $applicationData2);
+            $application = Application::create($applicationData);
             // Define the desired alt text
             $desiredAlt = 'Image';
             $imageSrc = $crawler->filter('img')->reduce(function (Crawler $node) use ($desiredAlt) {

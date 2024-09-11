@@ -30,6 +30,10 @@ class RoleSeeder extends Seeder
                 'is_active' => 1,
             ],
             [
+                'name' => 'Final Medical',
+                'is_active' => 1,
+            ],
+            [
                 'name' => 'Viva/Final Selection',
                 'is_active' => 1,
             ],

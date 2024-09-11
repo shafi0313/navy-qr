@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreApplicationUrlRequest;
@@ -17,19 +18,12 @@ class ApplicationUrlController extends Controller
     public function index(Request $request)
     {
         // $query = ApplicationUrl::query();
-        // return$query->with([
-        //     'application:id,application_url_id,post,batch,roll,name',
-        //     'application.examMark'
-        // ])->whereHas('application.examMark', function ($query) {
-        //     $query->where('bangla', '>', 8)
-        //           ->where('english', '>', 8)
-        //           ->where('math', '>', 8)
-        //           ->where('science', '>', 8)
-        //           ->where('general_knowledge', '>', 8);
-        // })
-        // ->select('id', 'url', 'is_written_pass', 'is_final_pass')
-        // ->get();
-        // return $query = ApplicationUrl::with('application')->get();
+        // return $query->select('url')->get();
+        // return $query->with([
+        //     'application:id,application_url_id,post,batch,roll,name'
+        // ])->get();
+
+
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $query = ApplicationUrl::query();
@@ -37,61 +31,160 @@ class ApplicationUrlController extends Controller
             switch ($roleId) {
                 case 1: // Admin
                     $query->with([
-                        'application:id,application_url_id,post,batch,roll,name'
-                    ]);
+                        'application:id,application_url_id,post,batch,roll,name',
+                        'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+                    ])->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                        ->selectRaw('
+                        (COALESCE(exam_marks.bangla, 0) +
+                        COALESCE(exam_marks.english, 0) +
+                        COALESCE(exam_marks.math, 0) +
+                        COALESCE(exam_marks.science, 0) +
+                        COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+                    ')
+                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                        ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                        ->orderBy('total_marks', 'desc');
                     break;
                 case 2: // Normal User
                     $query->select('url');
                     break;
                 case 3: // Primary Medical
                     $query->with([
-                        'application:id,application_url_id,post,batch,roll,name'
+                        'application:id,application_url_id,post,batch,roll,name',
+                        'application.examMark:id'
                     ])->select('id', 'url', 'is_medical_pass');
                     break;
                 case 4: // Written
                     $query->with([
-                        'application:id,application_url_id,post,batch,roll,name'
-                    ])->select('id', 'url', 'is_medical_pass', 'is_written_pass')
-                        ->where('is_medical_pass', 1);
+                        'application:id,application_url_id,post,batch,roll,name',
+                        'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+                    ])
+                        ->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                        ->selectRaw('
+                        (COALESCE(exam_marks.bangla, 0) +
+                        COALESCE(exam_marks.english, 0) +
+                        COALESCE(exam_marks.math, 0) +
+                        COALESCE(exam_marks.science, 0) +
+                        COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+                    ')
+                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                        ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                        ->orderBy('total_marks', 'desc');
                     break;
                 case 5: // Final Medical
                     $query->with([
                         'application:id,application_url_id,post,batch,roll,name',
-                        'application.examMark'
-                    ])->whereHas('application.examMark', function ($query) {
-                        $query->where('bangla', '>', 8)
-                            ->where('english', '>', 8)
-                            ->where('math', '>', 8)
-                            ->where('science', '>', 8)
-                            ->where('general_knowledge', '>', 8);
-                    })
-                        ->select('id', 'url', 'is_written_pass', 'is_final_pass');
+                        'application.examMark:id,application_id,bangla,english,math,science,general_knowledge'
+                    ])
+                        ->whereHas('application.examMark', function ($query) {
+                            $query->where('bangla', '>=', 8)
+                                ->where('english', '>=', 8)
+                                ->where('math', '>=', 8)
+                                ->where('science', '>=', 8)
+                                ->where('general_knowledge', '>=', 8);
+                        })
+                        ->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                        ->selectRaw('
+                        (COALESCE(exam_marks.bangla, 0) +
+                        COALESCE(exam_marks.english, 0) +
+                        COALESCE(exam_marks.math, 0) +
+                        COALESCE(exam_marks.science, 0) +
+                        COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+                    ')
+                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                        ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                        ->orderBy('total_marks', 'desc');
                     break;
                 case 6: // Viva / Final Selection
                     $query->with([
-                        'application:id,application_url_id,post,batch,roll,name'
-                    ])->where('is_final_pass', 1);
+                        'application:id,application_url_id,post,batch,roll,name',
+                        'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+                    ])
+                        ->whereHas('application.examMark', function ($query) {
+                            $query->where('bangla', '>=', 8)
+                                ->where('english', '>=', 8)
+                                ->where('math', '>=', 8)
+                                ->where('science', '>=', 8)
+                                ->where('general_knowledge', '>=', 8);
+                        })
+                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                        ->select(
+                            'application_urls.id',
+                            'is_medical_pass',
+                            'is_final_pass',
+                            'applications.id as application_id'
+                        )
+                        ->selectRaw('
+                        (COALESCE(exam_marks.bangla, 0) +
+                        COALESCE(exam_marks.english, 0) +
+                        COALESCE(exam_marks.math, 0) +
+                        COALESCE(exam_marks.science, 0) +
+                        COALESCE(exam_marks.general_knowledge, 0)) as total_marks,
+                        COALESCE(exam_marks.viva, 0) as total_viva
+                    ')
+                        ->groupBy(
+                            'application_urls.id',
+                            'applications.id',
+                            'is_medical_pass',
+                            'is_final_pass',
+                            'exam_marks.bangla',
+                            'exam_marks.english',
+                            'exam_marks.math',
+                            'exam_marks.science',
+                            'exam_marks.general_knowledge',
+                            'exam_marks.viva'
+                        )
+                        ->orderBy('total_viva', 'desc');
+
                     break;
             }
-
             $applications = $query;
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
+                ->addColumn('roll', function ($row) {
+                    return $row->application ? $row->application->roll : '';
+                })
+                ->addColumn('name', function ($row) {
+                    return $row->application ? $row->application->name : '';
+                })
                 ->addColumn('url', function ($row) {
                     return "<a href='$row->url' target='_blank'>Form</a>";
                 })
                 ->addColumn('medical', function ($row) {
                     return result($row->is_medical_pass);
                 })
-                ->addColumn('written', function ($row) {
-                    return result($row->is_written_pass);
+                ->addColumn('written', function ($row) use ($roleId) {
+                    if (in_array($roleId, [1, 4, 5, 6]) && $row->application && $row->application->examMark) {
+                        $written = $row->application->examMark;
+                        if ($written->bangla >= 8 && $written->english >= 8 && $written->math >= 8 && $written->science >= 8 && $written->general_knowledge >= 8) {
+                            return '<span class="badge bg-success">Pass</span>' . ' ' . ($row->total_marks ? $row->total_marks : '');
+                        } elseif ($written->bangla <= 7 || $written->english <= 7 || $written->math <= 7 || $written->science <= 7 || $written->general_knowledge <= 7) {
+                            return '<span class="badge bg-danger">Fail</span>';
+                        } else {
+                            return '<span class="badge bg-warning">Pending</span>';
+                        }
+                    } else {
+                        return '';
+                    }
                 })
-                ->addColumn('final', function ($row) {
-                    return result($row->is_final_pass);
+                ->addColumn('final', function ($row) use ($roleId) {
+                    if (in_array($roleId, [1, 5, 6])) {
+                        return result($row->is_final_pass);
+                    } else {
+                        return '';
+                    }
                 })
-                ->addColumn('viva', function ($row) {
-                    return result($row->is_viva_pass);
+                ->addColumn('viva', function ($row) use ($roleId) {
+                    if (in_array($roleId, [1, 5, 6])) {
+                        return $row->application->examMark->viva;
+                    } else {
+                        return '';
+                    }
                 })
                 // ->addColumn('action', function ($row) {
                 //     $btn = '';
