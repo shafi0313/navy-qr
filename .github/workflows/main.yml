@@ -1,0 +1,21 @@
+on: push
+name: 🚀 Deploy Peoples Vet Care
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          # local-dir: ./home/ggegosjj/peoplesvetcare.com/
+          # source: "."
+          # target: "/home/ggegosjj/peoplesvetcare.com"
+          local-dir: "./" # Source directory on your local machine (root of the repository)
+          server-dir: "/dev3.softgiantbd.com/"
