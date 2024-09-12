@@ -22,7 +22,12 @@ class ApplicationUrlController extends Controller
     {
         $applicationUrl = 'https://joinnavyofficer.org/candidate-verify/verify/XSJRROMRL';
 
-        $client = new Client();
+        // $client = new Client();
+        $client = new Client([
+            'headers' => [
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+            ]
+        ]);
         // if ($this->processURL($applicationUrl)) {
             $response = $client->get($applicationUrl);
             $htmlContent = $response->getBody()->getContents();
