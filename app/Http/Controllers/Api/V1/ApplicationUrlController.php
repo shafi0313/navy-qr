@@ -281,9 +281,9 @@ class ApplicationUrlController extends BaseController
     {
         $data = $request->validated();
         $checkDuplicate = ApplicationUrl::whereUrl($request->url)->first();
-        if ($checkDuplicate) {
-            return $this->sendError('Duplicate Error.', 'Applicant already exists.');
-        }
+        // if ($checkDuplicate) {
+        //     return $this->sendError('Duplicate Error.', 'Applicant already exists.');
+        // }
         $applicationUrl = ApplicationUrl::create($data);
 
         $client = new Client();
