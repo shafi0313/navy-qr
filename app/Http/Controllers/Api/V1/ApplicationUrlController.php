@@ -149,10 +149,10 @@ class ApplicationUrlController extends BaseController
         $data = $request->validated();
 
         // Check for duplicate
-        // $checkDuplicate = ApplicationUrl::whereUrl($request->url)->first();
-        // if ($checkDuplicate) {
-        //     return $this->sendError('Duplicate Error.', 'Applicant already exists.');
-        // }
+        $checkDuplicate = ApplicationUrl::whereUrl($request->url)->first();
+        if ($checkDuplicate) {
+            return $this->sendError('Duplicate Error.', 'Applicant already exists.');
+        }
 
         // Create the application URL
         $applicationUrl = ApplicationUrl::create($data);
@@ -244,7 +244,7 @@ class ApplicationUrlController extends BaseController
                     'hsc_board'          => $data[64] ?? null,
                 ];
 
-                // Store the application data
+                // Commented out the Application::create, so data won't be saved
                 $application = Application::create($applicationData);
 
                 // Process and save the image if available
@@ -261,17 +261,20 @@ class ApplicationUrlController extends BaseController
 
                     // Download and save the image
                     $client->get($imageSrc, ['sink' => $imagePath]);
-                    $application->update(['photo' => $imgName]);
+                    // Commented out the update to the Application model
+                    // $application->update(['photo' => $imgName]);
                 }
 
+                // Mark the application URL as processed
                 $applicationUrl->update(['is_info_taken' => 1]);
 
-                return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant info successfully inserted.');
+                return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant info successfully retrieved.');
             }
         } catch (\Exception $e) {
             return $this->sendError('Error occurred.', $e->getMessage());
         }
     }
+
 
 
     // public function store(StoreApplicationUrlRequest $request)
