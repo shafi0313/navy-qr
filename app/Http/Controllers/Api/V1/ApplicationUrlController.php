@@ -149,10 +149,10 @@ class ApplicationUrlController extends BaseController
         $data = $request->validated();
 
         // Check for duplicate
-        $checkDuplicate = ApplicationUrl::whereUrl($request->url)->first();
-        if ($checkDuplicate) {
-            return $this->sendError('Duplicate Error.', 'Applicant already exists.');
-        }
+        // $checkDuplicate = ApplicationUrl::whereUrl($request->url)->first();
+        // if ($checkDuplicate) {
+        //     return $this->sendError('Duplicate Error.', 'Applicant already exists.');
+        // }
 
         // Create the application URL
         $applicationUrl = ApplicationUrl::create($data);
