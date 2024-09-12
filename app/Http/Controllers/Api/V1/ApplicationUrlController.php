@@ -298,7 +298,7 @@ class ApplicationUrlController extends BaseController
             $elements->each(function (Crawler $node) use (&$data) {
                 $data[] = trim($node->text());
             });
-            return $data;
+            // return $data;
 
             $batch = explode(":", $data[2]);
             $roll = explode(":", $data[3]);
