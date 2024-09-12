@@ -17,9 +17,9 @@ return new class extends Migration
             // $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string('url')->index();
             $table->boolean('is_medical_pass')->index()->nullable();
-            $table->boolean('is_written_pass')->index()->nullable();
+            // $table->boolean('is_written_pass')->index()->nullable();
             $table->boolean('is_final_pass')->index()->nullable();
-            $table->boolean('is_viva_pass')->index()->nullable();
+            // $table->boolean('is_viva_pass')->index()->nullable();
             $table->boolean('is_info_taken')->default(false);
             $table->timestamps();
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');

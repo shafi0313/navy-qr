@@ -6,8 +6,10 @@ use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Setting\AppDbBackupController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
+use App\Http\Controllers\Admin\PrimaryMedicalController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
@@ -25,6 +27,10 @@ Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(
     Route::post('/backup-delete/{name}/{ext}', 'deleteBackup')->name('backup.delete');
 });
 
+// Global Ajax Route
+Route::get('select-2-ajax', [AjaxController::class, 'select2'])->name('select2');
+Route::post('response', [AjaxController::class, 'response'])->name('ajax');
+
 Route::resource('/roles', RoleController::class)->except(['show','create']);
 Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name('roles.is_active');
 
@@ -36,6 +42,10 @@ Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 Route::resource('/exam-marks', ExamMarkController::class)->except(['show']);
 
-// Global Ajax Route
-Route::get('select-2-ajax', [AjaxController::class, 'select2'])->name('select2');
-Route::post('response', [AjaxController::class, 'response'])->name('ajax');
+Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
+Route::patch('primary-medicals/pass', [PrimaryMedicalController::class, 'pass'])->name('primary_medicals.pass');
+Route::patch('primary-medicals/fail', [PrimaryMedicalController::class, 'fail'])->name('primary_medicals.fail');
+
+Route::get('final-medicals', [FinalMedicalController::class, 'index'])->name('final_medicals.index');
+Route::patch('final-medicals/pass', [FinalMedicalController::class, 'pass'])->name('final_medicals.pass');
+Route::patch('final-medicals/fail', [FinalMedicalController::class, 'fail'])->name('final_medicals.fail');

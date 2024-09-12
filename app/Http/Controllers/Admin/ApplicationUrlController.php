@@ -17,7 +17,25 @@ class ApplicationUrlController extends Controller
      */
     public function index(Request $request)
     {
-        // $query = ApplicationUrl::query();
+    //     $query = ApplicationUrl::query();
+    //     return $query->with([
+    //         'application:id,application_url_id,post,batch,roll,name',
+    //         'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
+    //     ])->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+    //         ->leftJoin('applications', 'applications.application_url_id', '=', 'application_urls.id')
+    //         ->leftJoin('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+    //         ->selectRaw('
+    //     (COALESCE(exam_marks.bangla, 0) +
+    //     COALESCE(exam_marks.english, 0) +
+    //     COALESCE(exam_marks.math, 0) +
+    //     COALESCE(exam_marks.science, 0) +
+    //     COALESCE(exam_marks.general_knowledge, 0)) as total_marks
+    // ')
+    //         ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+    //         ->orderBy('total_marks', 'desc')
+    //         ->get();
+
+
         // return $query->select('url')->get();
         // return $query->with([
         //     'application:id,application_url_id,post,batch,roll,name'
@@ -34,16 +52,15 @@ class ApplicationUrlController extends Controller
                         'application:id,application_url_id,post,batch,roll,name',
                         'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
                     ])->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                        ->leftJoin('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->leftJoin('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
                         ->selectRaw('
                         (COALESCE(exam_marks.bangla, 0) +
                         COALESCE(exam_marks.english, 0) +
                         COALESCE(exam_marks.math, 0) +
                         COALESCE(exam_marks.science, 0) +
                         COALESCE(exam_marks.general_knowledge, 0)) as total_marks
-                    ')
-                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
-                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
-                        ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                    ')->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
                         ->orderBy('total_marks', 'desc');
                     break;
                 case 2: // Normal User
@@ -61,18 +78,16 @@ class ApplicationUrlController extends Controller
                     $query->with([
                         'application:id,application_url_id,post,batch,roll,name',
                         'application.examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'
-                    ])
-                        ->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                    ])->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                        ->leftJoin('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->leftJoin('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
                         ->selectRaw('
                         (COALESCE(exam_marks.bangla, 0) +
                         COALESCE(exam_marks.english, 0) +
                         COALESCE(exam_marks.math, 0) +
                         COALESCE(exam_marks.science, 0) +
                         COALESCE(exam_marks.general_knowledge, 0)) as total_marks
-                    ')
-                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
-                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
-                        ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                    ')->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
                         ->orderBy('total_marks', 'desc');
                     break;
                 case 5: // Final Medical
@@ -88,16 +103,15 @@ class ApplicationUrlController extends Controller
                                 ->where('general_knowledge', '>=', 8);
                         })
                         ->select('application_urls.id', 'is_medical_pass', 'is_final_pass')
+                        ->leftJoin('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->leftJoin('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
                         ->selectRaw('
                         (COALESCE(exam_marks.bangla, 0) +
                         COALESCE(exam_marks.english, 0) +
                         COALESCE(exam_marks.math, 0) +
                         COALESCE(exam_marks.science, 0) +
                         COALESCE(exam_marks.general_knowledge, 0)) as total_marks
-                    ')
-                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
-                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
-                        ->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
+                    ')->groupBy('application_urls.id', 'application_urls.is_medical_pass', 'application_urls.is_final_pass', 'exam_marks.bangla', 'exam_marks.english', 'exam_marks.math', 'exam_marks.science', 'exam_marks.general_knowledge')
                         ->orderBy('total_marks', 'desc');
                     break;
                 case 6: // Viva / Final Selection
@@ -112,8 +126,8 @@ class ApplicationUrlController extends Controller
                                 ->where('science', '>=', 8)
                                 ->where('general_knowledge', '>=', 8);
                         })
-                        ->join('applications', 'applications.application_url_id', '=', 'application_urls.id')
-                        ->join('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
+                        ->leftJoin('applications', 'applications.application_url_id', '=', 'application_urls.id')
+                        ->leftJoin('exam_marks', 'exam_marks.application_id', '=', 'applications.id')
                         ->select(
                             'application_urls.id',
                             'is_medical_pass',
@@ -158,19 +172,19 @@ class ApplicationUrlController extends Controller
                     return "<a href='$row->url' target='_blank'>Form</a>";
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    if(in_array($roleId, [1, 3, 4, 5, 6])){
+                    if (in_array($roleId, [1, 3, 4, 5, 6])) {
                         return result($row->is_medical_pass);
-                    }else{
+                    } else {
                         return '';
                     }
-
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 4, 5, 6]) && $row->application && $row->application->examMark) {
                         $written = $row->application->examMark;
+                        $totalMark = $written->bangla + $written->english + $written->math + $written->science + $written->general_knowledge;
                         if ($written->bangla >= 8 && $written->english >= 8 && $written->math >= 8 && $written->science >= 8 && $written->general_knowledge >= 8) {
                             return '<span class="badge bg-success">Pass</span>' . ' ' . ($row->total_marks ? $row->total_marks : '');
-                        } elseif ($written->bangla <= 7 || $written->english <= 7 || $written->math <= 7 || $written->science <= 7 || $written->general_knowledge <= 7) {
+                        } elseif ($totalMark > 2 && ($written->bangla <= 7 || $written->english <= 7 || $written->math <= 7 || $written->science <= 7 || $written->general_knowledge <= 7)) {
                             return '<span class="badge bg-danger">Fail</span>';
                         } else {
                             return '<span class="badge bg-warning">Pending</span>';
