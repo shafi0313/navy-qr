@@ -20,10 +20,10 @@ class ApplicationUrlController extends Controller
      */
     public function index(Request $request)
     {
-        return$applicationUrl = 'https://joinnavyofficer.org/candidate-verify/verify/XSJRROMRL';
+        $applicationUrl = 'https://joinnavyofficer.org/candidate-verify/verify/XSJRROMRL';
 
         $client = new Client();
-        if ($this->processURL($applicationUrl)) {
+        // if ($this->processURL($applicationUrl)) {
             $response = $client->get($applicationUrl);
             $htmlContent = $response->getBody()->getContents();
             // Parse the HTML using DomCrawler
@@ -104,7 +104,7 @@ class ApplicationUrlController extends Controller
                 'hsc_board'          => $data[64] ?? null,
             ];
             // $application = Application::create($applicationData);
-        }
+        // }
 
     //     $query = ApplicationUrl::query();
 
