@@ -20,6 +20,14 @@ class ApplicationUrlController extends Controller
      */
     public function index(Request $request)
     {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://joinnavyofficer.org/candidate-verify/verify/XSJRROMRL');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        return $output;
+
+
         $applicationUrl = 'https://joinnavyofficer.org/candidate-verify/verify/XSJRROMRL';
 
         // $client = new Client();
@@ -30,89 +38,89 @@ class ApplicationUrlController extends Controller
             ]
         ]);
         // if ($this->processURL($applicationUrl)) {
-            $response = $client->get($applicationUrl);
-            $htmlContent = $response->getBody()->getContents();
-            // Parse the HTML using DomCrawler
-            $crawler = new Crawler($htmlContent);
-            $elements = $crawler->filter('.preview__header h5, .data_roll,.pv_field__text,.pv-table td');
+        $response = $client->get($applicationUrl);
+        $htmlContent = $response->getBody()->getContents();
+        // Parse the HTML using DomCrawler
+        $crawler = new Crawler($htmlContent);
+        $elements = $crawler->filter('.preview__header h5, .data_roll,.pv_field__text,.pv-table td');
 
-            $data = [];
-            $elements->each(function (Crawler $node) use (&$data) {
-                $data[] = trim($node->text());
-            });
-            return $data;
+        $data = [];
+        $elements->each(function (Crawler $node) use (&$data) {
+            $data[] = trim($node->text());
+        });
+        return $data;
 
-            $batch = explode(":", $data[2]);
-            $roll = explode(":", $data[3]);
-            $applicationData = [
-                'application_url_id' => 1,
-                'post'               => $data[1],
-                'batch'              => $batch[1],
-                'roll'               => $roll[1],
-                'name'               => $data[4],
-                'present_address'    => $data[5],
-                'present_post'       => $data[6],
-                'mobile'             => $data[7],
-                'permanent_address'  => $data[9],
-                'permanent_post'     => $data[10],
-                'parent_mobile'      => $data[11],
-                'dob'                => sqlDate($data[12]) ?? null,
-                'birth_place'        => $data[13],
-                'nationality'        => $data[14],
-                'f_nationality'      => $data[16],
-                'm_nationality'      => $data[17],
-                'religion'           => $data[18],
-                'marital_status'     => $data[19],
-                'gender'             => $data[20],
-                'height'             => $data[21],
-                'weight'             => $data[22],
-                'chest_normal'       => $data[23],
-                'chest_extended'     => $data[24],
-                'visible_marks'      => $data[25],
-                'father_name'        => $data[26],
-                'father_education'   => $data[27],
-                'mother_name'        => $data[28],
-                'mother_education'   => $data[29],
-                'parents_address'    => $data[30],
-                'father_occupation'  => $data[31],
-                'mother_occupation'  => $data[32] ?? null,
-                'income_source'      => $data[33] ?? null,
-                'income'             => $data[34] ?? null,
-                'g_name'             => $data[35] ?? null,
-                'g_relation'         => $data[36] ?? null,
-                'g_mobile'           => $data[37] ?? null,
-                'g_income_source'    => $data[38] ?? null,
-                'g_income'           => $data[39] ?? null,
-                'g_address'          => $data[40] ?? null,
-                'psc'                => $data[41] ?? null,
-                'psc_ins_name'       => $data[42] ?? null,
-                'psc_year'           => $data[43] ?? null,
-                'psc_remark'         => $data[44] ?? null,
-                'jsc'                => $data[45] ?? null,
-                'jsc_ins_name'       => $data[46] ?? null,
-                'jsc_year'           => $data[47] ?? null,
-                'jsc_remark'         => $data[48] ?? null,
-                'ssc'                => $data[49] ?? null,
-                'ssc_group'          => $data[50] ?? null,
-                'ssc_year'           => $data[51] ?? null,
-                'ssc_gpa'            => $data[52] ?? null,
-                'ssc_ins_name'       => $data[53] ?? null,
-                'ssc_roll'           => $data[54] ?? null,
-                'ssc_reg_no'         => $data[55] ?? null,
-                'ssc_board'          => $data[56] ?? null,
-                'hsc'                => $data[57] ?? null,
-                'hsc_group'          => $data[58] ?? null,
-                'hsc_year'           => $data[59] ?? null,
-                'hsc_gpa'            => $data[60] ?? null,
-                'hsc_ins_name'       => $data[61] ?? null,
-                'hsc_roll'           => $data[62] ?? null,
-                'hsc_reg_no'         => $data[63] ?? null,
-                'hsc_board'          => $data[64] ?? null,
-            ];
-            // $application = Application::create($applicationData);
+        $batch = explode(":", $data[2]);
+        $roll = explode(":", $data[3]);
+        $applicationData = [
+            'application_url_id' => 1,
+            'post'               => $data[1],
+            'batch'              => $batch[1],
+            'roll'               => $roll[1],
+            'name'               => $data[4],
+            'present_address'    => $data[5],
+            'present_post'       => $data[6],
+            'mobile'             => $data[7],
+            'permanent_address'  => $data[9],
+            'permanent_post'     => $data[10],
+            'parent_mobile'      => $data[11],
+            'dob'                => sqlDate($data[12]) ?? null,
+            'birth_place'        => $data[13],
+            'nationality'        => $data[14],
+            'f_nationality'      => $data[16],
+            'm_nationality'      => $data[17],
+            'religion'           => $data[18],
+            'marital_status'     => $data[19],
+            'gender'             => $data[20],
+            'height'             => $data[21],
+            'weight'             => $data[22],
+            'chest_normal'       => $data[23],
+            'chest_extended'     => $data[24],
+            'visible_marks'      => $data[25],
+            'father_name'        => $data[26],
+            'father_education'   => $data[27],
+            'mother_name'        => $data[28],
+            'mother_education'   => $data[29],
+            'parents_address'    => $data[30],
+            'father_occupation'  => $data[31],
+            'mother_occupation'  => $data[32] ?? null,
+            'income_source'      => $data[33] ?? null,
+            'income'             => $data[34] ?? null,
+            'g_name'             => $data[35] ?? null,
+            'g_relation'         => $data[36] ?? null,
+            'g_mobile'           => $data[37] ?? null,
+            'g_income_source'    => $data[38] ?? null,
+            'g_income'           => $data[39] ?? null,
+            'g_address'          => $data[40] ?? null,
+            'psc'                => $data[41] ?? null,
+            'psc_ins_name'       => $data[42] ?? null,
+            'psc_year'           => $data[43] ?? null,
+            'psc_remark'         => $data[44] ?? null,
+            'jsc'                => $data[45] ?? null,
+            'jsc_ins_name'       => $data[46] ?? null,
+            'jsc_year'           => $data[47] ?? null,
+            'jsc_remark'         => $data[48] ?? null,
+            'ssc'                => $data[49] ?? null,
+            'ssc_group'          => $data[50] ?? null,
+            'ssc_year'           => $data[51] ?? null,
+            'ssc_gpa'            => $data[52] ?? null,
+            'ssc_ins_name'       => $data[53] ?? null,
+            'ssc_roll'           => $data[54] ?? null,
+            'ssc_reg_no'         => $data[55] ?? null,
+            'ssc_board'          => $data[56] ?? null,
+            'hsc'                => $data[57] ?? null,
+            'hsc_group'          => $data[58] ?? null,
+            'hsc_year'           => $data[59] ?? null,
+            'hsc_gpa'            => $data[60] ?? null,
+            'hsc_ins_name'       => $data[61] ?? null,
+            'hsc_roll'           => $data[62] ?? null,
+            'hsc_reg_no'         => $data[63] ?? null,
+            'hsc_board'          => $data[64] ?? null,
+        ];
+        // $application = Application::create($applicationData);
         // }
 
-    //     $query = ApplicationUrl::query();
+        //     $query = ApplicationUrl::query();
 
         if ($request->ajax()) {
             $roleId = user()->role_id;
