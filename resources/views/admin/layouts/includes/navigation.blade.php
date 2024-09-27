@@ -106,7 +106,13 @@
             <li class="side-nav-item">
                 <a href="{{ route('admin.exam-marks.create') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
-                    <span> Mark Entry </span>
+                    <span>Written Mark Entry </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('admin.viva-marks.create') }}" class="side-nav-link">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Viva Mark Entry </span>
                 </a>
             </li>
 

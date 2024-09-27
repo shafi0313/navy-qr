@@ -5,6 +5,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ExamMarkController;
+use App\Http\Controllers\Admin\VivaMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\FinalMedicalController;
@@ -42,7 +43,8 @@ Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 Route::resource('/applications', ApplicationController::class)->except(['show']);
-Route::resource('/exam-marks', ExamMarkController::class)->except(['show']);
+Route::resource('/exam-marks', ExamMarkController::class)->only(['create','store']);
+Route::resource('/viva-marks', VivaMarkController::class)->only(['create','store']);
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
 Route::patch('primary-medicals/pass', [PrimaryMedicalController::class, 'pass'])->name('primary_medicals.pass');
