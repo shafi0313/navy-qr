@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 
@@ -12,18 +13,15 @@ class AjaxController extends Controller
         if ($request->ajax()) {
             switch ($request->type) {
                 case 'getApplicant':
-                    $response = ApplicationUrl::with([
-                        'application' => function ($q) use ($request) {
-                            $q->select('id', 'application_url_id', 'post', 'batch', 'roll', 'name')
-                                ->where('name', 'like', "%{$request->q}%")
-                                ->orWhere('roll', 'like', "%{$request->q}%");
-                        }
-                    ])->select('id', 'is_medical_pass')->where('is_medical_pass', 1)
+                    $response = Application::select('id', 'name', 'serial_no')
+                        ->where('name', 'like', "%{$request->q}%")
+                        ->orWhere('serial_no', 'like', "%{$request->q}%")
+                        ->orderBy('serial_no')
                         ->limit(100)
                         ->get()->map(function ($data) {
                             return [
-                                'id' => $data->application->id,
-                                'text' => $data->application->name . ' (' . $data->application->roll . ')',
+                                'id' => $data->id,
+                                'text' => $data->name . ' (' . $data->serial_no . ')',
                             ];
                         })->toArray();
                     break;
@@ -40,6 +38,4 @@ class AjaxController extends Controller
 
         return abort(404);
     }
-
-
 }

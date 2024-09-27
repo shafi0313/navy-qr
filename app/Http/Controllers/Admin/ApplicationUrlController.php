@@ -20,6 +20,8 @@ class ApplicationUrlController extends Controller
      */
     public function index(Request $request)
     {
+
+        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://joinnavyofficer.org/candidate-verify/verify/XSJRROMRL');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

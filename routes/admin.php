@@ -6,6 +6,7 @@ use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Setting\AppDbBackupController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
@@ -40,6 +41,7 @@ Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'stat
 Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit']);
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
+Route::resource('/applications', ApplicationController::class)->except(['show']);
 Route::resource('/exam-marks', ExamMarkController::class)->except(['show']);
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');

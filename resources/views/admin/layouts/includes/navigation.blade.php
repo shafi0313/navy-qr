@@ -86,7 +86,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{ route('admin.application-urls.index') }}" class="side-nav-link">
+                <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-id-card"></i>
                     <span> Applications </span>
                 </a>
