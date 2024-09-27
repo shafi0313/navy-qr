@@ -73,9 +73,14 @@
                             searchable: false,
                         },
                         {
-                            data: 'roll',
-                            name: 'roll',
-                            title: 'roll',
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'des.',
+                        },
+                        {
+                            data: 'serial_no',
+                            name: 'serial_no',
+                            title: 'serial no',
                         },
                         {
                             data: 'name',
@@ -83,9 +88,9 @@
                             title: 'Name',
                         },
                         {
-                            data: 'url',
-                            name: 'url',
-                            title: 'url',
+                            data: 'eligible_district',
+                            name: 'eligible_district',
+                            title: 'district',
                         },
                         {
                             data: 'action',

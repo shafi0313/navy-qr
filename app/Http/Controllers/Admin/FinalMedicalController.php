@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Application;
 use Illuminate\Http\Request;
-use App\Models\ApplicationUrl;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,21 +13,17 @@ class FinalMedicalController extends Controller
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            $applications = ApplicationUrl::with([
-                'application:id,application_url_id,post,batch,roll,name',
-                'application.examMark:id'
-            ])->select('id', 'url', 'is_final_pass');
+            $applications = Application::with([
+                'examMark:id'
+            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_final_pass');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('roll', function ($row) {
-                    return $row->application ? $row->application->roll : '';
+                ->addColumn('serial_no', function ($row) {
+                    return $row->serial_no;
                 })
                 ->addColumn('name', function ($row) {
-                    return $row->application ? $row->application->name : '';
-                })
-                ->addColumn('url', function ($row) {
-                    return "<a href='$row->url' target='_blank'>Form</a>";
+                    return $row->name;
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 3])) {
@@ -50,7 +46,7 @@ class FinalMedicalController extends Controller
                 //         $query->search($search);
                 //     }
                 // })
-                ->rawColumns(['url', 'medical', 'action'])
+                ->rawColumns(['medical', 'action'])
                 ->make(true);
         }
         return view('admin.final-medical.index');
@@ -58,7 +54,7 @@ class FinalMedicalController extends Controller
 
     public function pass(Request $request)
     {
-        $application = ApplicationUrl::find($request->id);
+        $application = Application::find($request->id);
         $application->is_final_pass = 1;
         $application->save();
         try {
@@ -71,7 +67,7 @@ class FinalMedicalController extends Controller
 
     public function fail(Request $request)
     {
-        $application = ApplicationUrl::find($request->id);
+        $application = Application::find($request->id);
         $application->is_final_pass = 0;
         $application->save();
         try {
