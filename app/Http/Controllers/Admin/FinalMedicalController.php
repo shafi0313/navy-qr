@@ -34,8 +34,8 @@ class FinalMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-2' onclick='fMPass(".$row->id.")'>Pass</button>";
-                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(".$row->id.")'>Fail</button>";
+                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-2' onclick='fMPass(" . $row->id . ")'>Pass</button>";
+                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Fail</button>";
                     return $btn;
                 })
                 // ->filter(function ($query) use ($request) {
@@ -54,6 +54,9 @@ class FinalMedicalController extends Controller
 
     public function pass(Request $request)
     {
+        if (!in_array(user()->role_id, [1, 3])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
         $application = Application::find($request->id);
         $application->is_final_pass = 1;
         $application->save();
@@ -67,6 +70,9 @@ class FinalMedicalController extends Controller
 
     public function fail(Request $request)
     {
+        if (!in_array(user()->role_id, [1, 3])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
         $application = Application::find($request->id);
         $application->is_final_pass = 0;
         $application->save();

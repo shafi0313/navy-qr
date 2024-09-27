@@ -17,8 +17,8 @@
                     <div class="card-body">
                         <div class="row gy-2 mb-3">
                             <div class="col-md-6">
-                                <label for="id" class="form-label required">Applicant </label>
-                                <select name="id" id="id" class="form-select"></select>
+                                <label for="application_id" class="form-label required">Applicant </label>
+                                <select name="application_id" id="application_id" class="form-select"></select>
                             </div>
                         </div>
                         <div class="row gy-2">

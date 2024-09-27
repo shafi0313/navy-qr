@@ -22,7 +22,7 @@ class StoreExamMarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'                => ['required', 'exists:applications,id'],
+            'application_id'    => ['required', 'exists:applications,id'],
             'bangla'            => ['required', 'numeric'],
             'english'           => ['required', 'numeric'],
             'math'              => ['required', 'numeric'],

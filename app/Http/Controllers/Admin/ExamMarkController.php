@@ -33,7 +33,7 @@ class ExamMarkController extends Controller
     public function store(StoreExamMarkRequest $request)
     {
         $data = $request->validated();
-        $check = Application::select('id','serial_no', 'name','is_medical_pass')->whereId($request->id)->first();
+        $check = Application::select('id','serial_no', 'name','is_medical_pass')->whereId($request->application_id)->first();
 
         if ($check->is_medical_pass != 1) {
             return response()->json(['message' => 'Please update primary medical first'], 404);
@@ -42,8 +42,7 @@ class ExamMarkController extends Controller
         $data['created_by'] = user()->id;
 
         try {
-            ExamMark::updateOrCreate(['id'=> $request->id],$data);
-            // ExamMark::create($data);
+            ExamMark::updateOrCreate(['id'=> $request->application_id],$data);
             return response()->json(['message' => 'The information has been inserted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
