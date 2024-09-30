@@ -88,31 +88,32 @@
             <li class="side-nav-item">
                 <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-id-card"></i>
-                    <span> Applications </span>
+                    <span> Applicants </span>
                 </a>
             </li>
             <li class="side-nav-item">
                 <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
-                    <span> Primary Medical Entry </span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
-                    <i class="fa-solid fa-list"></i>
-                    <span> Final Medical Entry </span>
+                    <span> Primary Medical Selection </span>
                 </a>
             </li>
             <li class="side-nav-item">
                 <a href="{{ route('admin.exam-marks.create') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
-                    <span>Written Mark Entry </span>
+                    <span>Written Exam </span>
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Final Medical</span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
                 <a href="{{ route('admin.viva-marks.create') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
-                    <span>Viva Mark Entry </span>
+                    <span>Final Viva</span>
                 </a>
             </li>
 

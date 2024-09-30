@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Application';
+    $pageTitle = 'Total Applicants';
     $folder = 'application';
     $route = $folder . 's';
 @endphp
@@ -13,11 +13,25 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of {{ $pageTitle }}s</h4>
+                        <h4 class="card-title">{{ $pageTitle }}</h4>
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="row justify-content-center filter align-items-end">
+                            {{-- <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="district">@lang('District')</label>
+                                    <select name="district" class="form-control w-100 district" id="district">
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="exam_date">@lang('Edam Date')</label>
+                                    <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
+                                    </select>
+                                </div>
+                            </div> --}}
+                            {{-- <div class="col">
                                 <div class="form-group my-3">
                                     <label class="form-label" for="gender">@lang('Gender')</label>
                                     <select name="gender" class="gender select_2 form-control w-100">
@@ -26,12 +40,12 @@
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col">
+                            </div> --}}
+                            {{-- <div class="col">
                                 <div class="form-group my-3">
                                     <a href="" class="btn btn-danger">Clear</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
@@ -77,7 +91,12 @@
                         {
                             data: 'serial_no',
                             name: 'serial_no',
-                            title: 'serial no',
+                            title: 'Roll no',
+                        },
+                        {
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'Des',
                         },
                         {
                             data: 'name',
@@ -85,29 +104,39 @@
                             title: 'Name',
                         },
                         {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'p. medical',
-                            className: 'text-center',
+                            data: 'eligible_district',
+                            name: 'eligible_district',
+                            title: 'District',
                         },
                         {
-                            data: 'written',
-                            name: 'written',
-                            title: 'written',
-                            className: 'text-center',
+                            data: 'remark',
+                            name: 'remark',
+                            title: 'remark',
                         },
-                        {
-                            data: 'final',
-                            name: 'final',
-                            title: 'final m.',
-                            className: 'text-center',
-                        },
-                        {
-                            data: 'viva',
-                            name: 'viva',
-                            title: 'viva',
-                            className: 'text-center',
-                        },
+                        // {
+                        //     data: 'medical',
+                        //     name: 'medical',
+                        //     title: 'p. medical',
+                        //     className: 'text-center',
+                        // },
+                        // {
+                        //     data: 'written',
+                        //     name: 'written',
+                        //     title: 'written',
+                        //     className: 'text-center',
+                        // },
+                        // {
+                        //     data: 'final',
+                        //     name: 'final',
+                        //     title: 'final m.',
+                        //     className: 'text-center',
+                        // },
+                        // {
+                        //     data: 'viva',
+                        //     name: 'viva',
+                        //     title: 'viva',
+                        //     className: 'text-center',
+                        // },
                         // {
                         //     data: 'action',
                         //     name: 'action',
@@ -134,6 +163,52 @@
                     table.draw();
                 });
             });
+        </script>
+        <script>
+            $('#district').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getDistricts',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+            $('#exam_date').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getExamDates',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
         </script>
     @endpush
 @endsection

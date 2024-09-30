@@ -37,9 +37,9 @@ if (! function_exists('result')) {
     function result($data)
     {
         return match ($data) {
-            1 => '<span class="badge bg-success">Pass</span>',
-            0 => '<span class="badge bg-danger">Fail</span>',
-            default => '<span class="badge bg-warning">Pending</span>',
+            1 => '<span class="btn btn-success btn-sm">Fit</span>',
+            0 => '<span class="btn btn-danger btn-sm">Unfit</span>',
+            default => '<span class="btn btn-warning btn-sm">Pending</span>',
         };
     }
 }

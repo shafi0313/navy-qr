@@ -34,8 +34,8 @@ class PrimaryMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-2' onclick='pMPass(" . $row->id . ")'>Pass</button>";
-                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Fail</button>";
+                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
+                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
                     return $btn;
                 })
                 // ->filter(function ($query) use ($request) {

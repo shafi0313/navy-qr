@@ -25,4 +25,12 @@ class Application extends Model
             'general_knowledge' => 0
         ]);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('serial_no', 'like', '%'.$search.'%')
+            ->orWhere('name', 'like', '%'.$search.'%')
+            ->orWhere('eligible_district', 'like', '%'.$search.'%')
+            ->orWhere('candidate_designation', 'like', '%'.$search.'%');
+    }
 }

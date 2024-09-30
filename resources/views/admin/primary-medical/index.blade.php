@@ -73,14 +73,14 @@
                             searchable: false,
                         },
                         {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'des.',
-                        },
-                        {
                             data: 'serial_no',
                             name: 'serial_no',
-                            title: 'serial no',
+                            title: 'Roll no',
+                        },
+                        {
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'des',
                         },
                         {
                             data: 'name',
@@ -101,7 +101,7 @@
                         {
                             data: 'medical',
                             name: 'medical',
-                            title: 'p. medical',
+                            title: 'Remarks',
                             className: 'text-center',
                         },
                     ],

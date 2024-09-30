@@ -22,59 +22,31 @@
                             </div>
                         </div>
                         <div class="row gy-2">
-                            @if (user()->role_id == 4)
+                            @if (in_array(user()->role_id, [1,4]))
                                 <div class="col-md-2">
                                     <label for="bangla" class="form-label required">Bangla </label>
-                                    <input type="number" step="any" name="bangla" id="bangla" class="form-control" required>
+                                    <input type="number" step="any" name="bangla" id="bangla" class="form-control"
+                                        required>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="english" class="form-label required">English </label>
-                                    <input type="number" step="any" name="english" id="english" class="form-control" required>
+                                    <input type="number" step="any" name="english" id="english" class="form-control"
+                                        required>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="math" class="form-label required">math </label>
-                                    <input type="number" step="any" name="math" id="math" class="form-control" required>
+                                    <input type="number" step="any" name="math" id="math" class="form-control"
+                                        required>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="science" class="form-label required">science </label>
-                                    <input type="number" step="any" name="science" id="science" class="form-control" required>
+                                    <input type="number" step="any" name="science" id="science" class="form-control"
+                                        required>
                                 </div>
                                 <div class="col-md-2">
-                                    <label for="general_knowledge" class="form-label">general knowledge </label>
+                                    <label for="general_knowledge" class="form-label required">general knowledge </label>
                                     <input type="number" step="any" name="general_knowledge" id="general_knowledge"
-                                        class="form-control">
-                                </div>
-                            @elseif(user()->role_id == 6)
-                                <div class="col-md-2">
-                                    <label for="viva" class="form-label">Viva/Final Selection </label>
-                                    <input type="number" step="any" name="viva" id="viva" class="form-control">
-                                </div>
-                            @else
-                                <div class="col-md-2">
-                                    <label for="bangla" class="form-label">Bangla </label>
-                                    <input type="number" step="any" name="bangla" id="bangla" class="form-control">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="english" class="form-label">English </label>
-                                    <input type="number" step="any" name="english" id="english" class="form-control">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="math" class="form-label">math </label>
-                                    <input type="number" step="any" name="math" id="math" class="form-control">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="science" class="form-label">science </label>
-                                    <input type="number" step="any" name="science" id="science" class="form-control">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="general_knowledge" class="form-label">general knowledge </label>
-                                    <input type="number" step="any" name="general_knowledge" id="general_knowledge"
-                                        class="form-control">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="viva" class="form-label">Viva/Final Selection </label>
-                                    <input type="number" step="any" name="viva" id="viva"
-                                        class="form-control">
+                                        class="form-control" required>
                                 </div>
                             @endif
 

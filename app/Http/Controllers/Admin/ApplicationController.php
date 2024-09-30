@@ -44,6 +44,7 @@ class ApplicationController extends Controller
 
 
         if ($request->ajax()) {
+            // return($request->district);
             $roleId = user()->role_id;
             $query = Application::query();
 
@@ -61,7 +62,8 @@ class ApplicationController extends Controller
                             'applications.current_phone',
                             'applications.is_medical_pass',
                             'applications.is_final_pass',
-                            // 'applications.',
+                            'applications.remark',
+
                             'exam_marks.bangla',
                             'exam_marks.english',
                             'exam_marks.math',
@@ -248,6 +250,9 @@ class ApplicationController extends Controller
                 // ->filter(function ($query) use ($request) {
                 //     if ($request->has('gender') && $request->gender != '') {
                 //         $query->where('gender', $request->gender);
+                //     }
+                //     if ($request->has('district') && $request->district != '') {
+                //         $query->where('applications.eligible_district', $request->district);
                 //     }
                 //     if ($search = $request->get('search')['value']) {
                 //         $query->search($search);

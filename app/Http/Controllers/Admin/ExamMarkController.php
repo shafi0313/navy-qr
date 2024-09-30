@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\ExamMark;
 use App\Models\Application;
-use App\Models\ApplicationUrl;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreExamMarkRequest;
 use App\Http\Requests\UpdateExamMarkRequest;

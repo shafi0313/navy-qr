@@ -105,6 +105,7 @@ return new class extends Migration
             $table->boolean('is_medical_pass')->index()->nullable();
             $table->boolean('is_final_pass')->index()->nullable();
 
+            $table->string('remark')->nullable();
             // Timestamps
             $table->timestamps();
         });
