@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Http\Controllers\Api\V1\ApplicationUrlController;
 
 
@@ -17,10 +18,10 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::apiResource('application-urls', ApplicationUrlController::class);
-        Route::post('/application-urls/medical-pass-status', [ApplicationUrlController::class, 'medicalPassStatus']);
+        Route::apiResource('applications', ApplicationController::class);
+        Route::post('/applications/medical-pass-status', [ApplicationController::class, 'medicalPassStatus']);
 
-        
+
         Route::post('/logout', [AuthController::class, 'logout']);
 
     });

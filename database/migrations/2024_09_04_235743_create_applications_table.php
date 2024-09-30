@@ -106,6 +106,7 @@ return new class extends Migration
             $table->boolean('is_final_pass')->index()->nullable();
 
             $table->string('remark')->nullable();
+            $table->dateTime('scanned_at')->nullable();
             // Timestamps
             $table->timestamps();
         });
