@@ -8,6 +8,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use App\Http\Resources\ApplicationResource;
 use App\Http\Resources\ApplicationUrlResource;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\ApplicationShowResource;
 use App\Http\Requests\StoreApplicationUrlRequest;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
@@ -162,8 +163,20 @@ class ApplicationController extends BaseController
             $application->update(['scanned_at' => now()]);
         }
 
-        return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
+        return $this->sendResponse(new ApplicationShowResource($application), 'Applicant info.');
+
     }
+
+    // public function show($serialNo)
+    // {
+    //     $application = Application::whereSerialNo($serialNo)->first();
+
+    //     if($application){
+    //         $application->update(['scanned_at' => now()]);
+    //     }
+
+    //     return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
+    // }
 
 
     public function store(StoreApplicationUrlRequest $request)
