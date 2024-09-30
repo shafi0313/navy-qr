@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="row justify-content-center filter align-items-end">
-                            {{-- <div class="col">
+                            <div class="col">
                                 <div class="form-group my-3">
                                     <label class="form-label" for="district">@lang('District')</label>
                                     <select name="district" class="form-control w-100 district" id="district">
@@ -26,11 +26,11 @@
                             </div>
                             <div class="col">
                                 <div class="form-group my-3">
-                                    <label class="form-label" for="exam_date">@lang('Edam Date')</label>
+                                    <label class="form-label" for="exam_date">@lang('Exam Date')</label>
                                     <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
                             {{-- <div class="col">
                                 <div class="form-group my-3">
                                     <label class="form-label" for="gender">@lang('Gender')</label>
@@ -41,11 +41,11 @@
                                     </select>
                                 </div>
                             </div> --}}
-                            {{-- <div class="col">
+                            <div class="col">
                                 <div class="form-group my-3">
                                     <a href="" class="btn btn-danger">Clear</a>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
@@ -74,10 +74,12 @@
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
                         data: function(d) {
-                            return $.extend({}, d, {
-                                "gender": $('.gender').val()
+                            // Use $.extend to combine the original data (d) with custom parameters
+                            return $.extend(d, {
+                                district: $('.district').val(),
+                                exam_date: $('.exam_date').val()
                             });
-                        }
+                        },
                     },
                     columns: [{
                             data: 'DT_RowIndex',
@@ -87,6 +89,11 @@
                             title: 'SL',
                             orderable: false,
                             searchable: false,
+                        },
+                        {
+                            data: 'exam_date',
+                            name: 'exam_date',
+                            title: 'exam date',
                         },
                         {
                             data: 'serial_no',

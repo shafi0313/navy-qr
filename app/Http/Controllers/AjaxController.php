@@ -46,7 +46,7 @@ class AjaxController extends Controller
                         ->where('exam_date', 'like', "%{$request->q}%")
                         ->groupBy('exam_date')
                         ->orderBy('exam_date', 'desc')
-                        ->limit(20)
+                        // ->limit(20)
                         ->get()
                         ->map(function ($data) {
                             return [

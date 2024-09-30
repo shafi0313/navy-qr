@@ -12,60 +12,15 @@ class ApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        // $query = Application::query();
-
-        // return $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-        // ->select(
-        //     'applications.id',
-        //     'applications.candidate_designation',
-        //     'applications.serial_no',
-        //     'applications.eligible_district',
-        //     'applications.name',
-        //     'applications.father_name',
-        //     'applications.mother_name',
-        //     'applications.current_phone',
-        //     'applications.is_medical_pass',
-        //     'applications.is_final_pass',
-        //     // 'applications.',
-        //     'exam_marks.bangla',
-        //     'exam_marks.english',
-        //     'exam_marks.math',
-        //     'exam_marks.science',
-        //     'exam_marks.general_knowledge',
-        // )
-        // ->selectRaw(
-        //     '(exam_marks.bangla +
-        //     exam_marks.english +
-        //     exam_marks.math +
-        //     exam_marks.science +
-        //     exam_marks.general_knowledge) as total_marks'
-        // )
-        // ->orderBy('total_marks', 'desc')->get();
-
-
         if ($request->ajax()) {
-            // return($request->district);
             $roleId = user()->role_id;
             $query = Application::query();
-
             switch ($roleId) {
                 case 1: // Admin
                     $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            'applications.id',
-                            'applications.candidate_designation',
-                            'applications.serial_no',
-                            'applications.eligible_district',
-                            'applications.name',
-                            'applications.is_medical_pass',
-                            'applications.is_final_pass',
-                            'applications.remark',
-
-                            'exam_marks.bangla',
-                            'exam_marks.english',
-                            'exam_marks.math',
-                            'exam_marks.science',
-                            'exam_marks.general_knowledge',
+                            $this->applicationColumns(),
+                            $this->examColumns(),
                         )
                         ->selectRaw(
                             '(exam_marks.bangla +
@@ -85,19 +40,8 @@ class ApplicationController extends Controller
                 case 4: // Written
                     $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            'applications.id',
-                            'applications.candidate_designation',
-                            'applications.serial_no',
-                            'applications.eligible_district',
-                            'applications.name',
-                            'applications.is_medical_pass',
-                            'applications.is_final_pass',
-                            // 'applications.',
-                            'exam_marks.bangla',
-                            'exam_marks.english',
-                            'exam_marks.math',
-                            'exam_marks.science',
-                            'exam_marks.general_knowledge',
+                            $this->applicationColumns(),
+                            $this->examColumns(),
                         )
                         ->selectRaw(
                             '(exam_marks.bangla +
@@ -119,19 +63,8 @@ class ApplicationController extends Controller
                         })
                         ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            'applications.id',
-                            'applications.candidate_designation',
-                            'applications.serial_no',
-                            'applications.eligible_district',
-                            'applications.name',
-                            'applications.is_medical_pass',
-                            'applications.is_final_pass',
-                            // 'applications.',
-                            'exam_marks.bangla',
-                            'exam_marks.english',
-                            'exam_marks.math',
-                            'exam_marks.science',
-                            'exam_marks.general_knowledge',
+                            $this->applicationColumns(),
+                            $this->examColumns(),
                         )
                         ->selectRaw(
                             '(exam_marks.bangla +
@@ -152,19 +85,8 @@ class ApplicationController extends Controller
                                 ->where('general_knowledge', '>=', 8);
                         })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            'applications.id',
-                            'applications.candidate_designation',
-                            'applications.serial_no',
-                            'applications.eligible_district',
-                            'applications.name',
-                            'applications.is_medical_pass',
-                            'applications.is_final_pass',
-                            // 'applications.',
-                            'exam_marks.bangla',
-                            'exam_marks.english',
-                            'exam_marks.math',
-                            'exam_marks.science',
-                            'exam_marks.general_knowledge',
+                            $this->applicationColumns(),
+                            $this->examColumns(),
                         )
                         ->selectRaw(
                             '(exam_marks.bangla +
@@ -243,21 +165,50 @@ class ApplicationController extends Controller
                 //     }
                 //     return $btn;
                 // })
-                // ->filter(function ($query) use ($request) {
-                //     if ($request->has('gender') && $request->gender != '') {
-                //         $query->where('gender', $request->gender);
-                //     }
-                //     if ($request->has('district') && $request->district != '') {
-                //         $query->where('applications.eligible_district', $request->district);
-                //     }
-                //     if ($search = $request->get('search')['value']) {
-                //         $query->search($search);
-                //     }
-                // })
+                ->filter(function ($query) use ($request) {
+                    // if ($request->has('gender') && $request->gender != '') {
+                    //     $query->where('gender', $request->gender);
+                    // }
+                    if ($request->filled('district')) {
+                        $query->where('applications.eligible_district', $request->district);
+                    }
+                    if ($request->filled('exam_date')) {
+                        $query->where('applications.exam_date', $request->exam_date);
+                    }
+                    if ($search = $request->get('search')['value']) {
+                        $query->search($search);
+                    }
+                })
                 ->rawColumns(['url', 'medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
 
         return view('admin.application.index');
+    }
+
+    protected function applicationColumns()
+    {
+        return [
+            'applications.id',
+            'applications.candidate_designation',
+            'applications.exam_date',
+            'applications.serial_no',
+            'applications.eligible_district',
+            'applications.name',
+            'applications.is_medical_pass',
+            'applications.is_final_pass',
+            'applications.remark',
+        ];
+    }
+
+    protected function examColumns()
+    {
+        return [
+            'exam_marks.bangla',
+            'exam_marks.english',
+            'exam_marks.math',
+            'exam_marks.science',
+            'exam_marks.general_knowledge',
+        ];
     }
 }
