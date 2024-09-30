@@ -57,9 +57,6 @@ class ApplicationController extends Controller
                             'applications.serial_no',
                             'applications.eligible_district',
                             'applications.name',
-                            'applications.father_name',
-                            'applications.mother_name',
-                            'applications.current_phone',
                             'applications.is_medical_pass',
                             'applications.is_final_pass',
                             'applications.remark',
@@ -80,10 +77,10 @@ class ApplicationController extends Controller
                         ->orderBy('total_marks', 'desc');
                     break;
                 case 2: // Normal User
-                    $query->select('id', 'candidate_designation', 'serial_no', 'name');
+                    $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district');
                     break;
                 case 3: // Primary Medical
-                    $query->select('id', 'candidate_designation', 'serial_no', 'name','is_medical_pass');
+                    $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass');
                     break;
                 case 4: // Written
                     $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
@@ -93,9 +90,6 @@ class ApplicationController extends Controller
                             'applications.serial_no',
                             'applications.eligible_district',
                             'applications.name',
-                            'applications.father_name',
-                            'applications.mother_name',
-                            'applications.current_phone',
                             'applications.is_medical_pass',
                             'applications.is_final_pass',
                             // 'applications.',
@@ -130,9 +124,6 @@ class ApplicationController extends Controller
                             'applications.serial_no',
                             'applications.eligible_district',
                             'applications.name',
-                            'applications.father_name',
-                            'applications.mother_name',
-                            'applications.current_phone',
                             'applications.is_medical_pass',
                             'applications.is_final_pass',
                             // 'applications.',
@@ -166,9 +157,6 @@ class ApplicationController extends Controller
                             'applications.serial_no',
                             'applications.eligible_district',
                             'applications.name',
-                            'applications.father_name',
-                            'applications.mother_name',
-                            'applications.current_phone',
                             'applications.is_medical_pass',
                             'applications.is_final_pass',
                             // 'applications.',
@@ -208,16 +196,24 @@ class ApplicationController extends Controller
                     }
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
-                    return $row->total_marks;
-                    if (in_array($roleId, [1, 4, 5, 6])) {
-                        $written = $row;
-                        $totalMark = $written->bangla + $written->english + $written->math + $written->science + $written->general_knowledge;
-                        if ($written->bangla >= 8 && $written->english >= 8 && $written->math >= 8 && $written->science >= 8 && $written->general_knowledge >= 8) {
-                            return '<span class="badge bg-success">Pass</span>' . ' ' . ($row->total_marks ? $row->total_marks : '');
-                        } elseif ($totalMark > 2 && ($written->bangla <= 7 || $written->english <= 7 || $written->math <= 7 || $written->science <= 7 || $written->general_knowledge <= 7)) {
-                            return '<span class="badge bg-danger">Fail</span>';
+                    if (in_array($roleId, [1, 4, 5, 6]) && ($row->bangla || $row->english || $row->math || $row->science || $row->general_knowledge)) {
+                        $row->bangla + $row->english + $row->math + $row->science + $row->general_knowledge;
+                        $failCount = 0;
+                        // Check each subject mark and count fails
+                        if ($row->bangla < 8) $failCount++;
+                        if ($row->english < 8) $failCount++;
+                        if ($row->math < 8) $failCount++;
+                        if ($row->science < 8) $failCount++;
+                        if ($row->general_knowledge < 8) $failCount++;
+                        // If no subject failed and all marks are >= 8, it's a pass
+                        if ($failCount == 0) {
+                            return '<span class="badge bg-success">Pass</span>';
+                        }
+                        // If there are any fails, it's a fail
+                        elseif ($failCount > 0) {
+                            return '<span class="badge bg-danger">Failed</span> (' . $failCount . ' subject(s) failed)';
                         } else {
-                            return '<span class="badge bg-warning">Pending</span>';
+                            return '';
                         }
                     } else {
                         return '';

@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Application';
-    $folder = 'application-url';
+    $pageTitle = 'Exam Mark';
+    $folder = 'exam-mark';
     $route = $folder . 's';
 @endphp
 @section('title', $pageTitle)
@@ -13,10 +13,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of {{ $pageTitle }}s</h4>
+                        <h4 class="card-title">List of Applicants</h4>
                     </div>
                     <div class="col-md-12 mb-2">
-                        <div class="row justify-content-center filter align-items-end">
+                        {{-- <div class="row justify-content-center filter align-items-end">
                             <div class="col">
                                 <div class="form-group my-3">
                                     <label class="form-label" for="gender">@lang('Gender')</label>
@@ -32,7 +32,7 @@
                                     <a href="" class="btn btn-danger">Clear</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
@@ -73,48 +73,56 @@
                             searchable: false,
                         },
                         {
-                            data: 'application.roll',
-                            name: 'application.roll',
-                            title: 'roll',
+                            data: 'serial_no',
+                            name: 'serial_no',
+                            title: 'Roll no',
                         },
                         {
-                            data: 'application.name',
-                            name: 'application.name',
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'des',
+                        },
+                        {
+                            data: 'name',
+                            name: 'name',
                             title: 'Name',
                         },
                         {
-                            data: 'url',
-                            name: 'url',
-                            title: 'url',
+                            data: 'eligible_district',
+                            name: 'eligible_district',
+                            title: 'district',
                         },
                         {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'medical',
+                            data: 'bangla',
+                            name: 'bangla',
+                            title: 'Bangla',
+                        },
+                        {
+                            data: 'english',
+                            name: 'english',
+                            title: 'english',
+                        },
+                        {
+                            data: 'math',
+                            name: 'math',
+                            title: 'math',
+                        },
+                        {
+                            data: 'science',
+                            name: 'science',
+                            title: 'science',
+                        },
+                        {
+                            data: 'general_knowledge',
+                            name: 'general_knowledge',
+                            title: 'general knowledge',
                         },
                         {
                             data: 'written',
                             name: 'written',
-                            title: 'written',
+                            title: 'Remarks',
+                            className: 'text-center',
                         },
-                        {
-                            data: 'final',
-                            name: 'final',
-                            title: 'final',
-                        },
-                        {
-                            data: 'viva',
-                            name: 'viva',
-                            title: 'viva',
-                        },
-                        // {
-                        //     data: 'action',
-                        //     name: 'action',
-                        //     title: 'Action',
-                        //     width: '60px',
-                        //     orderable: false,
-                        //     searchable: false
-                        // },
                     ],
                     scroller: {
                         loadingIndicator: true

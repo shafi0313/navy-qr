@@ -15,7 +15,7 @@ class FinalMedicalController extends Controller
             $roleId = user()->role_id;
             $applications = Application::with([
                 'examMark:id'
-            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_final_pass');
+            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'is_final_pass');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -26,6 +26,13 @@ class FinalMedicalController extends Controller
                     return $row->name;
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
+                    if (in_array($roleId, [1, 3, 5])) {
+                        return result($row->is_medical_pass );
+                    } else {
+                        return '';
+                    }
+                })
+                ->addColumn('final_medical', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 3])) {
                         return result($row->is_final_pass);
                     } else {
@@ -34,8 +41,8 @@ class FinalMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-2' onclick='fMPass(" . $row->id . ")'>Pass</button>";
-                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Fail</button>";
+                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='fMPass(" . $row->id . ")'>Fit</button>";
+                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Unfit</button>";
                     return $btn;
                 })
                 // ->filter(function ($query) use ($request) {
@@ -46,7 +53,7 @@ class FinalMedicalController extends Controller
                 //         $query->search($search);
                 //     }
                 // })
-                ->rawColumns(['medical', 'action'])
+                ->rawColumns(['medical', 'final_medical', 'action'])
                 ->make(true);
         }
         return view('admin.final-medical.index');

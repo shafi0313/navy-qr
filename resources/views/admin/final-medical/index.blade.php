@@ -15,7 +15,7 @@
                     <div class="d-flex justify-content-between mb-2">
                         <h4 class="card-title">List of Applicants</h4>
                     </div>
-                    <div class="col-md-12 mb-2">
+                    {{-- <div class="col-md-12 mb-2">
                         <div class="row justify-content-center filter align-items-end">
                             <div class="col">
                                 <div class="form-group my-3">
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
                         <tbody></tbody>
@@ -73,14 +73,14 @@
                             searchable: false,
                         },
                         {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'des.',
-                        },
-                        {
                             data: 'serial_no',
                             name: 'serial_no',
-                            title: 'serial no',
+                            title: 'Roll no',
+                        },
+                        {
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'des',
                         },
                         {
                             data: 'name',
@@ -92,6 +92,12 @@
                             name: 'eligible_district',
                             title: 'district',
                         },
+                        // {
+                        //     data: 'medical',
+                        //     name: 'medical',
+                        //     title: 'P. medical',
+                        //     className: 'text-center',
+                        // },
                         {
                             data: 'action',
                             name: 'action',
@@ -99,9 +105,9 @@
                             className: 'text-center',
                         },
                         {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'F. medical',
+                            data: 'final_medical',
+                            name: 'final_medical',
+                            title: 'Remarks',
                             className: 'text-center',
                         },
                     ],
