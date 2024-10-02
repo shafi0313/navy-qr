@@ -74,6 +74,7 @@
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
                         data: function(d) {
+                            console.log($('.exam_date').val());
                             // Use $.extend to combine the original data (d) with custom parameters
                             return $.extend(d, {
                                 district: $('.district').val(),

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Application;
 use Illuminate\Http\Request;
-use App\Models\ApplicationUrl;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -104,11 +103,11 @@ class ApplicationController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('serial_no', function ($row) {
-                    return $row->serial_no;
+                ->addColumn('exam_date', function ($row){
+                    return bdDate($row->exam_date);
                 })
-                ->addColumn('name', function ($row) {
-                    return $row->name;
+                ->addColumn('eligible_district', function ($row){
+                    return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 3, 4, 5, 6])) {

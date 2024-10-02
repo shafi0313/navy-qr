@@ -50,8 +50,8 @@ class AjaxController extends Controller
                         ->get()
                         ->map(function ($data) {
                             return [
-                                'id' => $data->id, // Using the first (min) id for each district
-                                'text' => $data->exam_date,
+                                'id' => $data->exam_date, // Using the first (min) id for each district
+                                'text' => bdDate($data->exam_date),
                             ];
                         })
                         ->toArray();
