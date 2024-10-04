@@ -37,22 +37,6 @@
 
     <!-- Sidebar -left -->
     <div class="h-100" id="leftside-menu-container" data-simplebar>
-        <!-- Leftbar User -->
-        <div class="leftbar-user p-3 text-white">
-            <a href="{{ route('admin.my-profiles.index') }}" class="d-flex align-items-center text-reset">
-                <div class="flex-shrink-0">
-                    <img src="{{ profileImg() }}" alt="user-image" height="42" class="rounded-circle shadow">
-                </div>
-                <div class="flex-grow-1 ms-2">
-                    <span class="fw-semibold fs-15 d-block">{{ user()->name }}</span>
-                    {{-- <span class="fs-13">Founder</span> --}}
-                </div>
-                <div class="ms-auto">
-                    <i class="ri-arrow-right-s-fill fs-20"></i>
-                </div>
-            </a>
-        </div>
-
         <!--- Sidemenu -->
         <ul class="side-nav">
             <li class="side-nav-title mt-1"> Main</li>
