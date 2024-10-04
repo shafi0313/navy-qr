@@ -15,7 +15,9 @@
                     <div class="d-flex justify-content-between mb-2">
                         <h4 class="card-title">{{ $pageTitle }}</h4>
                     </div>
+                    {{-- Filter HTML --}}
                     @include('admin.layouts.includes.applicant-get-filter-html')
+                    {{-- /Filter HTML --}}
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
                         <tbody></tbody>
@@ -42,8 +44,6 @@
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
                         data: function(d) {
-                            console.log($('.exam_date').val());
-                            // Use $.extend to combine the original data (d) with custom parameters
                             return $.extend(d, {
                                 district: $('.district').val(),
                                 exam_date: $('.exam_date').val()
@@ -140,6 +140,8 @@
                 });
             });
         </script>
+        {{-- Filter Get JS --}}
         @include('admin.layouts.includes.applicant-get-filter-js')
+        {{-- /Filter Get JS --}}
     @endpush
 @endsection

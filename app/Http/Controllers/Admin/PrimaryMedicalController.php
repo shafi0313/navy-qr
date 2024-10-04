@@ -15,15 +15,15 @@ class PrimaryMedicalController extends Controller
             $roleId = user()->role_id;
             $applications = Application::with([
                 'examMark:id'
-            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass');
+            ])->select('id', 'candidate_designation', 'exam_date', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'remark');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('serial_no', function ($row) {
-                    return $row->serial_no;
+                ->addColumn('exam_date', function ($row){
+                    return bdDate($row->exam_date);
                 })
-                ->addColumn('name', function ($row) {
-                    return $row->name;
+                ->addColumn('eligible_district', function ($row){
+                    return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 5])) {
@@ -38,14 +38,17 @@ class PrimaryMedicalController extends Controller
                     $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
                     return $btn;
                 })
-                // ->filter(function ($query) use ($request) {
-                //     if ($request->has('gender') && $request->gender != '') {
-                //         $query->where('gender', $request->gender);
-                //     }
-                //     if ($search = $request->get('search')['value']) {
-                //         $query->search($search);
-                //     }
-                // })
+                ->filter(function ($query) use ($request) {
+                    if ($request->filled('district')) {
+                        $query->where('applications.eligible_district', $request->district);
+                    }
+                    if ($request->filled('exam_date')) {
+                        $query->where('applications.exam_date', $request->exam_date);
+                    }
+                    if ($search = $request->get('search')['value']) {
+                        $query->search($search);
+                    }
+                })
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
