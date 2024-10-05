@@ -12,6 +12,13 @@
     </button>
 @endif
 
+@if ($type == 'ajax-add-by-id')
+    <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
+        class='text-primary _btn' title="@lang('Add')">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+@endif
+
 @if ($type == 'edit')
     <a href="{{ route($route . '.edit', $row->id) }}" class='text-primary _btn' title="@lang('Edit')">
         <i class='fa fa-edit'></i>

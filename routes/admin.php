@@ -44,6 +44,7 @@ Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 Route::resource('/applications', ApplicationController::class)->except(['show']);
 Route::resource('/exam-marks', ExamMarkController::class)->only(['index','create','store']);
+Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 'modalStore'])->name('exam_marks.modal_store');
 Route::resource('/viva-marks', VivaMarkController::class)->only(['create','store']);
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');

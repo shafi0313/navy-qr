@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App;
 use App\Models\ExamMark;
 use App\Models\Application;
 use Illuminate\Http\Request;
@@ -76,14 +77,24 @@ class ExamMarkController extends Controller
                         return '';
                     }
                 })
-                // ->filter(function ($query) use ($request) {
-                //     if ($request->has('gender') && $request->gender != '') {
-                //         $query->where('gender', $request->gender);
-                //     }
-                //     if ($search = $request->get('search')['value']) {
-                //         $query->search($search);
-                //     }
-                // })
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                        // $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
+                        $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
+
+                    return $btn;
+                })
+                ->filter(function ($query) use ($request) {
+                    if ($request->filled('district')) {
+                        $query->where('applications.eligible_district', $request->district);
+                    }
+                    if ($request->filled('exam_date')) {
+                        $query->where('applications.exam_date', $request->exam_date);
+                    }
+                    if ($search = $request->get('search')['value']) {
+                        $query->search($search);
+                    }
+                })
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
@@ -119,6 +130,16 @@ class ExamMarkController extends Controller
         }
     }
 
+    public function modalStore(Request $request, $applicantId)
+    {
+        if ($request->ajax()) {
+            $applicant = Application::select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
+            $modal = view('admin.exam-mark.add')->with(['applicant' => $applicant])->render();
+            return response()->json(['modal' => $modal], 200);
+        }
+        return abort(500);
+    }
+
     /**
      * Display the specified resource.
      */
@@ -130,10 +151,15 @@ class ExamMarkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ExamMark $examMark)
+    public function edit(Request $request, ExamMark $examMark)
     {
-        //
+        if ($request->ajax()) {
+            $modal = view('admin.exam-mark.edit')->with(['exa$examMark' => $examMark])->render();
+            return response()->json(['modal' => $modal], 200);
+        }
+        return abort(500);
     }
+
 
     /**
      * Update the specified resource in storage.
