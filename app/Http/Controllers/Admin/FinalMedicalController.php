@@ -45,14 +45,17 @@ class FinalMedicalController extends Controller
                     $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Unfit</button>";
                     return $btn;
                 })
-                // ->filter(function ($query) use ($request) {
-                //     if ($request->has('gender') && $request->gender != '') {
-                //         $query->where('gender', $request->gender);
-                //     }
-                //     if ($search = $request->get('search')['value']) {
-                //         $query->search($search);
-                //     }
-                // })
+                ->filter(function ($query) use ($request) {
+                    if ($request->filled('district')) {
+                        $query->where('applications.eligible_district', $request->district);
+                    }
+                    if ($request->filled('exam_date')) {
+                        $query->where('applications.exam_date', $request->exam_date);
+                    }
+                    if ($search = $request->get('search')['value']) {
+                        $query->search($search);
+                    }
+                })
                 ->rawColumns(['medical', 'final_medical', 'action'])
                 ->make(true);
         }

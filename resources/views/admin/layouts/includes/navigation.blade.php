@@ -95,7 +95,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{ route('admin.viva-marks.create') }}" class="side-nav-link">
+                <a href="{{ route('admin.viva-marks.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Final Viva</span>
                 </a>

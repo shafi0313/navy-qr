@@ -73,19 +73,29 @@
                             searchable: false,
                         },
                         {
-                            data: 'application.roll',
-                            name: 'application.roll',
-                            title: 'roll',
+                            data: 'exam_date',
+                            name: 'exam_date',
+                            title: 'exam date',
                         },
                         {
-                            data: 'application.name',
-                            name: 'application.name',
+                            data: 'serial_no',
+                            name: 'serial_no',
+                            title: 'Roll no',
+                        },
+                        {
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'Des',
+                        },
+                        {
+                            data: 'name',
+                            name: 'name',
                             title: 'Name',
                         },
                         {
-                            data: 'url',
-                            name: 'url',
-                            title: 'url',
+                            data: 'eligible_district',
+                            name: 'eligible_district',
+                            title: 'District',
                         },
                         {
                             data: 'medical',
