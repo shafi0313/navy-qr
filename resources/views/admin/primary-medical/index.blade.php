@@ -89,8 +89,8 @@
                             className: 'text-center',
                         },
                         {
-                            data: 'remark',
-                            name: 'remark',
+                            data: 'medical',
+                            name: 'medical',
                             title: 'Remarks',
                             className: 'text-center',
                         },
