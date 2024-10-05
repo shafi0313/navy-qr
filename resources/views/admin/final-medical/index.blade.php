@@ -73,6 +73,11 @@
                             searchable: false,
                         },
                         {
+                            data: 'exam_date',
+                            name: 'exam_date',
+                            title: 'exam date',
+                        },
+                        {
                             data: 'serial_no',
                             name: 'serial_no',
                             title: 'Roll no',
@@ -80,7 +85,7 @@
                         {
                             data: 'candidate_designation',
                             name: 'candidate_designation',
-                            title: 'des',
+                            title: 'Des',
                         },
                         {
                             data: 'name',
@@ -90,7 +95,7 @@
                         {
                             data: 'eligible_district',
                             name: 'eligible_district',
-                            title: 'district',
+                            title: 'District',
                         },
                         // {
                         //     data: 'medical',

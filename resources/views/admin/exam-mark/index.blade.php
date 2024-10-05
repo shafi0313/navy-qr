@@ -109,6 +109,11 @@
                             searchable: false,
                         },
                         {
+                            data: 'exam_date',
+                            name: 'exam_date',
+                            title: 'Exam Date',
+                        },
+                        {
                             data: 'serial_no',
                             name: 'serial_no',
                             title: 'Roll no',

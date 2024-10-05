@@ -6,6 +6,7 @@ use App;
 use App\Models\ExamMark;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreExamMarkRequest;
@@ -13,35 +14,17 @@ use App\Http\Requests\UpdateExamMarkRequest;
 
 class ExamMarkController extends Controller
 {
+    use ApplicationTrait;
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $applications = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                 ->select(
-                    'applications.id',
-                    'applications.candidate_designation',
-                    'applications.serial_no',
-                    'applications.eligible_district',
-                    'applications.name',
-                    'applications.father_name',
-                    'applications.mother_name',
-                    'applications.current_phone',
-                    'applications.is_medical_pass',
-                    'applications.is_final_pass',
-                    // 'applications.',
-                    'exam_marks.bangla',
-                    'exam_marks.english',
-                    'exam_marks.math',
-                    'exam_marks.science',
-                    'exam_marks.general_knowledge',
+                    array_merge($this->applicationColumns(), $this->examColumns())
                 )
                 ->selectRaw(
-                    '(exam_marks.bangla +
-                exam_marks.english +
-                exam_marks.math +
-                exam_marks.science +
-                exam_marks.general_knowledge) as total_marks'
+                    $this->examSumColumns()
                 )
                 ->where('applications.is_medical_pass', 1)
                 ->orderBy('total_marks', 'desc')
@@ -49,11 +32,11 @@ class ExamMarkController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('serial_no', function ($row) {
-                    return $row->serial_no;
+                ->addColumn('exam_date', function ($row) {
+                    return bdDate($row->exam_date);
                 })
-                ->addColumn('name', function ($row) {
-                    return $row->name;
+                ->addColumn('eligible_district', function ($row) {
+                    return ucfirst($row->eligible_district);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 4, 5, 6]) && ($row->bangla || $row->english || $row->math || $row->science || $row->general_knowledge)) {

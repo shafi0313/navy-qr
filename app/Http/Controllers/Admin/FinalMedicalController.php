@@ -19,11 +19,11 @@ class FinalMedicalController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('serial_no', function ($row) {
-                    return $row->serial_no;
+                ->addColumn('exam_date', function ($row) {
+                    return bdDate($row->exam_date);
                 })
-                ->addColumn('name', function ($row) {
-                    return $row->name;
+                ->addColumn('eligible_district', function ($row) {
+                    return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 3, 5])) {

@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
 {
+    use ApplicationTrait;
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -18,15 +21,10 @@ class ApplicationController extends Controller
                 case 1: // Admin
                     $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            $this->applicationColumns(),
-                            $this->examColumns(),
+                            array_merge($this->applicationColumns(), $this->examColumns())
                         )
                         ->selectRaw(
-                            '(exam_marks.bangla +
-                            exam_marks.english +
-                            exam_marks.math +
-                            exam_marks.science +
-                            exam_marks.general_knowledge) as total_marks'
+                            $this->examSumColumns()
                         )
                         ->orderBy('total_marks', 'desc');
                     break;
@@ -39,15 +37,10 @@ class ApplicationController extends Controller
                 case 4: // Written
                     $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            $this->applicationColumns(),
-                            $this->examColumns(),
+                            array_merge($this->applicationColumns(), $this->examColumns())
                         )
                         ->selectRaw(
-                            '(exam_marks.bangla +
-                            exam_marks.english +
-                            exam_marks.math +
-                            exam_marks.science +
-                            exam_marks.general_knowledge) as total_marks'
+                            $this->examSumColumns()
                         )
                         ->orderBy('total_marks', 'desc');
                     break;
@@ -62,15 +55,10 @@ class ApplicationController extends Controller
                         })
                         ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            $this->applicationColumns(),
-                            $this->examColumns(),
+                            array_merge($this->applicationColumns(), $this->examColumns())
                         )
                         ->selectRaw(
-                            '(exam_marks.bangla +
-                            exam_marks.english +
-                            exam_marks.math +
-                            exam_marks.science +
-                            exam_marks.general_knowledge) as total_marks'
+                            $this->examSumColumns()
                         )
                         ->orderBy('total_marks', 'desc');
                     break;
@@ -84,16 +72,10 @@ class ApplicationController extends Controller
                                 ->where('general_knowledge', '>=', 8);
                         })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
-                            $this->applicationColumns(),
-                            $this->examColumns(),
+                            array_merge($this->applicationColumns(), $this->examColumns())
                         )
                         ->selectRaw(
-                            '(exam_marks.bangla +
-                            exam_marks.english +
-                            exam_marks.math +
-                            exam_marks.science +
-                            exam_marks.general_knowledge) as total_marks,
-                            exam_marks.viva as total_viva'
+                            $this->examSumColumns()
                         )
                         ->orderBy('total_viva', 'desc')
                         ->orderBy('total_marks', 'desc');
@@ -103,10 +85,10 @@ class ApplicationController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('exam_date', function ($row){
+                ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
-                ->addColumn('eligible_district', function ($row){
+                ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
@@ -183,31 +165,5 @@ class ApplicationController extends Controller
         }
 
         return view('admin.application.index');
-    }
-
-    protected function applicationColumns()
-    {
-        return [
-            'applications.id',
-            'applications.candidate_designation',
-            'applications.exam_date',
-            'applications.serial_no',
-            'applications.eligible_district',
-            'applications.name',
-            'applications.is_medical_pass',
-            'applications.is_final_pass',
-            'applications.remark',
-        ];
-    }
-
-    protected function examColumns()
-    {
-        return [
-            'exam_marks.bangla',
-            'exam_marks.english',
-            'exam_marks.math',
-            'exam_marks.science',
-            'exam_marks.general_knowledge',
-        ];
     }
 }
