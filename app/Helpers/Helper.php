@@ -25,7 +25,6 @@ if (!function_exists('stringToDate')) {
 if (! function_exists('sqlDate')) {
     function sqlDate($date)
     {
-        // return $date;
         if ($date) {
             return Carbon::parse($date)->format('Y-m-d');
         } else {

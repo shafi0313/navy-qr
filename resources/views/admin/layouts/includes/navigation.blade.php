@@ -82,7 +82,7 @@
                 </a>
             </li>
             <li class="side-nav-item">
-                <a href="{{ route('admin.exam-marks.create') }}" class="side-nav-link">
+                <a href="{{ route('admin.exam-marks.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Written Exam </span>
                 </a>

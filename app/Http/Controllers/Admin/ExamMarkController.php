@@ -43,7 +43,9 @@ class ExamMarkController extends Controller
                 exam_marks.science +
                 exam_marks.general_knowledge) as total_marks'
                 )
-                ->orderBy('total_marks', 'desc');
+                ->where('applications.is_medical_pass', 1)
+                ->orderBy('total_marks', 'desc')
+                ->orderBy('serial_no', 'asc');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -79,8 +81,8 @@ class ExamMarkController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                        // $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
-                        $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
+                    // $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
+                    $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
 
                     return $btn;
                 })
@@ -116,16 +118,29 @@ class ExamMarkController extends Controller
         $data = $request->validated();
         $check = Application::select('id', 'serial_no', 'name', 'is_medical_pass')->whereId($request->application_id)->first();
 
+        if (!$check) {
+            return response()->json(['message' => 'Application not found'], 404);
+        }
+
         if ($check->is_medical_pass != 1) {
             return response()->json(['message' => 'Please update primary medical first'], 404);
         }
 
+        // Assign the creator
         $data['created_by'] = user()->id;
 
+        // Attempt to create a new ExamMark entry
         try {
-            ExamMark::updateOrCreate(['id' => $request->application_id], $data);
-            return response()->json(['message' => 'The information has been inserted'], 200);
+            // If an entry with the given 'id' does not exist, a new one will be created
+            $examMark = ExamMark::updateOrCreate(
+                ['application_id' => $request->application_id], // Search criteria
+                $data // Data to update or create
+            );
+
+            return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);
         } catch (\Exception $e) {
+            \Log::error('UpdateOrCreate Error: ' . $e->getMessage());
+
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
     }
@@ -133,7 +148,7 @@ class ExamMarkController extends Controller
     public function modalStore(Request $request, $applicantId)
     {
         if ($request->ajax()) {
-            $applicant = Application::select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
+            $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
             $modal = view('admin.exam-mark.add')->with(['applicant' => $applicant])->render();
             return response()->json(['modal' => $modal], 200);
         }

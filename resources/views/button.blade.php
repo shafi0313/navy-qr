@@ -1,10 +1,3 @@
-{{-- <button href="javascript: void(0);" class="fs-18 px-1">
-    <i class="fa-solid fa-pen-to-square text-primary"></i>
-</button>
-<a href="javascript: void(0);" class="fs-18 px-1">
-    <i class="fa-solid fa-trash text-danger"></i>
-</a> --}}
-
 @if ($type == 'ajax-edit')
     <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
         class='text-primary _btn' title="@lang('Edit')">
@@ -14,8 +7,8 @@
 
 @if ($type == 'ajax-add-by-id')
     <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
-        class='text-primary _btn' title="@lang('Add')">
-        <i class="fa-solid fa-plus"></i>
+        class='text-primary _btn' title="@lang('Add or Edit')">
+        <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-pen-to-square"></i>
     </button>
 @endif
 
@@ -56,19 +49,6 @@
     <a href="{{ route('panel.user.activitlog', $row->id) }}" class="btn  btn-sm btn-warning mb-2" target="_blank"
         title="@lang('activity.log')" title="@lang('activity.log')"><i class="fa btn-white fa-history"></i></a>
 @endif
-
-{{-- @if ($type == 'status')
-    <span data-route="{{$route}}"
-        style="font-size: 36px;line-height: 1;vertical-align: middle;cursor: pointer;" data-bs-placement="top" data-bs-toggle="tooltip"  data-bs-original-title="@lang('Status')"
-        data-value="{{$row->status}}"
-        onclick="changeStatus(this)" title="@lang('Status')">
-        @if ($row->status == 1)
-        <i class="fa fa-toggle-on text-success" title="Published"></i>
-        @else
-        <i class="fa fa-toggle-off text-danger" title="Unpublished"></i>
-        @endif
-    </span>
-@endif --}}
 
 @if ($type == 'is_active')
     <span data-route="{{ $route }}"
