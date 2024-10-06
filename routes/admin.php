@@ -47,9 +47,6 @@ Route::resource('/applications', ApplicationController::class)->except(['show'])
 Route::resource('/exam-marks', ExamMarkController::class)->only(['index','store']);
 Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 'modalStore'])->name('exam_marks.modal_store');
 
-Route::resource('/viva-marks', VivaMarkController::class)->only(['index','store']);
-Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 'modalStore'])->name('viva_marks.modal_store');
-
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
 Route::patch('primary-medicals/pass', [PrimaryMedicalController::class, 'pass'])->name('primary_medicals.pass');
 Route::patch('primary-medicals/fail', [PrimaryMedicalController::class, 'fail'])->name('primary_medicals.fail');
@@ -57,3 +54,6 @@ Route::patch('primary-medicals/fail', [PrimaryMedicalController::class, 'fail'])
 Route::get('final-medicals', [FinalMedicalController::class, 'index'])->name('final_medicals.index');
 Route::patch('final-medicals/pass', [FinalMedicalController::class, 'pass'])->name('final_medicals.pass');
 Route::patch('final-medicals/fail', [FinalMedicalController::class, 'fail'])->name('final_medicals.fail');
+
+Route::resource('/viva-marks', VivaMarkController::class)->only(['index','store']);
+Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 'modalStore'])->name('viva_marks.modal_store');

@@ -17,7 +17,7 @@ class VivaMarkController extends Controller
         if ($request->ajax()) {
             $roleId = user()->role_id;
                 $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'])
-                ->whereHas('application.examMark', function ($query) {
+                ->whereHas('examMark', function ($query) {
                     $query->where('bangla', '>=', 8)
                         ->where('english', '>=', 8)
                         ->where('math', '>=', 8)
@@ -25,12 +25,12 @@ class VivaMarkController extends Controller
                         ->where('general_knowledge', '>=', 8);
                 })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                 ->select(
-                    $this->applicationColumns(),
-                    $this->examColumns(),
+                    array_merge($this->applicationColumns(), $this->examColumns())
                 )
                 ->selectRaw(
                     $this->examSumColumns()
                 )
+                ->where('is_final_pass', 1)
                 ->orderBy('total_viva', 'desc')
                 ->orderBy('total_marks', 'desc');
 
@@ -66,10 +66,17 @@ class VivaMarkController extends Controller
                         return '';
                     }
                 })
+                ->addColumn('viva', function ($row) {
+                    if($row->total_viva){
+                        return $row->total_viva;
+                    }else{
+                        return '';
+                    }
+                })
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     // $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
-                    $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
+                    $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.viva_marks.modal_store', $row->id), 'row' => $row]);
 
                     return $btn;
                 })
@@ -101,8 +108,7 @@ class VivaMarkController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'application_id' => ['required', 'exists:applications,id'],
-            'viva'           => ['required', 'numeric'],
+            'viva' => ['required', 'numeric'],
         ]);
         $application = Application::select('id', 'serial_no', 'name', 'is_final_pass')->whereId($request->application_id)->first();
 
@@ -111,10 +117,20 @@ class VivaMarkController extends Controller
         }
 
         try {
-            $application->update($data);
+            $application->examMark->update($data);
             return response()->json(['message' => 'The information has been inserted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
+    }
+
+    public function modalStore(Request $request, $applicantId)
+    {
+        if ($request->ajax()) {
+            $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
+            $modal = view('admin.viva-mark.add')->with(['applicant' => $applicant])->render();
+            return response()->json(['modal' => $modal], 200);
+        }
+        return abort(500);
     }
 }

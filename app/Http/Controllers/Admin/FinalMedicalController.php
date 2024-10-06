@@ -15,7 +15,14 @@ class FinalMedicalController extends Controller
             $roleId = user()->role_id;
             $applications = Application::with([
                 'examMark:id'
-            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'is_final_pass');
+            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'is_final_pass')
+            ->whereHas('examMark', function ($query) {
+                $query->where('bangla', '>=', 8)
+                    ->where('english', '>=', 8)
+                    ->where('math', '>=', 8)
+                    ->where('science', '>=', 8)
+                    ->where('general_knowledge', '>=', 8);
+            });
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()

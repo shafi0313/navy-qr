@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Application';
-    $folder = 'application-url';
+    $pageTitle = 'Viva Mark';
+    $folder = 'viva-mark';
     $route = $folder . 's';
 @endphp
 @section('title', $pageTitle)
@@ -13,27 +13,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of {{ $pageTitle }}s</h4>
+                        <h4 class="card-title">List of Applicants</h4>
                     </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="row justify-content-center filter align-items-end">
-                            <div class="col">
-                                <div class="form-group my-3">
-                                    <label class="form-label" for="gender">@lang('Gender')</label>
-                                    <select name="gender" class="gender select_2 form-control w-100">
-                                        <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group my-3">
-                                    <a href="" class="btn btn-danger">Clear</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{-- Filter HTML --}}
+                    @include('admin.layouts.includes.applicant-get-filter-html')
+                    {{-- /Filter HTML --}}
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
                         <tbody></tbody>
@@ -97,34 +81,34 @@
                             name: 'eligible_district',
                             title: 'District',
                         },
-                        {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'medical',
-                        },
+                        // {
+                        //     data: 'medical',
+                        //     name: 'medical',
+                        //     title: 'medical',
+                        // },
                         {
                             data: 'written',
                             name: 'written',
                             title: 'written',
                         },
-                        {
-                            data: 'final',
-                            name: 'final',
-                            title: 'final',
-                        },
+                        // {
+                        //     data: 'final',
+                        //     name: 'final',
+                        //     title: 'final',
+                        // },
                         {
                             data: 'viva',
                             name: 'viva',
                             title: 'viva',
                         },
-                        // {
-                        //     data: 'action',
-                        //     name: 'action',
-                        //     title: 'Action',
-                        //     width: '60px',
-                        //     orderable: false,
-                        //     searchable: false
-                        // },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            title: 'Action',
+                            width: '60px',
+                            orderable: false,
+                            searchable: false
+                        },
                     ],
                     scroller: {
                         loadingIndicator: true
@@ -144,5 +128,8 @@
                 });
             });
         </script>
+        {{-- Filter Get JS --}}
+        @include('admin.layouts.includes.applicant-get-filter-js')
+        {{-- /Filter Get JS --}}
     @endpush
 @endsection
