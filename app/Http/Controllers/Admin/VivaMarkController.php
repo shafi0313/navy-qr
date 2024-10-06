@@ -54,7 +54,7 @@ class VivaMarkController extends Controller
                         if ($row->general_knowledge < 8) $failCount++;
                         // If no subject failed and all marks are >= 8, it's a pass
                         if ($failCount == 0) {
-                            return '<span class="badge bg-success">Pass</span>';
+                            return '<span class="badge bg-success">Pass</span>' . ' (' . $row->total_marks . ')';
                         }
                         // If there are any fails, it's a fail
                         elseif ($failCount > 0) {

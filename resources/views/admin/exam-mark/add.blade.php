@@ -10,7 +10,7 @@
                 @csrf
                 <input type="hidden" name="application_id" value="{{ $applicant->id }}">
                 <div class="modal-body">
-                    <div class="row gy-2">
+                    <div class="row gy-2 justify-content-center">
                         <div class="col-md-12 text-center">
                             <h5>{{ $applicant->candidate_designation }}</h5>
                             <h5>{{ $applicant->name }}</h5>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App;
 use App\Models\ExamMark;
 use App\Models\Application;
 use Illuminate\Http\Request;
@@ -42,17 +41,14 @@ class ExamMarkController extends Controller
                     if (in_array($roleId, [1, 4, 5, 6]) && ($row->bangla || $row->english || $row->math || $row->science || $row->general_knowledge)) {
                         $row->bangla + $row->english + $row->math + $row->science + $row->general_knowledge;
                         $failCount = 0;
-                        // Check each subject mark and count fails
                         if ($row->bangla < 8) $failCount++;
                         if ($row->english < 8) $failCount++;
                         if ($row->math < 8) $failCount++;
                         if ($row->science < 8) $failCount++;
                         if ($row->general_knowledge < 8) $failCount++;
-                        // If no subject failed and all marks are >= 8, it's a pass
                         if ($failCount == 0) {
                             return '<span class="badge bg-success">Pass</span>';
                         }
-                        // If there are any fails, it's a fail
                         elseif ($failCount > 0) {
                             return '<span class="badge bg-danger">Failed</span> (' . $failCount . ' subject(s) failed)';
                         } else {
@@ -64,9 +60,7 @@ class ExamMarkController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    // $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
                     $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
-
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -108,22 +102,14 @@ class ExamMarkController extends Controller
         if ($check->is_medical_pass != 1) {
             return response()->json(['message' => 'Please update primary medical first'], 404);
         }
-
-        // Assign the creator
         $data['created_by'] = user()->id;
-
-        // Attempt to create a new ExamMark entry
         try {
-            // If an entry with the given 'id' does not exist, a new one will be created
             $examMark = ExamMark::updateOrCreate(
-                ['application_id' => $request->application_id], // Search criteria
-                $data // Data to update or create
+                ['application_id' => $request->application_id],
+                $data
             );
-
             return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);
         } catch (\Exception $e) {
-            \Log::error('UpdateOrCreate Error: ' . $e->getMessage());
-
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
     }

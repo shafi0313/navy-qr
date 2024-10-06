@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Exam Mark';
+    $pageTitle = 'Written Exam Mark';
     $folder = 'exam-mark';
     $route = $folder . 's';
 @endphp
