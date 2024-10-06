@@ -8,7 +8,7 @@
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => ['', $pageTitle, 'Index']])
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12">
             <div class="card">
                 <form onsubmit="ajaxStoreModal(event, this, 'createModal')" action="{{ route('admin.' . $route . '.store') }}"
@@ -58,7 +58,7 @@
                 </form>
             </div> <!-- end card -->
         </div><!-- end col -->
-    </div><!-- end row -->
+    </div><!-- end row --> --}}
 
     <div class="row">
         <div class="col-12">
