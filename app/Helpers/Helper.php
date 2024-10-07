@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 
 if (!function_exists('bdDate')) {
     function bdDate($date)
@@ -294,38 +295,7 @@ if (!function_exists('openNav')) {
         return $rt ? ' show ' : '';
     }
 }
-if (!function_exists('userCan')) {
-    function userCan($permission)
-    {
-        if (auth()->check() && user()->can($permission)) {
-            return true;
-        }
-        return false;
-    }
-}
 
-if (!function_exists('roleName')) {
-    function roleName($roles)
-    {
-        $r = '';
-        foreach ($roles->where('name', '!=', 'client') as $role) {
-            $r .= '<span class="badge badge-info">' . ucfirst(explode('@uid', $role->name)[0]) . '</span>';
-        }
-        return $r;
-    }
-}
-if (!function_exists('trimRoleAdmin')) {
-    function trimRoleAdmin($roles)
-    {
-        return str_replace('-', ' ', $roles);
-    }
-}
-if (!function_exists('trimRole')) {
-    function trimRole($val)
-    {
-        return str_replace('-', ' ', explode('@uid', $val)[0]);
-    }
-}
 
 
 if (!function_exists('uniqueId')) {
@@ -349,131 +319,28 @@ if (!function_exists('user')) {
     }
 }
 
-if (! function_exists('slug')) {
-    function slug($text)
+
+if (!function_exists('sendOtpViaSms')) {
+    function sendOtpViaSms($mobileNumber, $otp)
     {
-        $array = [':', ',', '.', '!', '|', '।', 'ঃ', '{', '}', '[', ']', '(', ')', '৳', '%', '$', '#', '@', '*', '+', ';'];
-        $slug = strtolower(str_replace($array, '', trim($text)));
-        return str_replace(' ', '-', $slug);
-        return strtolower(preg_replace('/\s+/u', '-', trim($text)));
-    }
-}
+        $apiKey = '943faf062f3d7241';
+        $secretKey = 'dfd0b83b';
+        $senderId = env('REVE_SMS_SENDER_ID');
+        $message = "Your OTP code is $otp";
 
+        $response = Http::get('http://smpp.revesms.com:7788/sendtext', [
+            'apikey' => $apiKey,
+            'secretkey' => $secretKey,
+            'callerID' => $senderId,
+            'toUser' => $mobileNumber,
+            'messageContent' => $message,
+        ]);
 
-if (!function_exists('readableSize')) {
-    function readableSize($n)
-    {
-        // first strip any formatting;
-        $n = (0 + str_replace(",", "", $n));
-
-        // is this a number?
-        if (!is_numeric($n)) {
-            return $n;
+        // Check the response to make sure the message was sent successfully
+        if ($response->successful()) {
+            return true;
         }
-        // now filter it;
-        if ($n >= 1000000000000) {
-            return round(($n / 1000000000000), 1) . ' TB';
-        } elseif ($n >= 1000000000) {
-            return round(($n / 1000000000), 1) . ' GB';
-        } elseif ($n >= 1000000) {
-            return round(($n / 1000000), 1) . ' MB';
-        } elseif ($n >= 1000) {
-            return round(($n / 1000), 1) . ' KB';
-        }
-        return number_format($n);
-    }
-}
 
-if (!function_exists('niceFileSize')) {
-    function niceFileSize($bytes)
-    {
-        $result = '';
-        $bytes = floatval($bytes);
-        $arBytes = array(
-            0 => array(
-                "UNIT" => "TB",
-                "VALUE" => pow(1024, 4)
-            ),
-            1 => array(
-                "UNIT" => "GB",
-                "VALUE" => pow(1024, 3)
-            ),
-            2 => array(
-                "UNIT" => "MB",
-                "VALUE" => pow(1024, 2)
-            ),
-            3 => array(
-                "UNIT" => "KB",
-                "VALUE" => 1024
-            ),
-            4 => array(
-                "UNIT" => "B",
-                "VALUE" => 1
-            ),
-        );
-
-        foreach ($arBytes as $arItem) {
-            if ($bytes >= $arItem["VALUE"]) {
-                $result = $bytes / $arItem["VALUE"];
-                $result = strval(round($result, 2)) . " " . $arItem["UNIT"];
-                break;
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Converts a number to its roman presentation.
-     **/
-    if (!function_exists('numberToRoman')) {
-        function numberToRoman($num)
-        {
-            // Be sure to convert the given parameter into an integer
-            $n = intval($num);
-            $result = '';
-            // Declare a lookup array that we will use to traverse the number:
-            $lookup = array(
-                'M' => 1000,
-                'CM' => 900,
-                'D' => 500,
-                'CD' => 400,
-                'C' => 100,
-                'XC' => 90,
-                'L' => 50,
-                'XL' => 40,
-                'X' => 10,
-                'IX' => 9,
-                'V' => 5,
-                'IV' => 4,
-                'I' => 1
-            );
-            foreach ($lookup as $roman => $value) {
-                // Look for number of matches
-                $matches = intval($n / $value);
-                // Concatenate characters
-                $result .= str_repeat($roman, $matches);
-                // Substract that from the number
-                $n = $n % $value;
-            }
-            return $result;
-        }
-    };
-
-    if (!function_exists('numberNotation')) {
-        function numberNotation($number, $precision = 1)
-        {
-            $suffixes = ['', 'K', 'M', 'B', 'T'];
-            $suffixIndex = 0;
-            while ($number >= 900 && $suffixIndex < count($suffixes) - 1) {
-                $number /= 1000;
-                $suffixIndex++;
-            }
-            $formattedNumber = number_format($number, $precision);
-            if ($precision > 0) {
-                $formattedNumber = rtrim($formattedNumber, '0');
-                $formattedNumber = rtrim($formattedNumber, '.');
-            }
-            return $formattedNumber . $suffixes[$suffixIndex];
-        }
+        return false;
     }
 }

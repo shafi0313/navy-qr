@@ -40,7 +40,7 @@ class FortifyServiceProvider extends ServiceProvider
         // $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
@@ -82,15 +82,30 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function (Request $request) {
             $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
             $user = User::where($fieldType, $request->email)->first();
-            if ($user && $user->is_active == 0) {
-                return false;
 
+            if ($user && $user->is_active == 0) {
                 return redirect()->route('login')->withErrors('Account is inactive');
             }
 
             if ($user && Hash::check($request->password, $user->password)) {
-                return $user;
+                // Generate a random OTP
+                $otp = rand(1000, 9999);
+                $user->otp = $otp;
+                $user->otp_expires_at = now()->addMinutes(5);
+                $user->save();
+
+                // Send OTP via SMS using SmsHelper
+                $isSent = sendOtpViaSms($user->phone_number, $otp);
+                if (!$isSent) {
+                    return redirect()->route('login')->withErrors('Failed to send OTP');
+                }
+
+                // Store the login session and redirect to OTP input form
+                session(['login.id' => $user->id]);
+                return redirect()->route('two-factor.login');
             }
+
+            return false;
         });
     }
 }
