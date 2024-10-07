@@ -315,7 +315,7 @@ if (!function_exists('uniqueId')) {
 if (!function_exists('user')) {
     function user()
     {
-        return auth()->user();
+        return Auth::user();
     }
 }
 
