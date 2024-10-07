@@ -36,10 +36,12 @@ if (! function_exists('sqlDate')) {
 if (! function_exists('result')) {
     function result($data)
     {
-        if ($data === 1) {
-            return '<span class="btn btn-success btn-sm">Fit</span>';
-        } elseif ($data === 0) {
-            return '<span class="btn btn-danger btn-sm">Unfit</span>';
+        if (is_int($data)) {
+            return match ($data) {
+                1 => '<span class="btn btn-success btn-sm">Fit</span>',
+                0 => '<span class="btn btn-danger btn-sm">Unfit</span>',
+                default => '<span class="btn btn-warning btn-sm">Pending</span>',
+            };
         } else {
             return '<span class="btn btn-warning btn-sm">Pending</span>';
         }
