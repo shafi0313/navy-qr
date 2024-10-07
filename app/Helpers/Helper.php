@@ -36,7 +36,7 @@ if (! function_exists('sqlDate')) {
 if (! function_exists('result')) {
     function result($data)
     {
-        if(in_array($data, [0, 1])){
+        if($data=='1' || $data=='0'){
             $data = (int) $data;
             return match ($data) {
                 1 => '<span class="btn btn-success btn-sm">Fit</span>',
