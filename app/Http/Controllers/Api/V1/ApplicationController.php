@@ -114,4 +114,19 @@ class ApplicationController extends BaseController
         $application->update(['is_medical_pass' => $request->is_medical_pass]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
+
+    public function medicalFailStatus(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'id' => 'required|exists:applications,id',
+            'is_medical_pass' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+        $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
+        $application->update(['is_medical_pass' => $request->is_medical_pass]);
+        return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
+    }
 }
