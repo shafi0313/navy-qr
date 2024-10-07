@@ -34,7 +34,7 @@ if (! function_exists('sqlDate')) {
     }
 }
 if (! function_exists('result')) {
-    function result($data)
+    function result(int $data)
     {
         return match ($data) {
             1 => '<span class="btn btn-success btn-sm">Fit</span>',
