@@ -36,7 +36,7 @@ if (! function_exists('sqlDate')) {
 if (! function_exists('result')) {
     function result($data)
     {
-        if (is_int($data)) {
+        if (filter_var($data, FILTER_VALIDATE_INT) !== false) {
             return match ($data) {
                 1 => '<span class="btn btn-success btn-sm">Fit</span>',
                 0 => '<span class="btn btn-danger btn-sm">Unfit</span>',
