@@ -85,7 +85,7 @@ class FortifyServiceProvider extends ServiceProvider
             if ($user && $user->is_active == 0) {
                 return redirect()->route('login')->withErrors('Account is inactive');
             }
-
+            
             if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
