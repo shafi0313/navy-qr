@@ -27,7 +27,7 @@ class PrimaryMedicalController extends Controller
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     if (in_array($roleId, [1, 5])) {
-                        return result((int) $row->is_medical_pass);
+                        return result($row->is_medical_pass);
                     } else {
                         return '';
                     }
