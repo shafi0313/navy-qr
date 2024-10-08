@@ -14,27 +14,34 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             [
-                'name' => 'admin',
+                'name' => 'Super Admin',
                 'is_active' => 1,
             ],
             [
-                'name' => 'Normal User',
+                'name' => 'Admin',
                 'is_active' => 1,
             ],
+            [
+                'name' => 'Viva/Final Selection',
+                'is_active' => 1,
+            ],
+
+            [
+                'name' => 'Final Medical',
+                'is_active' => 1,
+            ],
+
+            [
+                'name' => 'Written',
+                'is_active' => 1,
+            ],
+
             [
                 'name' => 'Primary Medical',
                 'is_active' => 1,
             ],
             [
-                'name' => 'Written',
-                'is_active' => 1,
-            ],
-            [
-                'name' => 'Final Medical',
-                'is_active' => 1,
-            ],
-            [
-                'name' => 'Viva/Final Selection',
+                'name' => 'Normal User',
                 'is_active' => 1,
             ],
         ];
