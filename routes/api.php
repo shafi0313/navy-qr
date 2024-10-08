@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ApplicationController;
 use App\Http\Controllers\Api\V1\FinalMedicalController;
 use App\Http\Controllers\Api\V1\ApplicationUrlController;
+use App\Http\Controllers\Api\V1\PrimaryMedicalController;
 
 
 
@@ -21,12 +22,13 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/applications/count', [ApplicationController::class, 'count']);
         Route::apiResource('applications', ApplicationController::class);
-        Route::post('/applications/medical-pass-status', [ApplicationController::class, 'medicalPassStatus']);
-        Route::post('/applications/medical-fail-status', [ApplicationController::class, 'medicalFailStatus']);
+
+        Route::post('/applications/primary-medical/pass', [PrimaryMedicalController::class, 'passStatus']);
+        Route::post('/applications/primary-medical/fail', [PrimaryMedicalController::class, 'failStatus']);
 
         // Final Medical
-        Route::post('/applications/final-medical-pass-status', [FinalMedicalController::class, 'passStatus']);
-        Route::post('/applications/final-medical-fail-status', [FinalMedicalController::class, 'failStatus']);
+        Route::post('/applications/final-medical/pass', [FinalMedicalController::class, 'passStatus']);
+        Route::post('/applications/final-medical/fail', [FinalMedicalController::class, 'failStatus']);
 
 
         Route::post('/logout', [AuthController::class, 'logout']);
