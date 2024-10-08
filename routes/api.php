@@ -23,6 +23,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/applications/count', [ApplicationController::class, 'count']);
         Route::apiResource('applications', ApplicationController::class);
 
+        // Final Medical
         Route::post('/applications/primary-medical/pass', [PrimaryMedicalController::class, 'passStatus']);
         Route::post('/applications/primary-medical/fail', [PrimaryMedicalController::class, 'failStatus']);
 
