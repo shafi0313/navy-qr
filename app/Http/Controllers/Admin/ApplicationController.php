@@ -136,20 +136,7 @@ class ApplicationController extends Controller
                         return '';
                     }
                 })
-                // ->addColumn('action', function ($row) {
-                //     $btn = '';
-                //     if (userCan('admin-edit')) {
-                //         $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.admins.edit', $row->id), 'row' => $row]);
-                //     }
-                //     if (userCan('admin-delete')) {
-                //         $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.admins.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
-                //     }
-                //     return $btn;
-                // })
                 ->filter(function ($query) use ($request) {
-                    // if ($request->has('gender') && $request->gender != '') {
-                    //     $query->where('gender', $request->gender);
-                    // }
                     if ($request->filled('district')) {
                         $query->where('applications.eligible_district', $request->district);
                     }
