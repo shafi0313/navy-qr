@@ -18,8 +18,10 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/applications/count', [ApplicationController::class, 'count']);
         Route::apiResource('applications', ApplicationController::class);
         Route::post('/applications/medical-pass-status', [ApplicationController::class, 'medicalPassStatus']);
+        Route::post('/applications/medical-fail-status', [ApplicationController::class, 'medicalFailStatus']);
 
 
         Route::post('/logout', [AuthController::class, 'logout']);

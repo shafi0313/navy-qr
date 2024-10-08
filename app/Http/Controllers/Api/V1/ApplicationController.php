@@ -90,14 +90,14 @@ class ApplicationController extends BaseController
 
     public function show($serialNo)
     {
-        $application = Application::whereSerialNo($serialNo)->first();
+        $application = Application::where('serial_no', $serialNo)->first();
 
-        if($application){
+        if ($application) {
             $application->update(['scanned_at' => now()]);
+            return $this->sendResponse(new ApplicationShowResource($application), 'Applicant info.');
+        } else {
+            return $this->sendError('No Data Found.', [], 404);
         }
-
-        return $this->sendResponse(new ApplicationShowResource($application), 'Applicant info.');
-
     }
 
     public function medicalPassStatus(Request $request)
@@ -128,5 +128,13 @@ class ApplicationController extends BaseController
         $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
         $application->update(['is_medical_pass' => $request->is_medical_pass]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
+    }
+
+    public function count()
+    {
+        $data['allApplications'] = Application::count();
+        $data['todayApplications'] = Application::whereDate('scanned_at', now())->count();
+
+        return $this->sendResponse($data, 'Applicants count.');
     }
 }
