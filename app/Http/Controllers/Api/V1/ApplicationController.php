@@ -116,12 +116,13 @@ class ApplicationController extends BaseController
 
         if ($application) {
             if (!is_null($application->scanned_at)) {
-                return response()->json(['message' => 'Already Scanned.'], 200);
-                // return $this->sendError('Already Scanned.', [], 404);
+                // return response()->json(['message' => 'Already Scanned.'], 200);
+                return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
             }
             if (user()->role_id == 7) {
                 $application->update(['scanned_at' => now()]);
             }
+            $application->update(['user_id' => user()->id]);
             return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
         } else {
             return $this->sendError('No Data Found.', [], 404);
@@ -130,8 +131,8 @@ class ApplicationController extends BaseController
 
     public function count()
     {
-        $data['allApplicationsByUser'] = Application::where('scanned_by', user()->id)->count();
-        $data['todayApplicationsByUser'] = Application::where('scanned_by', user()->id)->whereDate('scanned_at', now())->count();
+        $data['allApplicationsByUser'] = Application::where('user_id', user()->id)->count();
+        $data['todayApplicationsByUser'] = Application::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
 
         return $this->sendResponse($data, 'Applicants count.');
     }

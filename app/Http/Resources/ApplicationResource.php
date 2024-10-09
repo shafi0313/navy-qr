@@ -16,10 +16,13 @@ class ApplicationResource extends JsonResource
     {
         $data = [
             'id'                    => $this->id,
+            'exam_date'             => $this->exam_date,
             'serial_no'             => $this->serial_no,
             'candidate_designation' => $this->candidate_designation,
             'eligible_district'     => $this->eligible_district,
             'name'                  => $this->name,
+            'father_name'           => $this->father_name,
+            'mother_name'           => $this->mother_name,
             'photo'                 => asset('uploads/images/photo/' . $this->photo),
             'is_medical_pass'       => $this->is_medical_pass ?? null,
             'is_final_pass'         => $this->is_final_pass ?? null,
