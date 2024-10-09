@@ -20,6 +20,7 @@ class ApplicationResource extends JsonResource
             'candidate_designation' => $this->candidate_designation,
             'eligible_district'     => $this->eligible_district,
             'name'                  => $this->name,
+            'photo'                 => asset('uploads/images/photo/' . $this->photo),
             'is_medical_pass'       => $this->is_medical_pass ?? null,
             'is_final_pass'         => $this->is_final_pass ?? null,
         ];

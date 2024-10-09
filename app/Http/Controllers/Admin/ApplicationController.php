@@ -125,7 +125,7 @@ class ApplicationController extends Controller
                         ->where('users.team', user()->team);
                     break;
                 case 7: // Normal User
-                    $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark');
+                    $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'photo', 'remark');
                     break;
             }
             $applications = $query;

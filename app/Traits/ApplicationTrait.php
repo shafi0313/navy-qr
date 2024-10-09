@@ -22,6 +22,7 @@ trait ApplicationTrait
             'applications.name',
             'applications.is_medical_pass',
             'applications.is_final_pass',
+            'applications.photo',
             'applications.remark',
         ];
     }
