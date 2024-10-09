@@ -134,7 +134,7 @@ class ApplicationController extends BaseController
 
     public function show($serialNo)
     {
-        $application = Application::where('serial_no', $serialNo)->first();
+        $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
 
         if ($application) {
             if (!is_null($application->scanned_at)) {
