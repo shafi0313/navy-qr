@@ -26,13 +26,12 @@ class UserSeeder extends Seeder
                 'removable' => 0,
                 'password' => bcrypt('##Zxc1234'),
             ],
-            
             // Team A
             [
                 'role_id' => 2,
                 'team' => 'A', // admin
                 'name' => 'Team A Admin',
-                'email' => 'admina@app.com',
+                'email' => 'admin_a@app.com',
                 'mobile' => '01725848515',
                 'user_name' => null,
                 'gender' => Gender::MALE,
@@ -40,11 +39,66 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('##Zxc1234'),
             ],
             [
-                'role_id' => 2,
-                'team' => 'A', // admin
-                'name' => 'Admin',
-                'email' => 'admin@app.com',
-                'mobile' => '01725848515',
+                'role_id' => 3,
+                'team' => 'A', // Team A Final Medical
+                'name' => 'Team A Final Medical',
+                'email' => 'f_medical_a@app.com',
+                'mobile' => null,
+                'user_name' => null,
+                'gender' => Gender::MALE,
+                'removable' => 0,
+                'password' => bcrypt('##Zxc1234'),
+            ],
+            [
+                'role_id' => 4,
+                'team' => 'A', // Team A Written Exam
+                'name' => 'Team A Written Exam',
+                'email' => 'written_a@app.com',
+                'mobile' => null,
+                'user_name' => null,
+                'gender' => Gender::MALE,
+                'removable' => 0,
+                'password' => bcrypt('##Zxc1234'),
+            ],
+            [
+                'role_id' => 6,
+                'team' => 'A', // Team A Preli Medical-1
+                'name' => 'Team A Preli Medical-1',
+                'email' => 'p_medical_a1@app.com',
+                'mobile' => null,
+                'user_name' => null,
+                'gender' => Gender::MALE,
+                'removable' => 0,
+                'password' => bcrypt('##Zxc1234'),
+            ],
+            [
+                'role_id' => 6,
+                'team' => 'A', // Team A Preli Medical-2
+                'name' => 'Team A Preli Medical-2',
+                'email' => 'p_medical_a2@app.com',
+                'mobile' => null,
+                'user_name' => null,
+                'gender' => Gender::MALE,
+                'removable' => 0,
+                'password' => bcrypt('##Zxc1234'),
+            ],
+            [
+                'role_id' => 7,
+                'team' => 'A', // Team A QR Code Scan-1
+                'name' => 'Team A QR Code Scan-1',
+                'email' => 'qr_a1@app.com',
+                'mobile' => null,
+                'user_name' => null,
+                'gender' => Gender::MALE,
+                'removable' => 0,
+                'password' => bcrypt('##Zxc1234'),
+            ],
+            [
+                'role_id' => 7,
+                'team' => 'A', // Team A QR Code Scan-2
+                'name' => 'Team A QR Code Scan-2',
+                'email' => 'qr_a2@app.com',
+                'mobile' => null,
                 'user_name' => null,
                 'gender' => Gender::MALE,
                 'removable' => 0,
