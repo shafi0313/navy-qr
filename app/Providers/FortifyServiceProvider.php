@@ -78,47 +78,57 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.two-factor-challenge');
         });
 
-        // Custom Login Validation
         Fortify::authenticateUsing(function (Request $request) {
+            // Determine if the login field is an email or username
             $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+            // Find the user by the email or username
             $user = User::where($fieldType, $request->email)->first();
-            if ($user && $user->is_active == 0) {
-                return redirect()->route('login')->withErrors('Account is inactive');
+
+            // Check if the user exists
+            if (!$user) {
+                return false; // User not found
             }
-            
-            if ($user && Hash::check($request->password, $user->password)) {
-                return $user;
+
+            // Check if the account is inactive
+            if ($user->is_active == 0) {
+                session()->flash('error', 'Account is inactive');
+                return false; // Prevent login for inactive users
             }
+
+            // Check if the user has the role that requires OTP (e.g., admin roles)
+            if (in_array($user->role_id, [10])) {
+                // Check if the password is correct
+                if (Hash::check($request->password, $user->password)) {
+                    // return '0k';
+                    // Generate a random OTP
+                    $otp = rand(1000, 9999);
+                    $user->otp = $otp;
+                    $user->otp_expires_at = now()->addMinutes(5);
+                    $user->save();
+
+                    // Send OTP via SMS using a helper function
+                    $isSent = sendOtpViaSms($user->phone_number, $otp);
+                    if (!$isSent) {
+                        session()->flash('error', 'Failed to send OTP');
+                        return false; // Prevent login if OTP sending failed
+                    }
+
+                    // Store the login session and return false to prevent auto-login
+                    session(['login.id' => $user->id]);
+                    session()->flash('otp_required', true); // Indicate that OTP is needed
+                    return false; // Prevent login and redirect for OTP
+                }
+            } else {
+                // Standard user login without OTP
+                if (Hash::check($request->password, $user->password)) {
+                    return $user; // Successful login
+                }
+            }
+
+            // If password check failed, return false
+            return false;
         });
 
-        //     // Custom Login Validation
-        //     Fortify::authenticateUsing(function (Request $request) {
-        //         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        //         $user = User::where($fieldType, $request->email)->first();
-
-        //         if ($user && $user->is_active == 0) {
-        //             return redirect()->route('login')->withErrors('Account is inactive');
-        //         }
-
-        //         if ($user && Hash::check($request->password, $user->password)) {
-        //             // Generate a random OTP
-        //             $otp = rand(1000, 9999);
-        //             $user->otp = $otp;
-        //             $user->otp_expires_at = now()->addMinutes(5);
-        //             $user->save();
-
-        //             // Send OTP via SMS using SmsHelper
-        //             $isSent = sendOtpViaSms($user->phone_number, $otp);
-        //             if (!$isSent) {
-        //                 return redirect()->route('login')->withErrors('Failed to send OTP');
-        //             }
-
-        //             // Store the login session and redirect to OTP input form
-        //             session(['login.id' => $user->id]);
-        //             return redirect()->route('two-factor.login');
-        //         }
-
-        //         return false;
-        //     });
     }
 }

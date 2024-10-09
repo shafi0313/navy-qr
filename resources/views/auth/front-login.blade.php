@@ -65,7 +65,7 @@
                             Navy</h2>
                         <h3 class="text-center">Login</h3>
                         @if (session()->has('message'))
-                            <div class="alert alert-{{ session('type') }}">
+                            <div class="alert alert-{{ session('type') }}" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
@@ -110,4 +110,5 @@
         </div>
     </div>
 </body>
+
 </html>

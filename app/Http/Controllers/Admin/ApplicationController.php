@@ -6,6 +6,7 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
@@ -14,6 +15,42 @@ class ApplicationController extends Controller
 
     public function index(Request $request)
     {
+
+        // return sendOtpViaSms($mobileNumber, $otp);
+
+        $otp = rand(1000, 9999); // Generate a 6-digit OTP
+        $mobileNumber = '+8801725848515';
+        return sendOtpViaSms($mobileNumber, $otp);
+
+
+
+
+
+
+        // $apiKey = '943faf062f3d7241';
+        // $secretKey = 'dfd0b83b';
+        // $senderId = 1;
+        // $message = "Your OTP code is $otp";
+
+        // $response = Http::get('http://smpp.revesms.com:7788/sendtext', [
+        //     'apikey' => $apiKey,
+        //     'secretkey' => $secretKey,
+        //     'callerID' => $senderId,
+        //     'toUser' => $mobileNumber,
+        //     'messageContent' => $message,
+        // ]);
+
+        // // Check the response to make sure the message was sent successfully
+        // if ($response->successful()) {
+        //     return true;
+        // }
+
+        // return false;
+
+
+
+
+
         // $query = Application::query();
         // return $query
         //     ->leftJoin('users', 'applications.user_id', '=', 'users.id')
