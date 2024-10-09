@@ -43,7 +43,8 @@ class ApplicationController extends Controller
 
             switch ($roleId) {
                 case 1: // Supper Admin
-                    $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                    $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                        ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(
                             array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                         )

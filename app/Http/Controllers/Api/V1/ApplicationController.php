@@ -19,7 +19,8 @@ class ApplicationController extends BaseController
         $query = Application::query();
         switch ($roleId) {
             case 1: // Supper Admin
-                $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
                         array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                     )
@@ -100,7 +101,6 @@ class ApplicationController extends BaseController
                     ->where('users.team', user()->team);
                 break;
             case 7: // Normal User
-                // $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark');
                 $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark');
                 break;
         }
@@ -115,14 +115,14 @@ class ApplicationController extends BaseController
         $application = Application::where('serial_no', $serialNo)->first();
 
         if ($application) {
-            if (user()->role_id == 2) {
+            if (user()->role_id == 7) {
                 $application->update(['scanned_at' => now()]);
             }
         }
 
         if ($application) {
-            $application->update(['scanned_at' => now()]);
-            return $this->sendResponse(new ApplicationShowResource($application), 'Applicant info.');
+            // $application->update(['scanned_at' => now()]);
+            return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
         } else {
             return $this->sendError('No Data Found.', [], 404);
         }
