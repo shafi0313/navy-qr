@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Application;
+use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class PrimaryMedicalController extends Controller
 {
+    use ApplicationTrait;
+    
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -26,11 +29,7 @@ class PrimaryMedicalController extends Controller
                     return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    if (in_array($roleId, [1, 5])) {
-                        return result($row->is_medical_pass);
-                    } else {
-                        return '';
-                    }
+                    return $this->primaryMedical($roleId, $row);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';

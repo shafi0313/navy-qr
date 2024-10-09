@@ -81,12 +81,18 @@
                             name: 'eligible_district',
                             title: 'District',
                         },
-                        // {
-                        //     data: 'medical',
-                        //     name: 'medical',
-                        //     title: 'P. medical',
-                        //     className: 'text-center',
-                        // },
+                        {
+                            data: 'medical',
+                            name: 'medical',
+                            title: 'Pre. Medical',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'written',
+                            name: 'written',
+                            title: 'Written',
+                            className: 'text-center',
+                        },
                         {
                             data: 'action',
                             name: 'action',
@@ -94,8 +100,8 @@
                             className: 'text-center',
                         },
                         {
-                            data: 'final_medical',
-                            name: 'final_medical',
+                            data: 'final',
+                            name: 'final',
                             title: 'Remarks',
                             className: 'text-center',
                         },

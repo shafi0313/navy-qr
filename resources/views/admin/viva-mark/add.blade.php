@@ -15,15 +15,13 @@
                             <h5>{{ $applicant->candidate_designation }}</h5>
                             <h5>{{ $applicant->name }}</h5>
                         </div>
-                        @if (in_array(user()->role_id, [1, 4]))
-                            <div class="row gy-2 justify-content-center">
-                                <div class="col-md-4">
-                                    <label for="viva" class="form-label">Viva/Final Selection </label>
-                                    <input type="number" step="any" name="viva" value="{{ $applicant->examMark?->viva }}" id="viva"
-                                        class="form-control">
-                                </div>
+                        <div class="row gy-2 justify-content-center">
+                            <div class="col-md-4">
+                                <label for="viva" class="form-label">Viva/Final Selection </label>
+                                <input type="number" step="any" name="viva"
+                                    value="{{ $applicant->examMark?->viva }}" id="viva" class="form-control">
                             </div>
-                        @endif
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

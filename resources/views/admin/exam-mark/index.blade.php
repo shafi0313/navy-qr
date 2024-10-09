@@ -134,6 +134,11 @@
                             title: 'district',
                         },
                         {
+                            data: 'medical',
+                            name: 'medical',
+                            title: 'medical',
+                        },
+                        {
                             data: 'bangla',
                             name: 'bangla',
                             title: 'Bangla',

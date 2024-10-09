@@ -28,8 +28,6 @@
         </div><!-- end col -->
     </div><!-- end row -->
 
-    {{-- @include('admin.' . $folder . '.create', ['pageTitle' => $pageTitle, 'route' => $route]) --}}
-
     @push('scripts')
         <script>
             $(function() {
@@ -62,17 +60,17 @@
                         {
                             data: 'exam_date',
                             name: 'exam_date',
-                            title: 'exam date',
+                            title: 'Exam Date',
                         },
                         {
                             data: 'serial_no',
                             name: 'serial_no',
-                            title: 'Roll no',
+                            title: 'Roll No',
                         },
                         {
                             data: 'candidate_designation',
                             name: 'candidate_designation',
-                            title: 'Des',
+                            title: 'Designation',
                         },
                         {
                             data: 'name',
@@ -85,42 +83,34 @@
                             title: 'District',
                         },
                         {
+                            data: 'medical',
+                            name: 'medical',
+                            title: 'Pre. Medical',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'written',
+                            name: 'written',
+                            title: 'Written',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'final',
+                            name: 'final',
+                            title: 'Final M.',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'total_viva',
+                            name: 'total_viva',
+                            title: 'Viva',
+                            className: 'text-center',
+                        },
+                        {
                             data: 'remark',
                             name: 'remark',
-                            title: 'remark',
+                            title: 'Remark',
                         },
-                        // {
-                        //     data: 'medical',
-                        //     name: 'medical',
-                        //     title: 'p. medical',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'written',
-                        //     name: 'written',
-                        //     title: 'written',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'final',
-                        //     name: 'final',
-                        //     title: 'final m.',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'viva',
-                        //     name: 'viva',
-                        //     title: 'viva',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'action',
-                        //     name: 'action',
-                        //     title: 'Action',
-                        //     width: '60px',
-                        //     orderable: false,
-                        //     searchable: false
-                        // },
                     ],
                     scroller: {
                         loadingIndicator: true
@@ -129,6 +119,7 @@
                         [1, 'asc']
                     ]
                 });
+
                 $(".filter").find('select').on('change', function() {
                     table.draw();
                 });

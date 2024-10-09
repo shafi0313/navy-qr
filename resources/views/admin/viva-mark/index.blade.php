@@ -81,24 +81,27 @@
                             name: 'eligible_district',
                             title: 'District',
                         },
-                        // {
-                        //     data: 'medical',
-                        //     name: 'medical',
-                        //     title: 'medical',
-                        // },
+                        {
+                            data: 'medical',
+                            name: 'medical',
+                            title: 'Pre. Medical',
+                            className: 'text-center',
+                        },
                         {
                             data: 'written',
                             name: 'written',
-                            title: 'written',
+                            title: 'Written',
+                            className: 'text-center',
                         },
-                        // {
-                        //     data: 'final',
-                        //     name: 'final',
-                        //     title: 'final',
-                        // },
                         {
-                            data: 'viva',
-                            name: 'viva',
+                            data: 'final',
+                            name: 'final',
+                            title: 'Final M.',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'total_viva',
+                            name: 'total_viva',
                             title: 'viva',
                         },
                         {

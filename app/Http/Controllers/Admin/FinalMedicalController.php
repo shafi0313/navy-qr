@@ -4,25 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class FinalMedicalController extends Controller
 {
+    use ApplicationTrait;
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            $applications = Application::with([
-                'examMark:id'
-            ])->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'is_final_pass')
-            ->whereHas('examMark', function ($query) {
+            $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
+            ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+            ->select(
+                array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+            )
+            ->selectRaw(
+                $this->examSumColumns()
+            )
+            ->where(function ($query) {
                 $query->where('bangla', '>=', 8)
                     ->where('english', '>=', 8)
                     ->where('math', '>=', 8)
                     ->where('science', '>=', 8)
                     ->where('general_knowledge', '>=', 8);
-            });
+            })
+            ->where('team', user()->team);
+            // ->orderBy('total_viva', 'desc')
+            // ->orderBy('total_marks', 'desc');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -33,18 +44,13 @@ class FinalMedicalController extends Controller
                     return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    if (in_array($roleId, [1, 3, 5])) {
-                        return result($row->is_medical_pass );
-                    } else {
-                        return '';
-                    }
+                    return $this->primaryMedical($roleId, $row);
                 })
-                ->addColumn('final_medical', function ($row) use ($roleId) {
-                    if (in_array($roleId, [1, 3])) {
-                        return result($row->is_final_pass);
-                    } else {
-                        return '';
-                    }
+                ->addColumn('written', function ($row) use ($roleId) {
+                    return $this->written($roleId, $row);
+                })
+                ->addColumn('final', function ($row) use ($roleId) {
+                    return $this->finalMedical($roleId, $row);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
@@ -63,7 +69,7 @@ class FinalMedicalController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['medical', 'final_medical', 'action'])
+                ->rawColumns(['medical', 'written', 'final', 'action'])
                 ->make(true);
         }
         return view('admin.final-medical.index');
@@ -71,7 +77,7 @@ class FinalMedicalController extends Controller
 
     public function pass(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 3])) {
+        if (!in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
@@ -87,7 +93,7 @@ class FinalMedicalController extends Controller
 
     public function fail(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 3])) {
+        if (!in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);

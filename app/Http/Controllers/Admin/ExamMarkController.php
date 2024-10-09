@@ -37,26 +37,11 @@ class ExamMarkController extends Controller
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
+                ->addColumn('medical', function ($row) use ($roleId) {
+                    return $this->primaryMedical($roleId, $row);
+                })
                 ->addColumn('written', function ($row) use ($roleId) {
-                    if (in_array($roleId, [1, 4, 5, 6]) && ($row->bangla || $row->english || $row->math || $row->science || $row->general_knowledge)) {
-                        $row->bangla + $row->english + $row->math + $row->science + $row->general_knowledge;
-                        $failCount = 0;
-                        if ($row->bangla < 8) $failCount++;
-                        if ($row->english < 8) $failCount++;
-                        if ($row->math < 8) $failCount++;
-                        if ($row->science < 8) $failCount++;
-                        if ($row->general_knowledge < 8) $failCount++;
-                        if ($failCount == 0) {
-                            return '<span class="badge bg-success">Pass</span>';
-                        }
-                        elseif ($failCount > 0) {
-                            return '<span class="badge bg-danger">Failed</span> (' . $failCount . ' subject(s) failed)';
-                        } else {
-                            return '';
-                        }
-                    } else {
-                        return '';
-                    }
+                    return $this->written($roleId, $row);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
@@ -74,7 +59,7 @@ class ExamMarkController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
+                ->rawColumns(['medical', 'written', 'action'])
                 ->make(true);
         }
         return view('admin.exam-mark.index');
