@@ -25,9 +25,10 @@ class AuthController extends BaseController
             $success['token'] =  $user->createToken('auto_token')->plainTextToken;
             $success['name'] =  $user->name;
             $success['role_id'] =  $user->role_id;
+            $success['team'] =  $user->team;
             return $this->sendResponse($success, 'User login successfully.');
         }else{
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('Unauthorized.', ['error'=>'Unauthorized']);
         }
     }
     // {

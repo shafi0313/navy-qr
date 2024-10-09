@@ -35,6 +35,8 @@ class ApplicationController extends Controller
         //     ->orderBy('total_viva', 'desc')
         //     ->orderBy('total_marks', 'desc')->get();
 
+        // return$query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark')->get();
+
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $query = Application::query();
@@ -117,15 +119,7 @@ class ApplicationController extends Controller
                 case 6: // Primary Medical
                     $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                         ->select(
-                            'applications.id',
-                            'applications.candidate_designation',
-                            'applications.serial_no',
-                            'applications.name',
-                            'applications.eligible_district',
-                            'applications.is_medical_pass',
-                            'applications.remark',
-                            'users.id as user_id',
-                            'users.team as team'
+                            array_merge($this->userColumns(), $this->applicationColumns())
                         )
                         ->where('users.team', user()->team);
                     break;

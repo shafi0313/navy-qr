@@ -6,7 +6,6 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Resources\ApplicationResource;
-use App\Http\Resources\ApplicationUrlResource;
 use App\Http\Resources\ApplicationShowResource;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
@@ -22,7 +21,7 @@ class ApplicationController extends BaseController
             case 1: // Supper Admin
                 $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -30,9 +29,10 @@ class ApplicationController extends BaseController
                     ->orderBy('total_marks', 'desc');
                 break;
             case 2: // Admin
-                $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -41,47 +41,49 @@ class ApplicationController extends BaseController
                     ->orderBy('total_marks', 'desc');
                 break;
             case 3: // Viva / Final Selection
-                $query->with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'])
-                    ->whereHas('application.examMark', function ($query) {
-                        $query->where('bangla', '>=', 8)
-                            ->where('english', '>=', 8)
-                            ->where('math', '>=', 8)
-                            ->where('science', '>=', 8)
-                            ->where('general_knowledge', '>=', 8);
-                    })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
                     )
-                    ->where('team', user()->team)
-                    ->orderBy('total_viva', 'desc')
-                    ->orderBy('total_marks', 'desc');
-                break;
-            case 4: // Final Medical
-                $query->with(['examMark:id,application_id,bangla,english,math,science,general_knowledge'])
-                    ->whereHas('examMark', function ($query) {
+                    ->where(function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)
                             ->where('math', '>=', 8)
                             ->where('science', '>=', 8)
                             ->where('general_knowledge', '>=', 8);
                     })
+                    ->where('team', user()->team)
+                    ->orderBy('total_viva', 'desc')
+                    ->orderBy('total_marks', 'desc');
+                break;
+            case 4: // Final Medical
+                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
                     )
+                    ->where(function ($query) {
+                        $query->where('bangla', '>=', 8)
+                            ->where('english', '>=', 8)
+                            ->where('math', '>=', 8)
+                            ->where('science', '>=', 8)
+                            ->where('general_knowledge', '>=', 8);
+                    })
                     ->where('team', user()->team)
                     ->orderBy('total_marks', 'desc');
                 break;
             case 5: // Written
-                $query->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -91,11 +93,15 @@ class ApplicationController extends BaseController
                 break;
 
             case 6: // Primary Medical
-                $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'is_medical_pass')
-                    ->where('team', user()->team);
+                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->select(
+                        array_merge($this->userColumns(), $this->applicationColumns())
+                    )
+                    ->where('users.team', user()->team);
                 break;
             case 7: // Normal User
-                $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district');
+                // $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark');
+                $query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark');
                 break;
         }
 
@@ -109,7 +115,7 @@ class ApplicationController extends BaseController
         $application = Application::where('serial_no', $serialNo)->first();
 
         if ($application) {
-            if(user()->role_id == 2) {
+            if (user()->role_id == 2) {
                 $application->update(['scanned_at' => now()]);
             }
         }
