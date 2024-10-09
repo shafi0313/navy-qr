@@ -29,7 +29,7 @@ class ApplicationResource extends JsonResource
             'is_final_pass'         => $this->is_final_pass ?? null,
         ];
 
-        if (in_array(user()->role_id, [1, 2, 3, 4, 5])) {
+        // if (in_array(user()->role_id, [1, 2, 3, 4, 5])) {
             $data['examMark'] = [
                 'bangla'            => $this->examMark->bangla,
                 'english'           => $this->examMark->english,
@@ -38,7 +38,7 @@ class ApplicationResource extends JsonResource
                 'general_knowledge' => $this->examMark->general_knowledge,
                 'viva'              => $this->examMark->viva,
             ];
-        }
+        // }
 
         return $data;
         // return [

@@ -20,9 +20,9 @@ class ApplicationController extends Controller
 
         $otp = rand(1000, 9999); // Generate a 6-digit OTP
         $mobileNumber = '+8801725848515';
-        return sendOtpViaSms($mobileNumber, $otp);
+        // return sendOtpViaSms($mobileNumber, $otp);
 
-
+        Http::get("http://smpp.revesms.com:7788/sendtext?apikey=943faf062f3d7241&secretkey=dfd0b83b&callerID=1&toUser=+8801725848515&messageContent=MESSAGE");
 
 
 
