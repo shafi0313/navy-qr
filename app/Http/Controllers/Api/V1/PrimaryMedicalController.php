@@ -20,7 +20,7 @@ class PrimaryMedicalController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
-        $application->update(['is_medical_pass' => $request->is_medical_pass]);
+        $application->update(['is_medical_pass' => 1]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 
@@ -35,7 +35,7 @@ class PrimaryMedicalController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
-        $application->update(['is_medical_pass' => $request->is_medical_pass]);
+        $application->update(['is_medical_pass' => 0]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 }
