@@ -10,8 +10,6 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ApplicationSeeder extends Seeder
 {
-
-
     public function run()
     {
         // Define the path to the JSON file
