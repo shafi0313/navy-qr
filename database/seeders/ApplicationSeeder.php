@@ -10,23 +10,33 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ApplicationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
+
     public function run()
     {
-        // Disable query logs to save memory
-        DB::disableQueryLog();
+        // Define the path to the JSON file
+        $filePath = storage_path('sailor_data.json'); // Adjust this path to where your JSON file is stored
 
-        // Path to your JSON data file
-        $jsonPath = storage_path('100_sailor_data.json');  // Assuming JSON format
-        $jsonData = File::get($jsonPath);
-        $data = json_decode($jsonData, true);
+        // Check if the file exists
+        if (!File::exists($filePath)) {
+            $this->command->error("File not found at: " . $filePath);
+            return;
+        }
 
-        $batchSize = 1000; // Insert 1000 records at a time
+        // Read the file contents
+        $jsonContent = File::get($filePath);
+        $applications = json_decode($jsonContent, true); // Convert JSON into an associative array
+
+        if (is_null($applications)) {
+            $this->command->error("Invalid JSON format or file is empty.");
+            return;
+        }
+
+        // Set the batch size
+        $batchSize = 500;
         $batchData = [];
 
-        foreach ($data as $index => $application) {
+        foreach ($applications as $application) {
             $batchData[] = [
                 'candidate_designation' => $application['candidate_designation'],
                 'exam_date' => $application['exam_date'],
@@ -98,39 +108,22 @@ class ApplicationSeeder extends Seeder
                 'is_khudro_jati_gosti' => $application['is_khudro_jati_gosti'],
                 'batch' => $application['batch'],
                 'center' => $application['center'],
-                // 'is_medical_pass' => $application['is_medical_pass'],
-                // 'is_final_pass' => $application['is_final_pass'],
+                // Add more fields if necessary
             ];
 
-            // $batchData[] = [/*...*/];
-
-            // if (count($batchData) == $batchSize) {
-            //     ImportApplicationsJob::dispatch($batchData);
-            //     $batchData = [];
-            // }
-
-
-
-
-            // Insert in batches of 1000
-            if (count($batchData) == $batchSize) {
+            // Insert the batch if the size is reached
+            if (count($batchData) >= $batchSize) {
                 DB::table('applications')->insert($batchData);
-                $batchData = []; // Reset batch
+                $batchData = []; // Reset the batch
             }
-
         }
 
-        // Dispatch remaining data
-        // if (!empty($batchData)) {
-        //     ImportApplicationsJob::dispatch($batchData);
-        // }
-
-
-
-
-        // Insert remaining data
+        // Insert any remaining data
         if (!empty($batchData)) {
             DB::table('applications')->insert($batchData);
         }
+
+        // Output success message
+        $this->command->info("Data import completed successfully.");
     }
 }
