@@ -15,64 +15,9 @@ class ApplicationController extends Controller
 
     public function index(Request $request)
     {
-
+        // $otp = rand(1000, 9999); // Generate a 6-digit OTP
+        // $mobileNumber = '+8801725848515';
         // return sendOtpViaSms($mobileNumber, $otp);
-
-        $otp = rand(1000, 9999); // Generate a 6-digit OTP
-        $mobileNumber = '+8801725848515';
-        // return sendOtpViaSms($mobileNumber, $otp);
-
-        Http::get("http://smpp.revesms.com:7788/sendtext?apikey=943faf062f3d7241&secretkey=dfd0b83b&callerID=1&toUser=+8801725848515&messageContent=MESSAGE");
-
-
-
-
-        // $apiKey = '943faf062f3d7241';
-        // $secretKey = 'dfd0b83b';
-        // $senderId = 1;
-        // $message = "Your OTP code is $otp";
-
-        // $response = Http::get('http://smpp.revesms.com:7788/sendtext', [
-        //     'apikey' => $apiKey,
-        //     'secretkey' => $secretKey,
-        //     'callerID' => $senderId,
-        //     'toUser' => $mobileNumber,
-        //     'messageContent' => $message,
-        // ]);
-
-        // // Check the response to make sure the message was sent successfully
-        // if ($response->successful()) {
-        //     return true;
-        // }
-
-        // return false;
-
-
-
-
-
-        // $query = Application::query();
-        // return $query
-        //     ->leftJoin('users', 'applications.user_id', '=', 'users.id')
-        //     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-        //     ->select(
-        //         array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-        //     )
-        //     ->selectRaw(
-        //         $this->examSumColumns()
-        //     )
-        //     ->where(function ($query) {
-        //         $query->where('bangla', '>=', 8)
-        //             ->where('english', '>=', 8)
-        //             ->where('math', '>=', 8)
-        //             ->where('science', '>=', 8)
-        //             ->where('general_knowledge', '>=', 8);
-        //     })
-        //     ->where('team', user()->team)
-        //     ->orderBy('total_viva', 'desc')
-        //     ->orderBy('total_marks', 'desc')->get();
-
-        // return$query->select('id', 'candidate_designation', 'serial_no', 'name', 'eligible_district', 'remark')->get();
 
         if ($request->ajax()) {
             $roleId = user()->role_id;

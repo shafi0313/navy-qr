@@ -23,12 +23,12 @@ class StoreExamMarkRequest extends FormRequest
     {
         return [
             'application_id'    => ['required', 'exists:applications,id'],
-            'bangla'            => ['required', 'numeric'],
-            'english'           => ['required', 'numeric'],
-            'math'              => ['required', 'numeric'],
-            'science'           => ['required', 'numeric'],
-            'general_knowledge' => ['required', 'numeric'],
-            'viva'              => ['nullable', 'numeric'],
+            'bangla'            => ['required', 'numeric', 'min:0', 'max:20'],
+            'english'           => ['required', 'numeric', 'min:0', 'max:20'],
+            'math'              => ['required', 'numeric', 'min:0', 'max:20'],
+            'science'           => ['required', 'numeric', 'min:0', 'max:20'],
+            'general_knowledge' => ['required', 'numeric', 'min:0', 'max:20'],
+            'viva'              => ['nullable', 'numeric', 'min:0', 'max:10'],
         ];
     }
 }

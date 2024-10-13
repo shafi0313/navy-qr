@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\VivaMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -57,3 +58,5 @@ Route::patch('final-medicals/fail', [FinalMedicalController::class, 'fail'])->na
 
 Route::resource('/viva-marks', VivaMarkController::class)->only(['index','store']);
 Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 'modalStore'])->name('viva_marks.modal_store');
+
+Route::resource('/results', ResultController::class)->only(['index']);

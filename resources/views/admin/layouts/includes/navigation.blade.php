@@ -101,8 +101,14 @@
                 </a>
             </li>
 
-            <li class="side-nav-title mt-2">Settings</li>
-            {{-- settings --}}
+            <li class="side-nav-item">
+                <a href="{{ route('admin.results.index') }}" class="side-nav-link">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Results</span>
+                </a>
+            </li>
+
+            {{-- <li class="side-nav-title mt-2">Settings</li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSettings" aria-expanded="false"
                     aria-controls="sidebarSettings" class="side-nav-link">
@@ -117,7 +123,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
 
 

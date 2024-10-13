@@ -329,7 +329,7 @@ if (!function_exists('sendOtpViaSms')) {
     {
         $apiKey = '943faf062f3d7241';
         $secretKey = 'dfd0b83b';
-        $senderId = 1;
+        $senderId = 'Navy_Barcode';
         $message = "Your OTP code is $otp";
 
         $response = Http::get('http://smpp.revesms.com:7788/sendtext', [
