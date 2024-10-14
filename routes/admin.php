@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 
 // App DB Backup
-Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(function(){
+Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(function () {
     Route::get('/password', 'password')->name('backup.password');
     Route::post('/checkPassword', 'checkPassword')->name('backup.checkPassword');
     Route::get('/confirm', 'index')->name('backup.index');
@@ -35,28 +35,25 @@ Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(
 Route::get('select-2-ajax', [AjaxController::class, 'select2'])->name('select2');
 Route::post('response', [AjaxController::class, 'response'])->name('ajax');
 
-Route::resource('/roles', RoleController::class)->except(['show','create']);
+Route::resource('/roles', RoleController::class)->except(['show', 'create']);
 Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name('roles.is_active');
 
-Route::resource('/admin-users', AdminUserController::class)->except(['show','create']);
+Route::resource('/admin-users', AdminUserController::class)->except(['show', 'create']);
 Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'status'])->name('admin_users.is_active');
 
-Route::resource('/my-profiles', MyProfileController::class)->only(['index','edit']);
+Route::resource('/my-profiles', MyProfileController::class)->only(['index', 'edit']);
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 Route::resource('/applications', ApplicationController::class)->except(['show']);
 
-Route::resource('/exam-marks', ExamMarkController::class)->only(['index','store']);
+Route::resource('/exam-marks', ExamMarkController::class)->only(['index', 'store']);
 Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 'modalStore'])->name('exam_marks.modal_store');
 
 Route::resource('/written-mark-imports', WrittenMarkImportController::class)->except(['create', 'show']);
-    Route::controller(WrittenMarkImportController::class)->prefix('written-mark-import')->name('written_mark_imports.')->group(function () {
-        Route::post('/imports', 'import')->name('import');
-        Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
-    });
-
-
-
+Route::controller(WrittenMarkImportController::class)->prefix('written-mark-import')->name('written_mark_imports.')->group(function () {
+    Route::post('/imports', 'import')->name('import');
+    Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
+});
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
 Route::patch('primary-medicals/pass', [PrimaryMedicalController::class, 'pass'])->name('primary_medicals.pass');
@@ -68,7 +65,7 @@ Route::patch('final-medicals/pass', [FinalMedicalController::class, 'pass'])->na
 Route::put('final-medicals/unfit-store', [FinalMedicalController::class, 'unfitStore'])->name('final_medicals.unfit_store');
 Route::get('/final-medicals/unfit/{application}', [FinalMedicalController::class, 'unfitModal'])->name('final_medicals.unfit');
 
-Route::resource('/viva-marks', VivaMarkController::class)->only(['index','store']);
+Route::resource('/viva-marks', VivaMarkController::class)->only(['index', 'store']);
 Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 'modalStore'])->name('viva_marks.modal_store');
 
 Route::resource('/results', ResultController::class)->only(['index']);
