@@ -18,7 +18,7 @@ return new class extends Migration
             // Basic Candidate Info
             $table->string('candidate_designation', 64);
             $table->date('exam_date');
-            $table->string('serial_no', 64);
+            $table->string('serial_no', 64)->index();
             $table->string('eligible_district', 128)->nullable();
             $table->string('district', 128)->nullable();
             $table->string('name', 128);
@@ -103,19 +103,14 @@ return new class extends Migration
             $table->string('center', 128)->nullable();
 
             // Pass Info
+            $table->boolean('is_important')->default(0)->nullable();
             $table->boolean('is_medical_pass')->index()->nullable();
             $table->boolean('is_final_pass')->index()->nullable();
 
+            $table->string('p_m_remark', 160)->nullable();
+            $table->string('f_m_remark', 160)->nullable();
             $table->string('remark')->nullable();
-
-            // $table->foreignId('scanned_by')->nullable()->constrained('users')->nullOnDelete();
             $table->dateTime('scanned_at')->nullable();
-            // $table->dateTime('normal_scanned_at')->nullable();
-            // $table->dateTime('primary_scanned_at')->nullable();
-            // $table->dateTime('written_scanned_at')->nullable();
-            // $table->dateTime('final_scanned_at')->nullable();
-            // $table->dateTime('viva_scanned_at')->nullable();
-            // Timestamps
             $table->timestamps();
         });
     }
