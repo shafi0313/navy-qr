@@ -15,10 +15,6 @@ class ApplicationController extends Controller
 
     public function index(Request $request)
     {
-        // $otp = rand(1000, 9999); // Generate a 6-digit OTP
-        // $mobileNumber = '+8801725848515';
-        // return sendOtpViaSms($mobileNumber, $otp);
-
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $query = Application::query();

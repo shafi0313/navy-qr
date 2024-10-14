@@ -14,6 +14,7 @@ use App\Http\Controllers\Setting\AppDbBackupController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
+use App\Http\Controllers\Admin\ImportantApplicationController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
@@ -67,5 +68,7 @@ Route::get('/final-medicals/unfit/{application}', [FinalMedicalController::class
 
 Route::resource('/viva-marks', VivaMarkController::class)->only(['index', 'store']);
 Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 'modalStore'])->name('viva_marks.modal_store');
+
+Route::resource('important-applications', ImportantApplicationController::class)->only(['index','store']);
 
 Route::resource('/results', ResultController::class)->only(['index']);

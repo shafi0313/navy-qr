@@ -9,7 +9,6 @@ use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreExamMarkRequest;
-use App\Http\Requests\UpdateExamMarkRequest;
 
 class ExamMarkController extends Controller
 {
@@ -109,17 +108,6 @@ class ExamMarkController extends Controller
         return abort(500);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ExamMark $examMark)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Request $request, ExamMark $examMark)
     {
         if ($request->ajax()) {
@@ -127,22 +115,5 @@ class ExamMarkController extends Controller
             return response()->json(['modal' => $modal], 200);
         }
         return abort(500);
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateExamMarkRequest $request, ExamMark $examMark)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ExamMark $examMark)
-    {
-        //
     }
 }
