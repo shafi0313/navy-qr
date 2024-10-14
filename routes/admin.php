@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Setting\AppDbBackupController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
+use App\Http\Controllers\Admin\WrittenMarkImportController;
 
 Route::get('/', function () {
     return view('admin.dashboard');
@@ -47,6 +48,15 @@ Route::resource('/applications', ApplicationController::class)->except(['show'])
 
 Route::resource('/exam-marks', ExamMarkController::class)->only(['index','store']);
 Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 'modalStore'])->name('exam_marks.modal_store');
+
+Route::resource('/written-mark-imports', WrittenMarkImportController::class)->except(['create', 'show']);
+    Route::controller(WrittenMarkImportController::class)->prefix('written-mark-import')->name('written_mark_imports.')->group(function () {
+        Route::post('/imports', 'import')->name('import');
+        Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
+    });
+
+
+
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
 Route::patch('primary-medicals/pass', [PrimaryMedicalController::class, 'pass'])->name('primary_medicals.pass');

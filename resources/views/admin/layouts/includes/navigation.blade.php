@@ -88,6 +88,12 @@
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="{{ route('admin.written-mark-imports.index') }}" class="side-nav-link">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Written Exam Import</span>
+                </a>
+            </li>
+            <li class="side-nav-item">
                 <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Final Medical</span>
