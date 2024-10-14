@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h3 class="text-center mb-4">Two-Factor Authentication</h3>
-    <form method="POST" action="{{ route('two-factor.verify') }}">
+    <form method="POST" action="{{ route('verify_otp') }}">
         @csrf
         <div class="form-group">
             <label for="otp">Enter the OTP sent to your phone:</label>
