@@ -17,21 +17,21 @@ class FinalMedicalController extends Controller
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
-            ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-            ->select(
-                array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-            )
-            ->selectRaw(
-                $this->examSumColumns()
-            )
-            ->where(function ($query) {
-                $query->where('bangla', '>=', 8)
-                    ->where('english', '>=', 8)
-                    ->where('math', '>=', 8)
-                    ->where('science', '>=', 8)
-                    ->where('general_knowledge', '>=', 8);
-            })
-            ->where('team', user()->team);
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                ->select(
+                    array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                )
+                ->selectRaw(
+                    $this->examSumColumns()
+                )
+                ->where(function ($query) {
+                    $query->where('bangla', '>=', 8)
+                        ->where('english', '>=', 8)
+                        ->where('math', '>=', 8)
+                        ->where('science', '>=', 8)
+                        ->where('general_knowledge', '>=', 8);
+                })
+                ->where('team', user()->team);
             // ->orderBy('total_viva', 'desc')
             // ->orderBy('total_marks', 'desc');
 
@@ -55,7 +55,8 @@ class FinalMedicalController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='fMPass(" . $row->id . ")'>Fit</button>";
-                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Unfit</button>";
+                    // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Unfit</button>";
+                    $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.final_medicals.unfit', $row->id), 'row' => $row]);
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -91,16 +92,27 @@ class FinalMedicalController extends Controller
         }
     }
 
-    public function fail(Request $request)
+    public function unfitModal(Request $request, Application $application)
+    {
+        if ($request->ajax()) {
+            $modal = view('admin.final-medical.unfit')->with(['application' => $application])->render();
+            return response()->json(['modal' => $modal], 200);
+        }
+        return abort(500);
+    }
+
+
+    public function unfitStore(Request $request)
     {
         if (!in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
-        $application->is_final_pass = 0;
-        $application->save();
         try {
-            $application->save();
+            $application->update([
+                'is_final_pass' => 0,
+                'f_m_remark' => $request->f_m_remark
+            ]);
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);

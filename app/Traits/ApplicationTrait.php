@@ -23,7 +23,8 @@ trait ApplicationTrait
             'applications.is_medical_pass',
             'applications.is_final_pass',
             'applications.photo',
-            'applications.remark',
+            'applications.p_m_remark',
+            'applications.f_m_remark',
         ];
     }
 
@@ -87,7 +88,7 @@ trait ApplicationTrait
     protected function finalMedical($roleId, $row)
     {
         if (in_array($roleId, [1, 2, 3, 4])) {
-            return result($row->is_final_pass);
+            return result($row->is_final_pass, $row->f_m_remark);
         } else {
             return '';
         }

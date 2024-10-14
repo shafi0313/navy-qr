@@ -65,7 +65,8 @@ Route::get('/primary-medicals/unfit/{application}', [PrimaryMedicalController::c
 
 Route::get('final-medicals', [FinalMedicalController::class, 'index'])->name('final_medicals.index');
 Route::patch('final-medicals/pass', [FinalMedicalController::class, 'pass'])->name('final_medicals.pass');
-Route::patch('final-medicals/fail', [FinalMedicalController::class, 'fail'])->name('final_medicals.fail');
+Route::put('final-medicals/unfit-store', [FinalMedicalController::class, 'unfitStore'])->name('final_medicals.unfit_store');
+Route::get('/final-medicals/unfit/{application}', [FinalMedicalController::class, 'unfitModal'])->name('final_medicals.unfit');
 
 Route::resource('/viva-marks', VivaMarkController::class)->only(['index','store']);
 Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 'modalStore'])->name('viva_marks.modal_store');
