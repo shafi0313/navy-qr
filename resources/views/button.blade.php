@@ -11,6 +11,12 @@
         <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-pen-to-square"></i>
     </button>
 @endif
+@if ($type == 'unfit')
+    <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
+        class='btn btn-danger btn-sm' title="@lang('Unfit')">
+        Unfit
+    </button>
+@endif
 
 @if ($type == 'edit')
     <a href="{{ route($route . '.edit', $row->id) }}" class='text-primary _btn' title="@lang('Edit')">

@@ -52,7 +52,7 @@ trait ApplicationTrait
     protected function primaryMedical($roleId, $row)
     {
         if (in_array($roleId, [1, 2, 3, 4, 5, 6])) {
-            return result($row->is_medical_pass);
+            return result($row->is_medical_pass, $row->p_m_remark);
         } else {
             return '';
         }

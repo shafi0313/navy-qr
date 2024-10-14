@@ -60,7 +60,8 @@ Route::resource('/written-mark-imports', WrittenMarkImportController::class)->ex
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
 Route::patch('primary-medicals/pass', [PrimaryMedicalController::class, 'pass'])->name('primary_medicals.pass');
-Route::patch('primary-medicals/fail', [PrimaryMedicalController::class, 'fail'])->name('primary_medicals.fail');
+Route::put('primary-medicals/unfit-store', [PrimaryMedicalController::class, 'unfitStore'])->name('primary_medicals.unfit_store');
+Route::get('/primary-medicals/unfit/{application}', [PrimaryMedicalController::class, 'unfitModal'])->name('primary_medicals.unfit');
 
 Route::get('final-medicals', [FinalMedicalController::class, 'index'])->name('final_medicals.index');
 Route::patch('final-medicals/pass', [FinalMedicalController::class, 'pass'])->name('final_medicals.pass');

@@ -11,14 +11,14 @@ use Yajra\DataTables\Facades\DataTables;
 class PrimaryMedicalController extends Controller
 {
     use ApplicationTrait;
-    
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $applications = Application::with([
                 'examMark:id'
-            ])->select('id', 'candidate_designation', 'exam_date', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'remark');
+            ])->select('id', 'candidate_designation', 'exam_date', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'p_m_remark');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -34,7 +34,8 @@ class PrimaryMedicalController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
-                    $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
+                    // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
+                    $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.primary_medicals.unfit', $row->id), 'row' => $row]);
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -67,13 +68,24 @@ class PrimaryMedicalController extends Controller
         }
     }
 
-    public function fail(Request $request)
+    public function unfitModal(Request $request, Application $application)
+    {
+        if ($request->ajax()) {
+            $modal = view('admin.primary-medical.unfit')->with(['application' => $application])->render();
+            return response()->json(['modal' => $modal], 200);
+        }
+        return abort(500);
+    }
+
+    public function unfitStore(Request $request)
     {
         $application = Application::find($request->id);
-        $application->is_medical_pass = 0;
-        $application->save();
+
         try {
-            $application->save();
+            $application->update([
+                'is_medical_pass' => 0,
+                'p_m_remark' => $request->p_m_remark
+            ]);
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);

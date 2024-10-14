@@ -34,15 +34,15 @@ if (! function_exists('sqlDate')) {
     }
 }
 if (! function_exists('result')) {
-    function result($data)
+    function result($data, $remark = null)
     {
-        if($data=='1' || $data=='0'){
+        if ($data == '1' || $data == '0') {
             $data = (int) $data;
             return match ($data) {
                 1 => '<span class="btn btn-success btn-sm">Fit</span>',
-                0 => '<span class="btn btn-danger btn-sm">Unfit</span>',
+                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($remark ? '(' . $remark . ')' : ''),
             };
-        }else{
+        } else {
             return '<span class="btn btn-warning btn-sm">Pending</span>';
         }
     }

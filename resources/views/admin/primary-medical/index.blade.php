@@ -167,7 +167,7 @@
                     if (willDelete) {
                         showLoadingAnimation();
                         $.ajax({
-                            url: '{{ route('admin.primary_medicals.fail') }}',
+                            url: '{{ route('admin.primary_medicals.unfit_store') }}',
                             type: "PATCH",
                             data: {
                                 id: id,
