@@ -16,23 +16,45 @@ class VivaMarkController extends Controller
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
+            if ($roleId == 1) {
                 $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'])
-                ->whereHas('examMark', function ($query) {
-                    $query->where('bangla', '>=', 8)
-                        ->where('english', '>=', 8)
-                        ->where('math', '>=', 8)
-                        ->where('science', '>=', 8)
-                        ->where('general_knowledge', '>=', 8);
-                })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                ->select(
-                    array_merge($this->applicationColumns(), $this->examColumns())
-                )
-                ->selectRaw(
-                    $this->examSumColumns()
-                )
-                ->where('is_final_pass', 1)
-                ->orderBy('total_viva', 'desc')
-                ->orderBy('total_marks', 'desc');
+                    ->whereHas('examMark', function ($query) {
+                        $query->where('bangla', '>=', 8)
+                            ->where('english', '>=', 8)
+                            ->where('math', '>=', 8)
+                            ->where('science', '>=', 8)
+                            ->where('general_knowledge', '>=', 8);
+                    })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                    ->select(
+                        array_merge($this->applicationColumns(), $this->examColumns())
+                    )
+                    ->selectRaw(
+                        $this->examSumColumns()
+                    )
+                    ->where('is_final_pass', 1)
+                    ->orderBy('total_viva', 'desc')
+                    ->orderBy('total_marks', 'desc');
+            } else {
+                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'])
+                    ->whereHas('examMark', function ($query) {
+                        $query->where('bangla', '>=', 8)
+                            ->where('english', '>=', 8)
+                            ->where('math', '>=', 8)
+                            ->where('science', '>=', 8)
+                            ->where('general_knowledge', '>=', 8);
+                    })->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                    ->select(
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                    )
+                    ->selectRaw(
+                        $this->examSumColumns()
+                    )
+                    ->where('team', user()->team)
+                    ->where('is_final_pass', 1)
+                    ->orderBy('total_viva', 'desc')
+                    ->orderBy('total_marks', 'desc');
+            }
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -89,7 +111,7 @@ class VivaMarkController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'viva' => ['required', 'numeric'],
+            'viva' => ['required', 'numeric', 'min:0', 'max:10'],
         ]);
         $application = Application::select('id', 'serial_no', 'name', 'is_final_pass')->whereId($request->application_id)->first();
 

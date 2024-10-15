@@ -17,7 +17,8 @@ class ExamMarkController extends Controller
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            $applications = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+            if($roleId == 1){
+                $applications = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                 ->select(
                     array_merge($this->applicationColumns(), $this->examColumns())
                 )
@@ -27,6 +28,21 @@ class ExamMarkController extends Controller
                 ->where('applications.is_medical_pass', 1)
                 ->orderBy('total_marks', 'desc')
                 ->orderBy('serial_no', 'asc');
+            }else{
+                $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                ->select(
+                    array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                )
+                ->selectRaw(
+                    $this->examSumColumns()
+                )
+                ->where('team', user()->team)
+                ->where('applications.is_medical_pass', 1)
+                ->orderBy('total_marks', 'desc')
+                ->orderBy('serial_no', 'asc');
+            }
+
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()

@@ -15,6 +15,11 @@ class Application extends Model
         return $this->belongsTo(ApplicationUrl::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function examMark()
     {
         return $this->hasOne(ExamMark::class)->withDefault([

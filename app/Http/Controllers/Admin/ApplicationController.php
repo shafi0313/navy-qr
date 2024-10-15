@@ -6,7 +6,6 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationController extends Controller
@@ -20,7 +19,7 @@ class ApplicationController extends Controller
             $query = Application::query();
 
             switch ($roleId) {
-                case 1: // Supper Admin
+                case 1: // Super Admin
                     $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                         ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                         ->select(

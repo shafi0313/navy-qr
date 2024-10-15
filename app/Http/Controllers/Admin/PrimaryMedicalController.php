@@ -16,9 +16,43 @@ class PrimaryMedicalController extends Controller
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            $applications = Application::with([
-                'examMark:id'
-            ])->select('id', 'candidate_designation', 'exam_date', 'serial_no', 'name', 'eligible_district', 'is_important', 'is_medical_pass', 'p_m_remark');
+            if ($roleId == 1) {
+                // For roleId 1: Fetch applications without filtering by team
+                $applications = Application::with([
+                    'examMark:id,application_id'
+                ])->select(
+                    'id',
+                    'user_id',
+                    'candidate_designation',
+                    'exam_date',
+                    'serial_no',
+                    'name',
+                    'eligible_district',
+                    'is_important',
+                    'is_medical_pass',
+                    'p_m_remark'
+                ); // Execute the query
+            } else {
+                // For other roles: Fetch applications, filtering by the authenticated user's team
+                $applications = Application::with([
+                    'examMark:id,application_id',
+                    'user:id,team',
+                ])->select(
+                    'id',
+                    'candidate_designation',
+                    'exam_date',
+                    'serial_no',
+                    'name',
+                    'eligible_district',
+                    'is_important',
+                    'is_medical_pass',
+                    'p_m_remark'
+                )->whereHas('user', function ($query) {
+                    $query->where('team', user()->team); // Fixed to use auth()->user()
+                }); // Execute the query
+            }
+
+
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
