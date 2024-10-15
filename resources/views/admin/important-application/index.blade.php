@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Important Application';
+    $pageTitle = 'All documents held';
     $folder = 'important-application';
     $route = $folder . 's';
 @endphp

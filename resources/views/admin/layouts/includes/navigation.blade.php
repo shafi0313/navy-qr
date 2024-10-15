@@ -110,7 +110,7 @@
             <li class="side-nav-item">
                 <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
-                    <span>Important Application</span>
+                    <span>All documents held</span>
                 </a>
             </li>
 
