@@ -19,8 +19,8 @@ class PrimaryMedicalController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
-        $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
-        $application->update(['is_medical_pass' => 1]);
+        $application = Application::select('id', 'is_medical_pass', 'p_m_remark')->findOrFail($request->id);
+        $application->update(['is_medical_pass' => 1, 'p_m_remark' => null]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 

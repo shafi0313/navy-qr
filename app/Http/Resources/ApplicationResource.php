@@ -25,6 +25,7 @@ class ApplicationResource extends JsonResource
             'mother_name'           => $this->mother_name,
             'photo'                 => $this->photo,
             // 'photo'                 => asset('uploads/images/photo/' . $this->photo),
+            'is_important'    => $this->is_important,
             'is_medical_pass' => $this->is_medical_pass ?? null,
             'p_m_remark'      => $this->p_m_remark ?? null,
             'is_final_pass'   => $this->is_final_pass ?? null,
