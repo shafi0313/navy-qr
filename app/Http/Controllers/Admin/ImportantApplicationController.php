@@ -83,7 +83,7 @@ class ImportantApplicationController extends Controller
         ]);
 
         $application = Application::find($request->application_id);
-        $application->is_medical_pass = 1;
+        // $application->is_medical_pass = 1;
         $application->is_important = 1;
         $application->save();
 

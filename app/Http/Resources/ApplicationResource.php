@@ -25,7 +25,7 @@ class ApplicationResource extends JsonResource
             'mother_name'           => $this->mother_name,
             'photo'                 => $this->photo,
             // 'photo'                 => asset('uploads/images/photo/' . $this->photo),
-            'is_important'    => $this->is_important,
+            'is_important'    => $this->is_important == 1 ? 'All documents held' : 0,
             'is_medical_pass' => $this->is_medical_pass ?? null,
             'p_m_remark'      => $this->p_m_remark ?? null,
             'is_final_pass'   => $this->is_final_pass ?? null,
@@ -33,14 +33,14 @@ class ApplicationResource extends JsonResource
         ];
 
         // if (in_array(user()->role_id, [1, 2, 3, 4, 5])) {
-            $data['examMark'] = [
-                'bangla'            => $this->examMark->bangla,
-                'english'           => $this->examMark->english,
-                'math'              => $this->examMark->math,
-                'science'           => $this->examMark->science,
-                'general_knowledge' => $this->examMark->general_knowledge,
-                'viva'              => $this->examMark->viva,
-            ];
+        $data['examMark'] = [
+            'bangla'            => $this->examMark->bangla,
+            'english'           => $this->examMark->english,
+            'math'              => $this->examMark->math,
+            'science'           => $this->examMark->science,
+            'general_knowledge' => $this->examMark->general_knowledge,
+            'viva'              => $this->examMark->viva,
+        ];
         // }
 
         return $data;
