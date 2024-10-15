@@ -11,12 +11,11 @@ class FinalMedicalController extends BaseController
 {
     public function passStatus(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 3])) {
+        if (!in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $validator = \Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
-            // 'is_final_pass' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -29,21 +28,19 @@ class FinalMedicalController extends BaseController
 
     public function failStatus(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 3])) {
-            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-        }if (!in_array(user()->role_id, [1, 3])) {
+        if (!in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $validator = \Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
-            // 'is_final_pass' => 'required|boolean',
+            'f_m_remark' => 'required|string|max:160',
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $application = Application::select('id', 'is_final_pass')->findOrFail($request->id);
-        $application->update(['is_final_pass' => 0]);
+        $application->update(['is_final_pass' => 0, 'f_m_remark' => $request->f_m_remark]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 }
