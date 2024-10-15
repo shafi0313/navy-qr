@@ -29,7 +29,7 @@ class Application extends Model
     public function scopeSearch($query, $search)
     {
         return $query->where('serial_no', 'like', '%'.$search.'%')
-            ->orWhere('name', 'like', '%'.$search.'%')
+            ->orWhere('applications.name', 'like', '%'.$search.'%')
             ->orWhere('eligible_district', 'like', '%'.$search.'%')
             ->orWhere('candidate_designation', 'like', '%'.$search.'%');
     }

@@ -18,18 +18,31 @@ class PrimaryMedicalController extends Controller
             $roleId = user()->role_id;
             $applications = Application::with([
                 'examMark:id'
-            ])->select('id', 'candidate_designation', 'exam_date', 'serial_no', 'name', 'eligible_district', 'is_medical_pass', 'p_m_remark');
+            ])->select('id', 'candidate_designation', 'exam_date', 'serial_no', 'name', 'eligible_district', 'is_important', 'is_medical_pass', 'p_m_remark');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
-                ->addColumn('exam_date', function ($row){
+                ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
-                ->addColumn('eligible_district', function ($row){
+                ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    return $this->primaryMedical($roleId, $row);
+                    if (in_array($roleId, [1, 2, 3, 4, 5, 6])) {
+                        $data = $row->is_medical_pass;
+                        if ($data == '1' || $data == '0') {
+                            $data = (int) $data;
+                            return match ($data) {
+                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
+                            };
+                        } else {
+                            return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
+                        }
+                    } else {
+                        return '';
+                    }
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
