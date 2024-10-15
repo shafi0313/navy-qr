@@ -141,9 +141,9 @@ class ApplicationController extends BaseController
                 // return response()->json(['message' => 'Already Scanned.'], 200);
                 return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
             }
-            if (user()->role_id == 7) {
-                $application->update(['scanned_at' => now()]);
-            }
+            // if (user()->role_id == 7) {
+            $application->update(['scanned_at' => now()]);
+            // }
             $application->update(['user_id' => user()->id]);
             return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
         } else {

@@ -28,14 +28,14 @@ class PrimaryMedicalController extends BaseController
     {
         $validator = \Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
-            // 'is_medical_pass' => 'required|boolean',
+            'p_m_remark' => 'required|string|max:160',
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
-        $application->update(['is_medical_pass' => 0]);
+        $application->update(['is_medical_pass' => 0, 'p_m_remark' => $request->p_m_remark]);
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 }
