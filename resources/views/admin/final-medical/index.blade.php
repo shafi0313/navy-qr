@@ -42,10 +42,11 @@
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
                         data: function(d) {
-                            return $.extend({}, d, {
-                                "gender": $('.gender').val()
+                            return $.extend(d, {
+                                district: $('.district').val(),
+                                exam_date: $('.exam_date').val()
                             });
-                        }
+                        },
                     },
                     columns: [{
                             data: 'DT_RowIndex',

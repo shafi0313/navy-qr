@@ -38,6 +38,7 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
+                    scrollX: true,
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
