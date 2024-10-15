@@ -38,6 +38,7 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
+                    scrollX: true,
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -56,11 +57,6 @@
                             title: 'SL',
                             orderable: false,
                             searchable: false,
-                        },
-                        {
-                            data: 'exam_date',
-                            name: 'exam_date',
-                            title: 'Exam Date',
                         },
                         {
                             data: 'serial_no',
@@ -83,21 +79,34 @@
                             title: 'District',
                         },
                         {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'Pre. Medical',
-                            className: 'text-center',
+                            data: 'bangla',
+                            name: 'bangla',
+                            title: 'Bangla',
+                        },
+                        {
+                            data: 'english',
+                            name: 'english',
+                            title: 'english',
+                        },
+                        {
+                            data: 'math',
+                            name: 'math',
+                            title: 'math',
+                        },
+                        {
+                            data: 'science',
+                            name: 'science',
+                            title: 'science',
+                        },
+                        {
+                            data: 'general_knowledge',
+                            name: 'general_knowledge',
+                            title: 'general knowledge',
                         },
                         {
                             data: 'written',
                             name: 'written',
                             title: 'Written',
-                            className: 'text-center',
-                        },
-                        {
-                            data: 'final',
-                            name: 'final',
-                            title: 'Final M.',
                             className: 'text-center',
                         },
                         {
@@ -110,6 +119,18 @@
                             data: 'remark',
                             name: 'remark',
                             title: 'Remark',
+                        },
+                        {
+                            data: 'medical',
+                            name: 'medical',
+                            title: 'Pre. Medical',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'final',
+                            name: 'final',
+                            title: 'Final M.',
+                            className: 'text-center',
                         },
                     ],
                     scroller: {

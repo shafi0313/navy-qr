@@ -25,6 +25,7 @@ trait ApplicationTrait
             'applications.photo',
             'applications.p_m_remark',
             'applications.f_m_remark',
+            'applications.remark',
         ];
     }
 
