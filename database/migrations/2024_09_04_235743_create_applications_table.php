@@ -64,26 +64,26 @@ return new class extends Migration
             $table->string('photo', 255)->nullable(); // Path for the photo (longer string for file path)
 
             // Education (JSC, SSC, HSC)
-            $table->string('jsc_reg_no', 20)->nullable();
+            $table->string('jsc_reg_no', 64)->nullable();
             $table->string('jsc_institute_name', 191)->nullable();
             $table->string('jsc_passing_year', 20)->nullable(); // Use 'year' for year data
-            $table->string('jsc_gpa', 32)->nullable();
+            $table->string('jsc_gpa', 64)->nullable();
 
             $table->string('ac_type_ssc', 64)->nullable();
             $table->string('ssc_institute', 191)->nullable();
             $table->string('ssc_group', 64)->nullable();
             $table->string('ssc_edu_board', 64)->nullable();
-            $table->string('ssc_reg_no', 20)->nullable();
-            $table->string('ssc_roll_no', 20)->nullable();
+            $table->string('ssc_reg_no', 64)->nullable();
+            $table->string('ssc_roll_no', 64)->nullable();
             $table->string('ssc_passing_year', 20)->nullable();
-            $table->string('ssc_gpa', 8)->nullable();
+            $table->string('ssc_gpa', 64)->nullable();
 
             $table->string('hsc_dip_institute', 191)->nullable();
             $table->string('hsc_dip_group', 64)->nullable();
             $table->string('hsc_dip_board', 64)->nullable();
-            $table->string('hsc_dip_reg_no', 20)->nullable();
-            $table->string('hsc_dip_roll_no', 20)->nullable();
-            $table->string('hsc_dip_passing_year', 20)->nullable();
+            $table->string('hsc_dip_reg_no', 64)->nullable();
+            $table->string('hsc_dip_roll_no', 64)->nullable();
+            $table->string('hsc_dip_passing_year', 64)->nullable();
 
             // Special Categories
             $table->string('is_freedom_fighter', 32)->nullable();

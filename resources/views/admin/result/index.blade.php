@@ -145,29 +145,6 @@
                     // Add export buttons
                     dom: 'Bfrtip',
                     buttons: [{
-                            extend: 'csvHtml5',
-                            title: 'Application Data',
-                            exportOptions: {
-                                columns: ':visible',
-                                modifier: {
-                                    search: 'applied',
-                                    order: 'applied',
-                                    page: 'all' // Export all data
-                                }
-                            },
-                            action: function(e, dt, button, config) {
-                                dt.one('preXhr', function(e, settings, data) {
-                                    data.length = -1; // Get all records from the server
-                                }).one('xhr', function(e, settings, json) {
-                                    $.fn.dataTable.ext.buttons.csvHtml5.action.call(this, e, dt,
-                                        button, config);
-                                    data.length = table.page
-                                .len(); // Reset the length back to the original
-                                });
-                                dt.ajax.reload();
-                            }
-                        },
-                        {
                             extend: 'excelHtml5',
                             title: 'Application Data',
                             exportOptions: {
@@ -175,19 +152,24 @@
                                 modifier: {
                                     search: 'applied',
                                     order: 'applied',
-                                    page: 'all' // Export all data
+                                    page: 'all' // Export all filtered data
                                 }
                             },
                             action: function(e, dt, button, config) {
                                 dt.one('preXhr', function(e, settings, data) {
-                                    data.length = -1; // Get all records from the server
+                                    data.length = -1; // Fetch all records from the server
                                 }).one('xhr', function(e, settings, json) {
+                                    // Call the default Excel export action
                                     $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e,
                                         dt, button, config);
-                                    data.length = table.page
-                                .len(); // Reset the length back to the original
+
+                                    // Reset the length to the original after export
+                                    data.length = dt.page.len();
                                 });
-                                dt.ajax.reload();
+
+                                // Temporarily disable the length reset to avoid reloading issues
+                                dt.ajax.reload(null,
+                                false); // Reload table without resetting the paging
                             }
                         },
                         {
@@ -198,24 +180,30 @@
                                 modifier: {
                                     search: 'applied',
                                     order: 'applied',
-                                    page: 'all' // Export all data
+                                    page: 'all' // Export all filtered data
                                 }
                             },
                             orientation: 'landscape',
                             pageSize: 'A4',
                             action: function(e, dt, button, config) {
                                 dt.one('preXhr', function(e, settings, data) {
-                                    data.length = -1; // Get all records from the server
+                                    data.length = -1; // Fetch all records from the server
                                 }).one('xhr', function(e, settings, json) {
+                                    // Call the default PDF export action
                                     $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt,
                                         button, config);
-                                    data.length = table.page
-                                .len(); // Reset the length back to the original
+
+                                    // Reset the length to the original after export
+                                    data.length = dt.page.len();
                                 });
-                                dt.ajax.reload();
+
+                                // Temporarily disable the length reset to avoid reloading issues
+                                dt.ajax.reload(null,
+                                false); // Reload table without resetting the paging
                             }
                         }
                     ]
+
                 });
 
                 $(".filter").find('select').on('change', function() {
