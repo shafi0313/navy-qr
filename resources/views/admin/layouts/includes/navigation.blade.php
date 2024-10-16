@@ -76,13 +76,14 @@
                     <span> Applicants </span>
                 </a>
             </li>
-            
+            @if(in_array($roleId,[1,2,3,4,5,6]))
             <li class="side-nav-item">
                 <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span> Primary Medical Selection </span>
                 </a>
             </li>
+            @endif
             @if(in_array($roleId,[1,2,3,4,5]))
             <li class="side-nav-item">
                 <a href="{{ route('admin.exam-marks.index') }}" class="side-nav-link">
