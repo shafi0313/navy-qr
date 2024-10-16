@@ -69,6 +69,9 @@ class ResultController extends Controller
                 ->addColumn('total_viva', function ($row) use ($roleId) {
                     return $this->viva($roleId, $row);
                 })
+                ->addColumn('specialty', function ($row) {
+                    return '';
+                })
                 ->filter(function ($query) use ($request) {
                     if ($request->filled('district')) {
                         $query->where('applications.eligible_district', $request->district);

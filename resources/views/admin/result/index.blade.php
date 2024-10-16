@@ -56,6 +56,10 @@
                     responsive: true,
                     scrollY: 400,
                     scrollX: true,
+                    lengthMenu: [
+                        [10, 25, 50, 100, 200, 500, 1000, 10000, -1],
+                        [10, 25, 50, 100, 200, 500, 1000, 10000, 'All']
+                    ],
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -67,83 +71,112 @@
                         },
                     },
                     columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        className: 'text-center',
-                        width: '60px',
-                        title: 'SL',
-                        orderable: false,
-                        searchable: false,
-                    }, {
-                        data: 'serial_no',
-                        name: 'serial_no',
-                        title: 'Roll No',
-                    }, {
-                        data: 'eligible_district',
-                        name: 'eligible_district',
-                        title: 'District',
-                    }, {
-                        data: 'name',
-                        name: 'name',
-                        title: 'Name',
-                    }, {
-                        data: 'candidate_designation',
-                        name: 'candidate_designation',
-                        title: 'Branch',
-                    }, {
-                        data: 'bangla',
-                        name: 'bangla',
-                        title: 'Bangla',
-                    }, {
-                        data: 'english',
-                        name: 'english',
-                        title: 'english',
-                    }, {
-                        data: 'math',
-                        name: 'math',
-                        title: 'math',
-                    }, {
-                        data: 'science',
-                        name: 'science',
-                        title: 'science',
-                    }, {
-                        data: 'general_knowledge',
-                        name: 'general_knowledge',
-                        title: 'general knowledge',
-                    }, {
-                        data: 'written',
-                        name: 'written',
-                        title: 'Written',
-                        className: 'text-center',
-                    }, {
-                        data: 'total_viva',
-                        name: 'total_viva',
-                        title: 'Viva',
-                        className: 'text-center',
-                    }, {
-                        data: 'remark',
-                        name: 'remark',
-                        title: 'Remark',
-                    }, {
-                        data: 'medical',
-                        name: 'medical',
-                        title: 'Pre. Medical',
-                        className: 'text-center',
-                    }, {
-                        data: 'final',
-                        name: 'final',
-                        title: 'Final M.',
-                        className: 'text-center',
-                    }, ],
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            className: 'text-center',
+                            width: '60px',
+                            title: 'SL',
+                            orderable: false,
+                            searchable: false
+                        },
+                        {
+                            data: 'serial_no',
+                            name: 'serial_no',
+                            title: 'Roll No'
+                        },
+                        {
+                            data: 'eligible_district',
+                            name: 'eligible_district',
+                            title: 'District'
+                        },
+                        {
+                            data: 'name',
+                            name: 'name',
+                            title: 'Name'
+                        },
+                        {
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'Branch'
+                        },
+                        {
+                            data: 'medical',
+                            name: 'medical',
+                            title: 'Pre. Medical',
+                            className: 'text-center'
+                        },
+                        // {
+                        //     data: 'p_m_remark',
+                        //     name: 'p_m_remark',
+                        //     title: 'Pre. M. Re.',
+                        // },
+                        {
+                            data: 'bangla',
+                            name: 'bangla',
+                            title: 'Bangla'
+                        },
+                        {
+                            data: 'specialty',
+                            name: 'specialty',
+                            title: 'Specialty'
+                        },
+                        {
+                            data: 'english',
+                            name: 'english',
+                            title: 'English'
+                        },
+                        {
+                            data: 'math',
+                            name: 'math',
+                            title: 'Math'
+                        },
+                        {
+                            data: 'science',
+                            name: 'science',
+                            title: 'Science'
+                        },
+                        {
+                            data: 'general_knowledge',
+                            name: 'general_knowledge',
+                            title: 'General Knowledge'
+                        },
+                        {
+                            data: 'written',
+                            name: 'written',
+                            title: 'Written',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'final',
+                            name: 'final',
+                            title: 'Final M.',
+                            className: 'text-center'
+                        },
+                        // {
+                        //     data: 'f_m_remark',
+                        //     name: 'f_m_remark',
+                        //     title: 'Final M. Re.',
+                        // },
+                        {
+                            data: 'total_viva',
+                            name: 'total_viva',
+                            title: 'Viva',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'remark',
+                            name: 'remark',
+                            title: 'Remark'
+                        },
+                    ],
                     scroller: {
                         loadingIndicator: true
                     },
                     order: [
                         [1, 'asc']
                     ],
-
-                    // Add export buttons
-                    dom: 'Bfrtip',
+                    // Adjusted DOM structure
+                    dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{
                             extend: 'excelHtml5',
                             title: 'Application Data',
@@ -152,24 +185,28 @@
                                 modifier: {
                                     search: 'applied',
                                     order: 'applied',
-                                    page: 'all' // Export all filtered data
+                                    page: 'all'
                                 }
                             },
                             action: function(e, dt, button, config) {
-                                dt.one('preXhr', function(e, settings, data) {
-                                    data.length = -1; // Fetch all records from the server
-                                }).one('xhr', function(e, settings, json) {
-                                    // Call the default Excel export action
-                                    $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e,
-                                        dt, button, config);
+                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                                dt.settings()[0].oFeatures.bServerSide = false;
 
-                                    // Reset the length to the original after export
-                                    data.length = dt.page.len();
+                                $.ajax({
+                                    url: dt.ajax.url(),
+                                    data: dt.ajax.params(),
+                                    success: (json) => {
+                                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(
+                                            this, e, dt, button, config);
+                                        dt.settings()[0].oFeatures.bServerSide =
+                                            originalServerSide;
+                                        dt.ajax.reload(null, false);
+                                    },
+                                    error: function(xhr, error, thrown) {
+                                        console.error('Error fetching data for export:',
+                                            error);
+                                    }
                                 });
-
-                                // Temporarily disable the length reset to avoid reloading issues
-                                dt.ajax.reload(null,
-                                false); // Reload table without resetting the paging
                             }
                         },
                         {
@@ -180,32 +217,36 @@
                                 modifier: {
                                     search: 'applied',
                                     order: 'applied',
-                                    page: 'all' // Export all filtered data
+                                    page: 'all'
                                 }
                             },
                             orientation: 'landscape',
                             pageSize: 'A4',
                             action: function(e, dt, button, config) {
-                                dt.one('preXhr', function(e, settings, data) {
-                                    data.length = -1; // Fetch all records from the server
-                                }).one('xhr', function(e, settings, json) {
-                                    // Call the default PDF export action
-                                    $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt,
-                                        button, config);
+                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                                dt.settings()[0].oFeatures.bServerSide = false;
 
-                                    // Reset the length to the original after export
-                                    data.length = dt.page.len();
+                                $.ajax({
+                                    url: dt.ajax.url(),
+                                    data: dt.ajax.params(),
+                                    success: (json) => {
+                                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
+                                            this, e, dt, button, config);
+                                        dt.settings()[0].oFeatures.bServerSide =
+                                            originalServerSide;
+                                        dt.ajax.reload(null, false);
+                                    },
+                                    error: function(xhr, error, thrown) {
+                                        console.error('Error fetching data for export:',
+                                            error);
+                                    }
                                 });
-
-                                // Temporarily disable the length reset to avoid reloading issues
-                                dt.ajax.reload(null,
-                                false); // Reload table without resetting the paging
                             }
                         }
                     ]
-
                 });
 
+                // Filter functionality
                 $(".filter").find('select').on('change', function() {
                     table.draw();
                 });
@@ -216,6 +257,8 @@
                     table.draw();
                 });
             });
+
+
 
 
 
