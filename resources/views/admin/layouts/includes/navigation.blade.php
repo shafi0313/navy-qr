@@ -1,3 +1,4 @@
+@php $roleId = user()->id @endphp
 <div class="leftside-menu">
     <style>
         .logo-lg img {
