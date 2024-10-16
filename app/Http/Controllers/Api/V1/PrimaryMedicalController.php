@@ -28,7 +28,7 @@ class PrimaryMedicalController extends BaseController
     {
         $validator = \Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
-            'p_m_remark' => 'required|string|max:160',
+            'p_m_remark' => 'nullable|string|max:160',
         ]);
 
         if ($validator->fails()) {

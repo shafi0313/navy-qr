@@ -16,9 +16,8 @@
                             <h4>{{ $application->serial_no  }}</h4>
                         </div>
                         <div class="col-md-12">
-                            <label for="name" class="form-label required">Remark </label>
-                            <input type="text" name="p_m_remark" class="form-control"
-                                required>
+                            <label for="name" class="form-label">Remark </label>
+                            <input type="text" name="p_m_remark" class="form-control">
                         </div>
                     </div>
                 </div>

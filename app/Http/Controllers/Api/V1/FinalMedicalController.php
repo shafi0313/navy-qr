@@ -33,7 +33,7 @@ class FinalMedicalController extends BaseController
         }
         $validator = \Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
-            'f_m_remark' => 'required|string|max:160',
+            'f_m_remark' => 'nullable|string|max:160',
         ]);
 
         if ($validator->fails()) {
