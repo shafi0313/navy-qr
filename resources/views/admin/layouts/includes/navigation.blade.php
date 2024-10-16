@@ -90,26 +90,31 @@
                     <span>Written Exam </span>
                 </a>
             </li>
-            @endif
+            
             <li class="side-nav-item">
                 <a href="{{ route('admin.written-mark-imports.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Written Exam Import</span>
                 </a>
             </li>
+            @endif
+
+            @if(in_array($roleId,[1,2,3,4]))
             <li class="side-nav-item">
                 <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Final Medical</span>
                 </a>
             </li>
-
+            @endif
+@if(in_array($roleId,[1,2,3]))
             <li class="side-nav-item">
                 <a href="{{ route('admin.viva-marks.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-list"></i>
                     <span>Final Viva</span>
                 </a>
             </li>
+            @endif
 
             <li class="side-nav-item">
                 <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
