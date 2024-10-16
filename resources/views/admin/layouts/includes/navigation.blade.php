@@ -124,13 +124,14 @@
                 </a>
             </li>
 
-            <li class="side-nav-item">
-                <a href="{{ route('admin.results.index') }}" class="side-nav-link">
-                    <i class="fa-solid fa-list"></i>
-                    <span>Results</span>
-                </a>
-            </li>
-
+            @if (in_array($roleId, [1, 2]))
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.results.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-list"></i>
+                        <span>Results</span>
+                    </a>
+                </li>
+            @endif
             {{-- <li class="side-nav-title mt-2">Settings</li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSettings" aria-expanded="false"
