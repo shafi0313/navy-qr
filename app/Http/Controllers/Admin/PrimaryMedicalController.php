@@ -104,7 +104,10 @@ class PrimaryMedicalController extends Controller
 
     public function pass(Request $request)
     {
-        $application = Application::find($request->id);
+        $application = Application::findOrFail($request->id);
+        if ($application->user_id == null) {
+            $application->update(['user_id' => user()->id]);
+        }
         $application->is_medical_pass = 1;
         $application->save();
         try {
@@ -129,6 +132,9 @@ class PrimaryMedicalController extends Controller
         $application = Application::find($request->id);
 
         try {
+            if ($application->user_id == null) {
+                $application->update(['user_id' => user()->id]);
+            }
             $application->update([
                 'is_medical_pass' => 0,
                 'p_m_remark' => $request->p_m_remark
