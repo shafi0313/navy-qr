@@ -143,13 +143,12 @@
                         {
                             data: 'general_knowledge',
                             name: 'general_knowledge',
-                            title: 'General Knowledge'
+                            title: 'GK'
                         },
                         {
-                            data: 'written',
-                            name: 'written',
-                            title: 'Written',
-                            className: 'text-center'
+                            data: 'total_marks',
+                            name: 'total_marks',
+                            title: 'GT'
                         },
                         {
                             data: 'final',
@@ -167,11 +166,6 @@
                             name: 'total_viva',
                             title: 'Viva',
                             className: 'text-center'
-                        },
-                        {
-                            data: 'remark',
-                            name: 'remark',
-                            title: 'Remark'
                         },
                     ],
                     scroller: {
