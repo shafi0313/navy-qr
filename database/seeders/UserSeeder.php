@@ -109,7 +109,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 2,
                 'team' => 'B', // admin
-                'name' => 'Team A Admin',
+                'name' => 'Team B Admin',
                 'email' => 'admin_b@app.com',
                 'mobile' => '01725848515',
                 'user_name' => null,
@@ -188,7 +188,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 2,
                 'team' => 'C', // admin
-                'name' => 'Team A Admin',
+                'name' => 'Team C Admin',
                 'email' => 'admin_c@app.com',
                 'mobile' => '01725848515',
                 'user_name' => null,
@@ -199,7 +199,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 3,
                 'team' => 'C', // Team A Final Medical
-                'name' => 'Team A Final Medical',
+                'name' => 'Team C Final Medical',
                 'email' => 'f_medical_c@app.com',
                 'mobile' => null,
                 'user_name' => null,
@@ -210,7 +210,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 4,
                 'team' => 'C', // Team A Written Exam
-                'name' => 'Team A Written Exam',
+                'name' => 'Team C Written Exam',
                 'email' => 'written_c@app.com',
                 'mobile' => null,
                 'user_name' => null,
@@ -221,7 +221,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 6,
                 'team' => 'C', // Team A Preli Medical-1
-                'name' => 'Team A Preli Medical-1',
+                'name' => 'Team C Preli Medical-1',
                 'email' => 'p_medical_c1@app.com',
                 'mobile' => null,
                 'user_name' => null,
@@ -232,7 +232,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 6,
                 'team' => 'C', // Team A Preli Medical-2
-                'name' => 'Team A Preli Medical-2',
+                'name' => 'Team C Preli Medical-2',
                 'email' => 'p_medical_c2@app.com',
                 'mobile' => null,
                 'user_name' => null,
@@ -243,7 +243,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 7,
                 'team' => 'C', // Team A QR Code Scan-1
-                'name' => 'Team A QR Code Scan-1',
+                'name' => 'Team C QR Code Scan-1',
                 'email' => 'qr_c1@app.com',
                 'mobile' => null,
                 'user_name' => null,
@@ -254,7 +254,7 @@ class UserSeeder extends Seeder
             [
                 'role_id' => 7,
                 'team' => 'C', // Team A QR Code Scan-2
-                'name' => 'Team A QR Code Scan-2',
+                'name' => 'Team C QR Code Scan-2',
                 'email' => 'qr_c2@app.com',
                 'mobile' => null,
                 'user_name' => null,

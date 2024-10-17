@@ -1,4 +1,4 @@
-@php $roleId = user()->id @endphp
+@php $roleId = user()->role_id @endphp
 <div class="leftside-menu">
     <style>
         .logo-lg img {
@@ -117,12 +117,12 @@
                 </li>
             @endif
             @if (in_array($roleId, [1]))
-            <li class="side-nav-item">
-                <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
-                    <i class="fa-solid fa-list"></i>
-                    <span>All documents held</span>
-                </a>
-            </li>
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-list"></i>
+                        <span>All documents held</span>
+                    </a>
+                </li>
             @endif
             @if (in_array($roleId, [1, 2]))
                 <li class="side-nav-item">
