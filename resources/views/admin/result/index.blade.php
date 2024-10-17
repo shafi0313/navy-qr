@@ -100,6 +100,11 @@
                             title: 'Branch'
                         },
                         {
+                            data: 'specialty',
+                            name: 'specialty',
+                            title: 'Specialty'
+                        },
+                        {
                             data: 'medical',
                             name: 'medical',
                             title: 'Pre. Medical',
@@ -114,11 +119,6 @@
                             data: 'bangla',
                             name: 'bangla',
                             title: 'Bangla'
-                        },
-                        {
-                            data: 'specialty',
-                            name: 'specialty',
-                            title: 'Specialty'
                         },
                         {
                             data: 'english',

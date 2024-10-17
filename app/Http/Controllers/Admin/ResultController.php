@@ -27,6 +27,7 @@ class ResultController extends Controller
                     ->selectRaw(
                         $this->examSumColumns()
                     )
+                    ->where('exam_marks.viva', '>=', 0)
                     ->orderBy('is_medical_pass', 'desc')
                     ->orderBy('is_final_pass', 'desc')
                     ->orderBy('total_marks', 'desc')
@@ -39,7 +40,9 @@ class ResultController extends Controller
                     )
                     ->selectRaw(
                         $this->examSumColumns()
-                    )->where('team', user()->team)
+                    )
+                    ->where('exam_marks.viva', '>=', 0)
+                    ->where('team', user()->team)
                     ->orderBy('is_medical_pass', 'desc')
                     ->orderBy('is_final_pass', 'desc')
                     ->orderBy('total_marks', 'desc')
