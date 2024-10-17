@@ -12,7 +12,11 @@
 
     <!-- DataTables Buttons CSS -->
     <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
-
+<style>
+    .dt-buttons {
+        margin-left: 2rem;
+    }
+</style>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -44,8 +48,9 @@
         <!-- JSZip for Excel export -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -180,6 +185,8 @@
                     buttons: [{
                             extend: 'excelHtml5',
                             title: 'Application Data',
+                            text: 'Export to Excel',
+                            className: 'btn btn-success',
                             exportOptions: {
                                 columns: ':visible',
                                 modifier: {
@@ -212,6 +219,7 @@
                         {
                             extend: 'pdfHtml5',
                             title: 'Application Data',
+                            text: 'Export to PDF',
                             exportOptions: {
                                 columns: ':visible',
                                 modifier: {
