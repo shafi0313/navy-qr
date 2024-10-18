@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
 use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
+use App\Http\Controllers\Admin\ApplicationImportantController;
 use App\Http\Controllers\Admin\ImportantApplicationController;
 
 Route::get('/', function () {
@@ -49,6 +50,12 @@ Route::resource('/application-urls', ApplicationUrlController::class)->only(['in
 Route::resource('/applications', ApplicationController::class)->except(['show']);
 Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store']);
 Route::get('/application-search/show/{id}', [ApplicationSearchController::class, 'show'])->name('application_search.show');
+
+Route::resource('/important-application-imports', ApplicationImportantController::class)->except(['create', 'show']);
+Route::controller(ApplicationImportantController::class)->prefix('important-application-import')->name('important_application_imports.')->group(function () {
+    Route::post('/imports', 'import')->name('import');
+    Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
+});
 
 Route::resource('/exam-marks', ExamMarkController::class)->only(['index', 'store']);
 Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 'modalStore'])->name('exam_marks.modal_store');

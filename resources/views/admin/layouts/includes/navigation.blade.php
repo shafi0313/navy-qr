@@ -129,6 +129,13 @@
                         <span>All documents held</span>
                     </a>
                 </li>
+
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.important-application-imports.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-list"></i>
+                        <span>All documents held Import</span>
+                    </a>
+                </li>
             @endif
             @if (in_array($roleId, [1, 2]))
                 <li class="side-nav-item">
