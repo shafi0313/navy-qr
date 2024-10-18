@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -82,23 +83,27 @@ class AdminUserController extends Controller
     public function update(Request $request, UpdateAdminUserRequest $adminRequest, User $admin_user)
     {
         $data = $adminRequest->validated();
-        if ($request->password && !Hash::check($request->old_password, $admin_user->password)) {
-            return response()->json(['message' => "Old Password Doesn't match!"], 500);
-        }
-        if (isset($request->password)) {
+        if ($request->filled('password')) {
+            if (!Hash::check($request->old_password, $admin_user->password)) {
+                return response()->json(['message' => "Old Password Doesn't match!"], 500);
+            }
             $data['password'] = bcrypt($request->password);
         }
         $image = $admin_user->image;
         if ($request->hasFile('image')) {
-            $data['image'] = imgWebpUpdate($request->image, 'user', [300, 300], $image);
+            $data['image'] = imgWebpUpdate($request->file('image'), 'user', [300, 300], $image);
         }
+        DB::beginTransaction();
         try {
             $admin_user->update($data);
+            DB::commit();
             return response()->json(['message' => 'The information has been updated'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
+            DB::rollBack();
+            return response()->json(['message' => 'Oops, something went wrong. Please try again later.'], 500);
         }
     }
+
 
     public function destroy(User $admin_user)
     {

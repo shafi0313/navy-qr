@@ -55,15 +55,11 @@
                         </div>
                         <div class="col-md-6">
                             <label for="password" class="form-label">Old Password</label>
-                            <input type="password" name="password" class="form-control">
+                            <input type="password" name="old_password" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control">
-                        </div>
-                        <div class="col-md-12 text-center mt-2">
-                            <button type="reset" class="btn btn-danger">Reset</button>
-                            <button type="submit" class="btn btn-warning">Update</button>
                         </div>
                     </div>
                 </div>

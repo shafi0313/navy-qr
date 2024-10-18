@@ -47,7 +47,7 @@
                     <span> Dashboard </span>
                 </a>
             </li>
-
+            @if (in_array($roleId, [1, 2]))
             @php
                 $admin = ['admin.admin-users.*', 'admin.role.*'];
             @endphp
@@ -69,7 +69,8 @@
                     </ul>
                 </div>
             </li>
-
+            @endif
+            
             <li class="side-nav-item">
                 <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-id-card"></i>
