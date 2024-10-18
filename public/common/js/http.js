@@ -60,57 +60,6 @@ function ajaxDelete(arg, type) {
     });
 }
 
-function ajaxAllDelete(arg, type) {
-    let args = $(arg);
-    var del_ids = [];
-    // Read all checked checkboxes
-    $("input:checkbox[class=check]:checked").each(function () {
-        del_ids.push($(this).val());
-    });
-    // Check checkbox checked or not
-    if (del_ids.length > 0) {
-        swal({
-            title: "Are you sure?",
-            text: "This action will delete all records and cannot be undone!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: args.data("route"),
-                    type: "delete",
-                    data: {
-                        ids: del_ids,
-                    },
-                    success: (res) => {
-                        swal({
-                            icon: "success",
-                            title: "Success",
-                            text: res.message,
-                        }).then((confirm) => {
-                            if (confirm) {
-                                if (type == "dt") {
-                                    $(".table").DataTable().ajax.reload();
-                                } else {
-                                    window.location.reload();
-                                }
-                            }
-                        });
-                    },
-                    error: (err) => {
-                        swal({
-                            icon: "error",
-                            title: "Oops...",
-                            text: err.responseJSON.message,
-                        });
-                    },
-                });
-            }
-        });
-    }
-}
-
 function ajaxEdit(arg, type) {
     let args = $(arg);
     $.ajax({

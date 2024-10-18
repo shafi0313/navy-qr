@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Setting\AppDbBackupController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
+use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
 use App\Http\Controllers\Admin\ImportantApplicationController;
 
@@ -46,6 +47,8 @@ Route::resource('/my-profiles', MyProfileController::class)->only(['index', 'edi
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 Route::resource('/applications', ApplicationController::class)->except(['show']);
+Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store']);
+Route::get('/application-search/show/{id}', [ApplicationSearchController::class, 'show'])->name('application_search.show');
 
 Route::resource('/exam-marks', ExamMarkController::class)->only(['index', 'store']);
 Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 'modalStore'])->name('exam_marks.modal_store');
