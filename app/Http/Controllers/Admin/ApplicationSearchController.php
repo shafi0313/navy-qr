@@ -11,17 +11,8 @@ use Yajra\DataTables\Facades\DataTables;
 class ApplicationSearchController extends Controller
 {
     use ApplicationTrait;
-    public function index(Request $request)
+    public function index()
     {
-        // $application = Application::findOrFail($request->application_id)
-        //     ->leftJoin('users', 'applications.user_id', '=', 'users.id')
-        //     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-        //     ->select(
-        //         array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-        //     )
-        //     ->selectRaw(
-        //         $this->examSumColumns()
-        //     );
         return view('admin.application-search.index');
     }
 
@@ -40,7 +31,7 @@ class ApplicationSearchController extends Controller
     {
         $application = Application::where('id',$request->application_id)->first();
         try {
-            $application->update(['user_id' => user()->id]);
+            $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
             return response()->json(['message' => 'The information has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);

@@ -30,10 +30,10 @@ class PrimaryMedicalController extends Controller
                     'eligible_district',
                     'is_important',
                     'is_medical_pass',
-                    'p_m_remark'
-                ); // Execute the query
+                    'p_m_remark',
+                    'scanned_at',
+                )->whereNotNull('scanned_at');
             } else {
-                // For other roles: Fetch applications, filtering by the authenticated user's team
                 $applications = Application::with([
                     'examMark:id,application_id',
                     'user:id,team',
@@ -46,13 +46,13 @@ class PrimaryMedicalController extends Controller
                     'eligible_district',
                     'is_important',
                     'is_medical_pass',
-                    'p_m_remark'
-                )->whereHas('user', function ($query) {
-                    $query->where('team', user()->team); // Fixed to use auth()->user()
-                }); // Execute the query
+                    'p_m_remark',
+                    'scanned_at',
+                )->whereNotNull('scanned_at')
+                    ->whereHas('user', function ($query) {
+                        $query->where('team', user()->team);
+                    });
             }
-
-
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -106,7 +106,7 @@ class PrimaryMedicalController extends Controller
     {
         $application = Application::findOrFail($request->id);
         if ($application->user_id == null) {
-            $application->update(['user_id' => user()->id]);
+            $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
         }
         $application->is_medical_pass = 1;
         $application->save();
@@ -133,7 +133,7 @@ class PrimaryMedicalController extends Controller
 
         try {
             if ($application->user_id == null) {
-                $application->update(['user_id' => user()->id]);
+                $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
             }
             $application->update([
                 'is_medical_pass' => 0,
