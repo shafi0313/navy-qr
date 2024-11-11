@@ -29,6 +29,26 @@ trait ApplicationTrait
         ];
     }
 
+    protected function applicationColumnsForResult()
+    {
+        return [
+            'applications.id',
+            'applications.candidate_designation',
+            'applications.exam_date',
+            'applications.serial_no',
+            'applications.eligible_district',
+            'applications.name',
+            'applications.is_medical_pass',
+            'applications.is_final_pass',
+            'applications.photo',
+            'applications.p_m_remark',
+            'applications.f_m_remark',
+            'applications.ssc_group',
+            'applications.ssc_gpa',
+            'applications.remark',
+        ];
+    }
+
     protected function examColumns()
     {
         return [

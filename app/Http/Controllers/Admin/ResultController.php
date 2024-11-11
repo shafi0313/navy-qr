@@ -22,7 +22,7 @@ class ResultController extends Controller
                 $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumnsForResult(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -36,7 +36,7 @@ class ResultController extends Controller
                 $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumnsForResult(), $this->examColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()

@@ -167,6 +167,18 @@
                             title: 'Viva',
                             className: 'text-center'
                         },
+                        {
+                            data: 'ssc_group',
+                            name: 'ssc_group',
+                            title: 'SSC Group',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'ssc_gpa',
+                            name: 'ssc_gpa',
+                            title: 'SSC GPA',
+                            className: 'text-center'
+                        },
                     ],
                     scroller: {
                         loadingIndicator: true
