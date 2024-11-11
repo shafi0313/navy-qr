@@ -38,6 +38,7 @@ trait ApplicationTrait
             'applications.serial_no',
             'applications.eligible_district',
             'applications.name',
+            'applications.dob',
             'applications.is_medical_pass',
             'applications.is_final_pass',
             'applications.photo',

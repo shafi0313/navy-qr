@@ -56,6 +56,9 @@ class ResultController extends Controller
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
+                ->addColumn('dob', function ($row) {
+                    return bdDate($row->dob);
+                })
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })

@@ -100,6 +100,11 @@
                             title: 'Name'
                         },
                         {
+                            data: 'dob',
+                            name: 'dob',
+                            title: 'Date of Birth'
+                        },
+                        {
                             data: 'candidate_designation',
                             name: 'candidate_designation',
                             title: 'Branch'
