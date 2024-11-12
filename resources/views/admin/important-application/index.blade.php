@@ -24,37 +24,6 @@
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
-                        {{-- <div class="row gy-2">
-                            @if (in_array(user()->role_id, [1, 4]))
-                                <div class="col-md-2">
-                                    <label for="bangla" class="form-label required">Bangla </label>
-                                    <input type="number" step="any" name="bangla" id="bangla" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="english" class="form-label required">English </label>
-                                    <input type="number" step="any" name="english" id="english" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="math" class="form-label required">math </label>
-                                    <input type="number" step="any" name="math" id="math" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="science" class="form-label required">science </label>
-                                    <input type="number" step="any" name="science" id="science" class="form-control"
-                                        required>
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="general_knowledge" class="form-label required">general knowledge </label>
-                                    <input type="number" step="any" name="general_knowledge" id="general_knowledge"
-                                        class="form-control" required>
-                                </div>
-                            @endif
-
-                        </div> --}}
-
                     </div> <!-- end card-body -->
                 </form>
             </div> <!-- end card -->
@@ -91,6 +60,7 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
+                    scrollX: true,
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -111,34 +81,94 @@
                             searchable: false,
                         },
                         {
-                            data: 'exam_date',
-                            name: 'exam_date',
-                            title: 'Exam Date',
-                        },
-                        {
                             data: 'serial_no',
                             name: 'serial_no',
-                            title: 'Roll no',
-                        },
-                        {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'des',
-                        },
-                        {
-                            data: 'name',
-                            name: 'name',
-                            title: 'Name',
+                            title: 'Roll No'
                         },
                         {
                             data: 'eligible_district',
                             name: 'eligible_district',
-                            title: 'district',
+                            title: 'District'
+                        },
+                        {
+                            data: 'name',
+                            name: 'name',
+                            title: 'Name'
+                        },
+                        {
+                            data: 'dob',
+                            name: 'dob',
+                            title: 'Date of Birth'
+                        },
+                        {
+                            data: 'candidate_designation',
+                            name: 'candidate_designation',
+                            title: 'Branch'
                         },
                         {
                             data: 'medical',
                             name: 'medical',
-                            title: 'medical',
+                            title: 'Pre. Medical',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'bangla',
+                            name: 'bangla',
+                            title: 'Bangla'
+                        },
+                        {
+                            data: 'english',
+                            name: 'english',
+                            title: 'English'
+                        },
+                        {
+                            data: 'math',
+                            name: 'math',
+                            title: 'Math'
+                        },
+                        {
+                            data: 'science',
+                            name: 'science',
+                            title: 'Science'
+                        },
+                        {
+                            data: 'general_knowledge',
+                            name: 'general_knowledge',
+                            title: 'GK'
+                        },
+                        {
+                            data: 'total_marks',
+                            name: 'total_marks',
+                            title: 'GT'
+                        },
+                        {
+                            data: 'final',
+                            name: 'final',
+                            title: 'Final M.',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'total_viva',
+                            name: 'total_viva',
+                            title: 'Viva',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'ssc_group',
+                            name: 'ssc_group',
+                            title: 'SSC Group',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'ssc_gpa',
+                            name: 'ssc_gpa',
+                            title: 'SSC GPA',
+                            className: 'text-center'
+                        },
+                        {
+                            data: 'remark',
+                            name: 'remark',
+                            title: 'Remark',
                         },
                     ],
                     scroller: {
