@@ -165,12 +165,12 @@
                             title: 'SSC GPA',
                             className: 'text-center'
                         },
-                        {
-                            data: 'remark',
-                            name: 'remark',
-                            title: 'Remark',
-                            width: '300px',
-                        },
+                        // {
+                        //     data: 'remark',
+                        //     name: 'remark',
+                        //     title: 'Remark',
+                        //     width: '500px',
+                        // },
                     ],
                     scroller: {
                         loadingIndicator: true
