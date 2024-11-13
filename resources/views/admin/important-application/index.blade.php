@@ -169,6 +169,7 @@
                             data: 'remark',
                             name: 'remark',
                             title: 'Remark',
+                            width: '300px',
                         },
                     ],
                     scroller: {
