@@ -70,8 +70,6 @@ class FinalMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    // $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='fMPass(" . $row->id . ")'>Fit</button>";
-                    // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='fMFail(" . $row->id . ")'>Unfit</button>";
                     $btn .= view('button', ['type' => 'fit', 'route' => route('admin.final_medicals.fit', $row->id), 'row' => $row]);
                     $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.final_medicals.unfit', $row->id), 'row' => $row]);
                     return $btn;
