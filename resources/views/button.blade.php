@@ -17,6 +17,12 @@
         Unfit
     </button>
 @endif
+@if ($type == 'fit')
+    <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
+        class='btn btn-primary btn-sm' title="@lang('Fit')">
+        Fit
+    </button>
+@endif
 
 @if ($type == 'edit')
     <a href="{{ route($route . '.edit', $row->id) }}" class='text-primary _btn' title="@lang('Edit')">
