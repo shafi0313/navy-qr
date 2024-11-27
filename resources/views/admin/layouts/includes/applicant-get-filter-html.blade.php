@@ -14,16 +14,6 @@
                 </select>
             </div>
         </div>
-        {{-- <div class="col">
-            <div class="form-group my-3">
-                <label class="form-label" for="gender">@lang('Gender')</label>
-                <select name="gender" class="gender select_2 form-control w-100">
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-            </div>
-        </div> --}}
         <div class="col">
             <div class="form-group my-3">
                 <a href="" class="btn btn-danger">Clear</a>

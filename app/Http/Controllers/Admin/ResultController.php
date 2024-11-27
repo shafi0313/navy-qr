@@ -83,6 +83,18 @@ class ResultController extends Controller
                     if ($request->filled('district')) {
                         $query->where('applications.eligible_district', $request->district);
                     }
+                    if ($request->filled('ssc_gpa')) {
+                        $query->where('applications.ssc_gpa', $request->ssc_gpa);
+                    }
+                    if ($request->filled('ssc_group')) {
+                        $query->where('applications.ssc_group', $request->ssc_group);
+                    }
+                    if ($request->filled('candidate_designation')) {
+                        $query->where('applications.candidate_designation', $request->candidate_designation);
+                    }
+                    if ($request->filled('dob')) {
+                        $query->where('applications.dob', $request->dob);
+                    }
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
                     }

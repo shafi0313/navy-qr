@@ -36,6 +36,10 @@ class Application extends Model
         return $query->where('serial_no', 'like', '%'.$search.'%')
             ->orWhere('applications.name', 'like', '%'.$search.'%')
             ->orWhere('eligible_district', 'like', '%'.$search.'%')
+            ->orWhere('ssc_gpa', 'like', '%'.$search.'%')
+            ->orWhere('ssc_group', 'like', '%'.$search.'%')
+            ->orWhere('dob', 'like', '%'.$search.'%')
+            ->orWhere('exam_date', 'like', '%'.$search.'%')
             ->orWhere('candidate_designation', 'like', '%'.$search.'%');
     }
 }

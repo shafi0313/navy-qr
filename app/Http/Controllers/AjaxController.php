@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Application;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\ApplicationUrl;
+use App\Traits\ApplicationTrait;
 
 class AjaxController extends Controller
 {
+    use ApplicationTrait;
     public function select2(Request $request)
     {
         if ($request->ajax()) {
@@ -37,6 +38,75 @@ class AjaxController extends Controller
                             return [
                                 'id' => $data->eligible_district, // Using the first (min) id for each district
                                 'text' => Str::ucfirst($data->eligible_district),
+                            ];
+                        })
+                        ->toArray();
+                    break;
+                case 'getSSCGroups':
+                    $response = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                        ->selectRaw('MIN(applications.id) as id, applications.ssc_group')
+                        ->where('applications.ssc_group', 'like', "%{$request->q}%")
+                        ->where('exam_marks.viva', '>=', 0)
+                        ->where('is_final_pass', 1)
+                        ->groupBy('applications.ssc_group')
+                        ->orderBy('applications.ssc_group')
+                        ->get()
+                        ->map(function ($data) {
+                            return [
+                                'id' => $data->ssc_group, // Using the first (min) id for each district
+                                'text' => Str::ucfirst($data->ssc_group),
+                            ];
+                        })
+                        ->toArray();
+                    break;
+                case 'getBranch':
+                    $response = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                        ->selectRaw('MIN(applications.id) as id, applications.candidate_designation')
+                        ->where('applications.candidate_designation', 'like', "%{$request->q}%")
+                        ->where('exam_marks.viva', '>=', 0)
+                        ->where('is_final_pass', 1)
+                        ->groupBy('applications.candidate_designation')
+                        ->orderBy('applications.candidate_designation')
+                        ->get()
+                        ->map(function ($data) {
+                            return [
+                                'id' => $data->candidate_designation, // Using the first (min) id for each district
+                                'text' => Str::ucfirst($data->candidate_designation),
+                            ];
+                        })
+                        ->toArray();
+                    break;
+                case 'getBob':
+                    $response = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                        ->selectRaw('MIN(applications.id) as id, applications.dob')
+                        ->where('applications.dob', 'like', "%{$request->q}%")
+                        ->where('exam_marks.viva', '>=', 0)
+                        ->where('is_final_pass', 1)
+                        ->groupBy('applications.dob')
+                        ->orderBy('applications.dob')
+                        ->get()
+                        ->map(function ($data) {
+                            return [
+                                'id' => $data->dob, // Using the first (min) id for each district
+                                'text' => bdDate($data->dob),
+                            ];
+                        })
+                        ->toArray();
+                    break;
+
+                case 'getGpa':
+                    $response = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                        ->selectRaw('MIN(applications.id) as id, applications.ssc_gpa')
+                        ->where('applications.ssc_gpa', 'like', "%{$request->q}%")
+                        ->where('exam_marks.viva', '>=', 0)
+                        ->where('is_final_pass', 1)
+                        ->groupBy('applications.ssc_gpa')
+                        ->orderBy('applications.ssc_gpa', 'desc')
+                        ->get()
+                        ->map(function ($data) {
+                            return [
+                                'id' => $data->ssc_gpa,
+                                'text' => $data->ssc_gpa,
                             ];
                         })
                         ->toArray();

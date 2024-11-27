@@ -12,11 +12,11 @@
 
     <!-- DataTables Buttons CSS -->
     <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
-<style>
-    .dt-buttons {
-        margin-left: 2rem;
-    }
-</style>
+    <style>
+        .dt-buttons {
+            margin-left: 2rem;
+        }
+    </style>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -25,7 +25,58 @@
                         <h4 class="card-title">{{ $pageTitle }}</h4>
                     </div>
                     {{-- Filter HTML --}}
-                    @include('admin.layouts.includes.applicant-get-filter-html')
+                    <div class="col-md-12 mb-2">
+                        <div class="row justify-content-center filter align-items-end">
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="district">@lang('District')</label>
+                                    <select name="district" class="form-control w-100 district" id="district">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="ssc_gpa">GPA</label>
+                                    <select name="ssc_gpa" class="form-control w-100 ssc_gpa" id="ssc_gpa">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="ssc_group">Group</label>
+                                    <select name="ssc_group" class="form-control w-100 ssc_group" id="ssc_group">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="candidate_designation">Branch</label>
+                                    <select name="candidate_designation" class="form-control w-100 candidate_designation" id="candidate_designation">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="dob">DOB</label>
+                                    <select name="dob" class="form-control w-100 dob" id="dob">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="exam_date">@lang('Exam Date')</label>
+                                    <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <a href="" class="btn btn-danger">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- /Filter HTML --}}
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
@@ -71,6 +122,10 @@
                         data: function(d) {
                             return $.extend(d, {
                                 district: $('.district').val(),
+                                ssc_gpa: $('.ssc_gpa').val(),
+                                ssc_group: $('.ssc_group').val(),
+                                candidate_designation: $('.candidate_designation').val(),
+                                dob: $('.dob').val(),
                                 exam_date: $('.exam_date').val()
                             });
                         },
@@ -270,5 +325,96 @@
         {{-- Filter Get JS --}}
         @include('admin.layouts.includes.applicant-get-filter-js')
         {{-- /Filter Get JS --}}
+
+        <script>
+            $('#ssc_gpa').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getGpa',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+            $('#ssc_group').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getSSCGroups',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+            $('#candidate_designation').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getBranch',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+            $('#dob').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getBob',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+        </script>
     @endpush
 @endsection
