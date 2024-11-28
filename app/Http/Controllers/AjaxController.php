@@ -111,6 +111,23 @@ class AjaxController extends Controller
                         })
                         ->toArray();
                     break;
+                case 'getHeight':
+                    $response = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                        ->selectRaw('MIN(applications.id) as id, applications.height')
+                        ->where('applications.height', 'like', "%{$request->q}%")
+                        ->where('exam_marks.viva', '>=', 0)
+                        ->where('is_final_pass', 1)
+                        ->groupBy('applications.height')
+                        ->orderBy('applications.height')
+                        ->get()
+                        ->map(function ($data) {
+                            return [
+                                'id' => $data->height,
+                                'text' => $data->height,
+                            ];
+                        })
+                        ->toArray();
+                    break;
                 case 'getExamDates':
                     $response = Application::selectRaw('MIN(id) as id, exam_date')
                         ->where('exam_date', 'like', "%{$request->q}%")

@@ -95,6 +95,9 @@ class ResultController extends Controller
                     if ($request->filled('dob')) {
                         $query->where('applications.dob', $request->dob);
                     }
+                    if ($request->filled('height')) {
+                        $query->where('applications.height', $request->height);
+                    }
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
                     }

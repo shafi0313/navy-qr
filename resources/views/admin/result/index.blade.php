@@ -64,6 +64,13 @@
                             </div>
                             <div class="col">
                                 <div class="form-group my-3">
+                                    <label class="form-label" for="height">Height</label>
+                                    <select name="height" class="form-control w-100 height" id="height">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
                                     <label class="form-label" for="exam_date">@lang('Exam Date')</label>
                                     <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
                                     </select>
@@ -406,6 +413,28 @@
                         return {
                             q: $.trim(params.term),
                             type: 'getBob',
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+            $('#height').select2({
+                width: '100%',
+                placeholder: 'Select...',
+                allowClear: true,
+                ajax: {
+                    url: window.location.origin + '/dashboard/select-2-ajax',
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term),
+                            type: 'getHeight',
                         };
                     },
                     processResults: function(data) {
