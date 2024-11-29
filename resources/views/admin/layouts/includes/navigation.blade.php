@@ -66,11 +66,14 @@
                         <li class="{{ activeNav('admin.admin-users.*') }}">
                             <a href="{{ route('admin.admin-users.index') }}">User</a>
                         </li>
+                        <li class="{{ activeNav('admin.specialities.*') }}">
+                            <a href="{{ route('admin.specialities.index') }}">Speciality</a>
+                        </li>
                     </ul>
                 </div>
             </li>
             @endif
-            
+
             <li class="side-nav-item">
                 <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-id-card"></i>
@@ -162,99 +165,6 @@
                     </ul>
                 </div>
             </li> --}}
-
-
-
-            {{-- <li class="side-nav-item">
-                <a href="" class="side-nav-link">
-                    <i class="ri-calendar-2-fill"></i>
-                    <span> Calendar </span>
-                </a>
-            </li> --}}
-
-            {{-- <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail"
-                    class="side-nav-link">
-                    <i class="ri-mail-fill"></i>
-                    <span> Email </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarEmail">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="#">Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#">Read Email</a>
-                        </li>
-                    </ul>
-                </div>
-            </li> --}}
-
-            {{-- <li class="side-nav-title mt-2">Custom</li> --}}
-
-            {{-- <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false"
-                    aria-controls="sidebarMultiLevel" class="side-nav-link">
-                    <i class="ri-share-fill"></i>
-                    <span> Multi Level </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarMultiLevel">
-                    <ul class="side-nav-second-level">
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
-                                aria-controls="sidebarSecondLevel">
-                                <span> Second Level </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarSecondLevel">
-                                <ul class="side-nav-third-level">
-                                    <li>
-                                        <a href="javascript: void(0);">Item 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript: void(0);">Item 2</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false"
-                                aria-controls="sidebarThirdLevel">
-                                <span> Third Level </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarThirdLevel">
-                                <ul class="side-nav-third-level">
-                                    <li>
-                                        <a href="javascript: void(0);">Item 1</a>
-                                    </li>
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false"
-                                            aria-controls="sidebarFourthLevel">
-                                            <span> Item 2 </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarFourthLevel">
-                                            <ul class="side-nav-forth-level">
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 2.1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 2.2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li> --}}
-
-
         </ul>
         <!--- End Sidemenu -->
 

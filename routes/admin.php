@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\VivaMarkController;
@@ -43,6 +44,9 @@ Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name
 
 Route::resource('/admin-users', AdminUserController::class)->except(['show', 'create']);
 Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'status'])->name('admin_users.is_active');
+
+Route::resource('/specialities', SpecialityController::class)->except(['show', 'create']);
+Route::patch('/specialities/is-active/{Speciality}', [SpecialityController::class, 'status'])->name('specialities.is_active');
 
 Route::resource('/my-profiles', MyProfileController::class)->only(['index', 'edit']);
 

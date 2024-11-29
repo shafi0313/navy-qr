@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('gender')->nullable();
             $table->string('mobile', 32)->nullable();
             $table->string('address')->nullable();
-            $table->boolean('is_active', [IsActive::ACTIVE, IsActive::INACTIVE])->default(IsActive::ACTIVE);
+            $table->boolean('is_active')->default(1);
             $table->boolean('removable')->default(1);
             $table->string('image', 32)->nullable();
             $table->timestamp('email_verified_at')->nullable();
