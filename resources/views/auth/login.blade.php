@@ -6,11 +6,11 @@
         </p>
     </div>
 
-    <form action="{{ route('login') }}" method="post">
+    <form action="{{ route('otp.login') }}" method="post">
         @csrf
         <div class="mb-3">
-            <label for="emailaddress" class="form-label">Email address</label>
-            <input type="email" name="email" value="{{ old('username') ?: old('email') }}" class="form-control" id="emailaddress" required="" placeholder="Enter your email">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" name="email" value="{{ old('email') }}" class="form-control" id="email" required placeholder="Enter your email">
         </div>
 
         <div class="mb-3">
