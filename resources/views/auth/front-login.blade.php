@@ -69,13 +69,13 @@
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('otp.login') }}">
                             @csrf
                             <div class="login-form">
                                 <div class="mb-3">
-                                    <label for="emailaddress" class="form-label">Email address</label>
-                                    <input type="email" name="email" value="{{ old('username') ?: old('email') }}"
-                                        class="form-control" id="emailaddress" required=""
+                                    <label for="email" class="form-label">Email address</label>
+                                    <input type="email" name="email" value="{{ old('email') }}"
+                                        class="form-control" id="email" required
                                         placeholder="Enter your email">
                                 </div>
 

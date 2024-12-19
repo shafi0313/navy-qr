@@ -100,6 +100,7 @@
     <!-- App js -->
     <script src="{{ asset('backend/js/app.min.js') }}"></script>
 
+    @stack('scripts')
 </body>
 
 </html>

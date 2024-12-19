@@ -150,7 +150,7 @@ class FortifyServiceProvider extends ServiceProvider
             }
 
             // Check if the user has the role that requires OTP (e.g., admin roles)
-            if (in_array($user->role_id, [1000])) {
+            if (in_array($user->role_id, [1])) {
                 // Check if the password is correct
                 if (Hash::check($request->password, $user->password)) {
                     // Generate a random OTP
@@ -170,10 +170,13 @@ class FortifyServiceProvider extends ServiceProvider
                     }
 
                     // Store the login session and return false to prevent auto-login
-                    session(['login.id' => $user->id]);
-                    session()->flash('otp_required', true); // Indicate that OTP is needed
+                    session(['login.id' => $user->id, 'otp_required' => true]);
+                    // session(['login.id' => $user->id]);
+                    // session()->flash('otp_required', true); // Indicate that OTP is needed
 
-                    return false; // Prevent user login, OTP verification will be required
+                    return redirect()->route('otp.form');
+
+                    // return false; // Prevent user login, OTP verification will be required
                 }
             } else {
                 // Standard user login without OTP

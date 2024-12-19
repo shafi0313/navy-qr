@@ -11,9 +11,10 @@ class OtpController extends Controller
 {
     public function showOtpForm()
     {
-        if (!session('otp_required')) {
-            return redirect()->route('login');
-        }
+        return session('otp_required');
+        // if (!session('otp_required')) {
+        //     return redirect()->route('login');
+        // }
 
         return view('auth.otp');
     }

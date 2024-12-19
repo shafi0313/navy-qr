@@ -15,9 +15,9 @@ class OtpMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // if (session('otp_required')) {
+        if (session('otp_required')) {
             return redirect()->route('otp.form');
-        // }
+        }
 
         return $next($request);
     }
