@@ -27,7 +27,7 @@ class OtpController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            if (env('APP_DEBUG') == false && ($user->role_id == 1 || $user->is_2fa == true)) {
+            if (env('APP_DEBUG') == false && $user->is_2fa == true) {
                 // Generate OTP
                 $otp = rand(1000, 9999);
                 $user->otp = $otp;
