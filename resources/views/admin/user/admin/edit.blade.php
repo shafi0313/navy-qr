@@ -21,6 +21,14 @@
                             </select>
                         </div>
                         <div class="col-md-6">
+                            <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
+                            <select name="is_2fa" id="is_2fa" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="0" @selected($admin_user->is_2fa)>No</option>
+                                <option value="1" @selected($admin_user->is_2fa)>Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
                             <label for="name" class="form-label required">Name </label>
                             <input type="text" name="name" value="{{ old('name') ?? $admin_user->name }}"
                                 class="form-control">
@@ -31,13 +39,8 @@
                                 class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="user_name" class="form-label">user name </label>
-                            <input type="text" name="user_name" value="{{ old('name_name') ?? $admin_user->user_name }}"
-                                class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="phone" class="form-label">Phone </label>
-                            <input type="text" name="phone" value="{{ old('phone') ?? $admin_user->phone }}"
+                            <label for="mobile" class="form-label">mobile </label>
+                            <input type="text" name="mobile" value="{{ old('mobile') ?? $admin_user->mobile }}"
                                 class="form-control" oninput="phoneIn(event)">
                         </div>
                         <div class="col-md-6">

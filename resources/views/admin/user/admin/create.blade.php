@@ -20,6 +20,14 @@
                             </select>
                         </div>
                         <div class="col-md-6">
+                            <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
+                            <select name="is_2fa" id="is_2fa" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
                             <label for="name" class="form-label required">Name </label>
                             <input type="text" name="name" class="form-control" required>
                         </div>
@@ -28,8 +36,8 @@
                             <input type="email" name="email" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="phone" class="form-label">phone </label>
-                            <input type="text" name="phone" class="form-control" oninput="phoneIn(event)">
+                            <label for="mobile" class="form-label">mobile </label>
+                            <input type="text" name="mobile" class="form-control" oninput="phoneIn(event)">
                         </div>
                         <div class="col-md-6">
                             <label for="image" class="form-label">image </label>

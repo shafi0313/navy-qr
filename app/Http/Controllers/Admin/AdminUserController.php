@@ -18,6 +18,13 @@ class AdminUserController extends Controller
     {
         if ($request->ajax()) {
             $admin_users = User::with(['role:id,name'])->orderBy('name');
+
+            if (user()->role_id == 2) {
+                $admin_users->where('team', user()->team);
+            } elseif (user()->role_id != 1) {
+                $admin_users->where('id', user()->id);
+            }
+
             return DataTables::of($admin_users)
                 ->addIndexColumn()
                 ->addColumn('image', function ($row) {
@@ -30,9 +37,7 @@ class AdminUserController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.admin-users.edit', $row->id), 'row' => $row]);
-
                     $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.admin-users.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
-
                     return $btn;
                 })
                 ->rawColumns(['image', 'is_active', 'action'])
@@ -44,6 +49,9 @@ class AdminUserController extends Controller
 
     function status(User $user)
     {
+        if (!in_array(user()->role_id, [1, 2])) {
+            return response()->json(['message' => 'You can not edit'], 500);
+        }
         $user->is_active = $user->is_active  == 1 ? 0 : 1;
         try {
             $user->save();
@@ -72,16 +80,23 @@ class AdminUserController extends Controller
 
     public function edit(Request $request, User $admin_user)
     {
+        if (!in_array(user()->role_id, [1, 2])) {
+            return response()->json(['message' => 'You cannot edit'], 403);
+        }
+
         if ($request->ajax()) {
             $roles = Role::select('id', 'name')->get();
-            $modal = view('admin.user.admin.edit')->with(['admin_user' => $admin_user, 'roles' => $roles])->render();
+            $modal = view('admin.user.admin.edit', ['admin_user' => $admin_user, 'roles' => $roles])->render();
             return response()->json(['modal' => $modal], 200);
         }
-        return abort(500);
+        return abort(403, 'Unauthorized action.');
     }
 
     public function update(Request $request, UpdateAdminUserRequest $adminRequest, User $admin_user)
     {
+        if (!in_array(user()->role_id, [1, 2])) {
+            return response()->json(['message' => 'You can not edit'], 500);
+        }
         $data = $adminRequest->validated();
         if ($request->filled('password')) {
             if (!Hash::check($request->old_password, $admin_user->password)) {
@@ -107,6 +122,9 @@ class AdminUserController extends Controller
 
     public function destroy(User $admin_user)
     {
+        if (!in_array(user()->role_id, [1, 2])) {
+            return response()->json(['message' => 'You can not edit'], 500);
+        }
         try {
             imgUnlink('user', $admin_user->image);
             $admin_user->delete();
