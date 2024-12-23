@@ -89,7 +89,7 @@
             @if (in_array($roleId, [1, 2, 3, 4, 5, 6]))
                 <li class="side-nav-item">
                     <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-list"></i>
+                        <i class="fa-solid fa-stethoscope"></i>
                         <span> Primary Medical Selection </span>
                     </a>
                 </li>
@@ -97,14 +97,14 @@
             @if (in_array($roleId, [1, 2, 3, 4, 5]))
                 <li class="side-nav-item">
                     <a href="{{ route('admin.exam-marks.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-list"></i>
+                        <i class="fa-solid fa-file-pen"></i>
                         <span>Written Exam </span>
                     </a>
                 </li>
 
                 <li class="side-nav-item">
                     <a href="{{ route('admin.written-mark-imports.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-list"></i>
+                        <i class="fa-regular fa-newspaper"></i>
                         <span>Written Exam Import</span>
                     </a>
                 </li>
@@ -113,7 +113,7 @@
             @if (in_array($roleId, [1, 2, 3, 4]))
                 <li class="side-nav-item">
                     <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-list"></i>
+                        <i class="fa-solid fa-user-doctor"></i>
                         <span>Final Medical</span>
                     </a>
                 </li>
@@ -129,7 +129,7 @@
             @if (in_array($roleId, [1]))
                 <li class="side-nav-item">
                     <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-list"></i>
+                        <i class="fa-solid fa-user-check"></i>
                         <span>All documents held</span>
                     </a>
                 </li>
@@ -144,7 +144,7 @@
             @if (in_array($roleId, [1, 2]))
                 <li class="side-nav-item">
                     <a href="{{ route('admin.results.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-list"></i>
+                        <i class="fa-solid fa-sliders"></i>
                         <span>Results</span>
                     </a>
                 </li>
