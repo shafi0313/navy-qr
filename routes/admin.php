@@ -50,7 +50,6 @@ Route::patch('/specialities/is-active/{Speciality}', [SpecialityController::clas
 
 Route::resource('/my-profiles', MyProfileController::class)->only(['index', 'edit']);
 
-Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 Route::resource('/applications', ApplicationController::class)->except(['show']);
 Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store']);
 Route::get('/application-search/show/{id}', [ApplicationSearchController::class, 'show'])->name('application_search.show');
@@ -88,3 +87,8 @@ Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 
 Route::resource('important-applications', ImportantApplicationController::class)->only(['index','store']);
 
 Route::resource('/results', ResultController::class)->only(['index']);
+
+
+
+
+Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);

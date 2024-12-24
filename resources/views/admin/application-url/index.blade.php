@@ -15,25 +15,6 @@
                     <div class="d-flex justify-content-between mb-2">
                         <h4 class="card-title">List of {{ $pageTitle }}s</h4>
                     </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="row justify-content-center filter align-items-end">
-                            <div class="col">
-                                <div class="form-group my-3">
-                                    <label class="form-label" for="gender">@lang('Gender')</label>
-                                    <select name="gender" class="gender select_2 form-control w-100">
-                                        <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group my-3">
-                                    <a href="" class="btn btn-danger">Clear</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
                         <tbody></tbody>
@@ -56,15 +37,7 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
-                    ajax: {
-                        url: "{{ route('admin.' . $route . '.index') }}",
-                        type: "get",
-                        data: function(d) {
-                            return $.extend({}, d, {
-                                "gender": $('.gender').val()
-                            });
-                        }
-                    },
+                    ajax: "{{ route('admin.' . $route . '.index') }}",
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -75,68 +48,14 @@
                             searchable: false,
                         },
                         {
-                            data: 'roll',
-                            name: 'roll',
-                            title: 'roll',
-                        },
-                        {
-                            data: 'name',
-                            name: 'name',
-                            title: 'Name',
-                        },
-                        {
                             data: 'url',
                             name: 'url',
                             title: 'url',
                         },
-                        {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'p. medical',
-                            className: 'text-center',
-                        },
-                        {
-                            data: 'written',
-                            name: 'written',
-                            title: 'written',
-                            className: 'text-center',
-                        },
-                        {
-                            data: 'final',
-                            name: 'final',
-                            title: 'final m.',
-                            className: 'text-center',
-                        },
-                        {
-                            data: 'viva',
-                            name: 'viva',
-                            title: 'viva',
-                            className: 'text-center',
-                        },
-                        // {
-                        //     data: 'action',
-                        //     name: 'action',
-                        //     title: 'Action',
-                        //     width: '60px',
-                        //     orderable: false,
-                        //     searchable: false
-                        // },
                     ],
                     scroller: {
                         loadingIndicator: true
-                    },
-                    order: [
-                        [1, 'asc']
-                    ]
-                });
-                $(".filter").find('select').on('change', function() {
-                    table.draw();
-                });
-
-                $(".filter").find('a').on('click', function(e) {
-                    e.preventDefault();
-                    $(".filter").find('select').val('').trigger('change');
-                    table.draw();
+                    }
                 });
             });
         </script>

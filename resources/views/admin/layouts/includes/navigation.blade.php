@@ -73,15 +73,14 @@
                     </div>
                 </li>
             @endif
-
-            <li class="side-nav-item">
-                <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
-                    <i class="fa-solid fa-id-card"></i>
-                    <span> Applicants </span>
-                </a>
-            </li>
             {{-- 1=sailor --}}
             @if (user()->exam_type == 1)
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span> Applicants </span>
+                    </a>
+                </li>
                 <li class="side-nav-item">
                     <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -151,6 +150,13 @@
                         </a>
                     </li>
                 @endif
+            @elseif (user()->exam_type == 2)
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.application-urls.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span> Applicants </span>
+                    </a>
+                </li>
             @endif
 
             {{-- <li class="side-nav-title mt-2">Settings</li>
