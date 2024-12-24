@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('application_urls', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('url');
+            $table->string('url', 191)->index();
             $table->timestamps();
         });
     }

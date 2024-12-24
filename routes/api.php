@@ -31,6 +31,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/applications/final-medical/pass', [FinalMedicalController::class, 'passStatus']);
         Route::post('/applications/final-medical/fail', [FinalMedicalController::class, 'failStatus']);
 
+        // Application Url
+        // Route::get('/application-urls', [ApplicationUrlController::class, 'index']);
+        Route::post('/application-urls/show-or-store', [ApplicationUrlController::class, 'showOrStore']);
+
 
         Route::post('/logout', [AuthController::class, 'logout']);
 
