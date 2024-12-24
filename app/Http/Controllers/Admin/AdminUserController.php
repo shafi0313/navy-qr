@@ -17,7 +17,7 @@ class AdminUserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $admin_users = User::with(['role:id,name'])->orderBy('name');
+            $admin_users = User::with(['role:id,name'])->whereExamType(user()->exam_type)->orderBy('name');
 
             if (user()->role_id == 2) {
                 $admin_users->where('team', user()->team);
@@ -66,6 +66,7 @@ class AdminUserController extends Controller
     {
         $data = $request->validated();
         $data['user_name'] = explode('@', $request->email)[0];
+        $data['exam_type'] = user()->exam_type;
         $data['password'] = bcrypt($request->password);
         if ($request->hasFile('image')) {
             $data['image'] = imgWebpStore($request->image, 'user', [300, 300]);
