@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Slider;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreSliderRequest;
 use App\Http\Requests\UpdateSliderRequest;
+use App\Models\Slider;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class SliderController extends Controller
 {
@@ -22,14 +22,16 @@ class SliderController extends Controller
 
         if ($request->ajax()) {
             $sliders = Slider::query();
+
             return DataTables::of($sliders)
                 ->addIndexColumn()
                 ->addColumn('content', function ($row) {
-                    return '<textarea class="form-control>' . $row->content . '</textarea>';
+                    return '<textarea class="form-control>'.$row->content.'</textarea>';
                 })
                 ->addColumn('image', function ($row) {
                     $path = imagePath('slider', $row->image);
-                    return '<img src="' . $path . '" width="70px" alt="image">';
+
+                    return '<img src="'.$path.'" width="70px" alt="image">';
                 })
                 ->addColumn('is_active', function ($row) {
                     if (userCan('slider-edit')) {
@@ -44,22 +46,25 @@ class SliderController extends Controller
                     if (userCan('slider-delete')) {
                         $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.sliders.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
                     }
+
                     return $btn;
                 })
                 ->rawColumns(['content', 'image', 'is_active', 'action'])
                 ->make(true);
         }
+
         return view('admin.slider.index');
     }
 
-    function status(Slider $slider)
+    public function status(Slider $slider)
     {
         if ($error = $this->authorize('slider-edit')) {
             return $error;
         }
-        $slider->is_active = $slider->is_active  == 1 ? 0 : 1;
+        $slider->is_active = $slider->is_active == 1 ? 0 : 1;
         try {
             $slider->save();
+
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -81,6 +86,7 @@ class SliderController extends Controller
 
         try {
             Slider::create($data);
+
             return response()->json(['message' => 'The information has been inserted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -97,8 +103,10 @@ class SliderController extends Controller
         }
         if ($request->ajax()) {
             $modal = view('admin.slider.edit')->with(['slider' => $slider])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 
@@ -117,6 +125,7 @@ class SliderController extends Controller
         }
         try {
             $slider->update($data);
+
             return response()->json(['message' => 'The information has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
@@ -134,6 +143,7 @@ class SliderController extends Controller
         try {
             imgUnlink('slider', $slider->image);
             $slider->delete();
+
             return response()->json(['message' => 'The information has been deleted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);

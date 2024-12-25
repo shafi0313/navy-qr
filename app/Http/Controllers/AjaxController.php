@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AjaxController extends Controller
 {
     use ApplicationTrait;
+
     public function select2(Request $request)
     {
         if ($request->ajax()) {
@@ -23,7 +24,7 @@ class AjaxController extends Controller
                         ->get()->map(function ($data) {
                             return [
                                 'id' => $data->id,
-                                'text' => $data->name . ' (' . $data->serial_no . ')',
+                                'text' => $data->name.' ('.$data->serial_no.')',
                             ];
                         })->toArray();
                     break;

@@ -19,7 +19,7 @@ class AuthController extends Controller
         $userId = session('login.id');
         $user = User::find($userId);
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login')->withErrors('Invalid session');
         }
 
@@ -28,6 +28,7 @@ class AuthController extends Controller
             // OTP is valid, log in the user
             Auth::login($user);
             session()->forget('login.id');
+
             return redirect()->route('dashboard');
         }
 

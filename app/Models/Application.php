@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
 
     public function applicationUrl()
@@ -27,7 +28,7 @@ class Application extends Model
             'english' => 0,
             'math' => 0,
             'science' => 0,
-            'general_knowledge' => 0
+            'general_knowledge' => 0,
         ]);
     }
 

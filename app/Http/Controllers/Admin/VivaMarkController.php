@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class VivaMarkController extends Controller
@@ -97,6 +97,7 @@ class VivaMarkController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
+
         return view('admin.viva-mark.index');
     }
 
@@ -121,6 +122,7 @@ class VivaMarkController extends Controller
 
         try {
             $application->examMark->update($data);
+
             return response()->json(['message' => 'The information has been inserted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -132,8 +134,10 @@ class VivaMarkController extends Controller
         if ($request->ajax()) {
             $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
             $modal = view('admin.viva-mark.add')->with(['applicant' => $applicant])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 }

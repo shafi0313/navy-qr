@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class PrimaryMedicalController extends Controller
@@ -19,7 +19,7 @@ class PrimaryMedicalController extends Controller
             if ($roleId == 1) {
                 // For roleId 1: Fetch applications without filtering by team
                 $applications = Application::with([
-                    'examMark:id,application_id'
+                    'examMark:id,application_id',
                 ])->select(
                     'id',
                     'user_id',
@@ -67,12 +67,13 @@ class PrimaryMedicalController extends Controller
                         $data = $row->is_medical_pass;
                         if ($data == '1' || $data == '0') {
                             $data = (int) $data;
+
                             return match ($data) {
-                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
+                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> '.($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> '.($row->p_m_remark ? '('.$row->p_m_remark.')' : ''),
                             };
                         } else {
-                            return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
+                            return '<span class="btn btn-warning btn-sm">Pending</span><br> '.($row->is_important == 1 ? '(All documents held)' : '');
                         }
                     } else {
                         return '';
@@ -80,9 +81,10 @@ class PrimaryMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
+                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(".$row->id.")'>Fit</button>";
                     // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
                     $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.primary_medicals.unfit', $row->id), 'row' => $row]);
+
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -99,6 +101,7 @@ class PrimaryMedicalController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
+
         return view('admin.primary-medical.index');
     }
 
@@ -112,6 +115,7 @@ class PrimaryMedicalController extends Controller
         $application->save();
         try {
             $application->save();
+
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -122,8 +126,10 @@ class PrimaryMedicalController extends Controller
     {
         if ($request->ajax()) {
             $modal = view('admin.primary-medical.unfit')->with(['application' => $application])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 
@@ -137,8 +143,9 @@ class PrimaryMedicalController extends Controller
             }
             $application->update([
                 'is_medical_pass' => 0,
-                'p_m_remark' => $request->p_m_remark
+                'p_m_remark' => $request->p_m_remark,
             ]);
+
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);

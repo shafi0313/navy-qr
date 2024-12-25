@@ -22,13 +22,13 @@ class StoreExamMarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'application_id'    => ['required', 'exists:applications,id'],
-            'bangla'            => ['required', 'numeric', 'min:0', 'max:20'],
-            'english'           => ['required', 'numeric', 'min:0', 'max:20'],
-            'math'              => ['required', 'numeric', 'min:0', 'max:20'],
-            'science'           => ['required', 'numeric', 'min:0', 'max:20'],
+            'application_id' => ['required', 'exists:applications,id'],
+            'bangla' => ['required', 'numeric', 'min:0', 'max:20'],
+            'english' => ['required', 'numeric', 'min:0', 'max:20'],
+            'math' => ['required', 'numeric', 'min:0', 'max:20'],
+            'science' => ['required', 'numeric', 'min:0', 'max:20'],
             'general_knowledge' => ['required', 'numeric', 'min:0', 'max:20'],
-            'viva'              => ['nullable', 'numeric', 'min:0', 'max:10'],
+            'viva' => ['nullable', 'numeric', 'min:0', 'max:10'],
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ImportantApplicationController extends Controller
@@ -99,11 +99,11 @@ class ImportantApplicationController extends Controller
 
                     // If no subject failed and all marks are >= 8, it's a pass
                     if ($failCount == 0) {
-                        if($row->is_final_pass == 1){
-                            return 'Assalamulaikum Sir,</br></br>Roll No:'. $row->serial_no . ', Name:' . $row->name . ',  Branch:'. $row->candidate_designation .  '</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
+                        if ($row->is_final_pass == 1) {
+                            return 'Assalamulaikum Sir,</br></br>Roll No:'.$row->serial_no.', Name:'.$row->name.',  Branch:'.$row->candidate_designation.'</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
                             </br></br>Passed in written exam. </br></br>Medically Fit. Recommended for Merit List. </br></br>With profound regards… </br>DPS';
-                        }else{
-                            return 'Assalamulaikum Sir,</br></br>Roll No:'. $row->serial_no . ', Name:' . $row->name . ',  Branch:'. $row->candidate_designation .  '</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
+                        } else {
+                            return 'Assalamulaikum Sir,</br></br>Roll No:'.$row->serial_no.', Name:'.$row->name.',  Branch:'.$row->candidate_designation.'</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
  </br></br>Passed in written exam. </br></br>Medically Not Fit. </br></br>Result: Not Qualified for Viva. </br></br>With profound regards… </br>DPS';
                         }
                     }
@@ -112,12 +112,12 @@ class ImportantApplicationController extends Controller
                     elseif ($failCount > 0) {
                         $failedSubjectsList = '';
                         foreach ($failedSubjects as $subject => $mark) {
-                            $failedSubjectsList .= $subject . ' (' . $mark . '), ';
+                            $failedSubjectsList .= $subject.' ('.$mark.'), ';
                         }
                         $failedSubjectsList = rtrim($failedSubjectsList, ', '); // Remove trailing comma and space
 
-                        return 'Assalamulaikum Sir,</br></br>Roll No:'. $row->serial_no . ', Name:' . $row->name . ',  Branch:'. $row->candidate_designation .  '</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
- </br></br>Failed in written exam (' . $failCount . ' sub)</br>'. $failedSubjectsList .' (Pass Mark 8) </br></br>Result: Not Qualified for Medical and Viva. </br></br>With profound regards… </br>DPS';
+                        return 'Assalamulaikum Sir,</br></br>Roll No:'.$row->serial_no.', Name:'.$row->name.',  Branch:'.$row->candidate_designation.'</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
+ </br></br>Failed in written exam ('.$failCount.' sub)</br>'.$failedSubjectsList.' (Pass Mark 8) </br></br>Result: Not Qualified for Medical and Viva. </br></br>With profound regards… </br>DPS';
                     } else {
                         return '';
                     }
@@ -136,6 +136,7 @@ class ImportantApplicationController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'remark'])
                 ->make(true);
         }
+
         return view('admin.important-application.index');
     }
 

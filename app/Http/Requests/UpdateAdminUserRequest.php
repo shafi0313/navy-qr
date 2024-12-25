@@ -22,15 +22,15 @@ class UpdateAdminUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role_id'   => ['required', 'integer', 'exists:roles,id'],
-            'name'      => ['required', 'string', 'min:1', 'max:100'],
-            'email'     => ['required', 'string', 'min:1', 'max:64', 'unique:users,email,'.$this->admin_user->id.'id'],
+            'role_id' => ['required', 'integer', 'exists:roles,id'],
+            'name' => ['required', 'string', 'min:1', 'max:100'],
+            'email' => ['required', 'string', 'min:1', 'max:64', 'unique:users,email,'.$this->admin_user->id.'id'],
             'user_name' => ['nullable', 'string', 'min:1', 'max:32', 'unique:users,user_name,'.$this->admin_user->id.'id'],
-            'mobile'     => ['nullable', 'phone:BD', 'required_if:is_2fa,1'],
-            'address'   => ['nullable', 'string', 'min:1', 'max:191'],
+            'mobile' => ['nullable', 'phone:BD', 'required_if:is_2fa,1'],
+            'address' => ['nullable', 'string', 'min:1', 'max:191'],
             'is_active' => ['nullable', 'boolean'],
-            'image'     => ['nullable', 'image', 'mimes:jpeg,jpg,JPG,png,webp,svg'],
-            'is_2fa'    => ['required', 'boolean', 'in:0,1'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,JPG,png,webp,svg'],
+            'is_2fa' => ['required', 'boolean', 'in:0,1'],
         ];
     }
 }

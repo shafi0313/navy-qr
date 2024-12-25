@@ -47,7 +47,7 @@ return [
         'backup' => [
             'driver' => 'local',
             'root' => public_path('backups'),
-            'url' => env('APP_URL') . '/backups',
+            'url' => env('APP_URL').'/backups',
             'visibility' => 'public',
             'throw' => false,
         ],

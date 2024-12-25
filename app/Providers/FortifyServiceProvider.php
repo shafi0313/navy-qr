@@ -2,20 +2,21 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Laravel\Fortify\Fortify;
-use Illuminate\Support\Facades\Hash;
 use App\Actions\Fortify\CreateNewUser;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
-use Illuminate\Support\Facades\RateLimiter;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Http\Responses\LoginResponse;
+use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Laravel\Fortify\Fortify;
+
 // use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -40,7 +41,7 @@ class FortifyServiceProvider extends ServiceProvider
         // $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
@@ -55,6 +56,7 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::loginView(function () {
             Session::forget('is_locked');
+
             return view('auth.login');
         });
 
@@ -139,13 +141,14 @@ class FortifyServiceProvider extends ServiceProvider
             $user = User::where($fieldType, $request->email)->first();
 
             // Check if the user exists
-            if (!$user) {
+            if (! $user) {
                 return false; // User not found
             }
 
             // Check if the account is inactive
             if ($user->is_active == 0) {
                 session()->flash('error', 'Account is inactive');
+
                 return false; // Prevent login for inactive users
             }
 
@@ -164,8 +167,9 @@ class FortifyServiceProvider extends ServiceProvider
                     // $isSent = sendOtpViaSms($user->mobile, $otp);
                     $isSent = $otp; // Placeholder for successful OTP sending
 
-                    if (!$isSent) {
+                    if (! $isSent) {
                         session()->flash('error', 'Failed to send OTP');
+
                         return false; // Prevent login if OTP sending failed
                     }
 
@@ -188,8 +192,6 @@ class FortifyServiceProvider extends ServiceProvider
             // If password check failed, return false
             return false;
         });
-
-
 
     }
 }

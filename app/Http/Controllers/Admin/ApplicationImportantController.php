@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Imports\ImportantApplicationImport;
+use App\Models\Application;
 use App\Models\ImportantApplication;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Imports\ImportantApplicationImport;
 
 class ApplicationImportantController extends Controller
 {
@@ -32,6 +32,7 @@ class ApplicationImportantController extends Controller
             return $e->getMessage();
             Alert::error('Something went wrong!, Please try again.');
         }
+
         return back();
     }
 

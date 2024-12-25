@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Api\V1\BaseController as BaseController;
+use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
 use Illuminate\Http\Request;
-use App\Http\Resources\ApplicationResource;
-use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
 class PrimaryMedicalController extends BaseController
 {
@@ -21,6 +21,7 @@ class PrimaryMedicalController extends BaseController
         }
         $application = Application::select('id', 'is_medical_pass', 'p_m_remark')->findOrFail($request->id);
         $application->update(['is_medical_pass' => 1, 'p_m_remark' => null]);
+
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 
@@ -36,6 +37,7 @@ class PrimaryMedicalController extends BaseController
         }
         $application = Application::select('id', 'is_medical_pass')->findOrFail($request->id);
         $application->update(['is_medical_pass' => 0, 'p_m_remark' => $request->p_m_remark]);
+
         return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
     }
 }

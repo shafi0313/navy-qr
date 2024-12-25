@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -15,6 +15,7 @@ class LockScreenController extends Controller
         if (session('is_locked') == null) {
             return redirect()->route('admin.dashboard');
         }
+
         return view('auth.locked');
     }
 
@@ -23,9 +24,9 @@ class LockScreenController extends Controller
         Session::forget('is_locked');
         $check = Hash::check($request->input('password'), auth()->user()->password);
 
-        if (!$check) {
+        if (! $check) {
             return redirect()->route('login.locked')->withErrors([
-                'Your password does not match your profile.'
+                'Your password does not match your profile.',
             ]);
         }
 

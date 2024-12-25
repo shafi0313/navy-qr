@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\SMSService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -39,15 +39,17 @@ class OtpController extends Controller
                 $isSent = sendOtpViaSms($user->mobile, $otp);
                 SMSService::store($user->id, $user->mobile, $otp, 'OTP');
 
-                if (!$isSent) {
+                if (! $isSent) {
                     return back()->with('error', 'Failed to send OTP.');
                 }
 
                 // Store session and redirect to OTP form
                 session(['login.id' => $user->id, 'otp_required' => true]);
+
                 return redirect()->route('otp.form');
             } else {
                 Auth::login($user);
+
                 return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully.');
             }
         }
@@ -58,10 +60,11 @@ class OtpController extends Controller
     // Show OTP form
     public function showOtpForm()
     {
-        if (!session('otp_required')) {
+        if (! session('otp_required')) {
             return redirect()->route('index')->with('error', 'Unauthorized access.');
         }
         $otpExpiresAt = User::find(session('login.id'))->otp_expires_at;
+
         return view('auth.otp-form', compact('otpExpiresAt'));
     }
 
@@ -74,7 +77,7 @@ class OtpController extends Controller
 
         $user = User::find(session('login.id'));
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login')->with('error', 'Invalid session.');
         }
 
@@ -95,6 +98,7 @@ class OtpController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('login')->with('success', 'Logged out successfully.');
     }
 }

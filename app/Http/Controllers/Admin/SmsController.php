@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Sms;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class SmsController extends Controller
@@ -25,6 +25,7 @@ class SmsController extends Controller
 
         $thisMonth = Sms::whereMonth('created_at', now()->month)->count();
         $allTime = Sms::count();
+
         return view('admin.sms.index', compact('thisMonth', 'allTime'));
     }
 }

@@ -1,21 +1,19 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ApplicationController;
+use App\Http\Controllers\Api\V1\ApplicationUrlController;
+use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\FinalMedicalController;
+use App\Http\Controllers\Api\V1\PrimaryMedicalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\AuthController;
-use App\Http\Controllers\Api\V1\ApplicationController;
-use App\Http\Controllers\Api\V1\FinalMedicalController;
-use App\Http\Controllers\Api\V1\ApplicationUrlController;
-use App\Http\Controllers\Api\V1\PrimaryMedicalController;
-
-
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 Route::prefix('v1')->group(function () {
-    Route::controller(AuthController::class)->group(function(){
+    Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login');
     });
 
@@ -34,7 +32,6 @@ Route::prefix('v1')->group(function () {
         // Application Url
         // Route::get('/application-urls', [ApplicationUrlController::class, 'index']);
         Route::post('/application-urls/show-or-store', [ApplicationUrlController::class, 'showOrStore']);
-
 
         Route::post('/logout', [AuthController::class, 'logout']);
 

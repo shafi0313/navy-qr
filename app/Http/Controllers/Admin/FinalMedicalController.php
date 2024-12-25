@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class FinalMedicalController extends Controller
@@ -72,6 +72,7 @@ class FinalMedicalController extends Controller
                     $btn = '';
                     $btn .= view('button', ['type' => 'fit', 'route' => route('admin.final_medicals.fit', $row->id), 'row' => $row]);
                     $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.final_medicals.unfit', $row->id), 'row' => $row]);
+
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -88,6 +89,7 @@ class FinalMedicalController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'action'])
                 ->make(true);
         }
+
         return view('admin.final-medical.index');
     }
 
@@ -111,23 +113,26 @@ class FinalMedicalController extends Controller
     {
         if ($request->ajax()) {
             $modal = view('admin.final-medical.fit')->with(['application' => $application])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 
     public function fitStore(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 2, 3])) {
+        if (! in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
         try {
             $application->update([
                 'is_final_pass' => 1,
-                'height' => $application->height = $request->height .'\''. $request->height .'"',
-                'f_m_remark' => NULL
+                'height' => $application->height = $request->height.'\''.$request->height.'"',
+                'f_m_remark' => null,
             ]);
+
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -138,22 +143,25 @@ class FinalMedicalController extends Controller
     {
         if ($request->ajax()) {
             $modal = view('admin.final-medical.unfit')->with(['application' => $application])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 
     public function unfitStore(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 2, 3])) {
+        if (! in_array(user()->role_id, [1, 2, 3])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
         try {
             $application->update([
                 'is_final_pass' => 0,
-                'f_m_remark' => $request->f_m_remark
+                'f_m_remark' => $request->f_m_remark,
             ]);
+
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);

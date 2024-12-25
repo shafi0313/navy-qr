@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\WrittenMark;
-use Illuminate\Http\Request;
-use App\Imports\WrittenMarkImport;
 use App\Http\Controllers\Controller;
+use App\Imports\WrittenMarkImport;
 use App\Models\Application;
 use App\Models\ExamMark;
+use App\Models\WrittenMark;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -32,6 +32,7 @@ class WrittenMarkImportController extends Controller
         } catch (\Exception $e) {
             Alert::error('Something went wrong!, Please try again.');
         }
+
         return back();
     }
 
@@ -47,17 +48,17 @@ class WrittenMarkImportController extends Controller
             $application = Application::where('serial_no', $writtenMark->serial_no)->first();
 
             // If the question already exists, skip to the next iteration
-            if (!$application) {
+            if (! $application) {
                 continue;
             }
 
             $examMark = ExamMark::where('application_id', $application->id)->first();
             $markData = [
-                'application_id'    => $application->id,
-                'bangla'            => $writtenMark->bangla,
-                'english'           => $writtenMark->english,
-                'math'              => $writtenMark->math,
-                'science'           => $writtenMark->science,
+                'application_id' => $application->id,
+                'bangla' => $writtenMark->bangla,
+                'english' => $writtenMark->english,
+                'math' => $writtenMark->math,
+                'science' => $writtenMark->science,
                 'general_knowledge' => $writtenMark->general_knowledge,
             ];
             if ($examMark) {

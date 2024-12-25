@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Setting\Permission;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
-use UxWeb\SweetAlert\SweetAlert;
-use Auth;
 
 class PermissionController extends Controller
 {
@@ -14,7 +12,6 @@ class PermissionController extends Controller
     {
         // $this->middleware(['permission:permission-manage']);
     }
-
 
     /**
      * Display a listing of the resource.
@@ -27,6 +24,7 @@ class PermissionController extends Controller
             return $error;
         }
         $permissions = Permission::all();
+
         return view('setting.permission.index')->with('permissions', $permissions);
     }
 
@@ -40,13 +38,13 @@ class PermissionController extends Controller
         if ($error = $this->authorize('permission-create')) {
             return $error;
         }
+
         return view('setting.permission.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -64,7 +62,7 @@ class PermissionController extends Controller
             'regex' => 'Invalid Entry! Only letters,underscores,hypens and numbers are allowed',
         ]);
 
-        $permission =  Permission::create([
+        $permission = Permission::create([
             'name' => str_replace(' ', '-', strtolower($request->name)),
             'module' => str_replace(' ', '-', strtolower($request->module)),
         ]);
@@ -88,15 +86,16 @@ class PermissionController extends Controller
         }
         if ($request->ajax()) {
             $modal = view('setting.permission.edit')->with('permission', $permission)->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -108,15 +107,14 @@ class PermissionController extends Controller
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-
         $this->validate($request, [
-            'name' => 'required|regex:/^[a-zA-Z0-9\-_\.]+$/|unique:permissions,name,' . $permission->id,
+            'name' => 'required|regex:/^[a-zA-Z0-9\-_\.]+$/|unique:permissions,name,'.$permission->id,
             'module' => 'required|regex:/^[a-zA-Z0-9\-_\.]+$/|string',
         ], [
             'regex' => 'Invalid Entry! Only letters,underscores,hypens and numbers are allowed',
         ]);
 
-        $permission->name   = str_replace(' ', '-', strtolower($request->name));
+        $permission->name = str_replace(' ', '-', strtolower($request->name));
         $permission->module = str_replace(' ', '-', strtolower($request->module));
 
         // Logging activity for created role
@@ -141,7 +139,7 @@ class PermissionController extends Controller
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         //default permission cannot be deleted
-        if (!$permission->removable) {
+        if (! $permission->removable) {
             return redirect()->back()->withErrors('This permission cannot be deleted');
         }
 
@@ -150,6 +148,6 @@ class PermissionController extends Controller
 
         $permission->delete();
 
-        return response()->json(['message'=> 'Permission Deleted Successfully'], 200);
+        return response()->json(['message' => 'Permission Deleted Successfully'], 200);
     }
 }

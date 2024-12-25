@@ -2,47 +2,47 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ExamMark;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreExamMarkRequest;
+use App\Models\Application;
+use App\Models\ExamMark;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ExamMarkController extends Controller
 {
     use ApplicationTrait;
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            if($roleId == 1){
+            if ($roleId == 1) {
                 $applications = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                ->select(
-                    array_merge($this->applicationColumns(), $this->examColumns())
-                )
-                ->selectRaw(
-                    $this->examSumColumns()
-                )
-                ->where('applications.is_medical_pass', 1)
-                ->orderBy('total_marks', 'desc')
-                ->orderBy('serial_no', 'asc');
-            }else{
+                    ->select(
+                        array_merge($this->applicationColumns(), $this->examColumns())
+                    )
+                    ->selectRaw(
+                        $this->examSumColumns()
+                    )
+                    ->where('applications.is_medical_pass', 1)
+                    ->orderBy('total_marks', 'desc')
+                    ->orderBy('serial_no', 'asc');
+            } else {
                 $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
-                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                ->select(
-                    array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-                )
-                ->selectRaw(
-                    $this->examSumColumns()
-                )
-                ->where('team', user()->team)
-                ->where('applications.is_medical_pass', 1)
-                ->orderBy('total_marks', 'desc')
-                ->orderBy('serial_no', 'asc');
+                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                    ->select(
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                    )
+                    ->selectRaw(
+                        $this->examSumColumns()
+                    )
+                    ->where('team', user()->team)
+                    ->where('applications.is_medical_pass', 1)
+                    ->orderBy('total_marks', 'desc')
+                    ->orderBy('serial_no', 'asc');
             }
-
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
@@ -61,6 +61,7 @@ class ExamMarkController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.exam_marks.modal_store', $row->id), 'row' => $row]);
+
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -77,8 +78,10 @@ class ExamMarkController extends Controller
                 ->rawColumns(['medical', 'written', 'action'])
                 ->make(true);
         }
+
         return view('admin.exam-mark.index');
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -95,7 +98,7 @@ class ExamMarkController extends Controller
         $data = $request->validated();
         $check = Application::select('id', 'serial_no', 'name', 'is_medical_pass')->whereId($request->application_id)->first();
 
-        if (!$check) {
+        if (! $check) {
             return response()->json(['message' => 'Application not found'], 404);
         }
 
@@ -108,6 +111,7 @@ class ExamMarkController extends Controller
                 ['application_id' => $request->application_id],
                 $data
             );
+
             return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
@@ -119,8 +123,10 @@ class ExamMarkController extends Controller
         if ($request->ajax()) {
             $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
             $modal = view('admin.exam-mark.add')->with(['applicant' => $applicant])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 
@@ -128,8 +134,10 @@ class ExamMarkController extends Controller
     {
         if ($request->ajax()) {
             $modal = view('admin.exam-mark.edit')->with(['exa$examMark' => $examMark])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(500);
     }
 }

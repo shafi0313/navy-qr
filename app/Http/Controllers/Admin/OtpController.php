@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class OtpController extends Controller
@@ -27,7 +27,7 @@ class OtpController extends Controller
 
         $user = User::find(session('login.id'));
 
-        if (!$user || $user->otp_expires_at < now()) {
+        if (! $user || $user->otp_expires_at < now()) {
             return redirect()->route('login')->with('error', 'OTP expired or invalid');
         }
 

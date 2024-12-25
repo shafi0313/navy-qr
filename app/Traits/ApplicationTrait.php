@@ -11,6 +11,7 @@ trait ApplicationTrait
             'users.team as team',
         ];
     }
+
     protected function applicationColumns()
     {
         return [
@@ -87,18 +88,28 @@ trait ApplicationTrait
             $row->bangla + $row->english + $row->math + $row->science + $row->general_knowledge;
             $failCount = 0;
             // Check each subject mark and count fails
-            if ($row->bangla < 8) $failCount++;
-            if ($row->english < 8) $failCount++;
-            if ($row->math < 8) $failCount++;
-            if ($row->science < 8) $failCount++;
-            if ($row->general_knowledge < 8) $failCount++;
+            if ($row->bangla < 8) {
+                $failCount++;
+            }
+            if ($row->english < 8) {
+                $failCount++;
+            }
+            if ($row->math < 8) {
+                $failCount++;
+            }
+            if ($row->science < 8) {
+                $failCount++;
+            }
+            if ($row->general_knowledge < 8) {
+                $failCount++;
+            }
             // If no subject failed and all marks are >= 8, it's a pass
             if ($failCount == 0) {
-                return '<span class="badge bg-success">Pass</span>' . ' (' . $row->total_marks . ')';
+                return '<span class="badge bg-success">Pass</span>'.' ('.$row->total_marks.')';
             }
             // If there are any fails, it's a fail
             elseif ($failCount > 0) {
-                return '<span class="badge bg-danger">Failed</span> (' . $failCount . ' subject(s) failed)';
+                return '<span class="badge bg-danger">Failed</span> ('.$failCount.' subject(s) failed)';
             } else {
                 return '';
             }

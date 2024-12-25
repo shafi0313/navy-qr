@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Models\ApplicationUrl;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreApplicationUrlRequest;
 use App\Http\Requests\UpdateApplicationUrlRequest;
+use App\Models\ApplicationUrl;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ApplicationUrlController extends Controller
 {
@@ -22,11 +22,12 @@ class ApplicationUrlController extends Controller
             return DataTables::of($applicationUrls)
                 ->addIndexColumn()
                 ->addColumn('url', function ($row) {
-                    return '<a href="' . $row->url . '" target="_blank">' . $row->url . '</a>';
+                    return '<a href="'.$row->url.'" target="_blank">'.$row->url.'</a>';
                 })
                 ->rawColumns(['url'])
                 ->make(true);
         }
+
         return view('admin.application-url.index');
     }
 

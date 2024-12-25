@@ -7,4 +7,3 @@ return [
         3 => 'Other',
     ],
 ];
-

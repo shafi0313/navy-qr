@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
-use App\Http\Resources\ApplicationResource;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
+use App\Http\Resources\ApplicationResource;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
 
 class ApplicationController extends BaseController
 {
@@ -46,12 +45,13 @@ class ApplicationController extends BaseController
         $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
 
         if ($application) {
-            if (!is_null($application->scanned_at)) {
+            if (! is_null($application->scanned_at)) {
                 return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
             }
-            
+
             $application->update(['scanned_at' => now()]);
             $application->update(['user_id' => user()->id]);
+
             return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
         } else {
             return $this->sendError('No Data Found.', [], 404);

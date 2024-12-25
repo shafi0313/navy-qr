@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Http\Request;
-use App\Models\ApplicationUrl;
-use App\Http\Resources\ApplicationUrlResource;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
+use App\Http\Resources\ApplicationUrlResource;
+use App\Models\ApplicationUrl;
+use Illuminate\Http\Request;
 
 class ApplicationUrlController extends BaseController
 {

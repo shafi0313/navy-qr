@@ -1,9 +1,8 @@
 <?php
 
-use App\Constants\IsActive;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -15,8 +14,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')->nullable()->constrained()->onDelete('set null');
-            $table->enum('team', ['A','B','C'])->nullable();
-            $table->string('name',100);
+            $table->enum('team', ['A', 'B', 'C'])->nullable();
+            $table->string('name', 100);
             $table->string('email', 64)->unique();
             $table->string('user_name', 32)->unique()->nullable();
             $table->unsignedTinyInteger('gender')->nullable();

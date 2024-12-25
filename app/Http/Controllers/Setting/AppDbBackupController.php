@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\Setting;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Spatie\DbDumper\Databases\MySql;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\DbDumper\Databases\MySql;
 
 class AppDbBackupController extends Controller
 {
     public function password()
     {
         session()->forget('pass');
+
         return view('setting.app_db_backup.password');
     }
+
     public function checkPassword(Request $request)
     {
         $request->validate([
@@ -31,28 +33,32 @@ class AppDbBackupController extends Controller
             return redirect()->route('admin.backup.index');
         }
         Alert::error('Your password is incorrect');
+
         return redirect()->back();
     }
+
     public function index()
     {
         $password = session()->get('pass');
-        $admin    = User::whereRole(1)->first();
+        $admin = User::whereRole(1)->first();
         if ($password && Hash::check($password, $admin->password)) {
             return view('setting.app_db_backup.index', [
                 'backups' => $this->getBackups(),
             ]);
         }
+
         return redirect()->route('admin.backup.password');
     }
 
     /**
      * Run Application Files Backup
-     * @param  string $value
+     *
+     * @param  string  $value
      * @return [type]        [description]
      */
     public function backupFiles()
     {
-        Artisan::call('backup:run', ['--only-files' => true, '--filename' => now()->format('Y-m-d-H-i-s') . '_FILES.zip']);
+        Artisan::call('backup:run', ['--only-files' => true, '--filename' => now()->format('Y-m-d-H-i-s').'_FILES.zip']);
         $output = Artisan::output();
 
         if (Str::contains($output, 'Backup completed!')) {
@@ -62,17 +68,19 @@ class AppDbBackupController extends Controller
         }
 
         $db = $this->getBackups()->last();
+
         return $this->downloadBackup($db['filename'], $db['extension']);
     }
 
     /**
      * Run Application DB Backup
-     * @param  string $value
+     *
+     * @param  string  $value
      * @return [type]        [description]
      */
     public function backupDb()
     {
-        Artisan::call('backup:run', ['--only-db' => true, '--filename' => now()->format('Y-m-d-H-i-s') . '_DATABASE.zip']);
+        Artisan::call('backup:run', ['--only-db' => true, '--filename' => now()->format('Y-m-d-H-i-s').'_DATABASE.zip']);
         $output = Artisan::output();
 
         if (Str::contains($output, 'Backup completed!')) {
@@ -81,6 +89,7 @@ class AppDbBackupController extends Controller
             toast('Database backed-up failed', 'error');
         }
         $db = $this->getBackups()->last();
+
         return $this->downloadBackup($db['filename'], $db['extension']);
     }
 
@@ -89,7 +98,7 @@ class AppDbBackupController extends Controller
         $path = public_path('backups');
 
         // Check if backup-file-path already exist
-        if (!File::isDirectory($path)) {
+        if (! File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
         }
 
@@ -104,28 +113,33 @@ class AppDbBackupController extends Controller
                 'time' => $dt->getMTime(),
             ]);
         }
+
         return $backups;
     }
 
     public function downloadBackup($name, $ext)
     {
         $path = public_path('backups');
-        $file = $path . '/' . $name . '.' . $ext;
-        $status = Storage::disk('backup')->download($name . '.' . $ext, $name . '.' . $ext);
+        $file = $path.'/'.$name.'.'.$ext;
+        $status = Storage::disk('backup')->download($name.'.'.$ext, $name.'.'.$ext);
+
         return $status;
     }
+
     public function deleteBackup($name, $ext)
     {
         $path = public_path('backups');
-        $file = $path . '/' . $name . '.' . $ext;
+        $file = $path.'/'.$name.'.'.$ext;
         $status = File::delete($file);
         if ($status) {
             toast('Backup deleted successfully', 'success');
         } else {
             toast('Ops! an error occurred, Try Again', 'error');
         }
+
         return redirect()->back();
     }
+
     public function restoreLoad(Request $request)
     {
         return view('admin.web-backup.restore');
@@ -138,8 +152,9 @@ class AppDbBackupController extends Controller
             ->setDbName(env('DB_DATABASE', 'forge'))
             ->setUserName(env('DB_USERNAME', 'forge'))
             ->setPassword(env('DB_PASSWORD', ''))
-            ->dumpToFile(base_path('app' . now() . '.sql'));
+            ->dumpToFile(base_path('app'.now().'.sql'));
         Alert::success('Database Dump Successful!', 'Please Check your root directory.');
+
         return back();
     }
 }
