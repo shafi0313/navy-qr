@@ -14,6 +14,13 @@ if (!function_exists('bdDate')) {
     }
 }
 
+if (!function_exists('bdDateTime')) {
+    function bdDateTime($date)
+    {
+        return Carbon::parse($date)->format('d/m/Y h:i A');
+    }
+}
+
 if (!function_exists('stringToDate')) {
     function stringToDate($date)
     {

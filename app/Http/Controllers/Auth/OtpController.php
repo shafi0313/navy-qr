@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Services\SMSService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,7 @@ class OtpController extends Controller
 
                 // Simulate sending OTP (replace with real SMS sending logic)
                 $isSent = sendOtpViaSms($user->mobile, $otp);
+                SMSService::store($user->id, $user->mobile, $otp, 'OTP');
 
                 if (!$isSent) {
                     return back()->with('error', 'Failed to send OTP.');

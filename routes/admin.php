@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\Admin\SmsController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\VivaMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Setting\AppDbBackupController;
@@ -38,6 +39,8 @@ Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(
 // Global Ajax Route
 Route::get('select-2-ajax', [AjaxController::class, 'select2'])->name('select2');
 Route::post('response', [AjaxController::class, 'response'])->name('ajax');
+
+Route::resource('/sms', SmsController::class)->only(['index']);
 
 Route::resource('/roles', RoleController::class)->except(['show', 'create']);
 Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name('roles.is_active');
