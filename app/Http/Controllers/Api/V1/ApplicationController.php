@@ -35,7 +35,7 @@ class ApplicationController extends BaseController
                     $this->examSumColumns()
                 )->where('team', user()->team);
         }
-        $applications = $query->get();
+        $applications = $query->paginate(20);
 
         return $this->sendResponse(ApplicationResource::collection($applications), 'Applicants list.');
     }
