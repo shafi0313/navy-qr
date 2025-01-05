@@ -8,6 +8,7 @@
             </div>
         </div>
     </div>
+
     {{-- 2 = Officer --}}
     @if (user()->exam_type == 2)
         <div class="row row-cols-1 row-cols-xxl-6 row-cols-lg-3 row-cols-md-2">
@@ -16,7 +17,8 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Customers">Today's Count</h5>
+                                <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Customers">Today's Count
+                                </h5>
                                 <h3 class="my-3">{{ $todayCount }}</h3>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
@@ -26,9 +28,9 @@
                                 </span>
                             </div>
                         </div>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
+                    </div>
+                </div>
+            </div>
 
             <div class="col">
                 <div class="card widget-icon-box">
@@ -45,20 +47,13 @@
                                 </span>
                             </div>
                         </div>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
+                    </div>
+                </div>
+            </div>
         </div>
 
 
-
-
-
-
-
-
-
-
+        {{-- Data Table --}}
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -67,11 +62,10 @@
                             <thead></thead>
                             <tbody></tbody>
                         </table>
-                        <!-- end row-->
-                    </div> <!-- end card-body -->
-                </div> <!-- end card -->
-            </div><!-- end col -->
-        </div><!-- end row -->
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 
     @push('scripts')
@@ -110,6 +104,8 @@
                                 data: 'url',
                                 name: 'url',
                                 title: 'URL',
+                                orderable: false,
+                                searchable: false,
                             },
                             {
                                 data: 'user.name',
