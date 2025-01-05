@@ -26,6 +26,7 @@ class ApplicationUrlController extends BaseController
             'user_id' => 'required|exists:users,id',
             'url' => 'required|url',
         ]);
+        $validatedData['scanned_at'] = now();
 
         $url = $validatedData['url'];
 
@@ -34,29 +35,5 @@ class ApplicationUrlController extends BaseController
         });
 
         return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant info.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
