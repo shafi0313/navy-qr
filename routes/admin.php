@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\ApplicationImportantController;
 use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Admin\ImportantApplicationController;
@@ -20,9 +21,7 @@ use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Setting\AppDbBackupController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // App DB Backup
 Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(function () {

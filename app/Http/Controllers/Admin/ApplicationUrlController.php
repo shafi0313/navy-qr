@@ -28,7 +28,6 @@ class ApplicationUrlController extends Controller
                 ->rawColumns(['url'])
                 ->make(true);
         }
-
         return view('admin.dashboard');
     }
 }
