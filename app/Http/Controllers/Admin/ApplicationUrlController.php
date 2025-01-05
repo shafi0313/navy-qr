@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreApplicationUrlRequest;
-use App\Http\Requests\UpdateApplicationUrlRequest;
 use App\Models\ApplicationUrl;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -17,57 +15,20 @@ class ApplicationUrlController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $applicationUrls = ApplicationUrl::query();
+            $applicationUrls = ApplicationUrl::with('user:id,name');
 
             return DataTables::of($applicationUrls)
                 ->addIndexColumn()
                 ->addColumn('url', function ($row) {
-                    return '<a href="'.$row->url.'" target="_blank">'.$row->url.'</a>';
+                    return '<a href="' . $row->url . '" target="_blank">' . $row->url . '</a>';
+                })
+                ->addColumn('scanned_at', function ($row) {
+                    return bdDateTime($row->scanned_at);
                 })
                 ->rawColumns(['url'])
                 ->make(true);
         }
 
-        return view('admin.application-url.index');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreApplicationUrlRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(ApplicationUrl $applicationUrl)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ApplicationUrl $applicationUrl)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateApplicationUrlRequest $request, ApplicationUrl $applicationUrl)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ApplicationUrl $applicationUrl)
-    {
-        //
+        return view('admin.dashboard');
     }
 }

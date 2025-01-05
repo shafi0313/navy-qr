@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Constants\ExamType;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
 use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
+use App\Models\ApplicationUrl;
 use App\Traits\ApplicationTrait;
 
 class ApplicationController extends BaseController
@@ -60,8 +62,13 @@ class ApplicationController extends BaseController
 
     public function count()
     {
-        $data['allApplicationsByUser'] = Application::where('user_id', user()->id)->count();
-        $data['todayApplicationsByUser'] = Application::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
+        if (user()->exam_type == ExamType::SAILOR) {
+            $data['allApplicationsByUser'] = Application::where('user_id', user()->id)->count();
+            $data['todayApplicationsByUser'] = Application::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
+        } elseif (user()->exam_type == ExamType::OFFICER) {
+            $data['allApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->count();
+            $data['todayApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
+        }
 
         return $this->sendResponse($data, 'Applicants count.');
     }
