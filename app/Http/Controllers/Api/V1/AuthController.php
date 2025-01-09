@@ -24,6 +24,7 @@ class AuthController extends BaseController
             $user = Auth::user();
             $success['token'] = $user->createToken('auto_token')->plainTextToken;
             $success['name'] = $user->name;
+            $success['user_id'] = $user->id;
             $success['role_id'] = $user->role_id;
             $success['team'] = $user->team;
 
