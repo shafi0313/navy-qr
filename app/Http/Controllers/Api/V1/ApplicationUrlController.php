@@ -30,10 +30,18 @@ class ApplicationUrlController extends BaseController
 
         $url = $validatedData['url'];
 
-        $applicationUrl = ApplicationUrl::where('url', $url)->firstOr(function () use ($validatedData) {
-            return ApplicationUrl::create($validatedData);
-        });
+        $applicationUrl = ApplicationUrl::where('url', $url)->first();
+        if($applicationUrl) {
+            return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant already exists.');
+        } else {
+            $applicationUrl = ApplicationUrl::create($validatedData);
+            return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant info created.');
+        }
 
-        return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant info.');
+        // $applicationUrl = ApplicationUrl::where('url', $url)->firstOr(function () use ($validatedData) {
+        //     return ApplicationUrl::create($validatedData);
+        // });
+
+        // return $this->sendResponse(new ApplicationUrlResource($applicationUrl), 'Applicant info.');
     }
 }
