@@ -8,6 +8,16 @@
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => ['', $pageTitle, 'Index']])
 
+        <!-- DataTables CSS -->
+        <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <!-- DataTables Buttons CSS -->
+        <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
+        <style>
+            .dt-buttons {
+                margin-left: 2rem;
+            }
+        </style>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -29,6 +39,19 @@
     </div><!-- end row -->
 
     @push('scripts')
+        <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+        <!-- DataTables Buttons JS and Dependencies -->
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <!-- JSZip for Excel export -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -38,6 +61,10 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
+                    lengthMenu: [
+                        [10, 50, 100, 500, 1000, 10000, 30000, -1],
+                        [10, 50, 100, 500, 1000, 10000, 30000, 'All']
+                    ],
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -100,7 +127,79 @@
                     },
                     order: [
                         [1, 'asc']
-                    ]
+                    ],
+                    // Adjusted DOM structure
+                    dom: '<"top"lfB>rt<"bottom"ip>',
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            title: 'Application Data',
+                            text: 'Export to Excel',
+                            className: 'btn btn-success',
+                            exportOptions: {
+                                columns: ':visible',
+                                modifier: {
+                                    search: 'applied',
+                                    order: 'applied',
+                                    page: 'all'
+                                }
+                            },
+                            action: function(e, dt, button, config) {
+                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                                dt.settings()[0].oFeatures.bServerSide = false;
+
+                                $.ajax({
+                                    url: dt.ajax.url(),
+                                    data: dt.ajax.params(),
+                                    success: (json) => {
+                                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(
+                                            this, e, dt, button, config);
+                                        dt.settings()[0].oFeatures.bServerSide =
+                                            originalServerSide;
+                                        dt.ajax.reload(null, false);
+                                    },
+                                    error: function(xhr, error, thrown) {
+                                        console.error('Error fetching data for export:',
+                                            error);
+                                    }
+                                });
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: 'Application Data',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: ':visible',
+                                modifier: {
+                                    search: 'applied',
+                                    order: 'applied',
+                                    page: 'all'
+                                }
+                            },
+                            orientation: 'landscape',
+                            pageSize: 'A4',
+                            action: function(e, dt, button, config) {
+                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                                dt.settings()[0].oFeatures.bServerSide = false;
+
+                                $.ajax({
+                                    url: dt.ajax.url(),
+                                    data: dt.ajax.params(),
+                                    success: (json) => {
+                                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
+                                            this, e, dt, button, config);
+                                        dt.settings()[0].oFeatures.bServerSide =
+                                            originalServerSide;
+                                        dt.ajax.reload(null, false);
+                                    },
+                                    error: function(xhr, error, thrown) {
+                                        console.error('Error fetching data for export:',
+                                            error);
+                                    }
+                                });
+                            }
+                        }
+                    ],
                 });
                 $(".filter").find('select').on('change', function() {
                     table.draw();
@@ -114,9 +213,9 @@
             });
         </script>
 
-{{-- Filter Get JS --}}
-@include('admin.layouts.includes.applicant-get-filter-js')
-{{-- /Filter Get JS --}}
+        {{-- Filter Get JS --}}
+        @include('admin.layouts.includes.applicant-get-filter-js')
+        {{-- /Filter Get JS --}}
 
         <script>
             function pMPass(id) {
