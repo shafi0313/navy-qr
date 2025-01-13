@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Login</title>
+    <title>Login | {{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta name="robots" content="noindex">
     <link rel="icon" href="{{ imagePath('logo', 'navy_fav.png') }}" type="image/x-icon" />
