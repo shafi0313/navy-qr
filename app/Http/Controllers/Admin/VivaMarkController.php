@@ -13,11 +13,11 @@ class VivaMarkController extends Controller
     use ApplicationTrait;
 
     public function index(Request $request)
-    {
+    {        
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {
-                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'])
+                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva,viva_remark'])
                     ->whereHas('examMark', function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)
@@ -35,7 +35,7 @@ class VivaMarkController extends Controller
                     ->orderBy('total_viva', 'desc')
                     ->orderBy('total_marks', 'desc');
             } else {
-                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva'])
+                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva,viva_remark'])
                     ->whereHas('examMark', function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)
@@ -113,6 +113,7 @@ class VivaMarkController extends Controller
     {
         $data = $request->validate([
             'viva' => ['required', 'numeric', 'min:0', 'max:10'],
+            'viva_remark' => ['nullable', 'string'],
         ]);
         $application = Application::select('id', 'serial_no', 'name', 'is_final_pass')->whereId($request->application_id)->first();
 

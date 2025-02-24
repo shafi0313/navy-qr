@@ -26,6 +26,10 @@
                                 <label for="viva" class="form-label">Viva/Final Selection </label>
                                 <input type="number" step="any" name="viva" id="viva" class="form-control">
                             </div>
+                            <div class="col-md-10">
+                                <label for="viva_remark" class="form-label">Remark </label>
+                                <input type="text" step="any" name="viva_remark" id="viva_remark" class="form-control">
+                            </div>
                         </div>
                         <div class="col-md-12 text-center mt-3">
                             <button type="submit" class="btn btn-primary">Save changes</button>

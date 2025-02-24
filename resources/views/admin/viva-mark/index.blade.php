@@ -106,6 +106,11 @@
                             title: 'viva',
                         },
                         {
+                            data: 'exam_mark.viva_remark',
+                            name: 'exam_mark.viva_remark',
+                            title: 'Remark',
+                        },
+                        {
                             data: 'action',
                             name: 'action',
                             title: 'Action',

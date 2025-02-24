@@ -10,17 +10,21 @@
                 @csrf
                 <input type="hidden" name="application_id" value="{{ $applicant->id }}">
                 <div class="modal-body">
-                    <div class="row gy-2">
+                    <div class="row mb-2">
                         <div class="col-md-12 text-center">
                             <h5>{{ $applicant->candidate_designation }}</h5>
                             <h5>{{ $applicant->name }}</h5>
+                        </div>                        
+                    </div>
+                    <div class="row gy-2 justify-content-center">
+                        <div class="col-md-4">
+                            <label for="viva" class="form-label">Viva/Final Selection </label>
+                            <input type="number" step="any" name="viva"
+                                value="{{ $applicant->examMark?->viva }}" id="viva" class="form-control">
                         </div>
-                        <div class="row gy-2 justify-content-center">
-                            <div class="col-md-4">
-                                <label for="viva" class="form-label">Viva/Final Selection </label>
-                                <input type="number" step="any" name="viva"
-                                    value="{{ $applicant->examMark?->viva }}" id="viva" class="form-control">
-                            </div>
+                        <div class="col-md-12">
+                            <label for="viva_remark" class="form-label">Remark </label>
+                            <textarea name="viva_remark" id="viva_remark" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
