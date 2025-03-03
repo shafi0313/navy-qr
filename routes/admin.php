@@ -1,25 +1,26 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\ApplicationController;
-use App\Http\Controllers\Admin\ApplicationImportantController;
-use App\Http\Controllers\Admin\ApplicationSearchController;
-use App\Http\Controllers\Admin\ApplicationUrlController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ExamMarkController;
-use App\Http\Controllers\Admin\FinalMedicalController;
-use App\Http\Controllers\Admin\ImportantApplicationController;
-use App\Http\Controllers\Admin\PrimaryMedicalController;
-use App\Http\Controllers\Admin\ResultController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SmsController;
-use App\Http\Controllers\Admin\SpecialityController;
-use App\Http\Controllers\Admin\VivaMarkController;
-use App\Http\Controllers\Admin\WrittenMarkImportController;
-use App\Http\Controllers\AjaxController;
-use App\Http\Controllers\MyProfileController;
-use App\Http\Controllers\Setting\AppDbBackupController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\Admin\SmsController;
+use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ResultController;
+use App\Http\Controllers\Admin\ExamMarkController;
+use App\Http\Controllers\Admin\VivaMarkController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SpecialityController;
+use App\Http\Controllers\Admin\ApplicationController;
+use App\Http\Controllers\Admin\FinalMedicalController;
+use App\Http\Controllers\Setting\AppDbBackupController;
+use App\Http\Controllers\Admin\ApplicantCountController;
+use App\Http\Controllers\Admin\ApplicationUrlController;
+use App\Http\Controllers\Admin\PrimaryMedicalController;
+use App\Http\Controllers\Admin\ApplicationSearchController;
+use App\Http\Controllers\Admin\WrittenMarkImportController;
+use App\Http\Controllers\Admin\ApplicationImportantController;
+use App\Http\Controllers\Admin\ImportantApplicationController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -90,3 +91,5 @@ Route::resource('important-applications', ImportantApplicationController::class)
 Route::resource('/results', ResultController::class)->only(['index']);
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
+
+Route::get('applicant-count', [ApplicantCountController::class, 'index'])->name('applicant_count');
