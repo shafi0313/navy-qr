@@ -14,14 +14,6 @@
                         <tr>
                             <td>District</td>
                         </tr>
-                        {{-- @foreach ($applicants as $applicant)
-                            <tr>
-                                <td>{{ $applicant->eligible_district }}</td>
-                                <td>{{ $applicant->candidate_designation }}</td>
-                                <td>{{ $applicant->total }}</td>
-                            </tr>
-                        @endforeach --}}
-
                         @foreach ($applicants->groupBy('eligible_district') as $applicant)
                             @php
                                 $byDistrict = $applicant->first();
