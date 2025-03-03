@@ -10,8 +10,13 @@ class ApplicantCountController extends Controller
 {
     public function index()
     {
-        return Application::groupBy('candidate_designation', 'eligible_district')
-            ->selectRaw('count(*) as total, candidate_designation, eligible_district')
+        // return$applicants = Application::groupBy('eligible_district', 'candidate_designation')
+        //     ->selectRaw('count(*) as total, candidate_designation, eligible_district')
+        //     ->get();
+
+        $applicants = Application::select('id','eligible_district', 'candidate_designation')
             ->get();
+
+        return view('admin.applicant-count.index', compact('applicants'));
     }
 }
