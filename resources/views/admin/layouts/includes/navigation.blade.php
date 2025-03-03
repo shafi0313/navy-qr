@@ -161,7 +161,7 @@
             <li class="side-nav-item">
                 <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
                     <i class="fa-solid fa-comment-sms"></i>
-                    <span> Applicant Count by Rank & District </span>
+                    <span> Applicant Count by District & Rank</span>
                 </a>
             </li>
             <li class="side-nav-item">
