@@ -9,13 +9,16 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <a href="{{ url('dashboard/export-applicants') }}" class="btn btn-success">
+                        Export to Excel
+                    </a>
                     <div class="table-responsive">
                         @php
                             // Get unique districts and designations
                             $districts = $applicants->groupBy('eligible_district');
                             $designations = $applicants->groupBy('candidate_designation')->keys();
                         @endphp
-
+                        
                         <table class="table table-bordered table-centered mb-0 w-100">
                             <thead>
                                 <tr>
@@ -54,7 +57,6 @@
                                 </tr>
                             </tfoot>
                         </table>
-
                     </div>
                 </div> <!-- end card-body -->
             </div> <!-- end card -->

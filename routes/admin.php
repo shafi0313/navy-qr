@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\ApplicantsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Admin\SmsController;
@@ -93,3 +95,7 @@ Route::resource('/results', ResultController::class)->only(['index']);
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 
 Route::get('applicant-count', [ApplicantCountController::class, 'index'])->name('applicant_count');
+
+Route::get('/export-applicants', function () {
+    return Excel::download(new ApplicantsExport, 'applicants.xlsx');
+});
