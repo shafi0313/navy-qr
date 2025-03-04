@@ -14,8 +14,10 @@ class ApplicantCountController extends Controller
         //     ->selectRaw('count(*) as total, candidate_designation, eligible_district')
         //     ->get();
 
-        $applicants = Application::select('id','eligible_district', 'candidate_designation')
+        $applicants = Application::selectRaw('eligible_district, candidate_designation, COUNT(id) as total')
+            ->groupBy('eligible_district', 'candidate_designation')
             ->get();
+
 
         return view('admin.applicant-count.index', compact('applicants'));
     }
