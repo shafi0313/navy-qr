@@ -32,7 +32,7 @@
                             <tbody>
                                 @foreach ($districts as $district => $applicantGroup)
                                     <tr>
-                                        <td>{{ $district }}</td>
+                                        <td>{{ ucfirst($district) }}</td>
                                         @php
                                             $districtTotal = $applicantGroup->sum('total');
                                         @endphp

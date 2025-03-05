@@ -28,6 +28,7 @@ class ApplicantsExport implements FromArray, WithHeadings, WithStyles
 
         // Table rows
         foreach ($districts as $district => $applicantGroup) {
+            $district = ucfirst($district);
             $districtTotal = $applicantGroup->sum('total');
             $row = [$district, $districtTotal];
 
