@@ -11,12 +11,13 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ApplicantsExport implements FromArray, WithHeadings, WithStyles
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function array(): array
     {
         // Get data grouped by district and designation
         $applicants = Application::selectRaw('eligible_district, candidate_designation, COUNT(id) as total')
+            ->whereNotNull('scanned_at')
             ->groupBy('eligible_district', 'candidate_designation')
             ->get();
 

@@ -11,6 +11,7 @@ class ApplicantCountController extends Controller
     public function index()
     {
         $applicants = Application::selectRaw('eligible_district, candidate_designation, COUNT(id) as total')
+            ->whereNotNull('scanned_at')
             ->groupBy('eligible_district', 'candidate_designation')
             ->get();
 
