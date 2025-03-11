@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Jobs\SendSmsJob;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class PrimaryMedicalController extends Controller
@@ -145,6 +146,13 @@ class PrimaryMedicalController extends Controller
                 'is_medical_pass' => 0,
                 'p_m_remark' => $request->p_m_remark,
             ]);
+
+            // if (env('APP_DEBUG') == false){
+                $msg = 'The status has been updated';
+                $type = 'Primary Medical';
+                SendSmsJob::dispatch(user()->id, $application->current_phone, $msg, $type)->onQueue('default');
+            // }
+            
 
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
