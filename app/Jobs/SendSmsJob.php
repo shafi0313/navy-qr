@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Services\SMSService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,9 +14,13 @@ class SendSmsJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $user_id;
+
     protected $mobile;
+
     protected $msg;
+
     protected $type;
+
     /**
      * Create a new job instance.
      */
@@ -34,7 +37,7 @@ class SendSmsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        sendSms($this->mobile, $this->msg);        
+        sendSms($this->mobile, $this->msg);
         SMSService::store($this->user_id, $this->mobile, $this->msg, $this->type);
     }
 }

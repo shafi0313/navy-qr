@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Jobs\SendSmsJob;
-use App\Models\ExamMark;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreExamMarkRequest;
+use App\Jobs\SendSmsJob;
+use App\Models\Application;
+use App\Models\ExamMark;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ExamMarkController extends Controller
 {
@@ -113,12 +113,12 @@ class ExamMarkController extends Controller
                 $data
             );
 
-            if (env('APP_DEBUG') == false){
-                if($request->bangla < 8 || $request->english < 8 || $request->math < 8 || $request->science < 8 || $request->general_knowledge < 8){
+            if (env('APP_DEBUG') == false) {
+                if ($request->bangla < 8 || $request->english < 8 || $request->math < 8 || $request->science < 8 || $request->general_knowledge < 8) {
                     $msg = 'You have failed in written exam.';
                     $type = 'Written Exam';
                     SendSmsJob::dispatch(user()->id, $check->current_phone, $msg, $type)->onQueue('default');
-                }                
+                }
             }
 
             return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);

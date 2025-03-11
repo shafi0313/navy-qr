@@ -20,7 +20,7 @@ class ApplicationUrlController extends Controller
             return DataTables::of($applicationUrls)
                 ->addIndexColumn()
                 ->addColumn('url', function ($row) {
-                    return '<a href="' . $row->url . '" target="_blank">' . $row->url . '</a>';
+                    return '<a href="'.$row->url.'" target="_blank">'.$row->url.'</a>';
                 })
                 ->addColumn('scanned_at', function ($row) {
                     return bdDateTime($row->scanned_at);
@@ -28,6 +28,7 @@ class ApplicationUrlController extends Controller
                 ->rawColumns(['url'])
                 ->make(true);
         }
+
         return view('admin.dashboard');
     }
 }

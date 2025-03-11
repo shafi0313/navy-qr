@@ -13,7 +13,7 @@ class VivaMarkController extends Controller
     use ApplicationTrait;
 
     public function index(Request $request)
-    {        
+    {
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {

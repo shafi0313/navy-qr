@@ -30,9 +30,9 @@ class ApplicationUrlController extends BaseController
 
         $url = $validatedData['url'];
 
-             
-        $applicationUrl = ApplicationUrl::firstOrCreate(['url' => $url], $validatedData);        
-        $message = $applicationUrl->wasRecentlyCreated ? 'URL created.' : 'URL already exists.';        
+        $applicationUrl = ApplicationUrl::firstOrCreate(['url' => $url], $validatedData);
+        $message = $applicationUrl->wasRecentlyCreated ? 'URL created.' : 'URL already exists.';
+
         return $this->sendResponse(new ApplicationUrlResource($applicationUrl), $message);
 
         // $applicationUrl = ApplicationUrl::where('url', $url)->firstOr(function () use ($validatedData) {

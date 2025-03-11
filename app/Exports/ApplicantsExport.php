@@ -39,7 +39,7 @@ class ApplicantsExport implements FromArray, WithHeadings, WithStyles
         }
 
         // Total row
-        $totalRow = ["Total", $applicants->sum('total')];
+        $totalRow = ['Total', $applicants->sum('total')];
         foreach ($designations as $designation) {
             $totalRow[] = $applicants->where('candidate_designation', $designation)->sum('total');
         }
@@ -53,7 +53,7 @@ class ApplicantsExport implements FromArray, WithHeadings, WithStyles
         // Get unique designations
         $designations = Application::select('candidate_designation')->distinct()->pluck('candidate_designation');
 
-        return array_merge(["District", "Total"], $designations->toArray());
+        return array_merge(['District', 'Total'], $designations->toArray());
     }
 
     public function styles(Worksheet $sheet)

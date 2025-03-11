@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Jobs\SendOtpSmsJob;
-use App\Services\SMSService;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +28,7 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->password, $user->password)) {
             if (env('APP_DEBUG') == false && $user->is_2fa == true) {
-                // Generate OTP 
+                // Generate OTP
                 $otp = rand(1000, 9999);
                 $user->otp = $otp;
                 $user->otp_expires_at = now()->addMinutes(5);

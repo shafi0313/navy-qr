@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Constants\ExamType;
+use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\ApplicationUrl;
-use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
