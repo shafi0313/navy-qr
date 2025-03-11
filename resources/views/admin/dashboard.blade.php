@@ -8,51 +8,38 @@
             </div>
         </div>
     </div>
+    @if (in_array(user()->role_id, [1, 2]))
+    @endif
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-hover table-striped mb-0 w-100">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Today's Count</th>
+                                    <th>All Count</th>
+                                </tr>
+                            </thead>
 
-    {{-- 2 = Officer --}}
-    @if (user()->exam_type == 2)
-        <div class="row row-cols-1 row-cols-xxl-6 row-cols-lg-3 row-cols-md-2">
-            <div class="col">
-                <div class="card widget-icon-box">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Customers">Today's Count
-                                </h5>
-                                <h3 class="my-3">{{ $todayCount }}</h3>
-                            </div>
-                            <div class="avatar-sm flex-shrink-0">
-                                <span
-                                    class="avatar-title text-bg-primary rounded rounded-3 fs-3 widget-icon-box-avatar shadow">
-                                    <i class="fa-solid fa-user"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card widget-icon-box">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Orders">All Count</h5>
-                                <h3 class="my-3">{{ $allCount }}</h3>
-                            </div>
-                            <div class="avatar-sm flex-shrink-0">
-                                <span
-                                    class="avatar-title text-bg-success rounded rounded-3 fs-3 widget-icon-box-avatar shadow">
-                                    <i class="fa-solid fa-users"></i>
-                                </span>
-                            </div>
-                        </div>
+                            @foreach ($counts as $count)
+                                <tr>
+                                    <td>{{ $count->team }}</td>
+                                    <td class="text-end">{{ nF($count->today_count) }}</td>
+                                    <td class="text-end">{{ nF($count->count) }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
+    @if (user()->exam_type == 2)
         {{-- Data Table --}}
         <div class="row">
             <div class="col-12">

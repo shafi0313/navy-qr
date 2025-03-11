@@ -91,6 +91,14 @@ if (! function_exists('pad6')) {
     }
 }
 
+
+if (! function_exists('nF')) {
+    function nF($number)
+    {
+        return number_format($number, 0);
+    }
+}
+
 if (! function_exists('nF2')) {
     function nF2($number)
     {
