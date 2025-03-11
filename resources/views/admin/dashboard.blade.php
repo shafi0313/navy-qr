@@ -84,12 +84,6 @@
                         ajax: {
                             url: "{{ route('admin.application-urls.index') }}",
                             type: "get",
-                            // data: function(d) {
-                            //     return $.extend(d, {
-                            //         district: $('.district').val(),
-                            //         exam_date: $('.exam_date').val()
-                            //     });
-                            // },
                         },
                         columns: [{
                                 data: 'DT_RowIndex',
@@ -125,16 +119,6 @@
                             [3, 'desc']
                         ]
                     });
-
-                    // $(".filter").find('select').on('change', function() {
-                    //     table.draw();
-                    // });
-
-                    // $(".filter").find('a').on('click', function(e) {
-                    //     e.preventDefault();
-                    //     $(".filter").find('select').val('').trigger('change');
-                    //     table.draw();
-                    // });
                 });
             </script>
         @endif
