@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Jobs\SendOtpSmsJob;
 use App\Services\SMSService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,19 +30,18 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->password, $user->password)) {
             if (env('APP_DEBUG') == false && $user->is_2fa == true) {
-                // Generate OTP
+                // Generate OTP 
                 $otp = rand(1000, 9999);
                 $user->otp = $otp;
                 $user->otp_expires_at = now()->addMinutes(5);
                 $user->save();
 
                 // Simulate sending OTP (replace with real SMS sending logic)
-                $isSent = sendOtpViaSms($user->mobile, $otp);
-                SMSService::store($user->id, $user->mobile, $otp, 'OTP');
-
-                if (! $isSent) {
-                    return back()->with('error', 'Failed to send OTP.');
-                }
+                // $isSent = sendOtpViaSms($user->mobile, $otp);
+                SendOtpSmsJob::dispatch($user->id, $user->mobile, $otp)->onQueue('high');
+                // if (! $isSent) {
+                //     return back()->with('error', 'Failed to send OTP.');
+                // }
 
                 // Store session and redirect to OTP form
                 session(['login.id' => $user->id, 'otp_required' => true]);
