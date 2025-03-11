@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreExamMarkRequest;
-use App\Models\Application;
+use App\Jobs\SendSmsJob;
 use App\Models\ExamMark;
-use App\Traits\ApplicationTrait;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\StoreExamMarkRequest;
 
 class ExamMarkController extends Controller
 {
@@ -96,7 +97,7 @@ class ExamMarkController extends Controller
     public function store(StoreExamMarkRequest $request)
     {
         $data = $request->validated();
-        $check = Application::select('id', 'serial_no', 'name', 'is_medical_pass')->whereId($request->application_id)->first();
+        $check = Application::select('id', 'current_phone', 'serial_no', 'name', 'is_medical_pass')->whereId($request->application_id)->first();
 
         if (! $check) {
             return response()->json(['message' => 'Application not found'], 404);
@@ -111,6 +112,14 @@ class ExamMarkController extends Controller
                 ['application_id' => $request->application_id],
                 $data
             );
+
+            if (env('APP_DEBUG') == false){
+                if($request->bangla < 8 || $request->english < 8 || $request->math < 8 || $request->science < 8 || $request->general_knowledge < 8){
+                    $msg = 'You have failed in written exam.';
+                    $type = 'Written Exam';
+                    SendSmsJob::dispatch(user()->id, $check->current_phone, $msg, $type)->onQueue('default');
+                }                
+            }
 
             return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);
         } catch (\Exception $e) {
