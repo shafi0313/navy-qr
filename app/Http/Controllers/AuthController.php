@@ -3,35 +3,102 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\SMSService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showTwoFactorLogin()
+    // Show login form
+    public function showLoginForm()
     {
-        return view('auth.two-factor-challenge');
+        return view('auth.login');
     }
 
-    public function verifyTwoFactorLogin(Request $request)
+    // Handle login and generate OTP
+    public function login(Request $request)
     {
-        $userId = session('login.id');
-        $user = User::find($userId);
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            if (env('APP_DEBUG') == false && $user->is_2fa == true) {
+                // Generate OTP
+                $otp = rand(1000, 9999);
+                $user->otp = $otp;
+                $user->otp_expires_at = now()->addMinutes(5);
+                $user->save();
+
+                // Simulate sending OTP (replace with real SMS sending logic)
+                $isSent = sendOtpViaSms($user->mobile, $otp);
+                SMSService::store($user->id, $user->mobile, $otp, 'OTP');
+
+                if (! $isSent) {
+                    return back()->with('error', 'Failed to send OTP.');
+                }
+
+                // Store session and redirect to OTP form
+                session(['login.id' => $user->id, 'otp_required' => true]);
+
+                return redirect()->route('otp.form');
+            } else {
+                Auth::login($user);
+
+                return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully.');
+            }
+        }
+
+        return back()->with('error', 'Invalid credentials.');
+    }
+
+    // Show OTP form
+    public function showOtpForm()
+    {
+        if (! session('otp_required')) {
+            return redirect()->route('index')->with('error', 'Unauthorized access.');
+        }
+        $otpExpiresAt = User::find(session('login.id'))->otp_expires_at;
+
+        return view('auth.otp-form', compact('otpExpiresAt'));
+    }
+
+    // Verify OTP
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|numeric|digits:4',
+        ]);
+
+        $user = User::find(session('login.id'));
 
         if (! $user) {
-            return redirect()->route('login')->withErrors('Invalid session');
+            return redirect()->route('login')->with('error', 'Invalid session.');
         }
 
-        // Check if OTP matches and is not expired
-        if ($user->otp == $request->otp && Carbon::now()->lessThanOrEqualTo($user->otp_expires_at)) {
-            // OTP is valid, log in the user
+        if ($user->otp == (int) $request->otp && $user->otp_expires_at > now()) {
+            // Log the user in
             Auth::login($user);
-            session()->forget('login.id');
 
-            return redirect()->route('dashboard');
+            // Clear session data
+            session()->forget(['login.id', 'otp_required']);
+
+            return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully.');
         }
 
-        return redirect()->route('two-factor.login')->withErrors('Invalid or expired OTP');
+        return back()->with('error', 'Invalid or expired OTP.');
+    }
+
+    // Handle logout
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('login')->with('success', 'Logged out successfully.');
     }
 }
