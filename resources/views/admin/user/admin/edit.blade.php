@@ -33,8 +33,8 @@
                             <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
                             <select name="is_2fa" id="is_2fa" class="form-select" required>
                                 <option value="">Select</option>
-                                <option value="0" @selected($admin_user->is_2fa)>No</option>
-                                <option value="1" @selected($admin_user->is_2fa)>Yes</option>
+                                <option value="0" @selected($admin_user->is_2fa == 1)>No</option>
+                                <option value="1" @selected($admin_user->is_2fa == 2)>Yes</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -57,11 +57,11 @@
                             <input type="text" name="address" value="{{ old('address') ?? $admin_user->address }}"
                                 class="form-control">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label class="form-label">Old Image </label>
                             <img src="{{ imagePath('user', $admin_user->image) }}" width="100px">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="image" class="form-label">image </label>
                             <input type="file" name="image" class="form-control">
                         </div>
