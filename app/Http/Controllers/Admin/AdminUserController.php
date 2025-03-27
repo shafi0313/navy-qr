@@ -68,9 +68,9 @@ class AdminUserController extends Controller
     public function store(StoreAdminUserRequest $request)
     {
         $data = $request->validated();
-        $data['user_name'] = explode('@', $request->email)[0];
         $data['exam_type'] = user()->exam_type;
         $data['password'] = bcrypt($request->password);
+        
         if ($request->hasFile('image')) {
             $data['image'] = imgWebpStore($request->image, 'user', [300, 300]);
         }

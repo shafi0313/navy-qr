@@ -21,6 +21,15 @@
                             </select>
                         </div>
                         <div class="col-md-6">
+                            <label for="team" class="form-label">Team </label>
+                            <select name="team" id="team" class="form-select">
+                                <option value="">Select</option>
+                                @foreach (config('var.teams') as $k => $v)
+                                    <option value="{{ $k }}" @selected($k==$admin_user->team)>{{ $v }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
                             <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
                             <select name="is_2fa" id="is_2fa" class="form-select" required>
                                 <option value="">Select</option>

@@ -20,6 +20,15 @@
                             </select>
                         </div>
                         <div class="col-md-6">
+                            <label for="team" class="form-label">Team </label>
+                            <select name="team" id="team" class="form-select">
+                                <option value="">Select</option>
+                                @foreach (config('var.teams') as $k => $v)
+                                    <option value="{{ $k }}">{{ $v }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
                             <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
                             <select name="is_2fa" id="is_2fa" class="form-select" required>
                                 <option value="">Select</option>
@@ -55,12 +64,6 @@
                             <label for="password_confirmation" class="form-label required">confirmation password
                             </label>
                             <input type="password" name="password_confirmation" class="form-control" required>
-                        </div>
-                        <div class="col-md-4 form-check form-switch">
-                            <label for="is_active" class="form-label status_label d-block required">Status </label>
-                            <input class="form-check-input" type="checkbox" id="is_active_input" value="1"
-                                name="is_active" checked>
-                            <label class="form-check-label" for="is_active_input" id="is_active_label">Active</label>
                         </div>
                     </div>
                 </div>
