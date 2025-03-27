@@ -95,7 +95,7 @@
                         </a>
                     </li>
                 @endif
-                @if (in_array($roleId, [1, 2, 3, 4, 5]))
+                @if (in_array($roleId, [1, 2, 5]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.exam-marks.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-file-pen"></i>
@@ -111,7 +111,7 @@
                     </li>
                 @endif
 
-                @if (in_array($roleId, [1, 2, 3, 4]))
+                @if (in_array($roleId, [1, 2, 4]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-user-doctor"></i>
@@ -158,6 +158,7 @@
                     </a>
                 </li>
             @endif
+            @if (in_array($roleId, [1, 2]))
             <li class="side-nav-item">
                 <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
                     <i class="fa-solid fa-comment-sms"></i>
@@ -170,6 +171,7 @@
                     <span> SMS Report </span>
                 </a>
             </li>
+            @endif
             {{-- <li class="side-nav-title mt-2">Settings</li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSettings" aria-expanded="false"

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreExamMarkRequest;
 use App\Jobs\SendSmsJob;
-use App\Models\Application;
 use App\Models\ExamMark;
-use App\Traits\ApplicationTrait;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\StoreExamMarkRequest;
 
 class ExamMarkController extends Controller
 {
@@ -17,6 +18,10 @@ class ExamMarkController extends Controller
 
     public function index(Request $request)
     {
+        if (!in_array(user()->role_id, [1, 2, 5])) {
+            Alert::error('Access Denied', 'You are not authorized to perform this action');
+            return back();
+        }
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {
@@ -86,16 +91,20 @@ class ExamMarkController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('admin.exam-mark.create');
-    }
+    // public function create()
+    // {
+    //     return view('admin.exam-mark.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreExamMarkRequest $request)
     {
+        if (! in_array(user()->role_id, [1, 2, 5])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
+
         $data = $request->validated();
         $check = Application::select('id', 'current_phone', 'serial_no', 'name', 'is_medical_pass')->whereId($request->application_id)->first();
 
@@ -130,6 +139,10 @@ class ExamMarkController extends Controller
     public function modalStore(Request $request, $applicantId)
     {
         if ($request->ajax()) {
+            if (! in_array(user()->role_id, [1, 2, 5])) {
+                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+            }
+    
             $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
             $modal = view('admin.exam-mark.add')->with(['applicant' => $applicant])->render();
 
@@ -139,14 +152,18 @@ class ExamMarkController extends Controller
         return abort(500);
     }
 
-    public function edit(Request $request, ExamMark $examMark)
-    {
-        if ($request->ajax()) {
-            $modal = view('admin.exam-mark.edit')->with(['exa$examMark' => $examMark])->render();
+    // public function edit(Request $request, ExamMark $examMark)
+    // {
+    //     if ($request->ajax()) {
+    //         if (! in_array(user()->role_id, [1, 2, 5])) {
+    //             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+    //         }
+    
+    //         $modal = view('admin.exam-mark.edit')->with(['exa$examMark' => $examMark])->render();
 
-            return response()->json(['modal' => $modal], 200);
-        }
+    //         return response()->json(['modal' => $modal], 200);
+    //     }
 
-        return abort(500);
-    }
+    //     return abort(500);
+    // }
 }

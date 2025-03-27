@@ -64,9 +64,23 @@
                             style="font-family: 'Marcellus SC', serif; font-weight: bold; font-size: 23px;">Bangladesh
                             Navy QR Code App</h2>
                         <h3 class="text-center">Login</h3>
+                        {{-- @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif --}}
                         @if (session()->has('message'))
                             <div class="alert alert-{{ session('type') }}" role="alert">
                                 {{ session('message') }}
+                            </div>
+                        @endif
+                        @if (session()->has('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
                             </div>
                         @endif
                         <form method="POST" action="{{ route('otp.login') }}">
@@ -75,8 +89,7 @@
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email address</label>
                                     <input type="email" name="email" value="{{ old('email') }}"
-                                        class="form-control" id="email" required
-                                        placeholder="Enter your email">
+                                        class="form-control" id="email" required placeholder="Enter your email">
                                 </div>
 
                                 <div class="mb-3">

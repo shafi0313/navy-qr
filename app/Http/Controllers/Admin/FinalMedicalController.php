@@ -15,8 +15,8 @@ class FinalMedicalController extends Controller
 
     public function index(Request $request)
     {
-        if(!in_array(user()->role_id, [1, 2, 4])) {
-            Alert::info('Access Denied', 'You are not authorized to perform this action');
+        if (!in_array(user()->role_id, [1, 2, 4])) {
+            Alert::error('Access Denied', 'You are not authorized to perform this action');
             return back();
         }
         if ($request->ajax()) {
@@ -97,10 +97,13 @@ class FinalMedicalController extends Controller
 
         return view('admin.final-medical.index');
     }
-    
+
     public function fitModal(Request $request, Application $application)
     {
         if ($request->ajax()) {
+            if (! in_array(user()->role_id, [1, 2, 4])) {
+                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+            }
             $modal = view('admin.final-medical.fit')->with(['application' => $application])->render();
 
             return response()->json(['modal' => $modal], 200);
@@ -111,14 +114,14 @@ class FinalMedicalController extends Controller
 
     public function fitStore(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 2, 3])) {
+        if (! in_array(user()->role_id, [1, 2, 4])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
         try {
             $application->update([
                 'is_final_pass' => 1,
-                'height' => $application->height = $request->height.'\''.$request->height.'"',
+                'height' => $application->height = $request->height . '\'' . $request->height . '"',
                 'f_m_remark' => null,
             ]);
 
@@ -131,6 +134,9 @@ class FinalMedicalController extends Controller
     public function unfitModal(Request $request, Application $application)
     {
         if ($request->ajax()) {
+            if (! in_array(user()->role_id, [1, 2, 4])) {
+                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+            }
             $modal = view('admin.final-medical.unfit')->with(['application' => $application])->render();
 
             return response()->json(['modal' => $modal], 200);
@@ -141,7 +147,7 @@ class FinalMedicalController extends Controller
 
     public function unfitStore(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 2, 3])) {
+        if (! in_array(user()->role_id, [1, 2, 4])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
