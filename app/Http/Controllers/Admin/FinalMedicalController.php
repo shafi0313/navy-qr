@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Alert;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Traits\ApplicationTrait;
@@ -14,6 +15,10 @@ class FinalMedicalController extends Controller
 
     public function index(Request $request)
     {
+        if(!in_array(user()->role_id, [1, 2, 4])) {
+            Alert::info('Access Denied', 'You are not authorized to perform this action');
+            return back();
+        }
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {
@@ -92,23 +97,7 @@ class FinalMedicalController extends Controller
 
         return view('admin.final-medical.index');
     }
-
-    // public function pass(Request $request)
-    // {
-    //     if (!in_array(user()->role_id, [1, 2, 3])) {
-    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //     }
-    //     $application = Application::find($request->id);
-    //     $application->height = $request->height .'\''. $request->height .'\"';
-    //     $application->save();
-    //     try {
-    //         $application->save();
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
-    //     }
-    // }
-
+    
     public function fitModal(Request $request, Application $application)
     {
         if ($request->ajax()) {
