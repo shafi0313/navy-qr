@@ -57,14 +57,14 @@
                             <input type="text" name="address" value="{{ old('address') ?? $admin_user->address }}"
                                 class="form-control">
                         </div>
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3">
                             <label class="form-label">Old Image </label>
                             <img src="{{ imagePath('user', $admin_user->image) }}" width="100px">
                         </div>
                         <div class="col-md-3">
                             <label for="image" class="form-label">image </label>
                             <input type="file" name="image" class="form-control">
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <label for="password" class="form-label">Old Password</label>
                             <input type="password" name="old_password" class="form-control">

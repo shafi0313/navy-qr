@@ -71,11 +71,11 @@
                             name: 'mobile',
                             title: 'mobile',
                         },
-                        {
-                            data: 'image',
-                            name: 'image',
-                            title: 'Image'
-                        },
+                        // {
+                        //     data: 'image',
+                        //     name: 'image',
+                        //     title: 'Image'
+                        // },
                         {
                             data: 'is_active',
                             name: 'is_active',

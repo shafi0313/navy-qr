@@ -70,10 +70,10 @@ class AdminUserController extends Controller
         $data = $request->validated();
         $data['exam_type'] = user()->exam_type;
         $data['password'] = bcrypt($request->password);
-        
-        if ($request->hasFile('image')) {
-            $data['image'] = imgWebpStore($request->image, 'user', [300, 300]);
-        }
+
+        // if ($request->hasFile('image')) {
+        //     $data['image'] = imgWebpStore($request->image, 'user', [300, 300]);
+        // }
         try {
             User::create($data);
 
@@ -111,10 +111,10 @@ class AdminUserController extends Controller
             }
             $data['password'] = bcrypt($request->password);
         }
-        $image = $admin_user->image;
-        if ($request->hasFile('image')) {
-            $data['image'] = imgWebpUpdate($request->file('image'), 'user', [300, 300], $image);
-        }
+        // $image = $admin_user->image;
+        // if ($request->hasFile('image')) {
+        //     $data['image'] = imgWebpUpdate($request->file('image'), 'user', [300, 300], $image);
+        // }
         DB::beginTransaction();
         try {
             $admin_user->update($data);

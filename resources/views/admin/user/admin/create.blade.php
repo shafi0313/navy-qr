@@ -48,10 +48,10 @@
                             <label for="mobile" class="form-label">mobile </label>
                             <input type="text" name="mobile" class="form-control" oninput="phoneIn(event)">
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label for="image" class="form-label">image </label>
                             <input type="file" name="image" class="form-control">
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <label for="address" class="form-label">address </label>
                             <input type="text" name="address" class="form-control">

@@ -28,7 +28,7 @@ class StoreAdminUserRequest extends FormRequest
             'email' => ['required', 'string', 'min:1', 'max:64', 'unique:users,email'],
             'mobile' => ['nullable', 'phone:BD', 'required_if:is_2fa,1'],
             'address' => ['nullable', 'string', 'min:1', 'max:191'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,JPG,png,webp,svg'],
+            // 'image' => ['nullable', 'image', 'mimes:jpeg,jpg,JPG,png,webp,svg'],
             'password' => ['required', 'confirmed', 'string', 'min:6', 'max:191'],
             'is_2fa' => ['required', 'boolean', 'in:0,1'],
         ];
