@@ -22,6 +22,14 @@
                             <input type="number" step="any" name="viva"
                                 value="{{ $applicant->examMark?->viva }}" id="viva" class="form-control">
                         </div>
+                        <div class="col-md-4">
+                            <label for="dup_test" class="form-label">Dup Test </label>
+                            <select name="dup_test" id="dup_test" class="form-select">
+                                <option value="" >Select</option>
+                                <option value="yes" @selected($applicant->examMark?->dup_test == 'yes')>Yes</option>
+                                <option value="no" @selected($applicant->examMark?->dup_test == 'no')>No</option>
+                            </select>
+                        </div>
                         <div class="col-md-12">
                             <label for="viva_remark" class="form-label">Remark </label>
                             <textarea name="viva_remark" id="viva_remark" class="form-control" rows="3"></textarea>

@@ -114,6 +114,7 @@ class VivaMarkController extends Controller
         $data = $request->validate([
             'viva' => ['required', 'numeric', 'min:0', 'max:10'],
             'viva_remark' => ['nullable', 'string'],
+            'dup_test' => ['nullable', 'in:yes,no'],
         ]);
         $application = Application::select('id', 'serial_no', 'name', 'is_final_pass')->whereId($request->application_id)->first();
 
@@ -133,7 +134,11 @@ class VivaMarkController extends Controller
     public function modalStore(Request $request, $applicantId)
     {
         if ($request->ajax()) {
-            $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
+            $applicant = Application::with('examMark')
+                ->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')
+                ->whereId($applicantId)
+                ->first();
+
             $modal = view('admin.viva-mark.add')->with(['applicant' => $applicant])->render();
 
             return response()->json(['modal' => $modal], 200);
