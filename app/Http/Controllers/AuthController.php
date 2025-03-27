@@ -13,7 +13,7 @@ class AuthController extends Controller
     // Show login form
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('auth.front-login');
     }
 
     // Handle login and generate OTP

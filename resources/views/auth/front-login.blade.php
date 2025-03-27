@@ -62,7 +62,7 @@
                     <div class="container container-login animated fadeIn">
                         <h2 class="text-center"
                             style="font-family: 'Marcellus SC', serif; font-weight: bold; font-size: 23px;">Bangladesh
-                            Navy</h2>
+                            Navy QR Code App</h2>
                         <h3 class="text-center">Login</h3>
                         @if (session()->has('message'))
                             <div class="alert alert-{{ session('type') }}" role="alert">
