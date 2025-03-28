@@ -18,7 +18,7 @@ class VivaMarkController extends Controller
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {
-                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva,viva_remark'])
+                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva,dup_test,viva_remark'])
                     ->whereHas('examMark', function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)
@@ -36,7 +36,7 @@ class VivaMarkController extends Controller
                     ->orderBy('total_viva', 'desc')
                     ->orderBy('total_marks', 'desc');
             } else {
-                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva,viva_remark'])
+                $applications = Application::with(['examMark:id,application_id,bangla,english,math,science,general_knowledge,viva,dup_test,viva_remark'])
                     ->whereHas('examMark', function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)

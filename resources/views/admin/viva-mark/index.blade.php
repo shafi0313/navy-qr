@@ -106,6 +106,11 @@
                             title: 'viva',
                         },
                         {
+                            data: 'exam_mark.dup_test',
+                            name: 'exam_mark.dup_test',
+                            title: 'Dup. Test',
+                        },
+                        {
                             data: 'exam_mark.viva_remark',
                             name: 'exam_mark.viva_remark',
                             title: 'Remark',
