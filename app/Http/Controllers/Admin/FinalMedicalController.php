@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use Alert;
-use App\Http\Controllers\Controller;
+use App\Traits\SmsTrait;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class FinalMedicalController extends Controller
 {
-    use ApplicationTrait;
+    use ApplicationTrait, SmsTrait;
 
     public function index(Request $request)
     {
@@ -118,6 +119,11 @@ class FinalMedicalController extends Controller
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
+
+        if ($application->is_final_pass == 1) {
+            return response()->json(['message' => 'The status has been updated'], 200);
+        }
+
         try {
             $application->update([
                 'is_final_pass' => 1,
@@ -151,12 +157,18 @@ class FinalMedicalController extends Controller
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
+        if ($application->is_final_pass == 0) {
+            return response()->json(['message' => 'The status has been updated'], 200);
+        }
         try {
             $application->update([
                 'is_final_pass' => 0,
                 'f_m_remark' => $request->f_m_remark,
             ]);
 
+            // SMS Trait Function
+            $this->fail($application->current_phone, 'Final Medical');
+            
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
