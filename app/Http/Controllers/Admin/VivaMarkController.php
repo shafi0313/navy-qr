@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Traits\SmsTrait;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class VivaMarkController extends Controller
 {
-    use ApplicationTrait;
+    use ApplicationTrait, SmsTrait;
 
     public function index(Request $request)
     {
@@ -101,10 +102,10 @@ class VivaMarkController extends Controller
         return view('admin.viva-mark.index');
     }
 
-    public function create()
-    {
-        return view('admin.viva-mark.create');
-    }
+    // public function create()
+    // {
+    //     return view('admin.viva-mark.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -116,13 +117,26 @@ class VivaMarkController extends Controller
             'viva_remark' => ['nullable', 'string'],
             'dup_test' => ['nullable', 'in:yes,no'],
         ]);
-        $application = Application::select('id', 'serial_no', 'name', 'is_final_pass')->whereId($request->application_id)->first();
+        $application = Application::select('id', 'serial_no', 'current_phone', 'name', 'is_final_pass')->whereId($request->application_id)->first();
 
         if ($application->is_final_pass != 1) {
             return response()->json(['message' => 'Please update final medical first'], 404);
         }
 
+        $application->examMark->viva;
+
+
+
         try {
+            // Check and send SMS if necessary
+            $currentViva = $application->examMark->viva ?? null;
+
+            if ($currentViva !== null && $currentViva != $data['viva'] && $data['viva'] < 5) {
+                $this->fail($application->current_phone, 'Viva');
+            } elseif ($currentViva === null && $data['viva'] < 5) {
+                $this->fail($application->current_phone, 'Viva');
+            }
+
             $application->examMark->update($data);
 
             return response()->json(['message' => 'The information has been inserted'], 200);
