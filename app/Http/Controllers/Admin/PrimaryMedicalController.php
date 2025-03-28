@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Jobs\SendSmsJob;
+use App\Traits\SmsTrait;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PrimaryMedicalController extends Controller
 {
-    use ApplicationTrait;
+    use ApplicationTrait, SmsTrait;
 
     public function index(Request $request)
     {
@@ -118,9 +119,14 @@ class PrimaryMedicalController extends Controller
         }
 
         $application = Application::findOrFail($request->id);
+        if ($application->is_medical_pass == 1) {
+            return response()->json(['message' => 'The status has been updated'], 200);
+        }
+
         if ($application->user_id == null) {
             $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
         }
+        
         $application->is_medical_pass = 1;
         $application->save();
         try {
@@ -155,6 +161,10 @@ class PrimaryMedicalController extends Controller
         
         $application = Application::find($request->id);
 
+        if($application->is_medical_pass == 0) {
+            return response()->json(['message' => 'The status has been updated'], 200);
+        }
+
         try {
             if ($application->user_id == null) {
                 $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
@@ -164,11 +174,13 @@ class PrimaryMedicalController extends Controller
                 'p_m_remark' => $request->p_m_remark,
             ]);
 
-            if (env('APP_DEBUG') == false) {
-                $msg = 'The status has been updated';
-                $type = 'Primary Medical';
-                SendSmsJob::dispatch(user()->id, $application->current_phone, $msg, $type)->onQueue('default');
-            }
+            $this->fail($application->current_phone, 'Primary Medical');
+
+            // if (env('APP_DEBUG') == false) {
+            //     $msg = 'The status has been updated';
+            //     $type = 'Primary Medical';
+            //     SendSmsJob::dispatch(user()->id, $application->current_phone, $msg, $type)->onQueue('default');
+            // }
 
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
