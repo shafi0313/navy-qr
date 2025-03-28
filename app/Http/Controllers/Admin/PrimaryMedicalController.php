@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Jobs\SendSmsJob;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class PrimaryMedicalController extends Controller
@@ -15,6 +16,10 @@ class PrimaryMedicalController extends Controller
 
     public function index(Request $request)
     {
+        if (!in_array(user()->role_id, [1, 2, 6])) {
+            Alert::error('Access Denied', 'You are not authorized to perform this action');
+            return back();
+        }
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {
@@ -70,11 +75,11 @@ class PrimaryMedicalController extends Controller
                             $data = (int) $data;
 
                             return match ($data) {
-                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> '.($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> '.($row->p_m_remark ? '('.$row->p_m_remark.')' : ''),
+                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
                             };
                         } else {
-                            return '<span class="btn btn-warning btn-sm">Pending</span><br> '.($row->is_important == 1 ? '(All documents held)' : '');
+                            return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
                         }
                     } else {
                         return '';
@@ -82,7 +87,7 @@ class PrimaryMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(".$row->id.")'>Fit</button>";
+                    $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
                     // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
                     $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.primary_medicals.unfit', $row->id), 'row' => $row]);
 
@@ -108,6 +113,10 @@ class PrimaryMedicalController extends Controller
 
     public function pass(Request $request)
     {
+        if (! in_array(user()->role_id, [1, 2, 6])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
+
         $application = Application::findOrFail($request->id);
         if ($application->user_id == null) {
             $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
@@ -126,6 +135,10 @@ class PrimaryMedicalController extends Controller
     public function unfitModal(Request $request, Application $application)
     {
         if ($request->ajax()) {
+            if (! in_array(user()->role_id, [1, 2, 6])) {
+                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+            }
+
             $modal = view('admin.primary-medical.unfit')->with(['application' => $application])->render();
 
             return response()->json(['modal' => $modal], 200);
@@ -136,6 +149,10 @@ class PrimaryMedicalController extends Controller
 
     public function unfitStore(Request $request)
     {
+        if (! in_array(user()->role_id, [1, 2, 6])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
+        
         $application = Application::find($request->id);
 
         try {
