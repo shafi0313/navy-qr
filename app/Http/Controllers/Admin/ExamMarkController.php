@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Jobs\SendSmsJob;
 use App\Models\ExamMark;
+use App\Traits\SmsTrait;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
@@ -14,7 +15,7 @@ use App\Http\Requests\StoreExamMarkRequest;
 
 class ExamMarkController extends Controller
 {
-    use ApplicationTrait;
+    use ApplicationTrait, SmsTrait;
 
     public function index(Request $request)
     {
@@ -96,6 +97,22 @@ class ExamMarkController extends Controller
     //     return view('admin.exam-mark.create');
     // }
 
+    public function modalStore(Request $request, $applicantId)
+    {
+        if ($request->ajax()) {
+            if (! in_array(user()->role_id, [1, 2, 5])) {
+                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+            }
+
+            $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
+            $modal = view('admin.exam-mark.add')->with(['applicant' => $applicant])->render();
+
+            return response()->json(['modal' => $modal], 200);
+        }
+
+        return abort(500);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -122,13 +139,11 @@ class ExamMarkController extends Controller
                 $data
             );
 
-            if (env('APP_DEBUG') == false) {
-                if ($request->bangla < 8 || $request->english < 8 || $request->math < 8 || $request->science < 8 || $request->general_knowledge < 8) {
-                    $msg = 'You have failed in written exam.';
-                    $type = 'Written Exam';
-                    SendSmsJob::dispatch(user()->id, $check->current_phone, $msg, $type)->onQueue('default');
-                }
+
+            if ($request->bangla < 8 || $request->english < 8 || $request->math < 8 || $request->science < 8 || $request->general_knowledge < 8) {
+                $this->fail($check->current_phone, 'Written');
             }
+
 
             return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);
         } catch (\Exception $e) {
@@ -136,21 +151,7 @@ class ExamMarkController extends Controller
         }
     }
 
-    public function modalStore(Request $request, $applicantId)
-    {
-        if ($request->ajax()) {
-            if (! in_array(user()->role_id, [1, 2, 5])) {
-                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-            }
-    
-            $applicant = Application::with('examMark')->select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass')->whereId($applicantId)->first();
-            $modal = view('admin.exam-mark.add')->with(['applicant' => $applicant])->render();
 
-            return response()->json(['modal' => $modal], 200);
-        }
-
-        return abort(500);
-    }
 
     // public function edit(Request $request, ExamMark $examMark)
     // {
@@ -158,7 +159,7 @@ class ExamMarkController extends Controller
     //         if (! in_array(user()->role_id, [1, 2, 5])) {
     //             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
     //         }
-    
+
     //         $modal = view('admin.exam-mark.edit')->with(['exa$examMark' => $examMark])->render();
 
     //         return response()->json(['modal' => $modal], 200);
