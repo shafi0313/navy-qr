@@ -219,6 +219,13 @@ class ApplicationSeeder extends Seeder
                 'ssc_roll_no' => $application['ssc_roll_no'],
                 'ssc_passing_year' => $application['ssc_passing_year'],
                 'ssc_gpa' => $application['ssc_gpa'],
+
+                'ssc_bangla' => $application['ssc_result_with_subject']['bangla'] ?? null,
+                'ssc_english' => $application['ssc_result_with_subject']['english'] ?? null,
+                'ssc_math' => $application['ssc_result_with_subject']['math'] ?? null,
+                'ssc_physics' => $application['ssc_result_with_subject']['physics'] ?? null,
+                'ssc_biology' => $application['ssc_result_with_subject']['biology'] ?? null,
+
                 'hsc_dip_institute' => $application['hsc_dip_institute'],
                 'hsc_dip_group' => $application['hsc_dip_group'],
                 'hsc_dip_board' => $application['hsc_dip_board'],

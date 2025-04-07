@@ -51,6 +51,18 @@ trait ApplicationTrait
         ];
     }
 
+    protected function sscResultColumns()
+    {
+        return [
+            'applications.ssc_edu_board',
+            'applications.ssc_bangla',
+            'applications.ssc_english',
+            'applications.ssc_math',
+            'applications.ssc_physics',
+            'applications.ssc_biology',
+        ];
+    }
+
     protected function examColumns()
     {
         return [

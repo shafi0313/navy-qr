@@ -28,7 +28,7 @@ class ExamMarkController extends Controller
             if ($roleId == 1) {
                 $applications = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->applicationColumns(), $this->examColumns(), $this->sscResultColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -40,7 +40,7 @@ class ExamMarkController extends Controller
                 $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns(), $this->sscResultColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()

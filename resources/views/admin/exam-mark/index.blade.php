@@ -130,6 +130,36 @@
                             name: 'name',
                             title: 'Name',
                         },
+                        // {
+                        //     data: 'ssc_edu_board',
+                        //     name: 'ssc_edu_board',
+                        //     title: 'SSC Board',
+                        // },
+                        {
+                            data: 'ssc_bangla',
+                            name: 'ssc_bangla',
+                            title: 'SSC/D/V Bangla',
+                        },
+                        {
+                            data: 'ssc_english',
+                            name: 'ssc_english',
+                            title: 'SSC/D/V English',
+                        },
+                        {
+                            data: 'ssc_math',
+                            name: 'ssc_math',
+                            title: 'SSC/D/V Math',
+                        },
+                        {
+                            data: 'ssc_physics',
+                            name: 'ssc_physics',
+                            title: 'SSC/D/V Physics',
+                        },
+                        {
+                            data: 'ssc_biology',
+                            name: 'ssc_biology',
+                            title: 'SSC/D/V Biology',
+                        },
                         {
                             data: 'eligible_district',
                             name: 'eligible_district',
