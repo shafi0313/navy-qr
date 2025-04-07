@@ -72,7 +72,7 @@ class VivaMarkController extends Controller
                     return $this->written($roleId, $row);
                 })
                 ->addColumn('final', function ($row) use ($roleId) {
-                    return $this->finalMedical($roleId, $row);
+                    return $this->finalMedical($roleId, $row).' Height:'.$row->height;
                 })
                 ->addColumn('total_viva', function ($row) use ($roleId) {
                     return $this->viva($roleId, $row);

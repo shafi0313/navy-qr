@@ -16,7 +16,9 @@ class ResultController extends Controller
     {
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            $query = Application::query();
+            $query = Application::whereHas('examMark', function ($query) {
+                $query->where('dup_test', '=', 'no');
+            });
 
             if ($roleId == 1) {
                 $query->leftJoin('users', 'applications.user_id', '=', 'users.id')

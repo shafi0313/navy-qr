@@ -105,10 +105,11 @@ class AdminUserController extends Controller
             return response()->json(['message' => 'You can not edit'], 500);
         }
         $data = $adminRequest->validated();
+
         if ($request->filled('password')) {
-            if (! Hash::check($request->old_password, $admin_user->password)) {
-                return response()->json(['message' => "Old Password Doesn't match!"], 500);
-            }
+            // if (! Hash::check($request->old_password, $admin_user->password)) {
+            //     return response()->json(['message' => "Old Password Doesn't match!"], 500);
+            // }
             $data['password'] = bcrypt($request->password);
         }
         // $image = $admin_user->image;

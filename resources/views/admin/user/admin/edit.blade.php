@@ -65,10 +65,10 @@
                             <label for="image" class="form-label">image </label>
                             <input type="file" name="image" class="form-control">
                         </div> --}}
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <label for="password" class="form-label">Old Password</label>
                             <input type="password" name="old_password" class="form-control">
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control">

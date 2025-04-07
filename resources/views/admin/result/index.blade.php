@@ -219,6 +219,12 @@
                             className: 'text-center'
                         },
                         {
+                            data: 'height',
+                            name: 'height',
+                            title: 'Height',
+                            className: 'text-center'
+                        },
+                        {
                             data: 'total_viva',
                             name: 'total_viva',
                             title: 'Viva',

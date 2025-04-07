@@ -6,7 +6,6 @@ use App\Constants\ExamType;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\ApplicationUrl;
-use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
 {
