@@ -118,16 +118,16 @@ class FinalMedicalController extends Controller
         if (! in_array(user()->role_id, [1, 2, 4])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
-        $application = Application::find($request->id);
+        $application = Application::select('id','is_final_pass','height','f_m_remark')->find($request->id);
 
-        if ($application->is_final_pass == 1) {
-            return response()->json(['message' => 'The status has been updated'], 200);
-        }
+        // if ($application->is_final_pass == 1) {
+        //     return response()->json(['message' => 'The status has been updated'], 200);
+        // }
 
         try {
             $application->update([
                 'is_final_pass' => 1,
-                'height' => $application->height = $request->height . '\'' . $request->height . '"',
+                'height' => $request->height . '\'' . $request->height2 . '"',
                 'f_m_remark' => null,
             ]);
 
