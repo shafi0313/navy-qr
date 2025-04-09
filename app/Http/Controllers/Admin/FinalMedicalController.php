@@ -157,9 +157,9 @@ class FinalMedicalController extends Controller
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
         $application = Application::find($request->id);
-        if ($application->is_final_pass == 0) {
-            return response()->json(['message' => 'The status has been updated'], 200);
-        }
+        // if ($application->is_final_pass == 0) {
+        //     return response()->json(['message' => 'The status has been updated'], 200);
+        // }
         try {
             $application->update([
                 'is_final_pass' => 0,

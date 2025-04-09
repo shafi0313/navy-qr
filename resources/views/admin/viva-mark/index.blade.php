@@ -108,7 +108,7 @@
                         {
                             data: 'exam_mark.dup_test',
                             name: 'exam_mark.dup_test',
-                            title: 'Dup. Test',
+                            title: 'Dope Test',
                         },
                         {
                             data: 'exam_mark.viva_remark',

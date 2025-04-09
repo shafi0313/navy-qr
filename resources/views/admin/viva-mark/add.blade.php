@@ -23,7 +23,7 @@
                                 value="{{ $applicant->examMark?->viva }}" id="viva" class="form-control">
                         </div>
                         <div class="col-md-4">
-                            <label for="dup_test" class="form-label">Dup Test </label>
+                            <label for="dup_test" class="form-label">HBsAG/Dope Test Report </label>
                             <select name="dup_test" id="dup_test" class="form-select">
                                 <option value="" >Select</option>
                                 <option value="yes" @selected($applicant->examMark?->dup_test == 'yes')>Yes</option>
