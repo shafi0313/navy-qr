@@ -47,7 +47,7 @@
                     <span> Dashboard </span>
                 </a>
             </li>
-            @if (in_array($roleId, [1, 2]))
+            @if (in_array($roleId, [1]))
                 @php
                     $admin = ['admin.admin-users.*', 'admin.role.*'];
                 @endphp
@@ -66,9 +66,9 @@
                             <li class="{{ activeNav('admin.admin-users.*') }}">
                                 <a href="{{ route('admin.admin-users.index') }}">User</a>
                             </li>
-                            <li class="{{ activeNav('admin.specialities.*') }}">
+                            {{-- <li class="{{ activeNav('admin.specialities.*') }}">
                                 <a href="{{ route('admin.specialities.index') }}">Speciality</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
