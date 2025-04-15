@@ -23,8 +23,7 @@
                         <div class="form-group col-sm-4">
                             <label for="file">File
                                 <span class="t_r"> *
-                                    {{-- <a href="{{ asset('uploads/Question-format.xlsx') }}" download>Download
-                                        Excel Format</a> --}}
+                                    {{-- <a href="{{ asset('uploads/written-mark-import.xlsx') }}" download>Download Excel Format</a> --}}
                                 </span>
                             </label>
                             <input type="file" name="file" class="form-control" required>
