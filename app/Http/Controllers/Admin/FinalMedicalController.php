@@ -31,6 +31,7 @@ class FinalMedicalController extends Controller
                     ->selectRaw(
                         $this->examSumColumns()
                     )
+                    ->where('applications.is_medical_pass', 1)
                     ->where(function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)
@@ -47,6 +48,7 @@ class FinalMedicalController extends Controller
                     ->selectRaw(
                         $this->examSumColumns()
                     )
+                    ->where('applications.is_medical_pass', 1)
                     ->where(function ($query) {
                         $query->where('bangla', '>=', 8)
                             ->where('english', '>=', 8)
