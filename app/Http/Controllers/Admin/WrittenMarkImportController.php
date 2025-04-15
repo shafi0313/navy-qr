@@ -15,7 +15,8 @@ class WrittenMarkImportController extends Controller
 {
     public function index()
     {
-        $writtenMarks = WrittenMark::paginate(30);
+        $writtenMarks = WrittenMark::all();
+        // $writtenMarks = WrittenMark::paginate(30);
 
         return view('admin.written-mark-import.index', compact('writtenMarks'));
     }

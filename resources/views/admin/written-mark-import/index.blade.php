@@ -42,6 +42,7 @@
                             <table class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th>SL</th>
                                         <th>From Number</th>
                                         <th>Bangla</th>
                                         <th>English</th>
@@ -54,6 +55,7 @@
                                 <tbody>
                                     @foreach ($writtenMarks as $writtenMark)
                                         <tr>
+                                            <td>{{ @$x+=1 }}</td>
                                             <td>{{ $writtenMark->serial_no }}</td>
                                             <td>{{ $writtenMark->bangla }}</td>
                                             <td>{{ $writtenMark->english }}</td>
