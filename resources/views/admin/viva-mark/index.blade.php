@@ -38,6 +38,7 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
+                    scrollX: true,
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -78,6 +79,31 @@
                             title: 'Name',
                         },
                         {
+                            data: 'ssc_bangla',
+                            name: 'ssc_bangla',
+                            title: 'SSC/D/V Bangla',
+                        },
+                        {
+                            data: 'ssc_english',
+                            name: 'ssc_english',
+                            title: 'SSC/D/V English',
+                        },
+                        {
+                            data: 'ssc_math',
+                            name: 'ssc_math',
+                            title: 'SSC/D/V Math',
+                        },
+                        {
+                            data: 'ssc_physics',
+                            name: 'ssc_physics',
+                            title: 'SSC/D/V Physics',
+                        },
+                        {
+                            data: 'ssc_biology',
+                            name: 'ssc_biology',
+                            title: 'SSC/D/V Biology',
+                        },
+                        {
                             data: 'eligible_district',
                             name: 'eligible_district',
                             title: 'District',
@@ -89,9 +115,34 @@
                             className: 'text-center',
                         },
                         {
+                            data: 'bangla',
+                            name: 'bangla',
+                            title: 'Bangla',
+                        },
+                        {
+                            data: 'english',
+                            name: 'english',
+                            title: 'english',
+                        },
+                        {
+                            data: 'math',
+                            name: 'math',
+                            title: 'math',
+                        },
+                        {
+                            data: 'science',
+                            name: 'science',
+                            title: 'science',
+                        },
+                        {
+                            data: 'general_knowledge',
+                            name: 'general_knowledge',
+                            title: 'general knowledge',
+                        },
+                        {
                             data: 'written',
                             name: 'written',
-                            title: 'Written',
+                            title: 'Total Written',
                             className: 'text-center',
                         },
                         {

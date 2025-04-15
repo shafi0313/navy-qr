@@ -27,7 +27,7 @@ class VivaMarkController extends Controller
                             ->where('general_knowledge', '>=', 8);
                     })->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns())
+                        array_merge($this->applicationColumns(), $this->examColumns(), $this->sscResultColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -46,7 +46,7 @@ class VivaMarkController extends Controller
                     })->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns(), $this->sscResultColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
