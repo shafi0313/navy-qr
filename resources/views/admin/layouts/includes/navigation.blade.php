@@ -84,7 +84,7 @@
                 <li class="side-nav-item">
                     <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <span> Applicant Search</span>
+                        <span> Applicant Gate Entry</span>
                     </a>
                 </li>
                 @if (in_array($roleId, [1, 2, 6]))

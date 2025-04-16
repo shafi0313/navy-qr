@@ -47,7 +47,7 @@
                                 <th>Designation</th>
                                 <th>Name</th>
                                 <th>District</th>
-                                <th>Action</th>
+                                <th>Gate Entry</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
