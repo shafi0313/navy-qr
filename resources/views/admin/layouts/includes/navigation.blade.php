@@ -158,25 +158,27 @@
                     </a>
                 </li>
             @endif
+
             @if (in_array($roleId, [1, 2]))
-            <li class="side-nav-item">
-                <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
-                    <i class="fa-solid fa-comment-sms"></i>
-                    <span> Applicant Count by District & Rank</span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{ route('admin.reports.daily_state.select') }}" class="side-nav-link">
-                    <i class="fa-solid fa-comment-sms"></i>
-                    <span> Daily State</span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{ route('admin.sms.index') }}" class="side-nav-link">
-                    <i class="fa-solid fa-comment-sms"></i>
-                    <span> SMS Report </span>
-                </a>
-            </li>
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.reports.daily_state.select') }}" class="side-nav-link">
+                        <i class="fa-solid fa-file-contract"></i>
+                        <span> Daily State</span>
+                    </a>
+                </li>
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
+                        <i class="fa-solid fa-file-contract"></i>
+                        <span> Applicant Count by District & Rank</span>
+                    </a>
+                </li>
+
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.sms.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-comment-sms"></i>
+                        <span> SMS Report </span>
+                    </a>
+                </li>
             @endif
             {{-- <li class="side-nav-title mt-2">Settings</li>
             <li class="side-nav-item">
