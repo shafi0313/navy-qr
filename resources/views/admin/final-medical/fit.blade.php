@@ -19,7 +19,7 @@
                             <label for="name" class="form-label">Height (Fit) </label>
                             <select name="height" class="form-control">
                                 <option value="5">5 Fit</option>
-                                <option value="5">6 Fit</option>
+                                <option value="6">6 Fit</option>
                             </select>
                         </div>
                         <div class="col-md-6">
