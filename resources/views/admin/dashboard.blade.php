@@ -8,8 +8,7 @@
             </div>
         </div>
     </div>
-    @if (in_array(user()->role_id, [1, 2]))
-    @endif
+
     <div class="card">
         <div class="card-body">
             <div class="row">

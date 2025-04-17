@@ -31,13 +31,14 @@ class DashboardController extends Controller
                     ->get();
             }
         } else {
+            // For Sailor
             if (user()->role_id == 1) {
                 $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
                     ->whereNotNull('applications.scanned_at')
                     ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
                     ->groupBy('users.team')
                     ->get();
-            } elseif(user()->role_id == 2) {
+            } elseif(in_array(user()->role_id, [2, 3, 4, 5])) {
                 $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
                     ->where('users.id', user()->team)
                     ->whereNotNull('applications.scanned_at')
