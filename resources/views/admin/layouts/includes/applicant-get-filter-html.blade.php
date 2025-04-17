@@ -2,14 +2,14 @@
     <div class="row justify-content-center filter align-items-end">
         <div class="col">
             <div class="form-group my-3">
-                <label class="form-label" for="district">@lang('District')</label>
+                <label class="form-label" for="district">District</label>
                 <select name="district" class="form-control w-100 district" id="district">
                 </select>
             </div>
         </div>
         <div class="col">
             <div class="form-group my-3">
-                <label class="form-label" for="exam_date">@lang('Exam Date')</label>
+                <label class="form-label" for="exam_date">Exam Date</label>
                 <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
                 </select>
             </div>

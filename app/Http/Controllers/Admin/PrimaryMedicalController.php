@@ -24,7 +24,6 @@ class PrimaryMedicalController extends Controller
         if ($request->ajax()) {
             $roleId = user()->role_id;
             if ($roleId == 1) {
-                // For roleId 1: Fetch applications without filtering by team
                 $applications = Application::with([
                     'examMark:id,application_id',
                 ])->select(
@@ -101,6 +100,13 @@ class PrimaryMedicalController extends Controller
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
                     }
+                    if ($request->filled('is_medical_pass')) {
+                        if ($request->is_medical_pass == 'null') {
+                            $query->whereNull('applications.is_medical_pass');
+                        } else {
+                            $query->where('applications.is_medical_pass', $request->is_medical_pass);
+                        }
+                    }
                     if ($search = $request->get('search')['value']) {
                         $query->search($search);
                     }
@@ -108,6 +114,7 @@ class PrimaryMedicalController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
+        // return response()->json(['is_medical_pass' => $request->is_medical_pass]);
 
         return view('admin.primary-medical.index');
     }
@@ -126,7 +133,7 @@ class PrimaryMedicalController extends Controller
         if ($application->user_id == null) {
             $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
         }
-        
+
         $application->is_medical_pass = 1;
         $application->save();
         try {
@@ -158,10 +165,10 @@ class PrimaryMedicalController extends Controller
         if (! in_array(user()->role_id, [1, 2, 6])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
-        
+
         $application = Application::find($request->id);
 
-        if($application->is_medical_pass == 0) {
+        if ($application->is_medical_pass == 0) {
             return response()->json(['message' => 'The status has been updated'], 200);
         }
 

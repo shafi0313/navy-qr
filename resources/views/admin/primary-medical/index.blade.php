@@ -26,7 +26,42 @@
                         <h4 class="card-title">List of Applicants</h4>
                     </div>
                     {{-- Filter HTML --}}
-                    @include('admin.layouts.includes.applicant-get-filter-html')
+                    <div class="col-md-12 mb-2">
+                        <div class="row justify-content-center filter align-items-end">
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="district">District</label>
+                                    <select name="district" class="form-control w-100 district" id="district">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="exam_date">Exam Date</label>
+                                    <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <label class="form-label" for="is_medical_pass">Primary Medical</label>
+                                    <select name="is_medical_pass" class="form-control w-100 is_medical_pass" id="is_medical_pass">
+                                        {{-- <option value="">Select</option> --}}
+                                        <option value="">All</option>
+                                        <option value="1">Fit</option>
+                                        <option value="0">Unfit</option>
+                                        <option value="null">Pending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group my-3">
+                                    <a href="" class="btn btn-danger">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     {{-- /Filter HTML --}}
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
@@ -71,7 +106,8 @@
                         data: function(d) {
                             return $.extend(d, {
                                 district: $('.district').val(),
-                                exam_date: $('.exam_date').val()
+                                exam_date: $('.exam_date').val(),
+                                is_medical_pass: $('.is_medical_pass').val()
                             });
                         },
                     },
