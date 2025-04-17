@@ -15,8 +15,18 @@
                                 <h3>Daily State Report Selection Page</h3>
                             </div>
                             <div class="col-md-4">
-                                <div class="mb-3 mx-2 row">
-                                    <label for="date" class="col-sm-2 col-form-label required">Date </label>
+                                <div class="mb-3 mx-1 row">
+                                    <div class="col-sm-4">
+                                        <label for="date" class="col-sm-2 col-form-label required">Date Form </label>
+                                    </div>                                    
+                                    <div class="col-sm-8">
+                                        <input type="date" name="date" class="form-control" id="date" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3 mx-1 row">
+                                    <label for="date" class="col-sm-2 col-form-label required">Date To </label>
                                     <div class="col-sm-10">
                                         <input type="date" name="date" class="form-control" id="date" required>
                                     </div>
@@ -24,7 +34,7 @@
                             </div>
                             @if (user()->role_id == 1)
                                 <div class="col-md-4">
-                                    <div class="mb-3 mx-2 row">
+                                    <div class="mb-3 mx-1 row">
                                         <label for="date" class="col-sm-2 col-form-label required">Team </label>
                                         <div class="col-sm-10">
                                             <select name="team" class="form-select" required>
@@ -37,13 +47,14 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="col-2">
-                                <div class="mb-3 row justify-content-center">
-                                    <label for="date" class="visually-hidden">Team</label>
-                                    <button type="submit" class="btn btn-primary" style="width: 100px">Submit</button>
-                                </div>
-                            </div>
+                            
 
+                        </div>
+                        <div class="col-12 text-center">
+                            <div class="mb-3 row justify-content-center">
+                                <label for="date" class="visually-hidden">Team</label>
+                                <button type="submit" class="btn btn-primary" style="width: 100px">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div>

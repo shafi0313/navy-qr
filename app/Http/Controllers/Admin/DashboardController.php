@@ -37,12 +37,19 @@ class DashboardController extends Controller
                     ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
                     ->groupBy('users.team')
                     ->get();
-            } else {
+            } elseif(user()->role_id == 2) {
                 $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-                    ->where('users.team', user()->team)
+                    ->where('users.id', user()->team)
                     ->whereNotNull('applications.scanned_at')
                     ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
                     ->groupBy('users.team')
+                    ->get();
+            }else{
+                $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
+                    ->where('users.id', user()->id)
+                    ->whereNotNull('applications.scanned_at')
+                    ->selectRaw('users.id, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
+                    ->groupBy('users.id')
                     ->get();
             }
         }
