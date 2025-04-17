@@ -166,6 +166,12 @@
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="{{ route('admin.reports.daily_state.select') }}" class="side-nav-link">
+                    <i class="fa-solid fa-comment-sms"></i>
+                    <span> Daily State</span>
+                </a>
+            </li>
+            <li class="side-nav-item">
                 <a href="{{ route('admin.sms.index') }}" class="side-nav-link">
                     <i class="fa-solid fa-comment-sms"></i>
                     <span> SMS Report </span>
