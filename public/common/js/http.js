@@ -94,17 +94,14 @@ function ajaxStoreModal(e, form, modal) {
         contentType: false,
         processData: false,
         success: (res) => {
+            $(".table").DataTable().ajax.reload();
+            $("#" + modal).modal("hide");
+            $(form).trigger("reset");
             hideLoadingAnimation();
             swal({
                 icon: "success",
                 title: "Success",
                 text: res.message,
-            }).then((confirm) => {
-                if (confirm) {
-                    $(".table").DataTable().ajax.reload();
-                    $("#" + modal).modal("hide");
-                    $(form).trigger("reset");
-                }
             });
         },
         error: (err) => {

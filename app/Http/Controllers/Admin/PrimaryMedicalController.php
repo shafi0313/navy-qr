@@ -168,9 +168,9 @@ class PrimaryMedicalController extends Controller
 
         $application = Application::find($request->id);
 
-        if ($application->is_medical_pass == 0) {
-            return response()->json(['message' => 'The status has been updated'], 200);
-        }
+        // if (!empty($application->is_medical_pass) && $application->is_medical_pass == 0) {
+        //     return response()->json(['message' => 'The status has been updated'], 200);
+        // }
 
         try {
             if ($application->user_id == null) {
@@ -182,12 +182,6 @@ class PrimaryMedicalController extends Controller
             ]);
 
             $this->fail($application->current_phone, 'Primary Medical');
-
-            // if (env('APP_DEBUG') == false) {
-            //     $msg = 'The status has been updated';
-            //     $type = 'Primary Medical';
-            //     SendSmsJob::dispatch(user()->id, $application->current_phone, $msg, $type)->onQueue('default');
-            // }
 
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {

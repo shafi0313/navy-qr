@@ -291,43 +291,6 @@
                     }
                 });
             }
-            // function pMFail(id) {
-            //     swal({
-            //         title: "Are you sure?",
-            //         text: "This change will affect all records!",
-            //         icon: "warning",
-            //         buttons: true,
-            //         dangerMode: true,
-            //     }).then((willDelete) => {
-            //         if (willDelete) {
-            //             showLoadingAnimation();
-            //             $.ajax({
-            //                 url: '{{ route('admin.primary_medicals.unfit_store') }}',
-            //                 type: "PATCH",
-            //                 data: {
-            //                     id: id,
-            //                 },
-            //                 success: (res) => {
-            //                     hideLoadingAnimation();
-            //                     swal({
-            //                         icon: "success",
-            //                         title: "Success",
-            //                         text: res.message,
-            //                     });
-            //                     $(".table").DataTable().ajax.reload();
-            //                 },
-            //                 error: (err) => {
-            //                     hideLoadingAnimation();
-            //                     swal({
-            //                         icon: "error",
-            //                         title: "Oops...",
-            //                         text: err.responseJSON.message,
-            //                     });
-            //                 },
-            //             });
-            //         }
-            //     });
-            // }
         </script>
     @endpush
 @endsection
