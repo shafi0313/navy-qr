@@ -52,7 +52,7 @@ class VivaMarkController extends Controller
                     ->selectRaw(
                         $this->examSumColumns()
                     )
-                    ->where('team', user()->team)                    
+                    ->where('team', user()->team)
                     ->where('applications.is_medical_pass', 1)
                     ->where('is_final_pass', 1)
                     ->orderBy('total_viva', 'desc')
@@ -78,6 +78,12 @@ class VivaMarkController extends Controller
                 })
                 ->addColumn('total_viva', function ($row) use ($roleId) {
                     return $this->viva($roleId, $row);
+                })
+                ->addColumn('dup_test', function ($row) use ($roleId) {
+                    if($row->examMark->dup_test){
+                        return $row->examMark->dup_test == 'yes' ? 'Pos' : 'Neg';
+                    }
+                    
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';

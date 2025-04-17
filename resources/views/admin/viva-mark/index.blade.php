@@ -157,8 +157,8 @@
                             title: 'viva',
                         },
                         {
-                            data: 'exam_mark.dup_test',
-                            name: 'exam_mark.dup_test',
+                            data: 'dup_test',
+                            name: 'dup_test',
                             title: 'Dope Test',
                         },
                         {

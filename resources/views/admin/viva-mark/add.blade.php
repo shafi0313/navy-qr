@@ -26,8 +26,8 @@
                             <label for="dup_test" class="form-label">HBsAG/Dope Test Report </label>
                             <select name="dup_test" id="dup_test" class="form-select">
                                 <option value="" >Select</option>
-                                <option value="yes" @selected($applicant->examMark?->dup_test == 'yes')>Yes</option>
-                                <option value="no" @selected($applicant->examMark?->dup_test == 'no')>No</option>
+                                <option value="yes" @selected($applicant->examMark?->dup_test == 'yes')>Pos</option>
+                                <option value="no" @selected($applicant->examMark?->dup_test == 'no')>Neg</option>
                             </select>
                         </div>
                         <div class="col-md-12">
