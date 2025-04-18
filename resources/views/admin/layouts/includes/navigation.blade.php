@@ -84,29 +84,28 @@
                 <li class="side-nav-item">
                     <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <span> Applicant Gate Entry</span>
+                        <span>1.0 - Gate Entry</span>
                     </a>
                 </li>
                 @if (in_array($roleId, [1, 2, 6]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-stethoscope"></i>
-                            <span> Primary Medical Selection </span>
+                            <span>2.0 - Primary Medical</span>
                         </a>
                     </li>
                 @endif
                 @if (in_array($roleId, [1, 2, 5]))
                     <li class="side-nav-item">
-                        <a href="{{ route('admin.exam-marks.index') }}" class="side-nav-link">
-                            <i class="fa-solid fa-file-pen"></i>
-                            <span>Written Exam </span>
-                        </a>
-                    </li>
-
-                    <li class="side-nav-item">
                         <a href="{{ route('admin.written-mark-imports.index') }}" class="side-nav-link">
                             <i class="fa-regular fa-newspaper"></i>
-                            <span>Written Exam Import</span>
+                            <span>3.1 - Written Exam Import</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{{ route('admin.exam-marks.index') }}" class="side-nav-link">
+                            <i class="fa-solid fa-file-pen"></i>
+                            <span>3.2 - Written Exam </span>
                         </a>
                     </li>
                 @endif
@@ -115,7 +114,7 @@
                     <li class="side-nav-item">
                         <a href="{{ route('admin.final_medicals.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-user-doctor"></i>
-                            <span>Final Medical</span>
+                            <span>4.0 - Final Medical</span>
                         </a>
                     </li>
                 @endif
@@ -123,7 +122,15 @@
                     <li class="side-nav-item">
                         <a href="{{ route('admin.viva-marks.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-list"></i>
-                            <span>Final Viva</span>
+                            <span>5.0 - Final Viva & HBsAg/Dope Test</span>
+                        </a>
+                    </li>
+                @endif
+                @if (in_array($roleId, [1, 2]))
+                    <li class="side-nav-item">
+                        <a href="{{ route('admin.results.index') }}" class="side-nav-link">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>6.0 - Primary Selection</span>
                         </a>
                     </li>
                 @endif
@@ -142,14 +149,7 @@
                         </a>
                     </li>
                 @endif
-                @if (in_array($roleId, [1, 2]))
-                    <li class="side-nav-item">
-                        <a href="{{ route('admin.results.index') }}" class="side-nav-link">
-                            <i class="fa-solid fa-sliders"></i>
-                            <span>Results</span>
-                        </a>
-                    </li>
-                @endif
+                
             @elseif (user()->exam_type == 2)
                 <li class="side-nav-item">
                     <a href="{{ route('admin.application-urls.index') }}" class="side-nav-link">
