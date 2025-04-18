@@ -19,7 +19,7 @@ use App\Http\Controllers\Setting\AppDbBackupController;
 use App\Http\Controllers\Admin\ApplicantCountController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
-use App\Http\Controllers\Admin\DailyStateReportController;
+use App\Http\Controllers\Admin\Reports\DailyStateReportController;
 use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
 use App\Http\Controllers\Admin\ApplicationImportantController;

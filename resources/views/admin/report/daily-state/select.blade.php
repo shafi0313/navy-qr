@@ -12,31 +12,35 @@
                     <form action="{{ route('admin.reports.daily_state.report') }}">
                         <div class="row justify-content-center">
                             <div class="col-md-12 text-center my-3">
-                                <h3>Daily State Report Selection Page</h3>
+                                <h3>Daily Recruitment State Selection Page</h3>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3 mx-1 row">
                                     <div class="col-sm-4">
-                                        <label for="date" class="col-sm-2 col-form-label required">Date Form </label>
+                                        <label for="start_date" class="col-sm-2 col-form-label required text-nowrap">Date Form </label>
                                     </div>                                    
                                     <div class="col-sm-8">
-                                        <input type="date" name="date" class="form-control" id="date" required>
+                                        <input type="date" name="start_date" class="form-control" id="start_date" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3 mx-1 row">
-                                    <label for="date" class="col-sm-2 col-form-label required">Date To </label>
-                                    <div class="col-sm-10">
-                                        <input type="date" name="date" class="form-control" id="date" required>
+                                    <div class="col-sm-4">
+                                        <label for="end_date" class="col-sm-2 col-form-label required text-nowrap">Date To </label>
+                                    </div>  
+                                    <div class="col-sm-8">
+                                        <input type="date" name="end_date" class="form-control" id="end_date" required>
                                     </div>
                                 </div>
                             </div>
                             @if (user()->role_id == 1)
                                 <div class="col-md-4">
                                     <div class="mb-3 mx-1 row">
-                                        <label for="date" class="col-sm-2 col-form-label required">Team </label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-4">
+                                            <label for="date" class="col-sm-2 col-form-label required text-nowrap">Team </label>
+                                        </div>  
+                                        <div class="col-sm-8">
                                             <select name="team" class="form-select" required>
                                                 <option value="">Select Team</option>
                                                 <option value="A">A</option>
