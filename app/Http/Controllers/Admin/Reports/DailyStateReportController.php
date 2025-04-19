@@ -20,13 +20,29 @@ class DailyStateReportController extends Controller
     public function report(Request $request)
     {
         // return
-        $startDate = $request->start_date;
-        $endDate = $request->end_date;
+        $data['startDate'] = $request->start_date;
+        $data['endDate'] = $request->end_date;
+        if (user()->role_id == 1) {
+            $data['team'] = $request->team;
+        } else {
+            $data['team'] = user()->team;
+        }
 
-        $baseQuery = Application::selectRaw('candidate_designation, COUNT(id) as total')
-            // ->whereBetween('exam_date', [$startDate, $endDate])
-            ->groupBy('candidate_designation');
+        $data['designationsQuery'] = Application::selectRaw('candidate_designation')
+            ->groupBy('candidate_designation')->get();
 
+        $baseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total')
+            ->whereBetween('exam_date', [$request->start_date, $request->end_date]);
+        if (user()->role_id == 1) {
+            if ($request->team != 'all') {
+                $baseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                    ->where('team', $request->team);
+            }
+        } else {
+            $baseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->where('team', user()->team);
+        }
+        $baseQuery->groupBy('candidate_designation');
 
         $data['applicants'] = (clone $baseQuery)->get();
         $data['attendants'] = (clone $baseQuery)->whereNotNull('scanned_at')->get();
@@ -39,15 +55,15 @@ class DailyStateReportController extends Controller
         // Written
         $wQuery = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-            // ->select(
-            //     'applications.candidate_designation',
-            //     'applications.exam_date',
-            // )
-            ->where('applications.is_medical_pass', 1)
-            // ->take(100)
-            // ->get()
-            // ->count()
-        ;
+            ->whereBetween('exam_date', [$request->start_date, $request->end_date]);
+        if (user()->role_id == 1) {
+            if ($request->team != 'all') {
+                $wQuery->where('team', $request->team);
+            }
+        } else {
+            $wQuery->where('team', user()->team);
+        }
+        $wQuery->where('applications.is_medical_pass', 1);
 
         $data['wPending'] = (clone $wQuery)
             ->where(function ($query) {

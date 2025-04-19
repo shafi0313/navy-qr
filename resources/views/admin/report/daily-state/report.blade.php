@@ -9,12 +9,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h3>DAILY RECRUITMENT STATE</h3>
+                        <h3>EXAMINATION CENTER: {{ $team }}</h3>
+                        <h3>Date: {{ Carbon\Carbon::parse($startDate)->format('d M Y') }} to
+                            {{ Carbon\Carbon::parse($endDate)->format('d M Y') }}</h3>
+                    </div>
                     <a href="{{ url('dashboard/export-applicants') }}" class="btn btn-success">
                         Export to Excel
                     </a>
                     <div class="table-responsive">
                         @php
-                            $designations = $applicants->groupBy('candidate_designation')->keys();
+                            $designations = $designationsQuery->groupBy('candidate_designation')->keys();
                         @endphp
                         <table class="table table-bordered mb-0 w-100">
                             <thead>
@@ -46,7 +52,7 @@
                                     @endforeach
                                     <td class="text-end">{{ $attendants->sum('total') }}</td>
                                 </tr>
-                                
+
                                 {{-- Preliminary Medical Start --}}
                                 <tr>
                                     <td rowspan="3">Preliminary Medical</td>
@@ -78,7 +84,7 @@
                                 </tr>
                                 {{-- Preliminary Medical End --}}
 
-                                {{-- Written Exam Start--}}
+                                {{-- Written Exam Start --}}
                                 <tr>
                                     <td rowspan="3">Written Exam</td>
                                     <td>Pending</td>
@@ -107,9 +113,9 @@
                                     @endforeach
                                     <td class="text-end">{{ $wPass->sum('total') }}</td>
                                 </tr>
-                                {{-- Written Exam End--}}
+                                {{-- Written Exam End --}}
 
-                                {{-- Final Medical Start--}}
+                                {{-- Final Medical Start --}}
                                 <tr>
                                     <td rowspan="3">Final Medical</td>
                                     <td>Pending</td>
@@ -138,9 +144,9 @@
                                     @endforeach
                                     <td class="text-end">{{ $fMFit->sum('total') }}</td>
                                 </tr>
-                                {{-- Final Medical End--}}
+                                {{-- Final Medical End --}}
 
-                                {{-- Viva Start--}}
+                                {{-- Viva Start --}}
                                 <tr>
                                     <td rowspan="3">Viva</td>
                                     <td>Pending</td>
@@ -169,9 +175,9 @@
                                     @endforeach
                                     <td class="text-end">{{ $vPass->sum('total') }}</td>
                                 </tr>
-                                {{-- Viva End--}}
+                                {{-- Viva End --}}
 
-                                {{-- HBsAg/Dope Test Start--}}
+                                {{-- HBsAg/Dope Test Start --}}
                                 <tr>
                                     <td rowspan="3">HBsAg/Dope Test</td>
                                     <td>Pending</td>
@@ -200,7 +206,7 @@
                                     @endforeach
                                     <td class="text-end">{{ $dPass->sum('total') }}</td>
                                 </tr>
-                                {{-- HBsAg/Dope Test End--}}
+                                {{-- HBsAg/Dope Test End --}}
                             </tbody>
                         </table>
                     </div>

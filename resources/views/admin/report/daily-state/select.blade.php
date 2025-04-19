@@ -43,6 +43,7 @@
                                         <div class="col-sm-8">
                                             <select name="team" class="form-select" required>
                                                 <option value="">Select Team</option>
+                                                <option value="all">All</option>
                                                 <option value="A">A</option>
                                                 <option value="B">B</option>
                                                 <option value="C">C</option>
