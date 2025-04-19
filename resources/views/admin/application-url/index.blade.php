@@ -48,10 +48,22 @@
                             searchable: false,
                         },
                         {
-                            data: 'url',
-                            name: 'url',
-                            title: 'url',
-                        },
+                                data: 'url',
+                                name: 'url',
+                                title: 'URL',
+                                orderable: false,
+                                searchable: false,
+                            },
+                            {
+                                data: 'user.name',
+                                name: 'user.name',
+                                title: 'Scanned By',
+                            },
+                            {
+                                data: 'scanned_at',
+                                name: 'scanned_at',
+                                title: 'Scan Date',
+                            },
                     ],
                     scroller: {
                         loadingIndicator: true

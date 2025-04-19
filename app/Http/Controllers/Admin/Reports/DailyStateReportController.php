@@ -19,7 +19,7 @@ class DailyStateReportController extends Controller
 
     public function report(Request $request)
     {
-        // return
+        return 'ok';
         $data['startDate'] = $request->start_date;
         $data['endDate'] = $request->end_date;
         if (user()->role_id == 1) {

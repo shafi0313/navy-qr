@@ -29,6 +29,6 @@ class ApplicationUrlController extends Controller
                 ->make(true);
         }
 
-        return view('admin.dashboard');
+        return view('admin.application-url.index');
     }
 }
