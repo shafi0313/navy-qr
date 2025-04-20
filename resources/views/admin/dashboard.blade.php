@@ -18,8 +18,8 @@
                             <thead class="table-primary">
                                 <tr>
                                     <th>Team</th>
-                                    <th>Today's Count</th>
-                                    <th>All Count</th>
+                                    <th>Today's Presence</th>
+                                    <th>Total Presence</th>
                                 </tr>
                             </thead>
 

@@ -59,7 +59,7 @@
             </div>
 
             <!-- Footer Start -->
-            @include('admin.layouts.includes.footer')
+            {{-- @include('admin.layouts.includes.footer') --}}
             <!-- end Footer -->
         </div>
     </div>
