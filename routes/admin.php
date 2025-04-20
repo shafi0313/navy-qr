@@ -107,5 +107,6 @@ Route::prefix('reports')->name('reports.')->group(function () {
     Route::controller(DailyStateReportController::class)->prefix('daily-state')->name('daily_state.')->group(function () {
         Route::get('/', 'select')->name('select');
         Route::get('/report', 'report')->name('report');
+        Route::get('/export/excel/{startDate}/{endDate}/{team}', 'exportExcel')->name('export_excel');
     });
 });
