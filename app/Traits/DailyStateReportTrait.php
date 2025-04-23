@@ -17,7 +17,7 @@ trait DailyStateReportTrait
 
 
         $applicantsBaseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total');
-            // ->whereBetween('scanned_at', [$startDate, $endDate]);
+        // ->whereBetween('scanned_at', [$startDate, $endDate]);
         // if (user()->role_id == 1) {
         //     if ($team != 'all') {
         //         $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
@@ -44,7 +44,7 @@ trait DailyStateReportTrait
         }
         $baseQuery->groupBy('candidate_designation');
 
-        $data['applicants'] = (clone $baseQuery)->get();
+        // $data['applicants'] = (clone $baseQuery)->get();
         $data['attendants'] = (clone $baseQuery)->whereNotNull('scanned_at')->get();
 
         // Primary Medical
