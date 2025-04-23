@@ -8,7 +8,6 @@ trait DailyStateReportTrait
 {
     protected function getStateReport($startDate, $endDate, $team)
     {
-        return 'ok';
         $data['startDate'] = $startDate;
         $data['endDate'] = $endDate;
         $data['team'] = $team;

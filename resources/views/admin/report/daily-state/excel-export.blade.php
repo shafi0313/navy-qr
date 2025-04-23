@@ -4,4 +4,5 @@
     <h3>Date: {{ Carbon\Carbon::parse($startDate)->format('d M Y') }} to
         {{ Carbon\Carbon::parse($endDate)->format('d M Y') }}</h3>
 </div>
+<br>
 @include('admin.report.daily-state.table')
