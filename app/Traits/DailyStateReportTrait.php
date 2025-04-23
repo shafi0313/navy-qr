@@ -18,15 +18,15 @@ trait DailyStateReportTrait
 
         $applicantsBaseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total');
             // ->whereBetween('scanned_at', [$startDate, $endDate]);
-        if (user()->role_id == 1) {
-            if ($team != 'all') {
-                $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->where('team', $team);
-            }
-        } else {
-            $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                ->where('team', user()->team);
-        }
+        // if (user()->role_id == 1) {
+        //     if ($team != 'all') {
+        //         $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
+        //             ->where('team', $team);
+        //     }
+        // } else {
+        //     $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
+        //         ->where('team', user()->team);
+        // }
         $applicantsBaseQuery->groupBy('candidate_designation');
         $data['applicants'] = (clone $applicantsBaseQuery)->get();
 
