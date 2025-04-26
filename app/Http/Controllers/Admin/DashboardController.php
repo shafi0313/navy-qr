@@ -98,7 +98,6 @@ class DashboardController extends Controller
 
     function getTeamData(array $districts)
     {
-
         // COUNT(*) as total,
         $query = Application::selectRaw("
             COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
