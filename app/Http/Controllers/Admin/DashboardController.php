@@ -33,10 +33,6 @@ class DashboardController extends Controller
             }
             $data = $data;
         } else {
-            
-            
-            
-
             $teams = [
                 'A' => team('a'),
                 'B' => team('b'),
@@ -102,18 +98,19 @@ class DashboardController extends Controller
 
     function getTeamData(array $districts)
     {
-        
-            // COUNT(*) as total,
+
+        // COUNT(*) as total,
         $query = Application::selectRaw("
-            COUNT(CASE WHEN DATE(exam_date) = ? THEN 1 END) as todayApplicants,
+            COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
             COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
-            COUNT(CASE WHEN DATE(scanned_at) = ? THEN 1 END) as today
-        ", [Carbon::today()->toDateString(), Carbon::today()->toDateString()])
+            COUNT(CASE WHEN DATE(scanned_at) = CURRENT_DATE THEN 1 END) as today
+        ")
             ->whereIn('eligible_district', $districts);
 
         if (user()->role_id == 7) {
             $query->where('user_id', user()->id);
         }
+
         return $query->first();
     }
 }
