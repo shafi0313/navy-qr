@@ -7,6 +7,7 @@
 @section('title', $pageTitle)
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => ['', $pageTitle, 'Index']])
+    @include('admin.layouts.includes.table-option')
 
     {{-- <div class="row">
         <div class="col-12">
@@ -22,7 +23,7 @@
                             </div>
                         </div>
                         <div class="row gy-2">
-                            @if (in_array(user()->role_id, [1,4]))
+                            @if (in_array(user()->role_id, [1, 4]))
                                 <div class="col-md-2">
                                     <label for="bangla" class="form-label required">Bangla </label>
                                     <input type="number" step="any" name="bangla" id="bangla" class="form-control"
@@ -130,11 +131,6 @@
                             name: 'name',
                             title: 'Name',
                         },
-                        // {
-                        //     data: 'ssc_edu_board',
-                        //     name: 'ssc_edu_board',
-                        //     title: 'SSC Board',
-                        // },
                         {
                             data: 'ssc_bangla',
                             name: 'ssc_bangla',
@@ -215,7 +211,7 @@
                     },
                     order: [
                         [1, 'asc']
-                    ]
+                    ],
                 });
                 $(".filter").find('select').on('change', function() {
                     table.draw();
