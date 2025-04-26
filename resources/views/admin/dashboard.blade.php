@@ -18,18 +18,30 @@
                             <thead class="table-primary">
                                 <tr>
                                     <th>Team</th>
+                                    <th>Todays applicant</th>
                                     <th>Today's Presence</th>
                                     <th>Total Presence</th>
                                 </tr>
                             </thead>
-
-                            @foreach ($counts as $count)
-                                <tr>
-                                    <td>{{ $count->team }}</td>
-                                    <td class="text-end">{{ nF($count->today_count) }}</td>
-                                    <td class="text-end">{{ nF($count->count) }}</td>
-                                </tr>
-                            @endforeach
+                            @if (user()->exam_type == 2)
+                                @foreach ($counts as $count)
+                                    <tr>
+                                        <td>{{ $count->team }}</td>
+                                        <td class="text-end">{{ nF($count->count) }}</td>
+                                        <td class="text-end">{{ nF($count->today_count) }}</td>
+                                        <td class="text-end">{{ nF($count->count) }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                @foreach ($data as $team)
+                                    <tr>
+                                        <td class="text-center">{{ $team['team'] }}</td>
+                                        <td class="text-end">{{ nF($team['stats']->todayApplicants ?? 0) }}</td>
+                                        <td class="text-end">{{ nF($team['stats']->today ?? 0) }}</td>
+                                        <td class="text-end">{{ nF($team['stats']->present ?? 0) }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
                         </table>
                     </div>
                 </div>

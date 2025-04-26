@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Constants\ExamType;
-use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\ApplicationUrl;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
@@ -30,31 +31,89 @@ class DashboardController extends Controller
                     ->groupBy('users.team')
                     ->get();
             }
+            $data = $data;
         } else {
-            // For Sailor
+            
+            
+            
+
+            $teams = [
+                'A' => team('a'),
+                'B' => team('b'),
+                'C' => team('c'),
+            ];
+
+            $data = [];
+
             if (user()->role_id == 1) {
-                $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-                    ->whereNotNull('applications.scanned_at')
-                    ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
-                    ->groupBy('users.team')
-                    ->get();
-            } elseif(in_array(user()->role_id, [2, 3, 4, 5, 6])) {
-                $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-                    ->where('users.id', user()->team)
-                    ->whereNotNull('applications.scanned_at')
-                    ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
-                    ->groupBy('users.team')
-                    ->get();
-            }else{
-                $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-                    ->where('users.id', user()->id)
-                    ->whereNotNull('applications.scanned_at')
-                    ->selectRaw('users.id, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
-                    ->groupBy('users.id')
-                    ->get();
+                // Role 1: Show all teams
+                foreach ($teams as $teamName => $districts) {
+                    $data[] = [
+                        'team' => $teamName,
+                        'stats' => $this->getTeamData($districts),
+                    ];
+                }
+            } else {
+                // Other users: Show only their team
+                if (user()->team == 'A' && isset($teams['A'])) {
+                    $data[] = [
+                        'team' => 'A',
+                        'stats' => $this->getTeamData($teams['A']),
+                    ];
+                } elseif (user()->team == 'B' && isset($teams['B'])) {
+                    $data[] = [
+                        'team' => 'B',
+                        'stats' => $this->getTeamData($teams['B']),
+                    ];
+                } elseif (user()->team == 'C' && isset($teams['C'])) {
+                    $data[] = [
+                        'team' => 'C',
+                        'stats' => $this->getTeamData($teams['C']),
+                    ];
+                }
             }
+            // if (user()->role_id == 1) {
+            //     $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
+            //         ->whereNotNull('applications.scanned_at')
+            //         ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
+            //         ->groupBy('users.team')
+            //         ->get();
+
+            // } elseif (in_array(user()->role_id, [2, 3, 4, 5, 6])) {
+            //     $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
+            //         ->where('users.id', user()->team)
+            //         ->whereNotNull('applications.scanned_at')
+            //         ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
+            //         ->groupBy('users.team')
+            //         ->get();
+            // } else {
+            //     $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
+            //         ->where('users.id', user()->id)
+            //         ->whereNotNull('applications.scanned_at')
+            //         ->selectRaw('users.id, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
+            //         ->groupBy('users.id')
+            //         ->get();
+            // }
+            $data = ['data' => $data];
         }
 
         return view('admin.dashboard', $data);
+    }
+
+    function getTeamData(array $districts)
+    {
+        
+            // COUNT(*) as total,
+        $query = Application::selectRaw("
+            COUNT(CASE WHEN DATE(exam_date) = ? THEN 1 END) as todayApplicants,
+            COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
+            COUNT(CASE WHEN DATE(scanned_at) = ? THEN 1 END) as today
+        ", [Carbon::today()->toDateString(), Carbon::today()->toDateString()])
+            ->whereIn('eligible_district', $districts);
+
+        if (user()->role_id == 7) {
+            $query->where('user_id', user()->id);
+        }
+        return $query->first();
     }
 }
