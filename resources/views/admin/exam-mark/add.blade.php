@@ -13,7 +13,7 @@
                     <div class="row gy-2 justify-content-center">
                         <div class="col-md-12 text-center">
                             <h5>{{ $applicant->candidate_designation }}</h5>
-                            <h5>{{ $applicant->name }}</h5>
+                            <h5>{{ $applicant->name }} ({{ $applicant->serial_no }})</h5>
                         </div>
                         <div class="col-md-2">
                             <label for="bangla" class="form-label required">Bangla </label>
