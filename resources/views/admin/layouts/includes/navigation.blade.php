@@ -35,7 +35,7 @@
     <div class="button-close-fullsidebar">
         <i class="ri-close-fill align-middle"></i>
     </div>
-
+    
     <!-- Sidebar -left -->
     <div class="h-100" id="leftside-menu-container" data-simplebar>
         <!--- Sidemenu -->
@@ -164,20 +164,22 @@
                             <span> Applicant Count by District & Rank</span>
                         </a>
                     </li>
-
-                    <li class="side-nav-item">
-                        <a href="{{ route('admin.sms.index') }}" class="side-nav-link">
-                            <i class="fa-solid fa-comment-sms"></i>
-                            <span> SMS Report </span>
-                        </a>
-                    </li>
                 @endif
-            {{-- 2 Officer --}}
+                {{-- 2 Officer --}}
             @elseif (user()->exam_type == 2)
                 <li class="side-nav-item">
                     <a href="{{ route('admin.application-urls.index') }}" class="side-nav-link">
                         <i class="fa-solid fa-id-card"></i>
                         <span> Applicants </span>
+                    </a>
+                </li>
+            @endif
+
+            @if (user()->role_id == 1)
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.sms.index') }}" class="side-nav-link">
+                        <i class="fa-solid fa-comment-sms"></i>
+                        <span> SMS Report </span>
                     </a>
                 </li>
             @endif

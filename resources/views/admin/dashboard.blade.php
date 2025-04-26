@@ -18,7 +18,7 @@
                             <thead class="table-primary">
                                 <tr>
                                     <th>Team</th>
-                                    <th>Todays applicant</th>
+                                    <th>Today's applicant</th>
                                     <th>Today's Presence</th>
                                     <th>Total Presence</th>
                                 </tr>
