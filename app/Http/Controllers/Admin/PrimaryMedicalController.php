@@ -76,7 +76,7 @@ class PrimaryMedicalController extends Controller
 
                             return match ($data) {
                                 1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
+                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> '. ($row->is_important == 1 ? '(All documents held)' : '') . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
                             };
                         } else {
                             return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
