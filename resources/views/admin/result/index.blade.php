@@ -51,7 +51,8 @@
                             <div class="col">
                                 <div class="form-group my-3">
                                     <label class="form-label" for="candidate_designation">Branch</label>
-                                    <select name="candidate_designation" class="form-control w-100 candidate_designation" id="candidate_designation">
+                                    <select name="candidate_designation" class="form-control w-100 candidate_designation"
+                                        id="candidate_designation">
                                     </select>
                                 </div>
                             </div>
@@ -76,6 +77,20 @@
                                     </select>
                                 </div>
                             </div>
+                            @if (user()->role_id == 1)
+                                <div class="col">
+                                    <div class="form-group my-3">
+                                        <label class="form-label" for="team">@lang('Team')</label>
+                                        <select name="team" class="form-control w-100 team" id="team">
+                                            <option value="">Select</option>
+                                            <option value="all">All</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col">
                                 <div class="form-group my-3">
                                     <a href="" class="btn btn-danger">Clear</a>
@@ -133,7 +148,8 @@
                                 ssc_group: $('.ssc_group').val(),
                                 candidate_designation: $('.candidate_designation').val(),
                                 dob: $('.dob').val(),
-                                exam_date: $('.exam_date').val()
+                                exam_date: $('.exam_date').val(),
+                                team: $('.team').val()
                             });
                         },
                     },
