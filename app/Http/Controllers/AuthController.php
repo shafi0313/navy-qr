@@ -34,8 +34,6 @@ class AuthController extends Controller
                 $user->otp_expires_at = now()->addMinutes(5);
                 $user->save();
 
-                // Simulate sending OTP (replace with real SMS sending logic)
-                // $isSent = sendOtpViaSms($user->mobile, $otp);
                 SendOtpSmsJob::dispatch($user->id, $user->mobile, $otp)->onQueue('high');
                 // if (! $isSent) {
                 //     return back()->with('error', 'Failed to send OTP.');
@@ -43,6 +41,12 @@ class AuthController extends Controller
 
                 // Store session and redirect to OTP form
                 session(['login.id' => $user->id, 'otp_required' => true]);
+                
+                if (session('login.id')) {
+                    return redirect()->route('otp.form');
+                } else {
+                    return redirect()->route('login')->with('error', 'Session expired. Please login again.');
+                }
 
                 return redirect()->route('otp.form');
             } else {
