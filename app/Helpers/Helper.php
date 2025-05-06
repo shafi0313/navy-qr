@@ -148,8 +148,8 @@ if (! function_exists('team')) {
             ]; // Khulna
         } elseif ($team == 'c') {
             return [
-                'Cumilla',
-                'Chandpur',
+                'cumilla',
+                'chandpur',
                 'lakshmipur',
                 'feni',
                 'noakhali',
