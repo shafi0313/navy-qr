@@ -8,6 +8,27 @@
     line-height: 1px !important;
 }
 
-table tr td {
-    padding: 5px !important;
+.page-title-box {
+    padding-bottom: 0rem;
+}
+
+.page-content {
+    padding: 0.75rem 0.75rem var(--taplox-footer-height) 0.75rem;
+}
+
+.card-body {
+    padding: 0.75rem 0.75rem;
+}
+
+.card-header {
+    padding: 0.75rem var(--taplox-card-cap-padding-x);
+}
+
+.card-title {
+    margin-top: 10px;
+}
+
+
+table tbody tr td, table tr td {
+    padding: 4px 5px !important;
 }

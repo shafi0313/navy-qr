@@ -11,13 +11,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h4 class="card-title">{{ $pageTitle }}</h4>
-                    </div>
-                </div>
-                <form action="{{ route('admin.written_mark_imports.import') }}" method="post"
-                    enctype="multipart/form-data">
+                <form action="{{ route('admin.written_mark_imports.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body row justify-content-center">
                         <div class="form-group col-sm-4">
@@ -55,7 +49,7 @@
                                 <tbody>
                                     @foreach ($writtenMarks as $writtenMark)
                                         <tr>
-                                            <td>{{ @$x+=1 }}</td>
+                                            <td>{{ @$x += 1 }}</td>
                                             <td>{{ $writtenMark->serial_no }}</td>
                                             <td>{{ $writtenMark->bangla }}</td>
                                             <td>{{ $writtenMark->english }}</td>
@@ -68,8 +62,7 @@
                                                     method="post"
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" title="Delete"
-                                                        class="btn btn-link btn-danger">
+                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </form>

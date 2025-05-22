@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'All Applicants';
+    $pageTitle = 'Merit List';
     $folder = 'result';
     $route = $folder . 's';
 @endphp
@@ -21,35 +21,32 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">{{ $pageTitle }}</h4>
-                    </div>
                     {{-- Filter HTML --}}
                     <div class="col-md-12 mb-2">
                         <div class="row justify-content-center filter align-items-end">
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="district">@lang('District')</label>
                                     <select name="district" class="form-control w-100 district" id="district">
                                     </select>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="ssc_gpa">GPA</label>
                                     <select name="ssc_gpa" class="form-control w-100 ssc_gpa" id="ssc_gpa">
                                     </select>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="ssc_group">Group</label>
                                     <select name="ssc_group" class="form-control w-100 ssc_group" id="ssc_group">
                                     </select>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="candidate_designation">Branch</label>
                                     <select name="candidate_designation" class="form-control w-100 candidate_designation"
                                         id="candidate_designation">
@@ -57,21 +54,21 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="dob">DOB</label>
                                     <select name="dob" class="form-control w-100 dob" id="dob">
                                     </select>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="height">Height</label>
                                     <select name="height" class="form-control w-100 height" id="height">
                                     </select>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="exam_date">@lang('Exam Date')</label>
                                     <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
                                     </select>
@@ -79,7 +76,7 @@
                             </div>
                             @if (user()->role_id == 1)
                                 <div class="col">
-                                    <div class="form-group my-3">
+                                    <div class="form-group">
                                         <label class="form-label" for="team">@lang('Team')</label>
                                         <select name="team" class="form-control w-100 team" id="team">
                                             <option value="">Select</option>
@@ -92,7 +89,7 @@
                                 </div>
                             @endif
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <a href="" class="btn btn-danger">Clear</a>
                                 </div>
                             </div>
@@ -176,6 +173,31 @@
                             data: 'name',
                             name: 'name',
                             title: 'Name'
+                        },
+                        {
+                            data: 'ssc_bangla',
+                            name: 'ssc_bangla',
+                            title: 'SSC/D/V Bangla',
+                        },
+                        {
+                            data: 'ssc_english',
+                            name: 'ssc_english',
+                            title: 'SSC/D/V English',
+                        },
+                        {
+                            data: 'ssc_math',
+                            name: 'ssc_math',
+                            title: 'SSC/D/V Math',
+                        },
+                        {
+                            data: 'ssc_physics',
+                            name: 'ssc_physics',
+                            title: 'SSC/D/V Physics',
+                        },
+                        {
+                            data: 'ssc_biology',
+                            name: 'ssc_biology',
+                            title: 'SSC/D/V Biology',
                         },
                         {
                             data: 'dob',
