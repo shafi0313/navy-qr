@@ -130,7 +130,7 @@
                     <li class="side-nav-item">
                         <a href="{{ route('admin.results.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-sliders"></i>
-                            <span>6.0 - Primary Selection</span>
+                            <span>6.0 - Merit List</span>
                         </a>
                     </li>
                 @endif
