@@ -73,6 +73,7 @@ trait ApplicationTrait
             'exam_marks.math',
             'exam_marks.science',
             'exam_marks.general_knowledge',
+            'exam_marks.viva_remark',
         ];
     }
 

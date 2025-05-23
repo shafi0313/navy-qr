@@ -32,3 +32,7 @@
 table tbody tr td, table tr td {
     padding: 4px 5px !important;
 }
+
+.page-title-box .page-title {
+    line-height: 35px;
+}

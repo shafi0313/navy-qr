@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Merit List';
+    $pageTitle = '6.0 - Merit List';
     $folder = 'result';
     $route = $folder . 's';
 @endphp
@@ -279,6 +279,11 @@
                             name: 'ssc_gpa',
                             title: 'SSC GPA',
                             className: 'text-center'
+                        },
+                        {
+                            data: 'viva_remark',
+                            name: 'viva_remark',
+                            title: 'Remark',
                         },
                     ],
                     scroller: {

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Viva Mark';
+    $pageTitle = '5.0 - Final Viva & HBsAg/Dope Test';
     $folder = 'viva-mark';
     $route = $folder . 's';
 @endphp
@@ -13,9 +13,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of Applicants</h4>
-                    </div>
                     {{-- Filter HTML --}}
                     @include('admin.layouts.includes.applicant-get-filter-html')
                     {{-- /Filter HTML --}}
