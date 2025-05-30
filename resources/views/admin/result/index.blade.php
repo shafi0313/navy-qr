@@ -74,6 +74,17 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label" for="is_important">All doc. held</label>
+                                    <select name="is_important" class="form-control w-100 is_important" id="is_important">
+                                        <option value="">Select</option>
+                                        <option value="">All</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
                             @if (user()->role_id == 1)
                                 <div class="col">
                                     <div class="form-group">
@@ -146,7 +157,8 @@
                                 candidate_designation: $('.candidate_designation').val(),
                                 dob: $('.dob').val(),
                                 exam_date: $('.exam_date').val(),
-                                team: $('.team').val()
+                                team: $('.team').val(),
+                                is_important: $('.is_important').val()
                             });
                         },
                     },
@@ -209,11 +221,11 @@
                             name: 'candidate_designation',
                             title: 'Branch'
                         },
-                        {
-                            data: 'specialty',
-                            name: 'specialty',
-                            title: 'Specialty'
-                        },
+                        // {
+                        //     data: 'specialty',
+                        //     name: 'specialty',
+                        //     title: 'Specialty'
+                        // },
                         {
                             data: 'medical',
                             name: 'medical',

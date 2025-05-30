@@ -24,7 +24,13 @@ class ResultController extends Controller
                 $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->userColumns(), $this->applicationColumnsForResult(), $this->examColumns(), $this->sscResultColumns())
+                        array_merge(
+                            $this->userColumns(),
+                            $this->applicationColumnsForResult(),
+                            $this->examColumns(),
+                            $this->sscResultColumns(),
+                            ['applications.is_important']
+                        )
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -39,7 +45,13 @@ class ResultController extends Controller
                 $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                     ->select(
-                        array_merge($this->userColumns(), $this->applicationColumnsForResult(), $this->examColumns(), $this->sscResultColumns())
+                        array_merge(
+                            $this->userColumns(),
+                            $this->applicationColumnsForResult(),
+                            $this->examColumns(),
+                            $this->sscResultColumns(),
+                            ['applications.is_important']
+                        )
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -78,9 +90,12 @@ class ResultController extends Controller
                 ->addColumn('total_viva', function ($row) use ($roleId) {
                     return $this->viva($roleId, $row);
                 })
-                ->addColumn('specialty', function ($row) {
-                    return '';
+                ->addColumn('viva_remark', function ($row) {
+                    return ($row->is_important == 1 ? '<span class="badge text-bg-primary">All doc. held</span>' : '') . $row->viva_remark;
                 })
+                // ->addColumn('specialty', function ($row) {
+                //     return '';
+                // })
                 ->filter(function ($query) use ($request) {
                     if ($request->filled('district')) {
                         $query->where('applications.eligible_district', $request->district);
@@ -104,18 +119,20 @@ class ResultController extends Controller
                         $query->where('applications.exam_date', $request->exam_date);
                     }
                     if ($request->filled('team')) {
-                        if($request->team == 'all') {
+                        if ($request->team == 'all') {
                             $query;
                         } else {
                             $query->where('users.team', $request->team);
                         }
-                        // $query->where('users.team', $request->team);
+                    }
+                    if ($request->filled('is_important')) {
+                        $query->where('is_important', $request->is_important);
                     }
                     if ($search = $request->get('search')['value']) {
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
+                ->rawColumns(['medical', 'written', 'final', 'viva', 'viva_remark', 'action'])
                 ->make(true);
         }
 
