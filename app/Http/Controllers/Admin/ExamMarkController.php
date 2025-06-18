@@ -52,22 +52,22 @@ class ExamMarkController extends Controller
             }
 
             return DataTables::eloquent($applications)
-                ->addIndexColumn()
-                ->addColumn('ssc_result', function ($row) {
-                    return "<span>"
-                        . "GPA: " . $row->ssc_gpa . "<br>"
-                        . $row->ssc_bangla . "<br>"
-                        . $row->ssc_english . "<br>"
-                        . $row->ssc_math . "<br>"
-                        . $row->ssc_physics . "<br>"
-                        . $row->ssc_biology
-                        . "</span>";
-                })
+                ->addIndexColumn()                
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
+                })
+                ->addColumn('ssc_result', function ($row) {
+                    return "<span>"
+                        . "GPA: " . $row->ssc_gpa . "<br>"
+                        . $row->ssc_bangla . "<br>"
+                        . $row->ssc_english . "<br>"
+                        . ($row->ssc_math !== null ? $row->ssc_math . "<br>" : "")
+                        . ($row->ssc_physics !== null ? $row->ssc_physics . "<br>" : "")
+                        . $row->ssc_biology
+                        . "</span>";
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);

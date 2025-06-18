@@ -67,6 +67,16 @@ class VivaMarkController extends Controller
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
+                ->addColumn('ssc_result', function ($row) {
+                    return "<span>"
+                        . "GPA: " . $row->ssc_gpa . "<br>"
+                        . $row->ssc_bangla . "<br>"
+                        . $row->ssc_english . "<br>"
+                        . ($row->ssc_math !== null ? $row->ssc_math . "<br>" : "")
+                        . ($row->ssc_physics !== null ? $row->ssc_physics . "<br>" : "")
+                        . $row->ssc_biology
+                        . "</span>";
+                })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
                 })
@@ -103,7 +113,7 @@ class VivaMarkController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
+                ->rawColumns(['ssc_result','medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
 

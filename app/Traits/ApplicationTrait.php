@@ -48,7 +48,6 @@ trait ApplicationTrait
             'applications.p_m_remark',
             'applications.f_m_remark',
             'applications.ssc_group',
-            'applications.ssc_gpa',
             'applications.remark',
         ];
     }
