@@ -53,6 +53,16 @@ class ExamMarkController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
+                ->addColumn('ssc_result', function ($row) {
+                    return "<span>"
+                        . "GPA: " . $row->ssc_gpa . "<br>"
+                        . $row->ssc_bangla . "<br>"
+                        . $row->ssc_english . "<br>"
+                        . $row->ssc_math . "<br>"
+                        . $row->ssc_physics . "<br>"
+                        . $row->ssc_biology
+                        . "</span>";
+                })
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
@@ -82,7 +92,7 @@ class ExamMarkController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['medical', 'written', 'action'])
+                ->rawColumns(['ssc_result', 'medical', 'written', 'action'])
                 ->make(true);
         }
 

@@ -80,7 +80,11 @@
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
-
+<style>
+    .ssc_result {
+        min-width: 50px !important;
+    }
+</style>
     @push('scripts')
         <script>
             $(function() {
@@ -132,29 +136,10 @@
                             title: 'Name',
                         },
                         {
-                            data: 'ssc_bangla',
-                            name: 'ssc_bangla',
-                            title: 'SSC/D/V Bangla',
-                        },
-                        {
-                            data: 'ssc_english',
-                            name: 'ssc_english',
-                            title: 'SSC/D/V English',
-                        },
-                        {
-                            data: 'ssc_math',
-                            name: 'ssc_math',
-                            title: 'SSC/D/V Math',
-                        },
-                        {
-                            data: 'ssc_physics',
-                            name: 'ssc_physics',
-                            title: 'SSC/D/V Physics',
-                        },
-                        {
-                            data: 'ssc_biology',
-                            name: 'ssc_biology',
-                            title: 'SSC/D/V Biology',
+                            data: 'ssc_result',
+                            name: 'ssc_result',
+                            title: 'SSC GPA',
+                            className: 'ssc_result',
                         },
                         {
                             data: 'eligible_district',
@@ -189,7 +174,7 @@
                         {
                             data: 'general_knowledge',
                             name: 'general_knowledge',
-                            title: 'general knowledge',
+                            title: 'GK',
                         },
                         {
                             data: 'written',

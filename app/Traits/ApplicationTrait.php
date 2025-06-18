@@ -57,6 +57,7 @@ trait ApplicationTrait
     {
         return [
             'applications.ssc_edu_board',
+            'applications.ssc_gpa',
             'applications.ssc_bangla',
             'applications.ssc_english',
             'applications.ssc_math',
