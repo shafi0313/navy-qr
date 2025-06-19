@@ -16,14 +16,15 @@ use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Setting\AppDbBackupController;
+use App\Http\Controllers\Admin\AppInstructionController;
 use App\Http\Controllers\Admin\ApplicantCountController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
-use App\Http\Controllers\Admin\Reports\DailyStateReportController;
 use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
 use App\Http\Controllers\Admin\ApplicationImportantController;
 use App\Http\Controllers\Admin\ImportantApplicationController;
+use App\Http\Controllers\Admin\Reports\DailyStateReportController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -49,6 +50,9 @@ Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name
 
 Route::resource('/admin-users', AdminUserController::class)->except(['show', 'create']);
 Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'status'])->name('admin_users.is_active');
+
+Route::resource('/app-instructions', AppInstructionController::class)->except(['show', 'create']);
+Route::patch('/app-instructions/is-active/{AppInstruction}', [AppInstructionController::class, 'status'])->name('app_instructions.is_active');
 
 Route::resource('/specialities', SpecialityController::class)->except(['show', 'create']);
 Route::patch('/specialities/is-active/{Speciality}', [SpecialityController::class, 'status'])->name('specialities.is_active');

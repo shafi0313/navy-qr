@@ -12,4 +12,21 @@ return [
         'B' => 'B',
         'C' => 'C',
     ],
+
+    'menuNames' => [
+        1 => 'User Role',
+        2 => 'User',
+        3 => '1.0 - Gate Entry',
+        4 => '2.0 - Primary Medical',
+        5 => '3.1 - Written Exam Import',
+        6 => '3.2 - Written Exam',
+        7 => '4.0 - Final Medical',
+        8 => '5.0 - Final Viva & HBsAg/Dope Test',
+        9 => '6.0 - Merit List',
+        10 => 'All documents held',
+        11 => 'Daily State',
+        12 => 'Applicant Count by District & Rank',
+        13 => 'SMS Report',
+
+    ],
 ];
