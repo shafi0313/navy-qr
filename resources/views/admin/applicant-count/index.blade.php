@@ -1,9 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', 'Applicant Count by District & Rank')
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', [
-        'title' => ['', 'Applicant Count by District & Rank', 'Index'],
-    ])
+    @include('admin.layouts.includes.breadcrumb', ['title' => 'Applicant Count by District & Rank'])
 
     <div class="row">
         <div class="col-12">

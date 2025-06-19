@@ -2,18 +2,19 @@
 @section('title', 'Daily State Report')
 @section('content')
     @include('admin.layouts.includes.breadcrumb', [
-        'title' => ['', 'Daily State Report', 'Report'],
+        'title' => 'Daily State Report',
     ])
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('admin.reports.daily_state.export_excel',[$startDate,$endDate,$team]) }}" class="btn btn-primary">
+                    <a href="{{ route('admin.reports.daily_state.export_excel', [$startDate, $endDate, $team]) }}"
+                        class="btn btn-primary">
                         Export to Excel
                     </a>
                 </div>
-                
+
                 <div class="card-body">
                     <div class="text-center mb-4">
                         <h3>DAILY RECRUITMENT STATE</h3>
@@ -21,7 +22,7 @@
                         <h3>Date: {{ Carbon\Carbon::parse($startDate)->format('d M Y') }} to
                             {{ Carbon\Carbon::parse($endDate)->format('d M Y') }}</h3>
                     </div>
-                    
+
                     <div class="table-responsive">
                         @include('admin.report.daily-state.table')
                     </div>

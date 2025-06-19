@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', 'SMS Report')
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => ['', 'SMS Report', 'Index']])
+    @include('admin.layouts.includes.breadcrumb', ['title' => 'SMS Report'])
 
     <div class="row">
         <div class="col-12">

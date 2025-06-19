@@ -2,7 +2,7 @@
 @section('title', 'Daily State Report')
 @section('content')
     @include('admin.layouts.includes.breadcrumb', [
-        'title' => ['', 'Daily State Report', 'Select'],
+        'title' => 'Daily State Report'],
     ])
 
     <div class="row">

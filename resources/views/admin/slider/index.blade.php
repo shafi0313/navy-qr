@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', 'Slider')
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => ['', 'Slider', 'Index']])
+    @include('admin.layouts.includes.breadcrumb', ['title' => 'Slider'])
 
     <div class="row">
         <div class="col-12">

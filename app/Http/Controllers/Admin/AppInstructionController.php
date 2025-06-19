@@ -81,6 +81,12 @@ class AppInstructionController extends Controller
         }
     }
 
+    public function show(AppInstruction $appInstruction)
+    {
+        $instruction = AppInstruction::findOrFail($appInstruction->id);
+        return view('admin.app-instruction.show', compact('instruction'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

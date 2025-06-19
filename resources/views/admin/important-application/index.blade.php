@@ -6,7 +6,7 @@
 @endphp
 @section('title', $pageTitle)
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => ['', $pageTitle, 'Index']])
+    @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle])
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 
