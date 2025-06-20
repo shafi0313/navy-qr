@@ -98,7 +98,7 @@ class FinalMedicalController extends Controller
                 ->make(true);
         }
 
-        return view('admin.final-medical.index');
+        return view('admin.final-medical.min\ApplicationImportantControllerindex');
     }
 
     public function fitModal(Request $request, Application $application)

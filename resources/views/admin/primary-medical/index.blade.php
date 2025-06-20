@@ -22,9 +22,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of Applicants</h4>
-                    </div>
                     {{-- Filter HTML --}}
                     <div class="col-md-12 mb-2">
                         <div class="row justify-content-center filter align-items-end">

@@ -11,11 +11,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h4 class="card-title">{{ $pageTitle }}</h4>
-                    </div>
-                </div>
                 <form action="{{ route('admin.important_application_imports.import') }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
