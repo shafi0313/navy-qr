@@ -25,11 +25,11 @@
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
-<style>
-    .ssc_result {
-        min-width: 50px !important;
-    }
-</style>
+    <style>
+        .ssc_result {
+            min-width: 50px !important;
+        }
+    </style>
     @push('scripts')
         <script>
             $(function() {

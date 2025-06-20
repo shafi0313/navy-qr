@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Application Search';
+    $pageTitle = '1.0 - Gate Entry';
     $folder = 'application-search';
     $route = 'application-search';
 @endphp

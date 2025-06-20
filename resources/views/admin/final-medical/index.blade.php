@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Final Medical';
+    $pageTitle = '4.0 - Final Medical';
     $folder = 'final_medical';
     $route = $folder . 's';
 @endphp

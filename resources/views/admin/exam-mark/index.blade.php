@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Written Exam Mark';
+    $pageTitle = '3.2 - Written Exam';
     $folder = 'exam-mark';
     $route = $folder . 's';
 @endphp
@@ -80,11 +80,11 @@
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
-<style>
-    .ssc_result {
-        min-width: 50px !important;
-    }
-</style>
+    <style>
+        .ssc_result {
+            min-width: 50px !important;
+        }
+    </style>
     @push('scripts')
         <script>
             $(function() {

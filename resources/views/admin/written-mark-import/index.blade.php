@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = 'Written Exam Mark Import';
+    $pageTitle = '3.1 - Written Exam Import';
     $folder = 'exam-mark';
     $route = $folder . 's';
 @endphp
