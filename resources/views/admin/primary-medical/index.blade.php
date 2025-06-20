@@ -8,15 +8,15 @@
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle, 'menuName' => 4])
 
-        <!-- DataTables CSS -->
-        <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
-        <!-- DataTables Buttons CSS -->
-        <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
-        <style>
-            .dt-buttons {
-                margin-left: 2rem;
-            }
-        </style>
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <!-- DataTables Buttons CSS -->
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <style>
+        .dt-buttons {
+            margin-left: 2rem;
+        }
+    </style>
 
     <div class="row">
         <div class="col-12">
@@ -42,7 +42,8 @@
                             <div class="col">
                                 <div class="form-group my-3">
                                     <label class="form-label" for="is_medical_pass">Primary Medical</label>
-                                    <select name="is_medical_pass" class="form-control w-100 is_medical_pass" id="is_medical_pass">
+                                    <select name="is_medical_pass" class="form-control w-100 is_medical_pass"
+                                        id="is_medical_pass">
                                         {{-- <option value="">Select</option> --}}
                                         <option value="">All</option>
                                         <option value="1">Fit</option>
@@ -58,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- /Filter HTML --}}
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
@@ -143,15 +144,15 @@
                             title: 'district',
                         },
                         {
-                            data: 'action',
-                            name: 'action',
-                            title: 'action',
-                            className: 'text-center',
-                        },
-                        {
                             data: 'medical',
                             name: 'medical',
                             title: 'Remarks',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            title: 'action',
                             className: 'text-center',
                         },
                     ],
@@ -246,11 +247,12 @@
             });
         </script>
 
+
         {{-- Filter Get JS --}}
         @include('admin.layouts.includes.applicant-get-filter-js')
         {{-- /Filter Get JS --}}
 
-        <script>
+        {{-- <script>
             function pMPass(id) {
                 swal({
                     title: "Are you sure?",
@@ -288,6 +290,6 @@
                     }
                 });
             }
-        </script>
+        </script> --}}
     @endpush
 @endsection

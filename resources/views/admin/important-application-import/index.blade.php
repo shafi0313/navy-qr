@@ -19,7 +19,8 @@
                             <label for="file">File
                                 <span class="t_r"> * </span>
                             </label>
-                            <a href="{{ asset('uploads/important-application-format.xlsx') }}" download>Download Excel Format</a>
+                            <a href="{{ asset('uploads/important-application-format.xlsx') }}" download>Download Excel
+                                Format</a>
                             <input type="file" name="file" class="form-control" required>
                         </div>
 
@@ -60,8 +61,7 @@
                                                     method="post"
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" title="Delete"
-                                                        class="btn btn-link btn-danger">
+                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </form>
