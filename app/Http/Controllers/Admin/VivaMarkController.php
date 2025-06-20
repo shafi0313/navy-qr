@@ -80,6 +80,15 @@ class VivaMarkController extends Controller
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
                 })
+                ->addColumn('written_mark', function ($row) use ($roleId) {
+                    return "<span>"
+                            . "Bangla: " . $row->bangla . "<br>"
+                            . "English: " . $row->english . "<br>"
+                            . "Math: " . $row->math . "<br>"
+                            . "Science: " . $row->science . "<br>"
+                            . "GK: " . $row->general_knowledge
+                        . "</span>";
+                })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);
                 })
@@ -90,10 +99,9 @@ class VivaMarkController extends Controller
                     return $this->viva($roleId, $row);
                 })
                 ->addColumn('dup_test', function ($row) use ($roleId) {
-                    if($row->examMark->dup_test){
+                    if ($row->examMark->dup_test) {
                         return $row->examMark->dup_test == 'yes' ? 'Pos' : 'Neg';
                     }
-                    
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
@@ -113,7 +121,7 @@ class VivaMarkController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['ssc_result','medical', 'written', 'final', 'viva', 'action'])
+                ->rawColumns(['ssc_result', 'medical', 'written_mark', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
 

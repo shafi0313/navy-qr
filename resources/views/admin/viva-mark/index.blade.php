@@ -29,6 +29,9 @@
         .ssc_result {
             min-width: 50px !important;
         }
+        .written_mark {
+            min-width: 50px !important;
+        }
     </style>
     @push('scripts')
         <script>
@@ -98,30 +101,36 @@
                             className: 'text-center',
                         },
                         {
-                            data: 'bangla',
-                            name: 'bangla',
-                            title: 'Bangla',
+                            data: 'written_mark',
+                            name: 'written_mark',
+                            title: 'written Mark',
+                            className: 'written_mark',
                         },
-                        {
-                            data: 'english',
-                            name: 'english',
-                            title: 'english',
-                        },
-                        {
-                            data: 'math',
-                            name: 'math',
-                            title: 'math',
-                        },
-                        {
-                            data: 'science',
-                            name: 'science',
-                            title: 'science',
-                        },
-                        {
-                            data: 'general_knowledge',
-                            name: 'general_knowledge',
-                            title: 'general knowledge',
-                        },
+                        // {
+                        //     data: 'bangla',
+                        //     name: 'bangla',
+                        //     title: 'Bangla',
+                        // },
+                        // {
+                        //     data: 'english',
+                        //     name: 'english',
+                        //     title: 'english',
+                        // },
+                        // {
+                        //     data: 'math',
+                        //     name: 'math',
+                        //     title: 'math',
+                        // },
+                        // {
+                        //     data: 'science',
+                        //     name: 'science',
+                        //     title: 'science',
+                        // },
+                        // {
+                        //     data: 'general_knowledge',
+                        //     name: 'general_knowledge',
+                        //     title: 'general knowledge',
+                        // },
                         {
                             data: 'written',
                             name: 'written',
