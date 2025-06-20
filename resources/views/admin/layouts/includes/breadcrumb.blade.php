@@ -3,9 +3,9 @@
         <div class="page-title-box justify-content-between d-flex align-items-md-center flex-md-row flex-column">
             <h4 class="page-title">{{ $title ?? null }}</h4>
             <ol class="breadcrumb m-0">
-                @if (!empty($insId))
+                @if (!empty($menuName))
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.app-instructions.show', $insId) }}" target="_blank">Instruction</a>
+                        <a href="{{ route('admin.app_instructions.show', $menuName) }}" target="_blank">Instruction</a>
                     </li>
                 @endif
                 {{-- @if ($title[0])

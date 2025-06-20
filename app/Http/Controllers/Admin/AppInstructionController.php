@@ -81,9 +81,9 @@ class AppInstructionController extends Controller
         }
     }
 
-    public function show(AppInstruction $appInstruction)
+    public function show($menuName)
     {
-        $instruction = AppInstruction::findOrFail($appInstruction->id);
+        $instruction = AppInstruction::whereMenuName($menuName)->first();
         return view('admin.app-instruction.show', compact('instruction'));
     }
 

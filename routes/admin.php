@@ -51,7 +51,8 @@ Route::patch('/roles/is-active/{role}', [RoleController::class, 'status'])->name
 Route::resource('/admin-users', AdminUserController::class)->except(['show', 'create']);
 Route::patch('/admin-users/is-active/{user}', [AdminUserController::class, 'status'])->name('admin_users.is_active');
 
-Route::resource('/app-instructions', AppInstructionController::class)->except(['create']);
+Route::resource('/app-instructions', AppInstructionController::class)->except(['show', 'create']);
+Route::get('/app-instructions/show/{menuName}', [AppInstructionController::class, 'show'])->name('app_instructions.show');
 Route::patch('/app-instructions/is-active/{AppInstruction}', [AppInstructionController::class, 'status'])->name('app_instructions.is_active');
 
 Route::resource('/specialities', SpecialityController::class)->except(['show', 'create']);
