@@ -27,6 +27,5 @@ return [
         11 => 'Daily State',
         12 => 'Applicant Count by District & Rank',
         13 => 'SMS Report',
-
     ],
 ];

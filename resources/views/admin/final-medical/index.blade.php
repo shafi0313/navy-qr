@@ -6,7 +6,7 @@
 @endphp
 @section('title', $pageTitle)
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle])
+    @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle, 'insId' => 7])
     @include('admin.layouts.includes.table-option')
 
     <div class="row">
