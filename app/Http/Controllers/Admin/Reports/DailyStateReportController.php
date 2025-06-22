@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Reports;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Excel;
-use App\Traits\ApplicationTrait;
 use App\Exports\DailyStateExport;
 use App\Http\Controllers\Controller;
+use App\Traits\ApplicationTrait;
 use App\Traits\DailyStateReportTrait;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
 
 class DailyStateReportController extends Controller
 {
-
     use ApplicationTrait, DailyStateReportTrait;
 
     public function select()

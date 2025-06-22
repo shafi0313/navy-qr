@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdminUserRequest;
+use App\Http\Requests\UpdateAdminUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StoreAdminUserRequest;
-use App\Http\Requests\UpdateAdminUserRequest;
 
 class AdminUserController extends Controller
 {
@@ -34,7 +34,7 @@ class AdminUserController extends Controller
                 ->addColumn('image', function ($row) {
                     $path = imagePath('user', $row->image);
 
-                    return '<img src="' . $path . '" width="70px" alt="image">';
+                    return '<img src="'.$path.'" width="70px" alt="image">';
                 })
                 ->addColumn('is_active', function ($row) {
                     return view('button', ['type' => 'is_active', 'route' => route('admin.admin_users.is_active', $row->id), 'row' => $row->is_active]);

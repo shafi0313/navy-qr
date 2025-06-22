@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Jobs\SendSmsJob;
-use App\Traits\SmsTrait;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use App\Traits\SmsTrait;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -17,8 +16,9 @@ class PrimaryMedicalController extends Controller
 
     public function index(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 2, 6])) {
+        if (! in_array(user()->role_id, [1, 2, 6])) {
             Alert::error('Access Denied', 'You are not authorized to perform this action');
+
             return back();
         }
         if ($request->ajax()) {
@@ -75,11 +75,11 @@ class PrimaryMedicalController extends Controller
                             $data = (int) $data;
 
                             return match ($data) {
-                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->is_important == 1 ? '(All documents held)' : '') . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
+                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> '.($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> '.($row->is_important == 1 ? '(All documents held)' : '').($row->p_m_remark ? '('.$row->p_m_remark.')' : ''),
                             };
                         } else {
-                            return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
+                            return '<span class="btn btn-warning btn-sm">Pending</span><br> '.($row->is_important == 1 ? '(All documents held)' : '');
                         }
                     } else {
                         return '';

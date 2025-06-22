@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use App\Constants\ExamType;
-use App\Models\Application;
-use App\Models\ApplicationUrl;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\AppInstruction;
-use Illuminate\Support\Facades\File;
+use App\Models\Application;
+use App\Models\ApplicationUrl;
 
 class DashboardController extends Controller
 {
@@ -70,21 +67,21 @@ class DashboardController extends Controller
                 }
             }
 
-
             $data = ['data' => $data];
         }
         $data['appInstructions'] = AppInstruction::all();
+
         return view('admin.dashboard', $data);
     }
 
-    function getTeamData(array $districts)
+    public function getTeamData(array $districts)
     {
         // COUNT(*) as total,
-        $query = Application::selectRaw("
+        $query = Application::selectRaw('
             COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
             COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
             COUNT(CASE WHEN DATE(scanned_at) = CURRENT_DATE THEN 1 END) as today
-        ")
+        ')
             ->whereIn('eligible_district', $districts);
 
         if (user()->role_id == 7) {

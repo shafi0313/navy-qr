@@ -23,7 +23,7 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
+
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
                 // Store session and redirect to OTP form
                 session(['login.id' => $user->id, 'otp_required' => true]);
-                
+
                 if (session('login.id')) {
                     return redirect()->route('otp.form');
                 } else {

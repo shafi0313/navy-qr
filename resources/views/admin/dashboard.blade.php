@@ -49,9 +49,8 @@
         </div>
     </div>
 
-
+    {{-- Officer Data --}}
     @if (user()->exam_type == 2)
-        {{-- Data Table --}}
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -65,7 +64,9 @@
             </div>
         </div>
     @endif
+    {{-- /Officer Data --}}
 
+    {{-- App Instructions --}}
     <div>
         <h4 class="p-1 mt-3">App Instructions</h4>
     </div>
@@ -81,6 +82,7 @@
             </div>
         </div>
     @endforeach
+    {{-- /App Instructions --}}
 
     @push('scripts')
         {{-- 2 = Officer --}}
@@ -136,6 +138,5 @@
                 });
             </script>
         @endif
-
     @endpush
 @endsection

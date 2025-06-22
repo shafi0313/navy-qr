@@ -15,7 +15,7 @@ class ApplicationSeeder extends Seeder
 
         // Check if the directory exists
         if (! File::exists($directoryPath)) {
-            $this->command->error('Directory not found at: ' . $directoryPath);
+            $this->command->error('Directory not found at: '.$directoryPath);
 
             return;
         }
@@ -24,7 +24,7 @@ class ApplicationSeeder extends Seeder
         $files = File::files($directoryPath);
 
         if (empty($files)) {
-            $this->command->error('No JSON files found in directory: ' . $directoryPath);
+            $this->command->error('No JSON files found in directory: '.$directoryPath);
 
             return;
         }
@@ -44,7 +44,7 @@ class ApplicationSeeder extends Seeder
             $applications = json_decode($jsonContent, true); // Convert JSON into an associative array
 
             if (is_null($applications)) {
-                $this->command->error('Invalid JSON format or file is empty: ' . $file->getFilename());
+                $this->command->error('Invalid JSON format or file is empty: '.$file->getFilename());
 
                 continue;
             }
@@ -104,13 +104,11 @@ class ApplicationSeeder extends Seeder
                     'ssc_passing_year' => $application['ssc_passing_year'],
                     'ssc_gpa' => $application['ssc_gpa'],
 
-
                     'ssc_bangla' => $application['ssc_result_with_subject']['bangla'] ?? null,
                     'ssc_english' => $application['ssc_result_with_subject']['english'] ?? null,
                     'ssc_math' => $application['ssc_result_with_subject']['math'] ?? null,
                     'ssc_physics' => $application['ssc_result_with_subject']['physics'] ?? null,
                     'ssc_biology' => $application['ssc_result_with_subject']['biology'] ?? null,
-
 
                     'hsc_dip_institute' => $application['hsc_dip_institute'],
                     'hsc_dip_group' => $application['hsc_dip_group'],

@@ -15,7 +15,6 @@ trait DailyStateReportTrait
         $data['designationsQuery'] = Application::selectRaw('candidate_designation')
             ->groupBy('candidate_designation')->get();
 
-
         $applicantsBaseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total');
         // ->whereBetween('scanned_at', [$startDate, $endDate]);
         // if (user()->role_id == 1) {
@@ -29,7 +28,6 @@ trait DailyStateReportTrait
         // }
         $applicantsBaseQuery->groupBy('candidate_designation');
         $data['applicants'] = (clone $applicantsBaseQuery)->get();
-
 
         $baseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total')
             ->whereBetween('scanned_at', [$startDate, $endDate]);

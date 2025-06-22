@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Models\AppInstruction;
 use App\Http\Controllers\Controller;
-use RealRashid\SweetAlert\Facades\Alert;
-use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreAppInstructionRequest;
 use App\Http\Requests\UpdateAppInstructionRequest;
+use App\Models\AppInstruction;
+use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class AppInstructionController extends Controller
 {
@@ -72,7 +72,7 @@ class AppInstructionController extends Controller
 
         try {
             AppInstruction::updateOrCreate([
-                'menu_name' => $data['menu_name']
+                'menu_name' => $data['menu_name'],
             ], $data);
 
             return response()->json(['message' => 'The information has been inserted'], 200);
@@ -86,8 +86,10 @@ class AppInstructionController extends Controller
         if ($request->ajax()) {
             $instruction = AppInstruction::whereMenuName($menuName)->first();
             $modal = view('admin.app-instruction.show-modal', ['instruction' => $instruction])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
+
         return abort(403, 'Unauthorized action.');
         // return view('admin.app-instruction.show', compact('instruction'));
     }
@@ -103,6 +105,7 @@ class AppInstructionController extends Controller
 
         if ($request->ajax()) {
             $modal = view('admin.app-instruction.edit', ['appInstruction' => $appInstruction])->render();
+
             return response()->json(['modal' => $modal], 200);
         }
 
@@ -120,6 +123,7 @@ class AppInstructionController extends Controller
         $data = $request->validated();
         try {
             $appInstruction->update($data);
+
             return response()->json(['message' => 'The information has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops, something went wrong. Please try again later.'], 500);

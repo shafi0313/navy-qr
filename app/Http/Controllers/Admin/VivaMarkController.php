@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Traits\SmsTrait;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use App\Traits\SmsTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class VivaMarkController extends Controller
@@ -68,37 +68,37 @@ class VivaMarkController extends Controller
                     return ucfirst($row->eligible_district);
                 })
                 ->addColumn('ssc_result', function ($row) {
-                    return "<span>"
-                        . "GPA: " . $row->ssc_gpa . "<br>"
-                        . $row->ssc_bangla . "<br>"
-                        . $row->ssc_english . "<br>"
-                        . ($row->ssc_math !== null ? $row->ssc_math . "<br>" : "")
-                        . ($row->ssc_physics !== null ? $row->ssc_physics . "<br>" : "")
-                        . $row->ssc_biology
-                        . "</span>";
+                    return '<span>'
+                        .'GPA: '.$row->ssc_gpa.'<br>'
+                        .$row->ssc_bangla.'<br>'
+                        .$row->ssc_english.'<br>'
+                        .($row->ssc_math !== null ? $row->ssc_math.'<br>' : '')
+                        .($row->ssc_physics !== null ? $row->ssc_physics.'<br>' : '')
+                        .$row->ssc_biology
+                        .'</span>';
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
                 })
-                ->addColumn('written_mark', function ($row) use ($roleId) {
-                    return "<span>"
-                            . "Bangla: " . $row->bangla . "<br>"
-                            . "English: " . $row->english . "<br>"
-                            . "Math: " . $row->math . "<br>"
-                            . "Science: " . $row->science . "<br>"
-                            . "GK: " . $row->general_knowledge
-                        . "</span>";
+                ->addColumn('written_mark', function ($row) {
+                    return '<span>'
+                            .'Bangla: '.$row->bangla.'<br>'
+                            .'English: '.$row->english.'<br>'
+                            .'Math: '.$row->math.'<br>'
+                            .'Science: '.$row->science.'<br>'
+                            .'GK: '.$row->general_knowledge
+                        .'</span>';
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);
                 })
                 ->addColumn('final', function ($row) use ($roleId) {
-                    return $this->finalMedical($roleId, $row) . ' Height:' . $row->height;
+                    return $this->finalMedical($roleId, $row).' Height:'.$row->height;
                 })
                 ->addColumn('total_viva', function ($row) use ($roleId) {
                     return $this->viva($roleId, $row);
                 })
-                ->addColumn('dup_test', function ($row) use ($roleId) {
+                ->addColumn('dup_test', function ($row) {
                     if ($row->examMark->dup_test) {
                         return $row->examMark->dup_test == 'yes' ? 'Pos' : 'Neg';
                     }
@@ -150,8 +150,6 @@ class VivaMarkController extends Controller
         }
 
         $application->examMark->viva;
-
-
 
         try {
             // Check and send SMS if necessary

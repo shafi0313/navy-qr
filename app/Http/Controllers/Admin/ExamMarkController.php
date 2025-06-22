@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Jobs\SendSmsJob;
-use App\Models\ExamMark;
-use App\Traits\SmsTrait;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreExamMarkRequest;
+use App\Models\Application;
+use App\Models\ExamMark;
+use App\Traits\ApplicationTrait;
+use App\Traits\SmsTrait;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
-use App\Http\Requests\StoreExamMarkRequest;
 
 class ExamMarkController extends Controller
 {
@@ -19,8 +18,9 @@ class ExamMarkController extends Controller
 
     public function index(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 2, 5])) {
+        if (! in_array(user()->role_id, [1, 2, 5])) {
             Alert::error('Access Denied', 'You are not authorized to perform this action');
+
             return back();
         }
         if ($request->ajax()) {
@@ -52,7 +52,7 @@ class ExamMarkController extends Controller
             }
 
             return DataTables::eloquent($applications)
-                ->addIndexColumn()                
+                ->addIndexColumn()
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
@@ -60,14 +60,14 @@ class ExamMarkController extends Controller
                     return ucfirst($row->eligible_district);
                 })
                 ->addColumn('ssc_result', function ($row) {
-                    return "<span>"
-                        . "GPA: " . $row->ssc_gpa . "<br>"
-                        . $row->ssc_bangla . "<br>"
-                        . $row->ssc_english . "<br>"
-                        . ($row->ssc_math !== null ? $row->ssc_math . "<br>" : "")
-                        . ($row->ssc_physics !== null ? $row->ssc_physics . "<br>" : "")
-                        . $row->ssc_biology
-                        . "</span>";
+                    return '<span>'
+                        .'GPA: '.$row->ssc_gpa.'<br>'
+                        .$row->ssc_bangla.'<br>'
+                        .$row->ssc_english.'<br>'
+                        .($row->ssc_math !== null ? $row->ssc_math.'<br>' : '')
+                        .($row->ssc_physics !== null ? $row->ssc_physics.'<br>' : '')
+                        .$row->ssc_biology
+                        .'</span>';
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
@@ -149,19 +149,15 @@ class ExamMarkController extends Controller
                 $data
             );
 
-
             if ($request->bangla < 8 || $request->english < 8 || $request->math < 8 || $request->science < 8 || $request->general_knowledge < 8) {
                 $this->fail($check->current_phone, 'Written');
             }
-
 
             return response()->json(['message' => 'The information has been inserted/updated', 'examMark' => $examMark], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
     }
-
-
 
     // public function edit(Request $request, ExamMark $examMark)
     // {

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use Alert;
-use App\Traits\SmsTrait;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use App\Traits\SmsTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class FinalMedicalController extends Controller
@@ -16,8 +16,9 @@ class FinalMedicalController extends Controller
 
     public function index(Request $request)
     {
-        if (!in_array(user()->role_id, [1, 2, 4])) {
+        if (! in_array(user()->role_id, [1, 2, 4])) {
             Alert::error('Access Denied', 'You are not authorized to perform this action');
+
             return back();
         }
         if ($request->ajax()) {
@@ -120,7 +121,7 @@ class FinalMedicalController extends Controller
         if (! in_array(user()->role_id, [1, 2, 4])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
-        $application = Application::select('id','is_final_pass','height','f_m_remark')->find($request->id);
+        $application = Application::select('id', 'is_final_pass', 'height', 'f_m_remark')->find($request->id);
 
         // if ($application->is_final_pass == 1) {
         //     return response()->json(['message' => 'The status has been updated'], 200);
@@ -129,7 +130,7 @@ class FinalMedicalController extends Controller
         try {
             $application->update([
                 'is_final_pass' => 1,
-                'height' => $request->height . '\'' . $request->height2 . '"',
+                'height' => $request->height.'\''.$request->height2.'"',
                 'f_m_remark' => null,
             ]);
 
@@ -170,7 +171,7 @@ class FinalMedicalController extends Controller
 
             // SMS Trait Function
             $this->fail($application->current_phone, 'Final Medical');
-            
+
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
