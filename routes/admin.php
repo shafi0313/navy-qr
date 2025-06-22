@@ -61,8 +61,9 @@ Route::patch('/specialities/is-active/{Speciality}', [SpecialityController::clas
 Route::resource('/my-profiles', MyProfileController::class)->only(['index', 'edit']);
 
 Route::resource('/applications', ApplicationController::class)->except(['show']);
-Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store']);
+Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store', 'edit']);
 Route::get('/application-search/show/{id}', [ApplicationSearchController::class, 'show'])->name('application_search.show');
+// Route::post('application-search/store', [ApplicationSearchController::class, 'store'])->name('primary_medicals.store');
 
 Route::resource('/important-application-imports', ApplicationImportantController::class)->except(['create', 'show']);
 Route::controller(ApplicationImportantController::class)->prefix('important-application-import')->name('important_application_imports.')->group(function () {

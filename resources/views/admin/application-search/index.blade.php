@@ -11,9 +11,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                {{-- <form onsubmit="ajaxStoreModal(event, this, 'createModal')" action="{{ route('admin.' . $route . '.store') }}"
-                    method="POST">
-                    @csrf --}}
                 <div class="card-body">
                     <div class="row justify-content-center gy-2 mb-3">
                         <div class="col-md-6">
@@ -27,7 +24,6 @@
                         </div>
                     </div>
                 </div> <!-- end card-body -->
-                {{-- </form> --}}
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
@@ -47,7 +43,8 @@
                                 <th>Designation</th>
                                 <th>Name</th>
                                 <th>District</th>
-                                <th>Gate Entry</th>
+                                <th>Exam Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -91,18 +88,7 @@
                     success: function(response) {
                         if (response.success) {
                             $('#data_table tbody').empty();
-                            const data = response.data;
-                            data.forEach(item => {
-                                const row = `<tr>
-                                    <td>${item.exam_date}</td>
-                                    <td>${item.serial_no}</td>
-                                    <td>${item.candidate_designation}</td>
-                                    <td>${item.name}</td>
-                                    <td>${item.eligible_district}</td>
-                                    <td><a class="btn btn-primary ok_btn">OK</a></td>
-                                 </tr>`;
-                                $('#data_table tbody').append(row);
-                            });
+                            $('#data_table tbody').html(response.modal);
                         } else {
                             alert(response.message);
                         }
@@ -128,13 +114,15 @@
             $(document).on('click', '.ok_btn', function(e) {
                 e.preventDefault();
                 let application_id = $('#application_id').find(":selected").val();
+                let yes_no = $('input[name="yes_no"]:checked').val();
                 showLoadingAnimation();
                 $.ajax({
                     url: "{{ route('admin.application-search.store') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        application_id: application_id
+                        application_id: application_id,
+                        yes_no: yes_no,
                     },
                     success: function(res) {
                         hideLoadingAnimation();
@@ -143,8 +131,8 @@
                             title: "Success",
                             text: res.message,
                         }).then((confirm) => {
-                            // If the user confirms (clicks OK)
                             if (confirm) {
+                                $('.modal').modal('hide');
                                 $('#data_table tbody').empty();
                             }
                         });
