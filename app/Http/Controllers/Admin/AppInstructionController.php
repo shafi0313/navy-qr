@@ -81,10 +81,15 @@ class AppInstructionController extends Controller
         }
     }
 
-    public function show($menuName)
+    public function show(Request $request, $menuName)
     {
-        $instruction = AppInstruction::whereMenuName($menuName)->first();
-        return view('admin.app-instruction.show', compact('instruction'));
+        if ($request->ajax()) {
+            $instruction = AppInstruction::whereMenuName($menuName)->first();
+            $modal = view('admin.app-instruction.show-modal', ['instruction' => $instruction])->render();
+            return response()->json(['modal' => $modal], 200);
+        }
+        return abort(403, 'Unauthorized action.');
+        // return view('admin.app-instruction.show', compact('instruction'));
     }
 
     /**

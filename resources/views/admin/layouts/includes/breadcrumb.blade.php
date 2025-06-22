@@ -5,7 +5,9 @@
             <ol class="breadcrumb m-0">
                 @if (!empty($menuName))
                     <li class="breadcrumb-item">
-                        <a href="{{ route('admin.app_instructions.show', $menuName) }}" target="_blank">Instruction</a>
+                        <button data-route="{{ route('admin.app_instructions.show', $menuName) }}" data-value="{{ $menuName }}" onclick="insShow(this)" class='text-primary _btn'>
+                            Instruction
+                        </button>
                     </li>
                 @endif
                 {{-- @if ($title[0])
@@ -23,3 +25,8 @@
         </div>
     </div>
 </div>
+
+{{-- <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
+    class='text-primary _btn' title="@lang('Edit')">
+    <i class='fa fa-edit'></i>
+</button> --}}
