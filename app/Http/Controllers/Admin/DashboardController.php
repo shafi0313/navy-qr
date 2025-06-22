@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\ApplicationUrl;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\AppInstruction;
 use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
@@ -68,31 +69,11 @@ class DashboardController extends Controller
                     ];
                 }
             }
-            // if (user()->role_id == 1) {
-            //     $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-            //         ->whereNotNull('applications.scanned_at')
-            //         ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
-            //         ->groupBy('users.team')
-            //         ->get();
 
-            // } elseif (in_array(user()->role_id, [2, 3, 4, 5, 6])) {
-            //     $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-            //         ->where('users.id', user()->team)
-            //         ->whereNotNull('applications.scanned_at')
-            //         ->selectRaw('users.team, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
-            //         ->groupBy('users.team')
-            //         ->get();
-            // } else {
-            //     $data['counts'] = Application::join('users', 'users.id', '=', 'applications.user_id')
-            //         ->where('users.id', user()->id)
-            //         ->whereNotNull('applications.scanned_at')
-            //         ->selectRaw('users.id, COUNT(*) as count, SUM(CASE WHEN DATE(applications.scanned_at) = CURDATE() THEN 1 ELSE 0 END) as today_count')
-            //         ->groupBy('users.id')
-            //         ->get();
-            // }
+
             $data = ['data' => $data];
         }
-
+        $data['appInstructions'] = AppInstruction::all();
         return view('admin.dashboard', $data);
     }
 
