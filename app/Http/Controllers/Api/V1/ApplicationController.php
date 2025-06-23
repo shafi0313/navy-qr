@@ -72,4 +72,69 @@ class ApplicationController extends BaseController
 
         return $this->sendResponse($data, 'Applicants count.');
     }
+
+    public function preMedicalCount()
+    {
+        // $data['allFitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 1)->count();
+        // $data['allUnfitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 0)->count();
+        // $data['todayFitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 1)->whereDate('scanned_at', now())->count();
+        // $data['todayUnfitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 0)->whereDate('scanned_at', now())->count();
+
+
+        $teams = [
+            'A' => team('a'),
+            'B' => team('b'),
+            'C' => team('c'),
+        ];
+
+        $data = [];
+
+        if (user()->role_id == 1) {
+            // Role 1: Show all teams
+            foreach ($teams as $teamName => $districts) {
+                $data[] = [
+                    'team' => $teamName,
+                    'stats' => $this->getTeamData($districts),
+                ];
+            }
+        } else {
+            // Other users: Show only their team
+            if (user()->team == 'A' && isset($teams['A'])) {
+                $data[] = [
+                    'team' => 'A',
+                    'stats' => $this->getTeamData($teams['A']),
+                ];
+            } elseif (user()->team == 'B' && isset($teams['B'])) {
+                $data[] = [
+                    'team' => 'B',
+                    'stats' => $this->getTeamData($teams['B']),
+                ];
+            } elseif (user()->team == 'C' && isset($teams['C'])) {
+                $data[] = [
+                    'team' => 'C',
+                    'stats' => $this->getTeamData($teams['C']),
+                ];
+            }
+        }
+
+        // $data;
+
+        return $this->sendResponse($data, 'Applicants Pre Medical count.');
+    }
+
+    public function getTeamData(array $districts)
+    {
+        // COUNT(*) as total,
+        $query = Application::selectRaw('
+            COUNT(CASE WHEN is_medical_pass = 1 THEN 1 END) as fit,
+            COUNT(CASE WHEN is_medical_pass = 0 THEN 1 END) as unfit
+        ')
+            ->whereIn('eligible_district', $districts);
+
+        if (user()->role_id == 7) {
+            $query->where('user_id', user()->id);
+        }
+
+        return $query->first();
+    }
 }

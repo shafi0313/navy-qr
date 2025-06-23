@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/applications/count', [ApplicationController::class, 'count']);
+        Route::get('/applications/pre-med-count', [ApplicationController::class, 'preMedicalCount']);
         Route::apiResource('applications', ApplicationController::class);
 
         // Final Medical
