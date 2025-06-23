@@ -77,7 +77,6 @@
                 </div>
             </li>
 
-
             <li class="d-none d-md-inline-block">
                 <a class="nav-link" href="" data-toggle="fullscreen">
                     <i class="fa-solid fa-expand fs-20"></i>
@@ -91,7 +90,6 @@
                     </span>
                     <span class="d-lg-flex flex-column gap-1 d-none">
                         <h5 class="my-0">{{ user()->name }}</h5>
-                        {{-- <h6 class="my-0 fw-normal">Founder</h6> --}}
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
@@ -105,18 +103,6 @@
                         <i class="ri-account-circle-fill align-middle me-1"></i>
                         <span>My Account</span>
                     </a>
-
-                    <!-- item-->
-                    <a href="pages-faq.html" class="dropdown-item">
-                        <i class="ri-customer-service-2-fill align-middle me-1"></i>
-                        <span>Support</span>
-                    </a>
-
-                    <!-- item-->
-                    {{-- <a href="{{ route('login.locked') }}" class="dropdown-item">
-                        <i class="ri-lock-password-fill align-middle me-1"></i>
-                        <span>Lock Screen</span>
-                    </a> --}}
 
                     <!-- item-->
                     <form action="{{ route('logout') }}" method="post">

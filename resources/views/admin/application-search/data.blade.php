@@ -1,6 +1,6 @@
 @foreach ($applicants as $applicant)
     <tr>
-        <td>{{ $applicant->exam_date }}</td>
+        <td>{{ bdDate($applicant->exam_date) }}</td>
         <td>{{ $applicant->serial_no }}</td>
         <td>{{ $applicant->candidate_designation }}</td>
         <td>{{ $applicant->name }}</td>
