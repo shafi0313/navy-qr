@@ -82,6 +82,16 @@
             $('.instruction').summernote({
                 height: 350,
             });
+            $(document).ready(function() {
+                $('#createModal').on('hidden.bs.modal', function() {
+                    if ($('.instruction').summernote) {
+                        $('.instruction').summernote('reset');
+                        $('.instruction').summernote('code', '');
+                    } else {
+                        $('#instruction').val('');
+                    }
+                });
+            });
         </script>
     @endpush
 @endsection
