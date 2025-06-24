@@ -51,12 +51,30 @@ class ApplicationController extends BaseController
                 return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
             }
 
-            $application->update(['scanned_at' => now()]);
-            $application->update(['user_id' => user()->id]);
+            // $application->update(['scanned_at' => now()]);
+            // $application->update(['user_id' => user()->id]);
 
             return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
         } else {
             return $this->sendError('No Data Found.', [], 404);
+        }
+    }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'id' => 'required|exists:applications,id',
+            'status' => 'in:yes,no',
+        ]);
+
+        if ($data['status'] == 'yes') {
+            Application::find($data['id'])->update([
+                'user_id' => user()->id,
+                'scanned_at' => now()
+            ]);
+            return $this->sendResponse($data, 'Application accepted.');
+        } else {
+            return $this->sendResponse($data, 'Application rejected.');
         }
     }
 
