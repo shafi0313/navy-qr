@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @php
-    $pageTitle = '1.0 - Gate Entry';
+    $pageTitle = '1.0 - Exam Status & Gate Entry';
     $folder = 'application-search';
     $route = 'application-search';
 @endphp
@@ -32,9 +32,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">Applicant</h4>
-                    </div>
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead>
                             <tr>
@@ -44,7 +41,7 @@
                                 <th>Name</th>
                                 <th>District</th>
                                 <th>Exam Status</th>
-                                <th>Action</th>
+                                <th>Gate Entry</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

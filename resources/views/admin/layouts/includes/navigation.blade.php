@@ -47,35 +47,7 @@
                     <span> Dashboard </span>
                 </a>
             </li>
-            @if (in_array($roleId, [1]))
-                @php
-                    $admin = ['admin.admin-users.*', 'admin.role.*'];
-                @endphp
-                <li class="side-nav-item {{ activeNav($admin) }}">
-                    <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin"
-                        class="side-nav-link">
-                        <i class="fa-solid fa-user-shield"></i>
-                        <span> Admin </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse {{ openNav($admin) }}" id="sidebarAdmin">
-                        <ul class="side-nav-second-level">
-                            <li class="{{ activeNav('admin.roles.*') }}">
-                                <a href="{{ route('admin.roles.index') }}">User Role</a>
-                            </li>
-                            <li class="{{ activeNav('admin.admin-users.*') }}">
-                                <a href="{{ route('admin.admin-users.index') }}">User</a>
-                            </li>
-                            <li class="{{ activeNav('admin.admin-users.*') }}">
-                                <a href="{{ route('admin.app-instructions.index') }}">App Instruction</a>
-                            </li>
-                            {{-- <li class="{{ activeNav('admin.specialities.*') }}">
-                                <a href="{{ route('admin.specialities.index') }}">Speciality</a>
-                            </li> --}}
-                        </ul>
-                    </div>
-                </li>
-            @endif
+            
             {{-- 1=sailor --}}
             @if (user()->exam_type == 1)
                 <li class="side-nav-item">
@@ -87,7 +59,7 @@
                 <li class="side-nav-item">
                     <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>1.0 - Gate Entry</span>
+                        <span>1.0 - Exam Status & Gate Entry</span>
                     </a>
                 </li>
                 @if (in_array($roleId, [1, 2, 6]))
@@ -184,6 +156,36 @@
                         <i class="fa-solid fa-comment-sms"></i>
                         <span> SMS Report </span>
                     </a>
+                </li>
+            @endif
+
+            @if (in_array($roleId, [1]))
+                @php
+                    $admin = ['admin.admin-users.*', 'admin.role.*'];
+                @endphp
+                <li class="side-nav-item {{ activeNav($admin) }}">
+                    <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin"
+                        class="side-nav-link">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span> Settings </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse {{ openNav($admin) }}" id="sidebarAdmin">
+                        <ul class="side-nav-second-level">
+                            <li class="{{ activeNav('admin.roles.*') }}">
+                                <a href="{{ route('admin.roles.index') }}">User Role</a>
+                            </li>
+                            <li class="{{ activeNav('admin.admin-users.*') }}">
+                                <a href="{{ route('admin.admin-users.index') }}">User</a>
+                            </li>
+                            <li class="{{ activeNav('admin.admin-users.*') }}">
+                                <a href="{{ route('admin.app-instructions.index') }}">App Instruction</a>
+                            </li>
+                            {{-- <li class="{{ activeNav('admin.specialities.*') }}">
+                                <a href="{{ route('admin.specialities.index') }}">Speciality</a>
+                            </li> --}}
+                        </ul>
+                    </div>
                 </li>
             @endif
             {{-- <li class="side-nav-title mt-2">Settings</li>

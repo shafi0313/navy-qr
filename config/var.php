@@ -16,7 +16,7 @@ return [
     'menuNames' => [
         1 => 'User Role',
         2 => 'User',
-        3 => '1.0 - Gate Entry',
+        3 => '1.0 - Exam Status & Gate Entry',
         4 => '2.0 - Primary Medical',
         5 => '3.1 - Written Exam Import',
         6 => '3.2 - Written Exam',
