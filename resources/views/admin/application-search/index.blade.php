@@ -46,7 +46,6 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <!-- end row-->
                 </div> <!-- end card-body -->
             </div> <!-- end card -->
         </div><!-- end col -->
