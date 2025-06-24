@@ -16,7 +16,7 @@ trait DailyStateReportTrait
             ->groupBy('candidate_designation')->get();
 
         $applicantsBaseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total');
-        // ->whereBetween('scanned_at', [$startDate, $endDate]);
+        // ->whereBetween('exam_date', [$startDate, $endDate]);
         // if (user()->role_id == 1) {
         //     if ($team != 'all') {
         //         $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
@@ -30,7 +30,7 @@ trait DailyStateReportTrait
         $data['applicants'] = (clone $applicantsBaseQuery)->get();
 
         $baseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total')
-            ->whereBetween('scanned_at', [$startDate, $endDate]);
+            ->whereBetween('exam_date', [$startDate, $endDate]);
         if (user()->role_id == 1) {
             if ($team != 'all') {
                 $baseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
@@ -43,7 +43,7 @@ trait DailyStateReportTrait
         $baseQuery->groupBy('candidate_designation');
 
         // $data['applicants'] = (clone $baseQuery)->get();
-        $data['attendants'] = (clone $baseQuery)->whereNotNull('scanned_at')->get();
+        $data['attendants'] = (clone $baseQuery)->whereNotNull('exam_date')->get();
 
         // Primary Medical
         $data['pMPending'] = (clone $baseQuery)->whereNull('is_medical_pass')->get();
@@ -53,7 +53,7 @@ trait DailyStateReportTrait
         // Written
         $wQuery = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-            ->whereBetween('scanned_at', [$startDate, $endDate]);
+            ->whereBetween('exam_date', [$startDate, $endDate]);
         if (user()->role_id == 1) {
             if ($team != 'all') {
                 $wQuery->where('team', $team);
