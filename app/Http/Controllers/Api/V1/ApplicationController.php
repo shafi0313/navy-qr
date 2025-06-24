@@ -67,13 +67,19 @@ class ApplicationController extends BaseController
             'status' => 'in:yes,no',
         ]);
 
+        $application = Application::find($data['id']);
+
         if ($data['status'] == 'yes') {
-            Application::find($data['id'])->update([
+            $application->update([
                 'user_id' => user()->id,
                 'scanned_at' => now()
             ]);
             return $this->sendResponse($data, 'Application accepted.');
         } else {
+            $application->update([
+                'user_id' => null,
+                'scanned_at' => null
+            ]);
             return $this->sendResponse($data, 'Application rejected.');
         }
     }
