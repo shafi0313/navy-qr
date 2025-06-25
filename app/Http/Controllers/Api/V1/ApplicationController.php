@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Constants\ExamType;
-use App\Http\Controllers\Api\V1\BaseController as BaseController;
-use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
+use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 use App\Traits\ApplicationTrait;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\ApplicationResource;
+use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
 class ApplicationController extends BaseController
 {
@@ -60,29 +62,38 @@ class ApplicationController extends BaseController
         }
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $data = request()->validate([
+        $validator = Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
-            'status' => 'in:yes,no',
+            'status' => 'required|in:yes,no',
         ]);
 
-        $application = Application::find($data['id']);
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
 
-        if ($data['status'] == 'yes') {
+        $validated = $validator->validated();
+        $application = Application::findOrFail($validated['id']);
+
+        // Update based on status
+        if ($validated['status'] === 'yes') {
             $application->update([
                 'user_id' => user()->id,
-                'scanned_at' => now()
+                'scanned_at' => now(),
             ]);
-            return $this->sendResponse($data, 'Application accepted.');
+
+            return $this->sendResponse($validated, 'Application accepted.');
         } else {
             $application->update([
                 'user_id' => null,
-                'scanned_at' => null
+                'scanned_at' => null,
             ]);
-            return $this->sendResponse($data, 'Application rejected.');
+
+            return $this->sendResponse($validated, 'Application rejected.');
         }
     }
+
 
     public function count()
     {
