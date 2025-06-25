@@ -113,6 +113,15 @@
 //     });
 // });
 
+// DataTable auto width adjustment
+$(".button-toggle-menu").on("click", function () {
+    setTimeout(function () {
+        if ($.fn.DataTable.isDataTable("#data_table")) {
+            $("#data_table").DataTable().columns.adjust();
+        }
+    }, 300); // Adjust timeout as needed for animation
+});
+
 function toast(type, message) {
     cuteToast({
         type: type,
