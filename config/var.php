@@ -25,7 +25,7 @@ return [
         9 => '6.0 - Merit List',
         10 => 'All documents held',
         11 => 'Daily State',
-        12 => 'Applicant Count by District & Rank',
+        12 => 'Applicant Present by District & Rank',
         13 => 'SMS Report',
         14 => 'All documents held Import',
     ],

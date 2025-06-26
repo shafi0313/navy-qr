@@ -136,7 +136,7 @@
                     <li class="side-nav-item">
                         <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
                             <i class="fa-solid fa-file-contract"></i>
-                            <span> Applicant Count by District & Rank</span>
+                            <span> Applicant Present by District & Rank</span>
                         </a>
                     </li>
                 @endif
