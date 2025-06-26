@@ -75,11 +75,11 @@ class PrimaryMedicalController extends Controller
                             $data = (int) $data;
 
                             return match ($data) {
-                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> '.($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> '.($row->is_important == 1 ? '(All documents held)' : '').($row->p_m_remark ? '('.$row->p_m_remark.')' : ''),
+                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->is_important == 1 ? '(All documents held)' : '') . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
                             };
                         } else {
-                            return '<span class="btn btn-warning btn-sm">Pending</span><br> '.($row->is_important == 1 ? '(All documents held)' : '');
+                            return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
                         }
                     } else {
                         return '';
@@ -90,7 +90,7 @@ class PrimaryMedicalController extends Controller
                     // $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
                     // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
                     // $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.primary_medicals.unfit', $row->id), 'row' => $row]);
-                    $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.primary_medicals.modal_store', $row->id), 'row' => $row]);
+                    $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.primary_medicals.modal_show', $row->id), 'row' => $row]);
 
                     return $btn;
                 })
@@ -120,7 +120,7 @@ class PrimaryMedicalController extends Controller
         return view('admin.primary-medical.index');
     }
 
-    public function modalStore(Request $request, $applicantId)
+    public function modalShow(Request $request, $applicantId)
     {
         if ($request->ajax()) {
             if (! in_array(user()->role_id, [1, 2, 5])) {
@@ -128,7 +128,7 @@ class PrimaryMedicalController extends Controller
             }
 
             $applicant = Application::select('id', 'candidate_designation', 'serial_no', 'name', 'is_medical_pass', 'p_m_remark')->whereId($applicantId)->first();
-            $modal = view('admin.primary-medical.add')->with(['applicant' => $applicant])->render();
+            $modal = view('admin.primary-medical.fit-unfit-modal')->with(['applicant' => $applicant])->render();
 
             return response()->json(['modal' => $modal], 200);
         }

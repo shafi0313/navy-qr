@@ -93,15 +93,15 @@
                             className: 'text-center',
                         },
                         {
-                            data: 'action',
-                            name: 'action',
-                            title: 'action',
-                            className: 'text-center',
-                        },
-                        {
                             data: 'final',
                             name: 'final',
                             title: 'Remarks',
+                            className: 'text-center',
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            title: 'action',
                             className: 'text-center',
                         },
                     ],
@@ -140,7 +140,7 @@
             //         if (willDelete) {
             //             showLoadingAnimation();
             //             $.ajax({
-            //                 url: '{{ route('admin.final_medicals.pass') }}',
+            //                 url: '{{ ('admin.final_medicals.pass') }}',
             //                 type: "PATCH",
             //                 data: {
             //                     id: id,
@@ -178,7 +178,7 @@
             //         if (willDelete) {
             //             showLoadingAnimation();
             //             $.ajax({
-            //                 url: '{{ route('admin.final_medicals.unfit_store') }}',
+            //                 url: '{{ ('admin.final_medicals.unfit_store') }}',
             //                 type: "PATCH",
             //                 data: {
             //                     id: id,
