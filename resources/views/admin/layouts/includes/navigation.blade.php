@@ -1,4 +1,16 @@
 @php $roleId = user()->role_id @endphp
+<style>
+    .side-nav span {
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        white-space: normal !important;
+        display: inline-block !important;
+        max-width: 230px !important;
+        width: 100% !important;
+        vertical-align: top !important;
+    }
+</style>
 <div class="leftside-menu">
     <style>
         .logo-lg img {
@@ -35,7 +47,7 @@
     <div class="button-close-fullsidebar">
         <i class="ri-close-fill align-middle"></i>
     </div>
-    
+
     <!-- Sidebar -left -->
     <div class="h-100" id="leftside-menu-container" data-simplebar>
         <!--- Sidemenu -->
@@ -47,7 +59,7 @@
                     <span> Dashboard </span>
                 </a>
             </li>
-            
+
             {{-- 1=sailor --}}
             @if (user()->exam_type == 1)
                 <li class="side-nav-item">
