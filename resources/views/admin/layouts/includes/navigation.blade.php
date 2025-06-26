@@ -1,4 +1,3 @@
-@php $roleId = user()->role_id @endphp
 <style>
     .side-nav span {
         word-break: break-word !important;
@@ -10,14 +9,14 @@
         width: 100% !important;
         vertical-align: top !important;
     }
+
+    .logo-lg img {
+        width: 50px !important;
+        height: auto;
+    }
 </style>
+@php $roleId = user()->role_id @endphp
 <div class="leftside-menu">
-    <style>
-        .logo-lg img {
-            width: 50px !important;
-            height: auto;
-        }
-    </style>
     <!-- Brand Logo Light -->
     <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
         <span class="logo-lg">
