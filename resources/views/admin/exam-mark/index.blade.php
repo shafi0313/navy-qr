@@ -125,7 +125,7 @@
                         {
                             data: 'candidate_designation',
                             name: 'candidate_designation',
-                            title: 'des',
+                            title: 'Branch',
                         },
                         {
                             data: 'name',

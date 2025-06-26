@@ -68,7 +68,7 @@
                         {
                             data: 'candidate_designation',
                             name: 'candidate_designation',
-                            title: 'Des',
+                            title: 'Branch',
                         },
                         {
                             data: 'name',

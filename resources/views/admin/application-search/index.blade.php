@@ -37,7 +37,7 @@
                             <tr>
                                 <th>Exam Date</th>
                                 <th>Roll No</th>
-                                <th>Designation</th>
+                                <th>Branch</th>
                                 <th>Name</th>
                                 <th>District</th>
                                 <th>Exam Status</th>
