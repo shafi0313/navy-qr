@@ -3,6 +3,8 @@
 3. New option create (App Instruction)
 4. App instructions added to all menus and dashboard
 5. Selection option added to Daily state report
+6. menu name word break fix
+7. Data table align fix
 API Work
 1. Applicant scan option Change
 2. Fit/Unfit Count

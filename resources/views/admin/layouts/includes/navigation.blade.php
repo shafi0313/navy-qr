@@ -1,5 +1,5 @@
 <style>
-    .side-nav span {
+    /* .side-nav span {
         word-break: break-word !important;
         overflow-wrap: break-word !important;
         word-wrap: break-word !important;
@@ -8,7 +8,7 @@
         max-width: 230px !important;
         width: 100% !important;
         vertical-align: top !important;
-    }
+    } */
 
     .logo-lg img {
         width: 50px !important;
