@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AppInstructionController;
 use App\Http\Controllers\Admin\ApplicantCountController;
 use App\Http\Controllers\Admin\ApplicationUrlController;
 use App\Http\Controllers\Admin\PrimaryMedicalController;
+use App\Http\Controllers\Admin\TeamF\TeamFDataController;
 use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
 use App\Http\Controllers\Admin\ApplicationImportantController;
@@ -112,11 +113,13 @@ Route::get('/export-applicants', function () {
     return Excel::download(new ApplicantsExport, 'applicants.xlsx');
 });
 
+// Team F Routes
 Route::resource('/team-f-data-imports', TeamFImportDataController::class)->except(['create', 'show']);
 Route::controller(TeamFImportDataController::class)->prefix('team-f-data-imports')->name('team_f_data_imports.')->group(function () {
     Route::post('/imports', 'import')->name('import');
     Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
 });
+Route::resource('/team-f-datum', TeamFDataController::class)->only(['index']);
 
 // Reports Route
 Route::prefix('reports')->name('reports.')->group(function () {
