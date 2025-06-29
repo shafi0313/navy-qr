@@ -293,7 +293,7 @@
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{
                             extend: 'excelHtml5',
-                            title: 'Application Data',
+                            title: null,
                             text: 'Export to Excel',
                             className: 'btn btn-success',
                             exportOptions: {
@@ -327,7 +327,7 @@
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Application Data',
+                            title: null,
                             text: 'Export to PDF',
                             exportOptions: {
                                 columns: ':visible',

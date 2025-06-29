@@ -169,6 +169,26 @@
                     </a>
                 </li>
             @endif
+            @if (in_array($roleId, [1]))
+                @php
+                    $admin = ['admin.admin-users.*', 'admin.role.*'];
+                @endphp
+                <li class="side-nav-item {{ activeNav($admin) }}">
+                    <a data-bs-toggle="collapse" href="#sidebarTeamF" aria-expanded="false" aria-controls="sidebarTeamF"
+                        class="side-nav-link">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span> Team F </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse {{ openNav($admin) }}" id="sidebarTeamF">
+                        <ul class="side-nav-second-level">
+                            <li class="{{ activeNav('admin.team-f-data-imports.*') }}">
+                                <a href="{{ route('admin.team-f-data-imports.index') }}">Import Data</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endif
 
             @if (in_array($roleId, [1]))
                 @php

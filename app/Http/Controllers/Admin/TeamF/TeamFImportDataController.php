@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\TeamF;
 
-use App\Http\Controllers\Controller;
-use App\Imports\ImportantApplicationImport;
+use App\Models\TeamFData;
 use App\Models\Application;
-use App\Models\ImportantApplication;
 use Illuminate\Http\Request;
+use App\Imports\TeamFDataImport;
+use App\Http\Controllers\Controller;
+use App\Models\ImportantApplication;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class ApplicationImportantController extends Controller
+class TeamFImportDataController extends Controller
 {
     public function index()
     {
-        $writtenMarks = ImportantApplication::paginate(30);
+        $teamFDatum = TeamFData::paginate(20);
 
-        return view('admin.important-application-import.index', compact('writtenMarks'));
+        return view('admin.team-f.import-data.index', compact('teamFDatum'));
     }
 
     public function import(Request $request)
@@ -26,7 +27,7 @@ class ApplicationImportantController extends Controller
         ]);
 
         try {
-            Excel::import(new ImportantApplicationImport, $request->file('file'));
+            Excel::import(new TeamFDataImport, $request->file('file'));
             Alert::success('Mark imported successfully!');
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -41,18 +42,17 @@ class ApplicationImportantController extends Controller
      */
     public function store(Request $request)
     {
-
-        $importantApplications = ImportantApplication::all();
-
-        foreach ($importantApplications as $importantApplication) {
-
-            $application = Application::where('serial_no', $importantApplication->serial_no)->first();
-            $application->update(['is_important' => 1]);
-            ImportantApplication::findOrFail($importantApplication->id)->delete();
-        }
-
         try {
-            Alert::success('Important Application added successfully!');
+            $importantApplications = TeamFData::all();
+
+            foreach ($importantApplications as $importantApplication) {
+
+                $application = Application::where('serial_no', $importantApplication->serial_no)->first();
+                $application->update(['is_team_f' => 1]);
+                TeamFData::findOrFail($importantApplication->id)->delete();
+            }
+
+            Alert::success('Team F data added successfully!');
         } catch (\Exception $e) {
             Alert::error('Something went wrong!, Please try again.');
         }
@@ -63,8 +63,8 @@ class ApplicationImportantController extends Controller
     public function allDelete()
     {
         try {
-            ImportantApplication::truncate();
-            Alert::success('Important Application deleted successfully!');
+            TeamFData::truncate();
+            Alert::success('Team F data deleted successfully!');
         } catch (\Exception $e) {
             Alert::error('Something went wrong!, Please try again.');
         }
@@ -78,7 +78,7 @@ class ApplicationImportantController extends Controller
     public function destroy($writtenMarkId)
     {
         try {
-            ImportantApplication::findOrFail($writtenMarkId)->delete();
+            TeamFData::findOrFail($writtenMarkId)->delete();
             Alert::success('Data deleted successfully!');
         } catch (\Exception $e) {
             Alert::error('Something went wrong!, Please try again.');
