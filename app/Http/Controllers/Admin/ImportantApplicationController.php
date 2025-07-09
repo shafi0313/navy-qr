@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
+use App\Models\ImportantApplication;
 use Yajra\DataTables\Facades\DataTables;
 
 class ImportantApplicationController extends Controller
@@ -136,8 +137,9 @@ class ImportantApplicationController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'remark'])
                 ->make(true);
         }
+        $writtenMarks = ImportantApplication::paginate(30);
 
-        return view('admin.important-application.index');
+        return view('admin.important-application.index', compact('writtenMarks'));
     }
 
     public function store(Request $request)
@@ -152,7 +154,7 @@ class ImportantApplicationController extends Controller
         $application->save();
 
         return response()->json([
-            'message' => 'Application is marked as important.',
+            'message' => 'Application is marked as All documents held.',
         ]);
     }
 }

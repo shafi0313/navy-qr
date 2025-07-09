@@ -31,13 +31,37 @@
                     method="POST">
                     @csrf
                     <div class="card-body">
-                        <div class="row gy-2 mb-3">
+                        <div class="row gy-2">
                             <div class="col-md-6">
-                                <label for="application_id" class="form-label required">Applicant </label>
-                                <select name="application_id" id="application_id" class="form-select"></select>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label for="application_id" class="form-label required">Applicant </label>
+                                        <span class="badge text-bg-primary">Marked as All documents held</span>
+                                        <select name="application_id" id="application_id" class="form-select"></select>
+                                    </div>
+                                    <div class="col-md-4" style="margin-top: 25px">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6" style="margin-top: 35px">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            <div class="col-md-6">
+                                <form action="{{ route('admin.important_application_imports.import') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label for="file" class="form-label required"> File</label>
+                                            <span class="badge text-bg-success">All documents held Import</span>
+                                            <a href="{{ asset('uploads/important-application-format.xlsx') }}"
+                                                download>Download Format</a>
+                                            <input type="file" name="file" class="form-control" required>
+                                        </div>
+
+                                        <div class="col-md-4" style="margin-top: 28px">
+                                            <button type="submit" class="btn btn-success">Import</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div> <!-- end card-body -->
@@ -47,12 +71,82 @@
     </div><!-- end row -->
 
     <div class="row">
+        <div class="col-md-12">
+            @if ($writtenMarks->count() > 0)
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive mt-3">
+                            <table class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>From Number</th>
+                                        <th>Bangla</th>
+                                        <th>English</th>
+                                        <th>Math</th>
+                                        <th>Science</th>
+                                        <th>GK</th>
+                                        <th class="no-sort" width="60px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($writtenMarks as $writtenMark)
+                                        <tr>
+                                            <td>{{ $writtenMark->serial_no }}</td>
+                                            <td>{{ $writtenMark->bangla }}</td>
+                                            <td>{{ $writtenMark->english }}</td>
+                                            <td>{{ $writtenMark->math }}</td>
+                                            <td>{{ $writtenMark->science }}</td>
+                                            <td>{{ $writtenMark->general_knowledge }}</td>
+                                            <td class="text-center">
+                                                <form
+                                                    action="{{ route('admin.important-application-imports.destroy', $writtenMark->id) }}"
+                                                    method="post"
+                                                    onclick="return confirm('Do you want to delete this data?')">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <form action="{{ route('admin.important-application-imports.store') }}" method="post">
+                        @csrf @method('POST')
+                        <div class="card-body">
+                            <div class="row mt-5">
+                                <div class="col-md-12 text-right">
+                                    <a href="{{ route('admin.important_application_imports.all_deletes') }}"
+                                        onclick="return confirm('Do you want to delete all data on this page?')"
+                                        class="btn btn-danger">Delete All</a>
+
+                                    <button type="submit" onclick="return confirm('Are you sure?')"
+                                        class="btn btn-primary">Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {{-- @else
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-info">No data found!</div>
+                    </div>
+                </div> --}}
+            @endif
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
+                    {{-- <div class="d-flex justify-content-between mb-2">
                         <h4 class="card-title">List of Applicants</h4>
-                    </div>
+                    </div> --}}
                     {{-- Filter HTML --}}
                     @include('admin.layouts.includes.applicant-get-filter-html')
                     {{-- /Filter HTML --}}
