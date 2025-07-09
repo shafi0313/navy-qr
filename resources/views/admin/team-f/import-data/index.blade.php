@@ -40,6 +40,7 @@
                                         <th>SL</th>
                                         <th>Roll No</th>
                                         <th>Name</th>
+                                        <th>District</th>
                                         <th class="no-sort" width="60px">Action</th>
                                     </tr>
                                 </thead>
@@ -49,6 +50,7 @@
                                             <td>{{ ($teamFDatum->currentPage() - 1) * $teamFDatum->perPage() + $loop->iteration }}</td>
                                             <td>{{ $teamFData->serial_no }}</td>
                                             <td>{{ $teamFData->application->name }}</td>
+                                            <td>{{ $teamFData->application->district }}</td>
                                             <td class="text-center">
                                                 <form
                                                     action="{{ route('admin.team-f-data-imports.destroy', $teamFData->id) }}"
