@@ -27,12 +27,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form onsubmit="ajaxStoreModal(event, this, 'createModal')" action="{{ route('admin.' . $route . '.store') }}"
-                    method="POST">
-                    @csrf
-                    <div class="card-body">
-                        <div class="row gy-2">
-                            <div class="col-md-6">
+                <div class="card-body">
+                    <div class="row gy-2">
+                        <div class="col-md-6">
+                            <form onsubmit="ajaxStoreModal(event, this, 'createModal')"
+                                action="{{ route('admin.' . $route . '.store') }}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-8">
                                         <label for="application_id" class="form-label required">Applicant </label>
@@ -43,29 +43,29 @@
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <form action="{{ route('admin.important_application_imports.import') }}" method="post"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <label for="file" class="form-label required"> File</label>
-                                            <span class="badge text-bg-success">All documents held Import</span>
-                                            <a href="{{ asset('uploads/important-application-format.xlsx') }}"
-                                                download>Download Format</a>
-                                            <input type="file" name="file" class="form-control" required>
-                                        </div>
-
-                                        <div class="col-md-4" style="margin-top: 28px">
-                                            <button type="submit" class="btn btn-success">Import</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                            </form>
                         </div>
-                    </div> <!-- end card-body -->
-                </form>
+                        <div class="col-md-6">
+                            <form action="{{ route('admin.important_application_imports.import') }}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label for="file" class="form-label required"> File</label>
+                                        <span class="badge text-bg-success">All documents held Import</span>
+                                        <a href="{{ asset('uploads/important-application-format.xlsx') }}" download>Download
+                                            Format</a>
+                                        <input type="file" name="file" class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-4" style="margin-top: 28px">
+                                        <button type="submit" class="btn btn-success">Import</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
@@ -75,10 +75,11 @@
             @if ($writtenMarks->count() > 0)
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive mt-3">
-                            <table class="display table table-striped table-hover">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th>SL</th>
                                         <th>From Number</th>
                                         <th>Bangla</th>
                                         <th>English</th>
@@ -91,6 +92,7 @@
                                 <tbody>
                                     @foreach ($writtenMarks as $writtenMark)
                                         <tr>
+                                            <td>{{ @$x += 1 }}</td>
                                             <td>{{ $writtenMark->serial_no }}</td>
                                             <td>{{ $writtenMark->bangla }}</td>
                                             <td>{{ $writtenMark->english }}</td>
@@ -103,8 +105,9 @@
                                                     method="post"
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger">
-                                                        <i class="fa fa-times"></i>
+                                                    <button type="submit" title="Delete"
+                                                        class="btn btn-sm btn-link btn-danger">
+                                                        <i class="fa fa-times text-light"></i>
                                                     </button>
                                                 </form>
                                             </td>
@@ -113,12 +116,11 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <form action="{{ route('admin.important-application-imports.store') }}" method="post">
-                        @csrf @method('POST')
-                        <div class="card-body">
-                            <div class="row mt-5">
-                                <div class="col-md-12 text-right">
+                        {{ $writtenMarks->links() }}
+                        <form action="{{ route('admin.important-application-imports.store') }}" method="post">
+                            @csrf @method('POST')
+                            <div class="row">
+                                <div class="col-md-12 text-center">
                                     <a href="{{ route('admin.important_application_imports.all_deletes') }}"
                                         onclick="return confirm('Do you want to delete all data on this page?')"
                                         class="btn btn-danger">Delete All</a>
@@ -127,8 +129,8 @@
                                         class="btn btn-primary">Post</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
                 {{-- @else
                 <div class="card">

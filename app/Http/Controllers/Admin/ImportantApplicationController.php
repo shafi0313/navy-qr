@@ -137,7 +137,7 @@ class ImportantApplicationController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'remark'])
                 ->make(true);
         }
-        $writtenMarks = ImportantApplication::paginate(30);
+        $writtenMarks = ImportantApplication::paginate(20);
 
         return view('admin.important-application.index', compact('writtenMarks'));
     }
