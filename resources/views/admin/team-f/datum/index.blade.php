@@ -1,8 +1,6 @@
 @extends('admin.layouts.app')
 @php
     $pageTitle = 'Team F Candidates Data';
-    // $folder = 'result';
-    // $route = $folder . 's';
 @endphp
 @section('title', $pageTitle)
 @section('content')
@@ -16,48 +14,43 @@
         .dt-buttons {
             margin-left: 2rem;
         }
-
-        .ssc_result {
-            min-width: 50px !important;
-        }
     </style>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     {{-- Filter HTML --}}
-                    <div class="col-md-12 mb-2">
-                        <div class="row justify-content-center filter align-items-end">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="district">@lang('District')</label>
-                                    <select name="district" class="form-control w-100 district" id="district">
-                                    </select>
-                                </div>
+                    <div class="row justify-content-center filter align-items-end">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label" for="ssc_group">Group</label>
+                                <select name="ssc_group" class="form-control w-100 ssc_group" id="ssc_group">
+                                </select>
                             </div>
-                            <div class="col">
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label" for="district">@lang('District')</label>
+                                <select name="district" class="form-control w-100 district" id="district">
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="ssc_gpa">GPA</label>
                                     <select name="ssc_gpa" class="form-control w-100 ssc_gpa" id="ssc_gpa">
                                     </select>
                                 </div>
+                            </div> --}}
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label" for="candidate_designation">Branch</label>
+                                <select name="candidate_designation" class="form-control w-100 candidate_designation"
+                                    id="candidate_designation">
+                                </select>
                             </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="ssc_group">Group</label>
-                                    <select name="ssc_group" class="form-control w-100 ssc_group" id="ssc_group">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="candidate_designation">Branch</label>
-                                    <select name="candidate_designation" class="form-control w-100 candidate_designation"
-                                        id="candidate_designation">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
+                        </div>
+                        {{-- <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="dob">DOB</label>
                                     <select name="dob" class="form-control w-100 dob" id="dob">
@@ -88,25 +81,23 @@
                                         <option value="0">No</option>
                                     </select>
                                 </div>
-                            </div>
-                            @if (user()->role_id == 1)
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label class="form-label" for="team">@lang('Team')</label>
-                                        <select name="team" class="form-control w-100 team" id="team">
-                                            <option value="">Select</option>
-                                            <option value="all">All</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            @endif
+                            </div> --}}
+                        @if (user()->role_id == 1)
                             <div class="col">
                                 <div class="form-group">
-                                    <a href="" class="btn btn-danger">Clear</a>
+                                    <label class="form-label" for="team">@lang('Team')</label>
+                                    <select name="team" class="form-control w-100 team" id="team">
+                                        <option value="">Select</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                    </select>
                                 </div>
+                            </div>
+                        @endif
+                        <div class="col">
+                            <div class="form-group">
+                                <a href="" class="btn btn-danger">Clear</a>
                             </div>
                         </div>
                     </div>
@@ -156,11 +147,8 @@
                         data: function(d) {
                             return $.extend(d, {
                                 district: $('.district').val(),
-                                ssc_gpa: $('.ssc_gpa').val(),
                                 ssc_group: $('.ssc_group').val(),
                                 candidate_designation: $('.candidate_designation').val(),
-                                dob: $('.dob').val(),
-                                exam_date: $('.exam_date').val(),
                                 team: $('.team').val(),
                                 is_important: $('.is_important').val()
                             });
@@ -181,114 +169,30 @@
                             title: 'Roll No'
                         },
                         {
-                            data: 'eligible_district',
-                            name: 'eligible_district',
-                            title: 'District'
-                        },
-                        {
                             data: 'name',
                             name: 'name',
                             title: 'Name'
                         },
                         {
-                            data: 'ssc_result',
-                            name: 'ssc_result',
-                            title: 'SSC GPA',
-                            className: 'ssc_result',
+                            data: 'ssc_group',
+                            name: 'ssc_group',
+                            title: 'SSC Group',
                         },
                         {
-                            data: 'dob',
-                            name: 'dob',
-                            title: 'Date of Birth'
+                            data: 'eligible_district',
+                            name: 'eligible_district',
+                            title: 'District'
                         },
                         {
                             data: 'candidate_designation',
                             name: 'candidate_designation',
                             title: 'Branch'
                         },
-                        // {
-                        //     data: 'specialty',
-                        //     name: 'specialty',
-                        //     title: 'Specialty'
-                        // },
-                        {
-                            data: 'medical',
-                            name: 'medical',
-                            title: 'Pre. Medical',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'bangla',
-                            name: 'bangla',
-                            title: 'Bangla'
-                        },
-                        {
-                            data: 'english',
-                            name: 'english',
-                            title: 'English'
-                        },
-                        {
-                            data: 'math',
-                            name: 'math',
-                            title: 'Math'
-                        },
-                        {
-                            data: 'science',
-                            name: 'science',
-                            title: 'Science'
-                        },
-                        {
-                            data: 'general_knowledge',
-                            name: 'general_knowledge',
-                            title: 'GK'
-                        },
-                        {
-                            data: 'total_marks',
-                            name: 'total_marks',
-                            title: 'GT'
-                        },
-                        {
-                            data: 'final',
-                            name: 'final',
-                            title: 'Final M.',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'height',
-                            name: 'height',
-                            title: 'Height',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'total_viva',
-                            name: 'total_viva',
-                            title: 'Viva',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'ssc_group',
-                            name: 'ssc_group',
-                            title: 'SSC Group',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'ssc_gpa',
-                            name: 'ssc_gpa',
-                            title: 'SSC GPA',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'viva_remark',
-                            name: 'viva_remark',
-                            title: 'Remark',
-                        },
                     ],
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [
-                        [1, 'asc']
-                    ],
+                    order: [],
                     // Adjusted DOM structure
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{
@@ -378,30 +282,7 @@
         {{-- Filter Get JS --}}
         @include('admin.layouts.includes.applicant-get-filter-js')
         {{-- /Filter Get JS --}}
-
         <script>
-            $('#ssc_gpa').select2({
-                width: '100%',
-                placeholder: 'Select...',
-                allowClear: true,
-                ajax: {
-                    url: window.location.origin + '/dashboard/select-2-ajax',
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    data: function(params) {
-                        return {
-                            q: $.trim(params.term),
-                            type: 'getGpa',
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    }
-                }
-            })
             $('#ssc_group').select2({
                 width: '100%',
                 placeholder: 'Select...',
@@ -437,50 +318,6 @@
                         return {
                             q: $.trim(params.term),
                             type: 'getBranch',
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    }
-                }
-            })
-            $('#dob').select2({
-                width: '100%',
-                placeholder: 'Select...',
-                allowClear: true,
-                ajax: {
-                    url: window.location.origin + '/dashboard/select-2-ajax',
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    data: function(params) {
-                        return {
-                            q: $.trim(params.term),
-                            type: 'getBob',
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    }
-                }
-            })
-            $('#height').select2({
-                width: '100%',
-                placeholder: 'Select...',
-                allowClear: true,
-                ajax: {
-                    url: window.location.origin + '/dashboard/select-2-ajax',
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    data: function(params) {
-                        return {
-                            q: $.trim(params.term),
-                            type: 'getHeight',
                         };
                     },
                     processResults: function(data) {
