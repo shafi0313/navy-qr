@@ -119,7 +119,7 @@ Route::controller(TeamFImportDataController::class)->prefix('team-f-data-imports
     Route::post('/imports', 'import')->name('import');
     Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
 });
-Route::resource('/team-f-datum', TeamFDataController::class)->only(['index']);
+Route::resource('/team-f-datum', TeamFDataController::class)->only(['index','destroy']);
 
 // Reports Route
 Route::prefix('reports')->name('reports.')->group(function () {

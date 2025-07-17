@@ -42,6 +42,11 @@ class TeamFDataController extends Controller
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                    $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.team-f-datum.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
+                    return $btn;
+                })
                 ->filter(function ($query) use ($request) {
                     if ($request->filled('district')) {
                         $query->where('applications.eligible_district', $request->district);
@@ -64,5 +69,16 @@ class TeamFDataController extends Controller
         }
 
         return view('admin.team-f.datum.index');
+    }
+
+    public function destroy($id)
+    {        
+        try {
+            $application = Application::findOrFail($id);
+            $application->update(['is_team_f' => 0]);
+            return response()->json(['message' => 'The information has been deleted'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
+        }
     }
 }
