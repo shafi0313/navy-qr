@@ -27,6 +27,7 @@ return [
         11 => 'Daily State',
         12 => 'Applicant Present by District & Rank',
         13 => 'SMS Report',
-        14 => 'All documents held Import',
+        14 => 'All Documents Held Import',
+        15 => 'Form Fill Up Activities',
     ],
 ];
