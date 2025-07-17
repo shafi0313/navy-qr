@@ -11,8 +11,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="{{ route('admin.team_f_data_imports.import') }}" method="post"
-                    enctype="multipart/form-data">
+                <form action="{{ route('admin.team_f_data_imports.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body row justify-content-center">
                         <div class="form-group col-sm-4">
@@ -33,7 +32,7 @@
             @if ($teamFDatum->count() > 0)
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive mt-3">
+                        <div class="table-responsive">
                             <table class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -47,7 +46,8 @@
                                 <tbody>
                                     @foreach ($teamFDatum as $teamFData)
                                         <tr>
-                                            <td>{{ ($teamFDatum->currentPage() - 1) * $teamFDatum->perPage() + $loop->iteration }}</td>
+                                            <td>{{ ($teamFDatum->currentPage() - 1) * $teamFDatum->perPage() + $loop->iteration }}
+                                            </td>
                                             <td>{{ $teamFData->serial_no }}</td>
                                             <td>{{ $teamFData->application->name }}</td>
                                             <td>{{ $teamFData->application->district }}</td>
@@ -57,8 +57,8 @@
                                                     method="post"
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger">
-                                                        <i class="fa fa-times"></i>
+                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger btn-sm">
+                                                        <i class="fa fa-times text-light"></i>
                                                     </button>
                                                 </form>
                                             </td>
@@ -67,15 +67,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="mt-3">
-                            {{ $teamFDatum->links() }}
-                        </div>
+                        {{ $teamFDatum->links() }}
                     </div>
                     <form action="{{ route('admin.team-f-data-imports.store') }}" method="post">
                         @csrf @method('POST')
                         <div class="card-body">
-                            <div class="row mt-5">
-                                <div class="col-md-12 text-right">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
                                     <a href="{{ route('admin.important_application_imports.all_deletes') }}"
                                         onclick="return confirm('Do you want to delete all data on this page?')"
                                         class="btn btn-danger">Delete All</a>

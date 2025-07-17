@@ -7,7 +7,6 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Imports\TeamFDataImport;
 use App\Http\Controllers\Controller;
-use App\Models\ImportantApplication;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -40,16 +39,23 @@ class TeamFImportDataController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
         try {
-            $importantApplications = TeamFData::all();
+            $importantApplications = TeamFData::pluck('serial_no', 'id');
+            $applications = Application::whereIn('serial_no', $importantApplications)->get()->keyBy('serial_no');
 
-            foreach ($importantApplications as $importantApplication) {
+            $idsToDelete = [];
 
-                $application = Application::where('serial_no', $importantApplication->serial_no)->first();
-                $application->update(['is_team_f' => 1]);
-                TeamFData::findOrFail($importantApplication->id)->delete();
+            foreach ($importantApplications as $id => $serial_no) {
+                if (isset($applications[$serial_no])) {
+                    $applications[$serial_no]->update(['is_team_f' => 1]);
+                    $idsToDelete[] = $id;
+                }
+            }
+
+            if (!empty($idsToDelete)) {
+                TeamFData::whereIn('id', $idsToDelete)->delete();
             }
 
             Alert::success('Team F data added successfully!');
