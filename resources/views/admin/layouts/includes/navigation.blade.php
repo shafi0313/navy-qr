@@ -188,6 +188,9 @@
                             <li class="{{ activeNav('admin.team-f-datum.*') }}">
                                 <a href="{{ route('admin.team-f-datum.index') }}">Candidates Data</a>
                             </li>
+                            <li class="{{ activeNav('admin.team_f.encl1_deuc_sailor.*') }}">
+                                <a href="{{ route('admin.team_f.encl1_deuc_sailor.report') }}">Export Encl-1</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <form action="{{ route('admin.team_f_data_imports.import') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.team_f.data_imports.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body row justify-content-center">
                         <div class="form-group col-sm-4">

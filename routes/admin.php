@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\ApplicationSearchController;
 use App\Http\Controllers\Admin\WrittenMarkImportController;
 use App\Http\Controllers\Admin\ApplicationImportantController;
 use App\Http\Controllers\Admin\ImportantApplicationController;
+use App\Http\Controllers\Admin\TeamF\Encl1DeucSailorController;
 use App\Http\Controllers\Admin\TeamF\TeamFImportDataController;
 use App\Http\Controllers\Admin\Reports\DailyStateReportController;
 
@@ -115,11 +116,15 @@ Route::get('/export-applicants', function () {
 
 // Team F Routes
 Route::resource('/team-f-data-imports', TeamFImportDataController::class)->except(['create', 'show']);
-Route::controller(TeamFImportDataController::class)->prefix('team-f-data-imports')->name('team_f_data_imports.')->group(function () {
-    Route::post('/imports', 'import')->name('import');
-    Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
+Route::resource('/team-f-datum', TeamFDataController::class)->only(['index', 'destroy']);
+Route::prefix('team-f')->name('team_f.')->group(function () {
+    Route::controller(TeamFImportDataController::class)->prefix('team-f-data-imports')->name('data_imports.')->group(function () {
+        Route::post('/imports', 'import')->name('import');
+        Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
+    });
+    Route::get('encl1-deuc-sailor', [Encl1DeucSailorController::class, 'report'])->name('encl1_deuc_sailor.report');
 });
-Route::resource('/team-f-datum', TeamFDataController::class)->only(['index','destroy']);
+
 
 // Reports Route
 Route::prefix('reports')->name('reports.')->group(function () {
