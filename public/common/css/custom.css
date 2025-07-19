@@ -67,6 +67,12 @@ table .required::after {
     color: red;
     font-weight: bold;
 }
+table thead tr th,
+table thead tr th,
+table tbody tr td,
+table tr td {
+    vertical-align: middle !important;
+}
 /* Table End */
 
 /* Select2 Start */

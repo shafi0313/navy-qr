@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', 'Encl-1 Nominal Roll DEUC Sailors')
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => 'Daily State Report', 'insId' => 11])
+    @include('admin.layouts.includes.breadcrumb', ['title' => 'Encl 1'])
 
     <div class="row">
         <div class="col-12">
