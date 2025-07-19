@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\TeamF;
 use App\Models\Application;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use PDF;
 
 class Encl1DeucSailorController extends Controller
 {
@@ -39,6 +40,10 @@ class Encl1DeucSailorController extends Controller
             $query->where('team', user()->team);
         }
         $applications = $query->cursor();
-        return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
+        // return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
+
+        $pdf = PDF::loadView('admin.team-f.encl1-deuc-sailor.pdf', compact('applications'));
+        return $pdf->stream('Encl1.pdf');
+
     }
 }
