@@ -191,6 +191,9 @@
                             <li class="{{ activeNav('admin.team_f.encl1_deuc_sailor.*') }}">
                                 <a href="{{ route('admin.team_f.encl1_deuc_sailor.report') }}">Export Encl-1</a>
                             </li>
+                            <li class="{{ activeNav('admin.team_f.encl2_non_deuc_sailor.*') }}">
+                                <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report') }}">Export Encl-2</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

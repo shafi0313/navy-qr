@@ -1,190 +1,46 @@
-@php
-    $designations = $designationsQuery->groupBy('candidate_designation')->keys();
-@endphp
 <table class="table table-bordered mb-0 w-100">
     <thead>
         <tr>
-            <th colspan="2">Subject/Rank</th>
-            @foreach ($designations as $designation)
-                <th class="text-end">{{ preg_replace('/^Sailor(?:\s-\s|-)?/', '', $designation) }}
-                </th>
-            @endforeach
-            <th class="text-end">Total</th>
+            <th rowspan="2">Ser</th>
+            <th rowspan="2">District</th>
+            <th rowspan="2">Roll No</th>
+            <th rowspan="2">Local No</th>
+            <th rowspan="2">Name (English & Bangla)</th>
+            <th rowspan="2">Rank (As Per Branch Seniority)</th>
+            <th rowspan="2">GPA (SSC)</th>
+            <th rowspan="2">Hight (Inch)</th>
+            <th colspan="3">SSC Result</th>
+            <th rowspan="2">Mobile No</th>
+            <th colspan="2">HSC Pass</th>
+            <th rowspan="2">Documents to be Submitted to BNS SHER-E-BANGLA</th>
+        </tr>
+        <tr>
+            <th>Eng</th>
+            <th>Math</th>
+            <th>Phy</th>
+            <th>Yes/ No</th>
+            <th>GPA (If Applicable)</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td colspan="2">Total Applicant</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $applicants->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $applicants->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td colspan="2">Total Presence</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $attendants->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $attendants->sum('total') }}</td>
-        </tr>
-
-        {{-- Preliminary Medical Start --}}
-        <tr>
-            <td rowspan="3">Preliminary Medical</td>
-            <td>Pending</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $pMPending->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $pMPending->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Unfit</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $pMUnfit->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $pMUnfit->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Fit</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $pMFit->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $pMFit->sum('total') }}</td>
-        </tr>
-        {{-- Preliminary Medical End --}}
-
-        {{-- Written Exam Start --}}
-        <tr>
-            <td rowspan="3">Written Exam</td>
-            <td>Pending</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $wPending->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $wPending->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Not Qualified</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $wFail->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $wFail->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Qualified</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $wPass->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $wPass->sum('total') }}</td>
-        </tr>
-        {{-- Written Exam End --}}
-
-        {{-- Final Medical Start --}}
-        <tr>
-            <td rowspan="3">Final Medical</td>
-            <td>Pending</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $fMPending->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $fMPending->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Unfit</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $fMUnfit->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $fMUnfit->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Fit</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $fMFit->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $fMFit->sum('total') }}</td>
-        </tr>
-        {{-- Final Medical End --}}
-
-        {{-- Viva Start --}}
-        <tr>
-            <td rowspan="3">Viva</td>
-            <td>Pending</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $vPending->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $vPending->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Not Qualified</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $vFail->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $vFail->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Qualified</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $vPass->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $vPass->sum('total') }}</td>
-        </tr>
-        {{-- Viva End --}}
-
-        {{-- HBsAg/Dope Test Start --}}
-        <tr>
-            <td rowspan="3">HBsAg/Dope Test</td>
-            <td>Pending</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $dPending->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $dPending->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Unfit</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $dFail->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $dFail->sum('total') }}</td>
-        </tr>
-        <tr>
-            <td>Fit</td>
-            @foreach ($designations as $designation)
-                <td class="text-end">
-                    {{ $dPass->firstWhere('candidate_designation', $designation)->total ?? 0 }}
-                </td>
-            @endforeach
-            <td class="text-end">{{ $dPass->sum('total') }}</td>
-        </tr>
-        {{-- HBsAg/Dope Test End --}}
+        @foreach ($applications as $application)
+            <tr>
+                <td>{{ @$i += 1 }}</td>
+                <td>{{ ucfirst($application->eligible_district) }}</td>
+                <td>{{ $application->serial_no }}</td>
+                <td></td>
+                <td>{{ $application->name }}</td>
+                <td>{{ $application->candidate_designation }}</td>
+                <td>{{ $application->ssc_gpa }}</td>
+                <td>{{ $application->height }}</td>
+                <td>{{ str_replace('English : ', '', $application->ssc_english ?? '') }}</td>
+                <td>{{ str_replace('Math : ', '', $application->ssc_math ?? '') }}</td>
+                <td>{{ str_replace('Physics : ', '', $application->ssc_physics ?? '') }}</td>
+                <td>{{ $application->current_phone }}</td>
+                <td>{{ $application->hsc_dip_group ? 'Yes' : 'No' }}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        @endforeach
     </tbody>
 </table>
