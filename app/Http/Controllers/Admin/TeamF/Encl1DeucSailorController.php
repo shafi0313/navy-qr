@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\TeamF;
 
 use App\Models\Application;
-use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
 
