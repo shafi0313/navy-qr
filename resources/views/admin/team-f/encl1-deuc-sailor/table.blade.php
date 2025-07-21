@@ -35,7 +35,7 @@
                 <td>{{ $application->serial_no }}</td>
                 <td></td>
                 <td>{{ $application->name }}</td>
-                <td>{{ $application->candidate_designation }}</td>
+                <td>{{ config('var.brCodes')[$application->br_code] ?? '' }}</td>
                 <td>{{ $application->ssc_gpa }}</td>
                 <td>{{ $application->height }}</td>
                 <td>{{ str_replace('English : ', '', $application->ssc_english ?? '') }}</td>

@@ -23,11 +23,24 @@ return [
         7 => '4.0 - Final Medical',
         8 => '5.0 - Final Viva & HBsAg/Dope Test',
         9 => '6.0 - Merit List',
-        10 => 'All documents held',
+        10 => '8.0 - All Documents Held Import & List',
         11 => 'Daily State',
         12 => 'Applicant Present by District & Rank',
         13 => 'SMS Report',
-        14 => 'All Documents Held Import',
         15 => 'Form Fill Up Activities',
     ],
+
+    'brCodes' => [
+        1 => "DE/UC",
+        2 => "Regualting",
+        3 => "Writer",
+        4 => "Store",
+        5 => "Medical",
+        6 => "Musician",
+        7 => "Cook",
+        8 => "Steward",
+        9 => "Topass",
+        10 => "MODC(N)"
+    ],
+
 ];

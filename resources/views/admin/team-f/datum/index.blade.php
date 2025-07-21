@@ -184,8 +184,8 @@
                             title: 'District'
                         },
                         {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
+                            data: 'br_code',
+                            name: 'br_code',
                             title: 'Branch'
                         },
                                                 {

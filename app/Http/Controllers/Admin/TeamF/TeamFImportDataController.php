@@ -42,15 +42,19 @@ class TeamFImportDataController extends Controller
     public function store()
     {
         try {
-            $importantApplications = TeamFData::pluck('serial_no', 'id');
-            $applications = Application::whereIn('serial_no', $importantApplications)->get()->keyBy('serial_no');
-
+            $importantApplications = TeamFData::select('id', 'serial_no', 'br_code')->get();
+            $serialNos = $importantApplications->pluck('serial_no')->toArray();
+            $applications = Application::whereIn('serial_no', $serialNos)->get()->keyBy('serial_no');
             $idsToDelete = [];
 
-            foreach ($importantApplications as $id => $serial_no) {
-                if (isset($applications[$serial_no])) {
-                    $applications[$serial_no]->update(['is_team_f' => 1]);
-                    $idsToDelete[] = $id;
+            foreach ($importantApplications as $item) {
+                $serial_no = $item->serial_no;
+                if (isset($applications[$serial_no]) && isset($item->br_code)) {
+                    $applications[$serial_no]->update([
+                        'is_team_f' => 1,
+                        'br_code' => $item->br_code,
+                    ]);
+                    $idsToDelete[] = $item->id;
                 }
             }
 

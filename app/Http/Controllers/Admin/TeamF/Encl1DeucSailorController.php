@@ -22,6 +22,7 @@ class Encl1DeucSailorController extends Controller
                     $this->userColumns(),
                     [
                         'applications.id',
+                        'applications.br_code',
                         'applications.eligible_district',
                         'applications.serial_no',
                         'applications.name',

@@ -105,7 +105,7 @@
                     </li>
                 @endif
                 @if (in_array($roleId, [1, 2, 3]))
-                    <li class="side-nav-item">
+                    <li class="side-nav-item" title="5.0 - Final Viva & HBsAg/Dope Test">
                         <a href="{{ route('admin.viva-marks.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-list"></i>
                             <span>5.0 - Final Viva & HBsAg/Dope Test</span>
@@ -121,10 +121,10 @@
                     </li>
                 @endif
                 @if (in_array($roleId, [1]))
-                    <li class="side-nav-item">
+                    <li class="side-nav-item" title="8.0 - All Documents Held Import & List">
                         <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-user-check"></i>
-                            <span>All Documents Held List</span>
+                            <span>8.0 - All Documents Held Import & List</span>
                         </a>
                     </li>
 

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('team_f_data', function (Blueprint $table) {
             $table->id();
             $table->string('serial_no')->nullable()->comment('Roll Number')->index();
+            $table->unsignedTinyInteger('br_code')->nullable();
             // $table->string('name')->nullable();
             // $table->string('district')->nullable();
             $table->timestamps();

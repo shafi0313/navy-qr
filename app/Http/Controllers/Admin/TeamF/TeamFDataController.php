@@ -23,6 +23,7 @@ class TeamFDataController extends Controller
                         $this->userColumns(),
                         [
                             'applications.id',
+                            'applications.br_code',
                             'applications.candidate_designation',
                             'applications.serial_no',
                             'applications.eligible_district',
@@ -41,6 +42,9 @@ class TeamFDataController extends Controller
                 ->addIndexColumn()
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
+                })
+                ->addColumn('br_code', function ($row) {
+                    return config('var.brCodes')[$row->br_code] ?? '';
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
@@ -72,7 +76,7 @@ class TeamFDataController extends Controller
     }
 
     public function destroy($id)
-    {        
+    {
         try {
             $application = Application::findOrFail($id);
             $application->update(['is_team_f' => 0]);

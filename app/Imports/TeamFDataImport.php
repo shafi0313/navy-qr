@@ -13,9 +13,9 @@ class TeamFDataImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // dd($row);
         return TeamFData::create([
-            'serial_no' => $row['roll_no'] ?? null,
+            'serial_no' => $row['roll'] ?? null,
+            'br_code' => $row['br_code'] ?? null,
         ]);
     }
 }
