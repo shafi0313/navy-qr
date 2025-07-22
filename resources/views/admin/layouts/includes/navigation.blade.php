@@ -67,7 +67,7 @@
                         <span> Applicants </span>
                     </a>
                 </li>
-                <li class="side-nav-item">
+                <li class="side-nav-item" title="1.0 - Exam Status & Gate Entry">
                     <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <span>1.0 - Exam Status & Gate Entry</span>
@@ -144,7 +144,7 @@
                             <span> Daily State</span>
                         </a>
                     </li>
-                    <li class="side-nav-item">
+                    <li class="side-nav-item" title="Applicant Present by District & Rank">
                         <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
                             <i class="fa-solid fa-file-contract"></i>
                             <span> Applicant Present by District & Rank</span>
