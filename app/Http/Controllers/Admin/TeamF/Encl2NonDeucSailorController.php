@@ -6,6 +6,7 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use PDF;
 
 class Encl2NonDeucSailorController extends Controller
 {
@@ -15,7 +16,7 @@ class Encl2NonDeucSailorController extends Controller
     {
         $roleId = user()->role_id;
         $query = Application::where('is_team_f', 1)
-            // ->where('candidate_designation', 'like', 'Sailor(DEUC%')
+            ->whereNot('candidate_designation', 'like', 'Sailor(DEUC%')
             ->leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->select(
                 array_merge(
@@ -42,7 +43,7 @@ class Encl2NonDeucSailorController extends Controller
         //     $query->where('team', user()->team);
         // }
         $applications = $query->cursor();
-        return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
+        // return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
 
         $pdf = PDF::loadView('admin.team-f.encl2-non-deuc-sailor.pdf', compact('applications'));
         return $pdf->stream('Encl2.pdf');

@@ -15,7 +15,7 @@ class Encl1DeucSailorController extends Controller
     {
         $roleId = user()->role_id;
         $query = Application::where('is_team_f', 1)
-        // ->where('candidate_designation', 'like', 'Sailor(DEUC%')
+        ->where('candidate_designation', 'like', 'Sailor(DEUC%')
         ->leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->select(
                 array_merge(
