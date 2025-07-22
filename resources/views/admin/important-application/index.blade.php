@@ -24,51 +24,50 @@
             white-space: nowrap;
         }
     </style>
-    <div class="row">
-        <div class="col-12">
+
+    <div class="row gy-2 justify-content-between">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <div class="row gy-2">
-                        <div class="col-md-6">
-                            <form onsubmit="ajaxStoreModal(event, this, 'createModal')"
-                                action="{{ route('admin.' . $route . '.store') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <label for="application_id" class="form-label required">Applicant </label>
-                                        <span class="badge text-bg-primary">Marked as All documents held</span>
-                                        <select name="application_id" id="application_id" class="form-select"></select>
-                                    </div>
-                                    <div class="col-md-4" style="margin-top: 25px">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                            <form action="{{ route('admin.important_application_imports.import') }}" method="post"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <label for="file" class="form-label required"> File</label>
-                                        <span class="badge text-bg-success">All documents held Import</span>
-                                        <a href="{{ asset('uploads/important-application-format.xlsx') }}" download>Download
-                                            Format</a>
-                                        <input type="file" name="file" class="form-control" required>
-                                    </div>
+                    <form action="{{ route('admin.important_application_imports.import') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div style="display: flex;">
+                            <div style="flex-grow: 1">
+                                <label for="file" class="form-label required">Bulk Import </label>
+                                <a href="{{ asset('uploads/important-application-format.xlsx') }}" download>(Download
+                                    Format)</a>
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
 
-                                    <div class="col-md-4" style="margin-top: 28px">
-                                        <button type="submit" class="btn btn-success">Import</button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div style="margin-top: 28px; margin-left: 10px;">
+                                <button type="submit" class="btn btn-success">Import</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </div> <!-- end card -->
-        </div><!-- end col -->
-    </div><!-- end row -->
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form onsubmit="ajaxStoreModal(event, this, 'createModal')"
+                        action="{{ route('admin.' . $route . '.store') }}" method="POST">
+                        @csrf
+                        <div style="display: flex;">
+                            <div style="flex-grow: 1">
+                                <label for="application_id" class="form-label required">Single Entry </label>
+                                <select name="application_id" id="application_id" class="form-select"></select>
+                            </div>
+                            <div style="margin-top: 25px; margin-left: 10px;">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
