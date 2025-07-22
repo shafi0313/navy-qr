@@ -24,6 +24,7 @@ class Encl1DeucSailorController extends Controller
                         'applications.id',
                         'applications.br_code',
                         'applications.eligible_district',
+                        'applications.exam_date',
                         'applications.serial_no',
                         'applications.name',
                         'applications.candidate_designation',
@@ -37,9 +38,9 @@ class Encl1DeucSailorController extends Controller
                     ]
                 )
             );
-        if ($roleId != 1) {
-            $query->where('team', user()->team);
-        }
+        // if ($roleId != 1) {
+        //     $query->where('team', user()->team);
+        // }
         $applications = $query->cursor();
         // return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
 
