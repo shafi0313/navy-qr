@@ -119,7 +119,7 @@ $(".button-toggle-menu").on("click", function () {
         if ($.fn.DataTable.isDataTable("#data_table")) {
             $("#data_table").DataTable().columns.adjust();
         }
-    }, 300); // Adjust timeout as needed for animation
+    }, 300);
 });
 
 function toast(type, message) {
