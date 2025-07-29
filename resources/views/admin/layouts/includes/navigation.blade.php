@@ -121,6 +121,37 @@
                     </li>
                 @endif
                 @if (in_array($roleId, [1]))
+                    @php
+                        $teamF = ['admin.team-f-data-imports.*', 'admin.team-f-datum.*'];
+                    @endphp
+                    <li class="side-nav-item {{ activeNav($teamF) }}">
+                        <a data-bs-toggle="collapse" href="#sidebarTeamF" aria-expanded="false"
+                            aria-controls="sidebarTeamF" class="side-nav-link">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>7.0 - Team F </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse {{ openNav($teamF) }}" id="sidebarTeamF">
+                            <ul class="side-nav-second-level">
+                                <li class="{{ activeNav('admin.team-f-data-imports.*') }}">
+                                    <a href="{{ route('admin.team-f-data-imports.index') }}">Import Data</a>
+                                </li>
+                                <li class="{{ activeNav('admin.team-f-datum.*') }}">
+                                    <a href="{{ route('admin.team-f-datum.index') }}">Candidates Data</a>
+                                </li>
+                                <li class="{{ activeNav('admin.team_f.encl1_deuc_sailor.*') }}">
+                                    <a href="{{ route('admin.team_f.encl1_deuc_sailor.report') }}">Export Encl-1</a>
+                                </li>
+                                <li class="{{ activeNav('admin.team_f.encl2_non_deuc_sailor.*') }}">
+                                    <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report') }}">Export
+                                        Encl-2</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                
+                @if (in_array($roleId, [1]))
                     <li class="side-nav-item" title="8.0 - All Documents Held Import & List">
                         <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-user-check"></i>
@@ -169,43 +200,15 @@
                     </a>
                 </li>
             @endif
-            @if (in_array($roleId, [1]))
-                @php
-                    $teamF = ['admin.team-f-data-imports.*', 'admin.team-f-datum.*'];
-                @endphp
-                <li class="side-nav-item {{ activeNav($teamF) }}">
-                    <a data-bs-toggle="collapse" href="#sidebarTeamF" aria-expanded="false" aria-controls="sidebarTeamF"
-                        class="side-nav-link">
-                        <i class="fa-solid fa-user-shield"></i>
-                        <span> Team F </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse {{ openNav($teamF) }}" id="sidebarTeamF">
-                        <ul class="side-nav-second-level">
-                            <li class="{{ activeNav('admin.team-f-data-imports.*') }}">
-                                <a href="{{ route('admin.team-f-data-imports.index') }}">Import Data</a>
-                            </li>
-                            <li class="{{ activeNav('admin.team-f-datum.*') }}">
-                                <a href="{{ route('admin.team-f-datum.index') }}">Candidates Data</a>
-                            </li>
-                            <li class="{{ activeNav('admin.team_f.encl1_deuc_sailor.*') }}">
-                                <a href="{{ route('admin.team_f.encl1_deuc_sailor.report') }}">Export Encl-1</a>
-                            </li>
-                            <li class="{{ activeNav('admin.team_f.encl2_non_deuc_sailor.*') }}">
-                                <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report') }}">Export Encl-2</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            @endif
+
 
             @if (in_array($roleId, [1]))
                 @php
                     $admin = ['admin.admin-users.*', 'admin.role.*'];
                 @endphp
                 <li class="side-nav-item {{ activeNav($admin) }}">
-                    <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin"
-                        class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
+                        aria-controls="sidebarAdmin" class="side-nav-link">
                         <i class="fa-solid fa-user-shield"></i>
                         <span> Settings </span>
                         <span class="menu-arrow"></span>

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin\TeamF;
 
-use App\Http\Controllers\Controller;
+use App\Models\TeamFData;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class TeamFDataController extends Controller
@@ -71,8 +72,8 @@ class TeamFDataController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-        return view('admin.team-f.datum.index');
+        $teamFDatum = TeamFData::paginate(20);
+        return view('admin.team-f.datum.index', compact('teamFDatum'));
     }
 
     public function destroy($id)

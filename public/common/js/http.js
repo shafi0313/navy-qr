@@ -41,7 +41,7 @@ function ajaxDelete(arg, type) {
                         hideLoadingAnimation();
                         if (confirm) {
                             if (type == "dt") {
-                                $(".table").DataTable().ajax.reload();
+                                $("#data_table").DataTable().ajax.reload();
                             } else {
                                 window.location.reload();
                             }
@@ -82,6 +82,7 @@ function ajaxEdit(arg, type) {
     });
 }
 
+// app instruction show modal
 function insShow(arg, type) {
     let args = $(arg);
     $.ajax({
@@ -116,7 +117,7 @@ function ajaxStoreModal(e, form, modal) {
         contentType: false,
         processData: false,
         success: (res) => {
-            $(".table").DataTable().ajax.reload();
+            $("#data_table").DataTable().ajax.reload();
             $("#" + modal).modal("hide");
             $(form).trigger("reset");
             hideLoadingAnimation();
@@ -156,7 +157,7 @@ function ajaxStore(e, form) {
             });
             // .then((confirm) => {
             //     if (confirm) {
-            //         $(".table").DataTable().ajax.reload();
+            //         $("#data_table").DataTable().ajax.reload();
             //         $("#" + modal).modal("hide");
             //         $(form).trigger("reset");
             //     }
@@ -197,7 +198,7 @@ function changeStatus(arg) {
                         title: "Success",
                         text: res.message,
                     });
-                    $(".table").DataTable().ajax.reload();
+                    $("#data_table").DataTable().ajax.reload();
                 },
                 error: (err) => {
                     hideLoadingAnimation();
@@ -236,7 +237,7 @@ function changeStatusPatch(arg) {
                         title: "Success",
                         text: res.message,
                     });
-                    $(".table").DataTable().ajax.reload();
+                    $("#data_table").DataTable().ajax.reload();
                 },
                 error: (err) => {
                     hideLoadingAnimation();
@@ -275,7 +276,7 @@ function accept(arg) {
                         title: "Success",
                         text: res.message,
                     });
-                    $(".table").DataTable().ajax.reload();
+                    $("#data_table").DataTable().ajax.reload();
                 },
                 error: (err) => {
                     hideLoadingAnimation();
@@ -314,7 +315,7 @@ function reject(arg) {
                         title: "Success",
                         text: res.message,
                     });
-                    $(".table").DataTable().ajax.reload();
+                    $("#data_table").DataTable().ajax.reload();
                 },
                 error: (err) => {
                     hideLoadingAnimation();

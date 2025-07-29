@@ -69,7 +69,8 @@ class DashboardController extends Controller
 
             $data = ['data' => $data];
         }
-        $data['appInstructions'] = AppInstruction::orderByRaw("FIELD(menu_name, 1,2,3.4,5,6,7,8,15,9,10,14,11,12,14)")->get();
+        $menuOrder = implode(',', config('var.menuNameOrder'));
+        $data['appInstructions'] = AppInstruction::orderByRaw("FIELD(menu_name, $menuOrder)")->get();
 
         return view('admin.dashboard', $data);
     }

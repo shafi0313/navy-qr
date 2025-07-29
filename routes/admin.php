@@ -121,6 +121,8 @@ Route::resource('/team-f-datum', TeamFDataController::class)->only(['index', 'de
 Route::prefix('team-f')->name('team_f.')->group(function () {
     Route::controller(TeamFImportDataController::class)->prefix('team-f-data-imports')->name('data_imports.')->group(function () {
         Route::post('/imports', 'import')->name('import');
+        Route::get('/single-store-view', 'singleStoreView')->name('single_store_view');
+        Route::post('/single-store', 'singleStore')->name('single_store');
         Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
     });
     Route::get('encl1-deuc-sailor', [Encl1DeucSailorController::class, 'report'])->name('encl1_deuc_sailor.report');
