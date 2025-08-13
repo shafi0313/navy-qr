@@ -1,4 +1,4 @@
-<style>
+{{-- <style>
     div.dataTables_wrapper div.row:first-child {
         display: flex !important;
         flex-wrap: nowrap !important;
@@ -20,4 +20,4 @@
     div.dataTables_wrapper div.dataTables_filter {
         float: none !important;
     }
-</style>
+</style> --}}

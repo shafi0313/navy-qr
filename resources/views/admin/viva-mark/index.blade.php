@@ -7,7 +7,7 @@
 @section('title', $pageTitle)
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle, 'menuName' => 8])
-    @include('admin.layouts.includes.table-option')
+    {{-- @include('admin.layouts.includes.table-option') --}}
 
     <div class="row">
         <div class="col-12">
