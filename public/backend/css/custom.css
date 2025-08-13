@@ -9,8 +9,8 @@
 }
 
 .btn-rem {
-        padding: 0.01rem 0.4rem;
-    }
+    padding: 0.01rem 0.4rem;
+}
 
 .page-title-box {
     padding-bottom: 0rem;
@@ -32,8 +32,8 @@
     margin-top: 10px;
 }
 
-
-table tbody tr td, table tr td {
+table tbody tr td,
+table tr td {
     padding: 4px 5px !important;
 }
 
