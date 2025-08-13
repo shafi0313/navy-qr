@@ -14,8 +14,8 @@
                     <h4 class="mb-1 mt-2">{{ user()->name }}</h4>
                     {{-- <p class="text-muted">Founder</p> --}}
 
-                    {{-- <button type="button" class="btn btn-success btn-sm mb-2">Follow</button>
-                    <button type="button" class="btn btn-danger btn-sm mb-2">Message</button> --}}
+                    {{-- <button type="button" class="btn btn-success btn-rem mb-2">Follow</button>
+                    <button type="button" class="btn btn-danger btn-rem mb-2">Message</button> --}}
 
                     <div class="text-start mt-3">
                         <h4 class="fs-13 text-uppercase">About Me :</h4>

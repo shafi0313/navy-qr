@@ -13,13 +13,13 @@
 @endif
 @if ($type == 'unfit')
     <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
-        class='btn btn-danger btn-sm' title="@lang('Unfit')">
+        class='btn btn-danger btn-rem' title="@lang('Unfit')">
         Unfit
     </button>
 @endif
 @if ($type == 'fit')
     <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
-        class='btn btn-primary btn-sm' title="@lang('Fit')">
+        class='btn btn-primary btn-rem' title="@lang('Fit')">
         Fit
     </button>
 @endif

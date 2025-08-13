@@ -46,11 +46,11 @@ if (! function_exists('result')) {
             $data = (int) $data;
 
             return match ($data) {
-                1 => '<span class="btn btn-success btn-sm">Fit</span>',
-                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($remark ? '(' . $remark . ')' : ''),
+                1 => '<span class="btn btn-success btn-rem">Fit</span>',
+                0 => '<span class="btn btn-danger btn-rem">Unfit </span> ' . ($remark ? '(' . $remark . ')' : ''),
             };
         } else {
-            return '<span class="btn btn-warning btn-sm">Pending</span>';
+            return '<span class="btn btn-warning btn-rem">Pending</span>';
         }
     }
 }

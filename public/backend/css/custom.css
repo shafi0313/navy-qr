@@ -8,6 +8,10 @@
     line-height: 1px !important;
 }
 
+.btn-rem {
+        padding: 0.01rem 0.4rem;
+    }
+
 .page-title-box {
     padding-bottom: 0rem;
 }

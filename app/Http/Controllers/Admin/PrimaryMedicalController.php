@@ -76,11 +76,11 @@ class PrimaryMedicalController extends Controller
                             $data = (int) $data;
 
                             return match ($data) {
-                                1 => '<span class="btn btn-success btn-sm">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-sm">Unfit </span> ' . ($row->is_important == 1 ? '(All documents held)' : '') . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
+                                1 => '<span class="btn btn-success btn-rem">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-rem">Unfit </span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '') . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
                             };
                         } else {
-                            return '<span class="btn btn-warning btn-sm">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
+                            return '<span class="btn btn-warning btn-rem">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
                         }
                     } else {
                         return '';
@@ -88,8 +88,8 @@ class PrimaryMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    // $btn .= "<button type='button' class='btn btn-primary btn-sm me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
-                    // $btn .= "<button type='button' class='btn btn-danger btn-sm' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
+                    // $btn .= "<button type='button' class='btn btn-primary btn-rem me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
+                    // $btn .= "<button type='button' class='btn btn-danger btn-rem' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
                     // $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.primary_medicals.unfit', $row->id), 'row' => $row]);
                     $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.primary_medicals.modal_show', $row->id), 'row' => $row]);
 
