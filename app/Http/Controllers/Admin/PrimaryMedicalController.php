@@ -26,6 +26,7 @@ class PrimaryMedicalController extends Controller
             if ($roleId == 1) {
                 $applications = Application::with([
                     'examMark:id,application_id',
+                    'user:id,team',
                 ])->select(
                     'id',
                     'user_id',
@@ -107,6 +108,11 @@ class PrimaryMedicalController extends Controller
                         } else {
                             $query->where('applications.is_medical_pass', $request->is_medical_pass);
                         }
+                    }
+                    if ($request->filled('team')) {
+                        $query->whereHas('user', function ($q) use ($request) {
+                            $q->where('team', $request->team);
+                        });
                     }
                     if ($search = $request->get('search')['value']) {
                         $query->search($search);

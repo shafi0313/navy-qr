@@ -29,6 +29,7 @@
         .ssc_result {
             min-width: 50px !important;
         }
+
         .written_mark {
             min-width: 50px !important;
         }
@@ -50,6 +51,7 @@
                         data: function(d) {
                             return $.extend(d, {
                                 district: $('.district').val(),
+                                team: $('.team').val(),
                                 exam_date: $('.exam_date').val()
                             });
                         },

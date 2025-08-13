@@ -27,8 +27,9 @@ class ExamMarkController extends Controller
             $roleId = user()->role_id;
             if ($roleId == 1) {
                 $applications = Application::leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                    ->leftJoin('users', 'applications.user_id', '=', 'users.id')
                     ->select(
-                        array_merge($this->applicationColumns(), $this->examColumns(), $this->sscResultColumns())
+                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns(), $this->sscResultColumns())
                     )
                     ->selectRaw(
                         $this->examSumColumns()
@@ -87,6 +88,9 @@ class ExamMarkController extends Controller
                     }
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
+                    }
+                    if ($request->filled('team')) {
+                        $query->where('users.team', $request->team);
                     }
                     if ($search = $request->get('search')['value']) {
                         $query->search($search);

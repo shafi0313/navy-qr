@@ -129,6 +129,8 @@ class ImportantApplicationController extends Controller
                     }
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
+                    }if ($request->filled('team')) {
+                        $query->where('users.team', $request->team);
                     }
                     if ($search = $request->get('search')['value']) {
                         $query->search($search);

@@ -40,11 +40,10 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group my-3">
+                                <div class="form-group">
                                     <label class="form-label" for="is_medical_pass">Primary Medical</label>
                                     <select name="is_medical_pass" class="form-control w-100 is_medical_pass"
                                         id="is_medical_pass">
-                                        {{-- <option value="">Select</option> --}}
                                         <option value="">All</option>
                                         <option value="1">Fit</option>
                                         <option value="0">Unfit</option>
@@ -52,6 +51,19 @@
                                     </select>
                                 </div>
                             </div>
+                            @if (user()->role_id == 1)
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-label" for="team">@lang('Team')</label>
+                                        <select name="team" class="form-control w-100 team" id="team">
+                                            <option value="">All</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col">
                                 <div class="form-group my-3">
                                     <a href="" class="btn btn-danger">Clear</a>
@@ -105,6 +117,7 @@
                             return $.extend(d, {
                                 district: $('.district').val(),
                                 exam_date: $('.exam_date').val(),
+                                team: $('.team').val(),
                                 is_medical_pass: $('.is_medical_pass').val()
                             });
                         },

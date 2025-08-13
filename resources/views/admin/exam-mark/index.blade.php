@@ -99,6 +99,7 @@
                         data: function(d) {
                             return $.extend(d, {
                                 district: $('.district').val(),
+                                team: $('.team').val(),
                                 exam_date: $('.exam_date').val()
                             });
                         },

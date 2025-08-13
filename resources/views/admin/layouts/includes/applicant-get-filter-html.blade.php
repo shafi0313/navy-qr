@@ -14,6 +14,19 @@
                 </select>
             </div>
         </div>
+        @if (user()->role_id == 1)
+            <div class="col">
+                <div class="form-group">
+                    <label class="form-label" for="team">@lang('Team')</label>
+                    <select name="team" class="form-control w-100 team" id="team">
+                        <option value="">All</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+            </div>
+        @endif
         <div class="col">
             <div class="form-group">
                 <a href="" class="btn btn-danger">Clear</a>

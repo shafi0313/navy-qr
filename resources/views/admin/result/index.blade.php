@@ -94,8 +94,7 @@
                                     <div class="form-group">
                                         <label class="form-label" for="team">@lang('Team')</label>
                                         <select name="team" class="form-control w-100 team" id="team">
-                                            <option value="">Select</option>
-                                            <option value="all">All</option>
+                                            <option value="">All</option>
                                             <option value="A">A</option>
                                             <option value="B">B</option>
                                             <option value="C">C</option>
