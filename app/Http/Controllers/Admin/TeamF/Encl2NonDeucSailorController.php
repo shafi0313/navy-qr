@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin\TeamF;
 
+use PDF;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
-use PDF;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Encl2NonDeucSailorController extends Controller
 {
     use ApplicationTrait;
 
-    public function report()
+    public function report($type = null)
     {
         $roleId = user()->role_id;
         $query = Application::where('is_team_f', 1)
@@ -44,8 +45,18 @@ class Encl2NonDeucSailorController extends Controller
         // }
         $applications = $query->cursor();
         // return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
+        // $pdf = PDF::loadView('admin.team-f.encl2-non-deuc-sailor.pdf', compact('applications'));
+        // return $pdf->stream('Encl2.pdf');
 
-        $pdf = PDF::loadView('admin.team-f.encl2-non-deuc-sailor.pdf', compact('applications'));
-        return $pdf->stream('Encl2.pdf');
+        if ($applications->isEmpty()) {
+            Alert::info('No data found');
+            return back();
+        }
+
+        if ($type && $type == 'pdf') {
+            $pdf = PDF::loadView('admin.team-f.encl2-non-deuc-sailor.pdf', compact('applications'));
+            return $pdf->stream('Encl2.pdf');
+        }
+        return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
     }
 }

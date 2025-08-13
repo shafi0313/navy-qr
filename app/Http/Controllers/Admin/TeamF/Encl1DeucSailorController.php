@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\TeamF;
 
+use Alert;
 use App\Models\Application;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
@@ -10,13 +11,13 @@ use PDF;
 class Encl1DeucSailorController extends Controller
 {
     use ApplicationTrait;
-    
-    public function report()
+
+    public function report($type = null)
     {
         $roleId = user()->role_id;
         $query = Application::where('is_team_f', 1)
-        ->where('candidate_designation', 'like', 'Sailor(DEUC%')
-        ->leftJoin('users', 'applications.user_id', '=', 'users.id')
+            ->where('candidate_designation', 'like', 'Sailor(DEUC%')
+            ->leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->select(
                 array_merge(
                     $this->userColumns(),
@@ -42,10 +43,15 @@ class Encl1DeucSailorController extends Controller
         //     $query->where('team', user()->team);
         // }
         $applications = $query->cursor();
-        // return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
+        if ($applications->isEmpty()) {
+            Alert::info('No data found');
+            return back();
+        }
 
-        $pdf = PDF::loadView('admin.team-f.encl1-deuc-sailor.pdf', compact('applications'));
-        return $pdf->stream('Encl1.pdf');
-
+        if ($type && $type == 'pdf') {
+            $pdf = PDF::loadView('admin.team-f.encl1-deuc-sailor.pdf', compact('applications'));
+            return $pdf->stream('Encl1.pdf');
+        }
+        return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
     }
 }

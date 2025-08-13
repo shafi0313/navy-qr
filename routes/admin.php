@@ -125,8 +125,8 @@ Route::prefix('team-f')->name('team_f.')->group(function () {
         Route::post('/single-store', 'singleStore')->name('single_store');
         Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
     });
-    Route::get('encl1-deuc-sailor', [Encl1DeucSailorController::class, 'report'])->name('encl1_deuc_sailor.report');
-    Route::get('encl2-non-deuc-sailor', [Encl2NonDeucSailorController::class, 'report'])->name('encl2_non_deuc_sailor.report');
+    Route::get('encl1-deuc-sailor/{type?}', [Encl1DeucSailorController::class, 'report'])->name('encl1_deuc_sailor.report');
+    Route::get('encl2-non-deuc-sailor/{type?}', [Encl2NonDeucSailorController::class, 'report'])->name('encl2_non_deuc_sailor.report');
 });
 
 

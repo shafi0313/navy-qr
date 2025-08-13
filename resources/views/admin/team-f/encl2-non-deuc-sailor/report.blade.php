@@ -62,13 +62,19 @@
                             </div>
                         </div>
                     </form> --}}
-                    <hr>
+                    {{-- <hr> --}}
                     {{-- <div class="card-header">
                         <a href="{{ route('admin.reports.daily_state.export_excel', [$startDate, $endDate, $team]) }}"
                             class="btn btn-primary">
                             Export to Excel
                         </a>
                     </div> --}}
+                    <div class="card-header">
+                        <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report', 'pdf') }}" class="btn btn-primary">
+                            Export to PDF
+                        </a>
+                    </div>
+                    <hr>
 
                     
                     @include('admin.team-f.encl2-non-deuc-sailor.table', ['applications' => $applications])
