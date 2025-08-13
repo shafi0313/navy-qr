@@ -27,7 +27,7 @@ trait DailyStateReportTrait
         //         ->where('team', user()->team);
         // }
         $applicantsBaseQuery->groupBy('candidate_designation');
-        $data['applicants'] = (clone $applicantsBaseQuery)->get();
+        $data['applicants'] = (clone $applicantsBaseQuery)->whereBetween('exam_date', [$startDate, $endDate])->get();
 
         $baseQuery = Application::selectRaw('candidate_designation, COUNT(applications.id) as total')
             ->whereBetween('exam_date', [$startDate, $endDate]);
