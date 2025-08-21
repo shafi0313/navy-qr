@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
 
             // Basic Candidate Info
+            $table->string('team', 16)->nullable();
             $table->string('candidate_designation', 64);
             $table->date('exam_date');
             $table->string('serial_no', 64)->index();
