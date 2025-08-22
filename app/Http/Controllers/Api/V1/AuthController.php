@@ -23,7 +23,7 @@ class AuthController extends BaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
 
-            $role = match ($user->role_id) {
+            $role = match ((int) $user->role_id) {
                 6 => 'Primary Medical ' . $user->team,
                 7 => 'Gate Entry ' . $user->team,
                 default => '',
