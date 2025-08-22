@@ -15,12 +15,6 @@ class ApplicationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $user = user()->role_id;
-        // if (user()->role_id == 6) {
-        //     $role = 'Primary Medical';
-        // } else {
-        //     $this->load('examMark');
-        // }
         $data = [
             'id' => $this->id,
             'user_id' => $this->user_id,
