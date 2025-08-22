@@ -22,12 +22,13 @@ class AuthController extends BaseController
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
+            $userNameLastDigit = preg_match('/\d$/', $user->name, $matches) ? "-{$matches[0]}" : '';
+            $roleMap = [
+                6 => 'Primary Medical ',
+                7 => 'Gate Entry ',
+            ];
+            $role = ($roleMap[$user->role_id] ?? '') . $user->team . $userNameLastDigit;
 
-            $role = match ((int) $user->role_id) {
-                6 => 'Primary Medical ' . $user->team,
-                7 => 'Gate Entry ' . $user->team,
-                default => '',
-            };
             $success['token'] = $user->createToken('auto_token')->plainTextToken;
             $success['name'] = $user->name;
             $success['user_id'] = $user->id;
