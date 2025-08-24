@@ -41,7 +41,9 @@ table tr td {
     line-height: 35px;
 }
 
-.team {
+.is_medical_pass,
+.team,
+.is_important {
     padding: 0rem 0.9rem !important;
     height: calc(0.9em + 0.9rem + calc(var(--ct-border-width) * 2)) !important;
 }
