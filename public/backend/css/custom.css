@@ -40,3 +40,8 @@ table tr td {
 .page-title-box .page-title {
     line-height: 35px;
 }
+
+.team {
+    padding: 0rem 0.9rem !important;
+    height: calc(0.9em + 0.9rem + calc(var(--ct-border-width) * 2)) !important;
+}

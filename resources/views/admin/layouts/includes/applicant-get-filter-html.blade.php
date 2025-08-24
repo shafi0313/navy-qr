@@ -1,4 +1,4 @@
-<div class="col-md-12 mb-2">
+<div class="col-md-12 mb-1">
     <div class="row justify-content-center filter align-items-end">
         <div class="col">
             <div class="form-group">
