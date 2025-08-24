@@ -6,7 +6,7 @@
                 @if (!empty($menuName))
                     <li class="breadcrumb-item">
                         <button data-route="{{ route('admin.app_instructions.show', $menuName) }}" data-value="{{ $menuName }}" onclick="insShow(this)" class='text-primary _btn'>
-                            Instruction
+                            User Guide
                         </button>
                     </li>
                 @endif
