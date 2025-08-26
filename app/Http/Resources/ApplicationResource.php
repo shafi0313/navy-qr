@@ -22,6 +22,7 @@ class ApplicationResource extends JsonResource
             'serial_no' => $this->serial_no,
             'candidate_designation' => $this->candidate_designation,
             'eligible_district' => $this->eligible_district,
+            'team_by_district' => $this->team_by_district,
             'center' => $this->center,
             'name' => $this->name,
             'father_name' => $this->father_name,

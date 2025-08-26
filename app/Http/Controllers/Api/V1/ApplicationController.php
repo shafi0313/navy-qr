@@ -48,6 +48,24 @@ class ApplicationController extends BaseController
     {
         $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
 
+        $teams = [
+            'A' => team('a'),
+            'B' => team('b'),
+            'C' => team('c'),
+        ];
+
+        $applicantTeam = null;
+
+        foreach ($teams as $teamName => $districts) {
+            if (in_array(strtolower($application->district), $districts)) {
+                $applicantTeam = $teamName;
+                break;
+            }
+        }
+
+        // 👇 concat (merge) into model object without saving to DB
+        $application->team_by_district = $applicantTeam;
+
         if ($application) {
             if (! is_null($application->scanned_at)) {
                 return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
