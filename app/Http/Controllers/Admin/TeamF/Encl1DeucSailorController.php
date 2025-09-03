@@ -2,47 +2,22 @@
 
 namespace App\Http\Controllers\Admin\TeamF;
 
+use PDF;
 use Alert;
-use App\Models\Application;
+use App\Traits\EnclTrait;
+use App\Exports\Encl1Export;
+use Maatwebsite\Excel\Excel;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
-use PDF;
 
 class Encl1DeucSailorController extends Controller
 {
-    use ApplicationTrait;
+    use ApplicationTrait, EnclTrait;
 
     public function report($type = null)
     {
-        $roleId = user()->role_id;
-        $query = Application::where('is_team_f', 1)
-            ->where('candidate_designation', 'like', 'Sailor(DEUC%')
-            ->leftJoin('users', 'applications.user_id', '=', 'users.id')
-            ->select(
-                array_merge(
-                    $this->userColumns(),
-                    [
-                        'applications.id',
-                        'applications.br_code',
-                        'applications.eligible_district',
-                        'applications.exam_date',
-                        'applications.serial_no',
-                        'applications.name',
-                        'applications.candidate_designation',
-                        'applications.ssc_gpa',
-                        'applications.height',
-                        'applications.ssc_english',
-                        'applications.ssc_math',
-                        'applications.ssc_physics',
-                        'applications.current_phone',
-                        'applications.hsc_dip_group',
-                    ]
-                )
-            );
-        // if ($roleId != 1) {
-        //     $query->where('team', user()->team);
-        // }
-        $applications = $query->cursor();
+        $applications = $this->encl1();
+
         if ($applications->isEmpty()) {
             Alert::info('No data found');
             return back();
@@ -53,5 +28,10 @@ class Encl1DeucSailorController extends Controller
             return $pdf->stream('Encl1.pdf');
         }
         return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
+    }
+
+    public function exportExcel(Excel $excel)
+    {
+        return $excel->download(new Encl1Export(), 'Encl1.xlsx');
     }
 }

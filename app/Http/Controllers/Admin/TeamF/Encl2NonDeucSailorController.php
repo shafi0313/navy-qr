@@ -3,50 +3,25 @@
 namespace App\Http\Controllers\Admin\TeamF;
 
 use PDF;
-use App\Models\Application;
+use App\Exports\Encl2Export;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Traits\EnclTrait;
+use Maatwebsite\Excel\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class Encl2NonDeucSailorController extends Controller
 {
-    use ApplicationTrait;
+    use ApplicationTrait, EnclTrait;
 
     public function report($type = null)
     {
-        $roleId = user()->role_id;
-        $query = Application::where('is_team_f', 1)
-            ->whereNot('candidate_designation', 'like', 'Sailor(DEUC%')
-            ->leftJoin('users', 'applications.user_id', '=', 'users.id')
-            ->select(
-                array_merge(
-                    $this->userColumns(),
-                    [
-                        'applications.id',
-                        'applications.br_code',
-                        'applications.eligible_district',
-                        'applications.exam_date',
-                        'applications.serial_no',
-                        'applications.name',
-                        'applications.candidate_designation',
-                        'applications.ssc_gpa',
-                        'applications.height',
-                        'applications.ssc_english',
-                        'applications.ssc_math',
-                        'applications.ssc_physics',
-                        'applications.current_phone',
-                        'applications.hsc_dip_group',
-                    ]
-                )
-            );
-        // if ($roleId != 1) {
-        //     $query->where('team', user()->team);
-        // }
-        $applications = $query->cursor();
+
         // return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
         // $pdf = PDF::loadView('admin.team-f.encl2-non-deuc-sailor.pdf', compact('applications'));
         // return $pdf->stream('Encl2.pdf');
+        $applications = $this->encl2();
 
         if ($applications->isEmpty()) {
             Alert::info('No data found');
@@ -58,5 +33,10 @@ class Encl2NonDeucSailorController extends Controller
             return $pdf->stream('Encl2.pdf');
         }
         return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
+    }
+
+    public function exportExcel(Excel $excel)
+    {
+        return $excel->download(new Encl2Export(), 'Encl2.xlsx');
     }
 }
