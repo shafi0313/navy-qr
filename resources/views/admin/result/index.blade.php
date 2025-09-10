@@ -304,6 +304,14 @@
                                 }
                             },
                             action: function(e, dt, button, config) {
+                                if ('{{ user()->role_id }}' != 1) {
+                                    swal({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "You are not authorized to perform this action",
+                                    });
+                                    return false;
+                                }
                                 const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
                                 dt.settings()[0].oFeatures.bServerSide = false;
 
@@ -339,6 +347,14 @@
                             orientation: 'landscape',
                             pageSize: 'A4',
                             action: function(e, dt, button, config) {
+                                if ('{{ user()->role_id }}' != 1) {
+                                    swal({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "You are not authorized to perform this action",
+                                    });
+                                    return false;
+                                }
                                 const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
                                 dt.settings()[0].oFeatures.bServerSide = false;
 

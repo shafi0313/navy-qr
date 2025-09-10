@@ -150,7 +150,7 @@
                         </div>
                     </li>
                 @endif
-                
+
                 @if (in_array($roleId, [1]))
                     <li class="side-nav-item" title="8.0 - All Documents Held Import & List">
                         <a href="{{ route('admin.important-applications.index') }}" class="side-nav-link">
@@ -175,6 +175,8 @@
                             <span> Daily State</span>
                         </a>
                     </li>
+                @endif
+                @if (in_array($roleId, [1]))
                     <li class="side-nav-item" title="Applicant Present by District & Rank">
                         <a href="{{ route('admin.applicant_count') }}" class="side-nav-link">
                             <i class="fa-solid fa-file-contract"></i>
