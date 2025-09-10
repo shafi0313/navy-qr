@@ -7,7 +7,7 @@
         <td>{{ $applicant->eligible_district }}</td>
         <td>
             <span>Med:
-                @if (empty($applicant->is_medical_pass))
+                @if (is_null($applicant->is_medical_pass))
                     Pending
                 @elseif ($applicant->is_medical_pass == 1)
                     Fit
