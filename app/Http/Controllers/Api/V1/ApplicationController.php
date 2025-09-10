@@ -8,12 +8,13 @@ use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 use App\Traits\ApplicationTrait;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\ApplicationValidationTrait;
 use App\Http\Resources\ApplicationResource;
 use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
 class ApplicationController extends BaseController
 {
-    use ApplicationTrait;
+    use ApplicationTrait, ApplicationValidationTrait;
 
     public function index()
     {
@@ -48,31 +49,14 @@ class ApplicationController extends BaseController
     {
         $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
 
-        $teams = [
-            'A' => team('a'),
-            'B' => team('b'),
-            'C' => team('c'),
-        ];
-
-        $applicantTeam = null;
-
-        foreach ($teams as $teamName => $districts) {
-            if (in_array(strtolower($application->district), $districts)) {
-                $applicantTeam = $teamName;
-                break;
-            }
-        }
-
-        // 👇 concat (merge) into model object without saving to DB
-        $application->team_by_district = $applicantTeam;
+        // Check exam date & venue
+        $application->exam_date_check = $this->examDateCheck($application);
+        $application->venue_check = $this->venueCheck($application);
 
         if ($application) {
             if (! is_null($application->scanned_at)) {
                 return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
             }
-
-            // $application->update(['scanned_at' => now()]);
-            // $application->update(['user_id' => user()->id]);
 
             return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
         } else {
@@ -83,7 +67,7 @@ class ApplicationController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:applications,id',
+            'id'     => 'required|exists:applications,id',
             'status' => 'required|in:yes,no',
         ]);
 
@@ -91,25 +75,29 @@ class ApplicationController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
-        $validated = $validator->validated();
-        $application = Application::findOrFail($validated['id']);
+        $validated    = $validator->validated();
+        $application  = Application::findOrFail($validated['id']);
+
+        // Check exam date & venue
+        if ($this->examDateCheck($application) !== true) {
+            return $this->sendError('Exam date mismatch.', [], 422);
+        }
+        if ($this->venueCheck($application) !== true) {
+            return $this->sendError('Venue mismatch.', [], 403);
+        }
 
         // Update based on status
-        if ($validated['status'] === 'yes') {
-            $application->update([
-                'user_id' => user()->id,
-                'scanned_at' => now(),
-            ]);
+        $updateData = $validated['status'] === 'yes'
+            ? ['user_id' => user()->id, 'scanned_at' => now()]
+            : ['user_id' => null, 'scanned_at' => null];
 
-            return $this->sendResponse($validated, 'Application accepted.');
-        } else {
-            $application->update([
-                'user_id' => null,
-                'scanned_at' => null,
-            ]);
+        $application->update($updateData);
 
-            return $this->sendResponse($validated, 'Application rejected.');
-        }
+        $message = $validated['status'] === 'yes'
+            ? 'Application accepted.'
+            : 'Application rejected.';
+
+        return $this->sendResponse($validated, $message);
     }
 
 
