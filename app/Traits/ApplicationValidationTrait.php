@@ -11,11 +11,15 @@ trait ApplicationValidationTrait
         } else {
             $exam_date_check = true;
         }
+
         return $exam_date_check;
     }
 
     protected function venueCheck($application)
     {
+        if (user()->role_id == 7) {
+            return true;
+        }
         $teams = [
             'A' => team('a'),
             'B' => team('b'),
@@ -30,7 +34,7 @@ trait ApplicationValidationTrait
             }
         }
 
-        if (user()->role_id !== 1 && user()->team !== $applicantTeam) {
+        if (user()->team != $applicantTeam) {
             $venue_check = 'Venue mismatch.';
         } else {
             $venue_check = true;
