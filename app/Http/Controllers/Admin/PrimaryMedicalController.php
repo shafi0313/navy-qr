@@ -76,11 +76,11 @@ class PrimaryMedicalController extends Controller
                             $data = (int) $data;
 
                             return match ($data) {
-                                1 => '<span class="btn btn-success btn-rem">Fit</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : ''),
-                                0 => '<span class="btn btn-danger btn-rem">Unfit </span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '') . ($row->p_m_remark ? '(' . $row->p_m_remark . ')' : ''),
+                                1 => '<span class="btn btn-success btn-rem">Fit</span><br> '.($row->is_important == 1 ? '(All documents held)' : ''),
+                                0 => '<span class="btn btn-danger btn-rem">Unfit </span><br> '.($row->is_important == 1 ? '(All documents held)' : '').($row->p_m_remark ? '('.$row->p_m_remark.')' : ''),
                             };
                         } else {
-                            return '<span class="btn btn-warning btn-rem">Pending</span><br> ' . ($row->is_important == 1 ? '(All documents held)' : '');
+                            return '<span class="btn btn-warning btn-rem">Pending</span><br> '.($row->is_important == 1 ? '(All documents held)' : '');
                         }
                     } else {
                         return '';
@@ -148,9 +148,9 @@ class PrimaryMedicalController extends Controller
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
 
-        if ($request->primary_medical == 0 && empty($request->p_m_remark)) {
-            return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
-        }
+        // if ($request->primary_medical == 0 && empty($request->p_m_remark)) {
+        //     return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
+        // }
 
         $application = Application::findOrFail($request->application_id);
 
