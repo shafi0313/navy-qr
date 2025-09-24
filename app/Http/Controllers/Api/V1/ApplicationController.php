@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Constants\ExamType;
-use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
+use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 use App\Traits\ApplicationTrait;
-use App\Traits\ApplicationValidationTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\ApplicationValidationTrait;
+use App\Http\Resources\ApplicationResource;
+use App\Http\Controllers\Api\V1\BaseController as BaseController;
 
 class ApplicationController extends BaseController
 {
@@ -46,34 +47,27 @@ class ApplicationController extends BaseController
 
     public function show($serialNo)
     {
-        try {
-            $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
+        $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
 
-            // Check exam date & venue
-            $application->exam_date_check = $this->examDateCheck($application);
-            $application->venue_check = $this->venueCheck($application);
+        // Check exam date & venue
+        $application->exam_date_check = $this->examDateCheck($application);
+        $application->venue_check = $this->venueCheck($application);
 
-            if ($application) {
-                if (! is_null($application->scanned_at)) {
-                    return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
-                }
-                if ($application->exam_date_check === true && $application->venue_check === true) {
-                    $application->select('serial_no', 'user_id', 'scanned_at')->update(['user_id' => user()->id, 'scanned_at' => now()]);
-                }
-
-                return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
-            } else {
-                return $this->sendError('No Data Found.', [], 404);
+        if ($application) {
+            if (! is_null($application->scanned_at)) {
+                return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
             }
-        } catch (\Exception $e) {
-            return $this->sendError('Server Error.', ['error' => $e->getMessage()], 500);
+
+            return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
+        } else {
+            return $this->sendError('No Data Found.', [], 404);
         }
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:applications,id',
+            'id'     => 'required|exists:applications,id',
             'status' => 'required|in:yes,no',
         ]);
 
@@ -81,8 +75,8 @@ class ApplicationController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
-        $validated = $validator->validated();
-        $application = Application::findOrFail($validated['id']);
+        $validated    = $validator->validated();
+        $application  = Application::findOrFail($validated['id']);
 
         // Check exam date & venue
         if ($this->examDateCheck($application) !== true) {
@@ -94,8 +88,8 @@ class ApplicationController extends BaseController
 
         // Update based on status
         $updateData = $validated['status'] === 'yes'
-            ? ['is_gate_entry' => 1]
-            : ['is_gate_entry' => 0];
+            ? ['user_id' => user()->id, 'scanned_at' => now()]
+            : ['user_id' => null, 'scanned_at' => null];
 
         $application->update($updateData);
 
@@ -105,6 +99,69 @@ class ApplicationController extends BaseController
 
         return $this->sendResponse($validated, $message);
     }
+
+    // public function show($serialNo)
+    // {
+    //     try {
+    //         $application = Application::with('examMark')->where('serial_no', $serialNo)->first();
+
+    //         // Check exam date & venue
+    //         $application->exam_date_check = $this->examDateCheck($application);
+    //         $application->venue_check = $this->venueCheck($application);
+
+    //         if ($application) {
+    //             if (! is_null($application->scanned_at)) {
+    //                 return $this->sendResponse(new ApplicationResource($application), 'Already Scanned.');
+    //             }
+    //             if ($application->exam_date_check === true && $application->venue_check === true) {
+    //                 $application->select('serial_no', 'user_id', 'scanned_at')->update(['user_id' => user()->id, 'scanned_at' => now()]);
+    //             }
+
+    //             return $this->sendResponse(new ApplicationResource($application), 'Applicant info.');
+    //         } else {
+    //             return $this->sendError('No Data Found.', [], 404);
+    //         }
+    //     } catch (\Exception $e) {
+    //         return $this->sendError('Server Error.', ['error' => $e->getMessage()], 500);
+    //     }
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'id' => 'required|exists:applications,id',
+    //         'status' => 'required|in:yes,no',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return $this->sendError('Validation Error.', $validator->errors(), 422);
+    //     }
+
+    //     $validated = $validator->validated();
+    //     $application = Application::findOrFail($validated['id']);
+
+    //     // Check exam date & venue
+    //     if ($this->examDateCheck($application) !== true) {
+    //         return $this->sendError('Exam date mismatch.', [], 422);
+    //     }
+    //     if ($this->venueCheck($application) !== true) {
+    //         return $this->sendError('Venue mismatch.', [], 403);
+    //     }
+
+    //     // Update based on status
+    //     $updateData = $validated['status'] === 'yes'
+    //         ? ['is_gate_entry' => 1]
+    //         : ['is_gate_entry' => 0];
+
+    //     $application->update($updateData);
+
+    //     $message = $validated['status'] === 'yes'
+    //         ? 'Application accepted.'
+    //         : 'Application rejected.';
+
+    //     return $this->sendResponse($validated, $message);
+    // }
+
 
     public function count()
     {
@@ -125,6 +182,7 @@ class ApplicationController extends BaseController
         // $data['allUnfitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 0)->count();
         // $data['todayFitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 1)->whereDate('scanned_at', now())->count();
         // $data['todayUnfitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 0)->whereDate('scanned_at', now())->count();
+
 
         $teams = [
             'A' => team('a'),

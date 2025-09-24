@@ -24,7 +24,7 @@ class PrimaryMedicalController extends BaseController
         $application = Application::select('id', 'is_gate_entry', 'exam_date', 'district', 'is_medical_pass', 'p_m_remark')->findOrFail($request->id);
 
         // Check exam date & venue
-        if ($application->is_gate_entry != 1) {
+        if ($application->scanned_at == null) {
             return $this->sendError('Applicant has not completed gate entry. Please ensure gate entry is done before proceeding.', [], 422);
         }
         if ($this->examDateCheck($application) !== true) {

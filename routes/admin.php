@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ExamMarkController;
 use App\Http\Controllers\Admin\VivaMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ResetDataController;
 use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\FinalMedicalController;
@@ -68,6 +69,10 @@ Route::resource('/applications', ApplicationController::class)->except(['show'])
 Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store', 'edit']);
 Route::get('/application-search/show/{id}', [ApplicationSearchController::class, 'show'])->name('application_search.show');
 // Route::post('application-search/store', [ApplicationSearchController::class, 'store'])->name('primary_medicals.store');
+
+
+Route::resource('/reset-data', ResetDataController::class)->only(['index', 'store']);
+Route::get('/reset-data/show/{id}', [ResetDataController::class, 'show'])->name('reset_data.show');
 
 Route::resource('/important-application-imports', ApplicationImportantController::class)->except(['create', 'show']);
 Route::controller(ApplicationImportantController::class)->prefix('important-application-import')->name('important_application_imports.')->group(function () {
