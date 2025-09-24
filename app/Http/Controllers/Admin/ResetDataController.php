@@ -33,7 +33,6 @@ class ResetDataController extends Controller
         // Simple checkboxes → null
         $simpleCheckboxes = [
             'scanned_at',
-            'is_gate_entry',
             'is_important',
         ];
 

@@ -54,12 +54,12 @@
                                     <label class="form-check-label" for="scanned_at">Scan</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            {{-- <div class="col-md-2">
                                 <div class="form-group form-check">
                                     <input type="checkbox" name="is_gate_entry" class="form-check-input" id="is_gate_entry">
                                     <label class="form-check-label" for="is_gate_entry">Gate Entry</label>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-2">
                                 <div class="form-group form-check">
                                     <input type="checkbox" name="is_medical_pass" class="form-check-input"
