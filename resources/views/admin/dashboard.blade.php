@@ -8,46 +8,47 @@
             </div>
         </div>
     </div>
-
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="table-responsive-sm">
-                        <table class="table table-bordered table-hover table-striped mb-0 w-100">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>Team</th>
-                                    <th>Today's applicant</th>
-                                    <th>Today's Presence</th>
-                                    <th>Total Presence</th>
-                                </tr>
-                            </thead>
-                            @if (user()->exam_type == 2)
-                                @foreach ($counts as $count)
+    @if (!in_array(user()->role_id, [4]))
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-hover table-striped mb-0 w-100">
+                                <thead class="table-primary">
                                     <tr>
-                                        <td>{{ $count->team }}</td>
-                                        <td class="text-end">{{ nF($count->count) }}</td>
-                                        <td class="text-end">{{ nF($count->today_count) }}</td>
-                                        <td class="text-end">{{ nF($count->count) }}</td>
+                                        <th>Team</th>
+                                        <th>Today's applicant</th>
+                                        <th>Today's Presence</th>
+                                        <th>Total Presence</th>
                                     </tr>
-                                @endforeach
-                            @else
-                                @foreach ($data as $team)
-                                    <tr>
-                                        <td class="text-center">{{ $team['team'] }}</td>
-                                        <td class="text-end">{{ nF($team['stats']->todayApplicants ?? 0) }}</td>
-                                        <td class="text-end">{{ nF($team['stats']->today ?? 0) }}</td>
-                                        <td class="text-end">{{ nF($team['stats']->present ?? 0) }}</td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </table>
+                                </thead>
+                                @if (user()->exam_type == 2)
+                                    @foreach ($counts as $count)
+                                        <tr>
+                                            <td>{{ $count->team }}</td>
+                                            <td class="text-end">{{ nF($count->count) }}</td>
+                                            <td class="text-end">{{ nF($count->today_count) }}</td>
+                                            <td class="text-end">{{ nF($count->count) }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    @foreach ($data as $team)
+                                        <tr>
+                                            <td class="text-center">{{ $team['team'] }}</td>
+                                            <td class="text-end">{{ nF($team['stats']->todayApplicants ?? 0) }}</td>
+                                            <td class="text-end">{{ nF($team['stats']->today ?? 0) }}</td>
+                                            <td class="text-end">{{ nF($team['stats']->present ?? 0) }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     {{-- Officer Data --}}
     @if (user()->exam_type == 2)

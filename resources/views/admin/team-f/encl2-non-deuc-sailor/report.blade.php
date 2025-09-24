@@ -8,9 +8,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-header">
-                        <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report', 'pdf') }}" class="btn btn-primary">
+                        {{-- <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report', 'pdf') }}" class="btn btn-primary">
                             Export Encl-2 to PDF
-                        </a>
+                        </a> --}}
                         <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.export_excel') }}" class="btn btn-success">
                             Export Encl-2 to Excel
                         </a>

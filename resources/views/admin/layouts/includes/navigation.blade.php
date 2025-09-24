@@ -75,7 +75,7 @@
                         </a>
                     </li>
                 @endif
-                @if (in_array($roleId, [1, 2, 6]))
+                @if (in_array($roleId, [1, 2,4, 6]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-stethoscope"></i>
