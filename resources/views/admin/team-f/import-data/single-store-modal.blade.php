@@ -16,23 +16,26 @@
                             <h5>{{ $applicant->candidate_designation }}</h5>
                             <h5>{{ $applicant->name }} ({{ $applicant->serial_no }})</h5>
                         </div>
-                        <div class="col-md-2" style="margin-top: 35px; display: flex; align-items: center;">
-                            <div class="form-check me-3">
-                                <input class="form-check-input" type="radio" name="team_f" value="1"
-                                    id="yes">
-                                <label class="form-check-label" for="yes">
-                                    Yes
-                                </label>
+
+                        <div class="col-md-2">
+                            <p>Do you want to add team F</p>
+                            <div style="margin-top: 15px; display: flex; align-items: center;">
+                                <div class="form-check me-3">
+                                    <input class="form-check-input" type="radio" name="team_f" value="1"
+                                        id="yes">
+                                    <label class="form-check-label" for="yes">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="team_f" value="0"
+                                        id="no">
+                                    <label class="form-check-label" for="no">
+                                        No
+                                    </label>
+                                </div>
                             </div>
-                            {{-- </div>
-                        <div class="col-md-2" style="margin-top: 35px;"> --}}
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="team_f" value="0"
-                                    id="no">
-                                <label class="form-check-label" for="no">
-                                    No
-                                </label>
-                            </div>
+
                         </div>
                         <div class="col-md-6">
                             <label for="br_code" class="form-label required">Branch </label>

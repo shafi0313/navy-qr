@@ -27,11 +27,11 @@ return [
         11 => 'Daily State',
         12 => 'Applicant Present by District & Rank',
         13 => 'SMS Report',
-        15 => 'Form Fill Up Activities',
+        // 15 => 'Form Fill Up Activities',
         16 => '7.0 - Team F',
     ],
 
-    'menuNameOrder' => [1,2,3,4,5,6,7,8,15,9,16,10,14,11,12,14],
+    'menuNameOrder' => [1,2,3,4,5,6,7,8,9,16,10,14,11,12,14],
 
     'brCodes' => [
         1 => "DE/UC",
@@ -45,5 +45,4 @@ return [
         9 => "Topass",
         10 => "MODC(N)"
     ],
-
 ];

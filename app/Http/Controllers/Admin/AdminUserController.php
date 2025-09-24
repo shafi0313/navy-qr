@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminUserRequest;
 use App\Http\Requests\UpdateAdminUserRequest;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +19,7 @@ class AdminUserController extends Controller
     {
         if (! in_array(user()->role_id, [1])) {
             Alert::error('You are not authorized to perform this action');
+            return back();
         }
         if ($request->ajax()) {
             $admin_users = User::with(['role:id,name'])->whereExamType(user()->exam_type)->orderBy('name');

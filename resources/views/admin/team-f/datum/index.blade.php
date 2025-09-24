@@ -15,49 +15,52 @@
             margin-left: 2rem;
         }
     </style>
-    <div class="row gy-2 justify-content-between">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.team_f.data_imports.import') }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
+    @if (!in_array(user()->role_id, [8]))
+        <div class="row gy-2 justify-content-between">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ route('admin.team_f.data_imports.import') }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <div style="display: flex;">
+                                <div style="flex-grow: 1">
+                                    <label for="file" class="form-label required">Bulk Import </label>
+                                    <a href="{{ asset('uploads/Final-selection.xlsx') }}" download>(Download
+                                        Format)</a>
+                                    <input type="file" name="file" class="form-control" required>
+                                </div>
+
+                                <div style="margin-top: 28px; margin-left: 10px;">
+                                    <button type="submit" class="btn btn-success">Import</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        {{-- <form onsubmit="ajaxStoreModal(event, this, 'createModal')" --}}
+                        {{-- action="{{ route('admin.team_f.data_imports.single_store') }}" method="POST"> --}}
+                        {{-- @csrf --}}
                         <div style="display: flex;">
                             <div style="flex-grow: 1">
-                                <label for="file" class="form-label required">Bulk Import </label>
-                                <a href="{{ asset('uploads/Final-selection.xlsx') }}" download>(Download
-                                    Format)</a>
-                                <input type="file" name="file" class="form-control" required>
+                                <label for="application_id" class="form-label required">Single Entry </label>
+                                <select name="application_id" id="application_id" class="form-select"></select>
                             </div>
-
-                            <div style="margin-top: 28px; margin-left: 10px;">
-                                <button type="submit" class="btn btn-success">Import</button>
+                            <div style="margin-top: 25px; margin-left: 10px;">
+                                <button type="submit" class="btn btn-primary" onclick="ajaxEdit(this)">Add</button>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    {{-- <form onsubmit="ajaxStoreModal(event, this, 'createModal')" --}}
-                    {{-- action="{{ route('admin.team_f.data_imports.single_store') }}" method="POST"> --}}
-                    {{-- @csrf --}}
-                    <div style="display: flex;">
-                        <div style="flex-grow: 1">
-                            <label for="application_id" class="form-label required">Single Entry </label>
-                            <select name="application_id" id="application_id" class="form-select"></select>
-                        </div>
-                        <div style="margin-top: 25px; margin-left: 10px;">
-                            <button type="submit" class="btn btn-primary" onclick="ajaxEdit(this)">Add</button>
-                        </div>
+                        {{-- </form> --}}
                     </div>
-                    {{-- </form> --}}
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
 
     <div class="row">
         <div class="col-12">

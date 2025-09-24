@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ApplicationSearchController extends Controller
 {
@@ -13,6 +14,12 @@ class ApplicationSearchController extends Controller
 
     public function index()
     {
+        if (! in_array(user()->role_id, [1, 2, 6, 7])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
+
         return view('admin.application-search.index');
     }
 
@@ -23,6 +30,7 @@ class ApplicationSearchController extends Controller
             return response()->json(['success' => false, 'message' => 'No applicants found'], 404);
         }
         $modal = view('admin.application-search.data')->with(['applicants' => $applicants])->render();
+
         return response()->json(['success' => true, 'modal' => $modal], 200);
     }
 
@@ -32,9 +40,11 @@ class ApplicationSearchController extends Controller
         try {
             if ($request->yes_no == 1) {
                 $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
+
                 return response()->json(['message' => 'The information has been accepted'], 200);
-            }else{
+            } else {
                 $application->update(['scanned_at' => null]);
+
                 return response()->json(['message' => 'The information has been rejected'], 200);
             }
         } catch (\Exception $e) {

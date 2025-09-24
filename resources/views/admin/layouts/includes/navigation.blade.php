@@ -61,18 +61,20 @@
 
             {{-- 1=sailor --}}
             @if (user()->exam_type == 1)
-                <li class="side-nav-item">
-                    <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-id-card"></i>
-                        <span> Applicants </span>
-                    </a>
-                </li>
-                <li class="side-nav-item" title="1.0 - Exam Status & Gate Entry">
-                    <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>1.0 - Exam Status & Gate Entry</span>
-                    </a>
-                </li>
+                @if (in_array($roleId, [1, 2, 6, 7]))
+                    <li class="side-nav-item">
+                        <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
+                            <i class="fa-solid fa-id-card"></i>
+                            <span> Applicants </span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item" title="1.0 - Exam Status & Gate Entry">
+                        <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>1.0 - Exam Status & Gate Entry</span>
+                        </a>
+                    </li>
+                @endif
                 @if (in_array($roleId, [1, 2, 6]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
@@ -120,7 +122,7 @@
                         </a>
                     </li>
                 @endif
-                @if (in_array($roleId, [1]))
+                @if (in_array($roleId, [1, 8]))
                     @php
                         $teamF = ['admin.team-f-data-imports.*', 'admin.team-f-datum.*'];
                     @endphp
@@ -134,16 +136,17 @@
                         <div class="collapse {{ openNav($teamF) }}" id="sidebarTeamF">
                             <ul class="side-nav-second-level">
                                 <li class="{{ activeNav('admin.team-f-data-imports.*') }}">
-                                    <a href="{{ route('admin.team-f-data-imports.index') }}">Import Data</a>
+                                    <a href="{{ route('admin.team-f-data-imports.index') }}">7.1 - Import Data</a>
                                 </li>
                                 <li class="{{ activeNav('admin.team-f-datum.*') }}">
-                                    <a href="{{ route('admin.team-f-datum.index') }}">Candidates Data</a>
+                                    <a href="{{ route('admin.team-f-datum.index') }}">7.2 - Candidates Data</a>
                                 </li>
                                 <li class="{{ activeNav('admin.team_f.encl1_deuc_sailor.*') }}">
-                                    <a href="{{ route('admin.team_f.encl1_deuc_sailor.report') }}">Export Encl-1</a>
+                                    <a href="{{ route('admin.team_f.encl1_deuc_sailor.report') }}">7.3 - Export
+                                        Encl-1</a>
                                 </li>
                                 <li class="{{ activeNav('admin.team_f.encl2_non_deuc_sailor.*') }}">
-                                    <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report') }}">Export
+                                    <a href="{{ route('admin.team_f.encl2_non_deuc_sailor.report') }}">7.4 - Export
                                         Encl-2</a>
                                 </li>
                             </ul>

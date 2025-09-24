@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\TeamF;
 
-use App\Models\TeamFData;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Imports\TeamFDataImport;
 use App\Http\Controllers\Controller;
+use App\Imports\TeamFDataImport;
+use App\Models\Application;
+use App\Models\TeamFData;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,6 +14,11 @@ class TeamFImportDataController extends Controller
 {
     public function index()
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
         $teamFDatum = TeamFData::paginate(20);
 
         return view('admin.team-f.import-data.index', compact('teamFDatum'));
@@ -21,6 +26,11 @@ class TeamFImportDataController extends Controller
 
     public function import(Request $request)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
         $request->validate([
             'file' => 'required|mimes:xlsx',
         ]);
@@ -38,8 +48,8 @@ class TeamFImportDataController extends Controller
 
     public function singleStoreView(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 2])) {
-            return response()->json(['message' => 'You cannot edit'], 403);
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
 
         if ($request->ajax()) {
@@ -57,6 +67,9 @@ class TeamFImportDataController extends Controller
      */
     public function singleStore(Request $request)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
         $request->validate([
             'application_id' => 'required|exists:applications,id',
             'team_f' => 'required|in:0,1',
@@ -78,6 +91,11 @@ class TeamFImportDataController extends Controller
 
     public function store()
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
         try {
             $importantApplications = TeamFData::select('id', 'serial_no', 'br_code')->get();
             $serialNos = $importantApplications->pluck('serial_no')->toArray();
@@ -95,7 +113,7 @@ class TeamFImportDataController extends Controller
                 }
             }
 
-            if (!empty($idsToDelete)) {
+            if (! empty($idsToDelete)) {
                 TeamFData::whereIn('id', $idsToDelete)->delete();
             }
 
@@ -109,6 +127,11 @@ class TeamFImportDataController extends Controller
 
     public function allDelete()
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
         try {
             TeamFData::truncate();
             Alert::success('Team F data deleted successfully!');
@@ -124,6 +147,11 @@ class TeamFImportDataController extends Controller
      */
     public function destroy($writtenMarkId)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
         try {
             TeamFData::findOrFail($writtenMarkId)->delete();
             Alert::success('Data deleted successfully!');

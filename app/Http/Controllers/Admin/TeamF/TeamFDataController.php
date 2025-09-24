@@ -7,6 +7,7 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class TeamFDataController extends Controller
@@ -15,6 +16,10 @@ class TeamFDataController extends Controller
 
     public function index(Request $request)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+            return back();
+        }
         if ($request->ajax()) {
             $roleId = user()->role_id;
             $query = Application::where('is_team_f', 1);
@@ -78,6 +83,10 @@ class TeamFDataController extends Controller
 
     public function destroy($id)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+            return back();
+        }
         try {
             $application = Application::findOrFail($id);
             $application->update(['is_team_f' => 0]);

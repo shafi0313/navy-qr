@@ -17,6 +17,10 @@ class Encl2NonDeucSailorController extends Controller
 
     public function report($type = null)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+            return back();
+        }
 
         // return view('admin.team-f.encl2-non-deuc-sailor.report', compact('applications'));
         // $pdf = PDF::loadView('admin.team-f.encl2-non-deuc-sailor.pdf', compact('applications'));
@@ -37,6 +41,10 @@ class Encl2NonDeucSailorController extends Controller
 
     public function exportExcel(Excel $excel)
     {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+            return back();
+        }
         return $excel->download(new Encl2Export(), 'Encl2.xlsx');
     }
 }
