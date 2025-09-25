@@ -66,6 +66,9 @@ class ApplicationController extends BaseController
 
     public function store(Request $request)
     {
+        if (user()->role_id != 7) {
+            return $this->sendError('You are not authorized to perform this action.', [], 403);
+        }
         $validator = Validator::make($request->all(), [
             'id'     => 'required|exists:applications,id',
             'status' => 'required|in:yes,no',
@@ -80,7 +83,7 @@ class ApplicationController extends BaseController
 
         // Check exam date & venue
         if ($this->examDateCheck($application) !== true) {
-            return $this->sendError('Exam date mismatch.', [], 422);
+            return $this->sendError('Exam date mismatch.', [], 403);
         }
         if ($this->venueCheck($application) !== true) {
             return $this->sendError('Venue mismatch.', [], 403);
