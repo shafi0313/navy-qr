@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Constants\ExamType;
+use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
-use Illuminate\Http\Request;
 use App\Models\ApplicationUrl;
 use App\Traits\ApplicationTrait;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\ApplicationValidationTrait;
-use App\Http\Resources\ApplicationResource;
-use App\Http\Controllers\Api\V1\BaseController as BaseController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends BaseController
 {
@@ -66,11 +66,8 @@ class ApplicationController extends BaseController
 
     public function store(Request $request)
     {
-        if (user()->role_id != 7) {
-            return $this->sendError('You are not authorized to perform this action.', [], 403);
-        }
         $validator = Validator::make($request->all(), [
-            'id'     => 'required|exists:applications,id',
+            'id' => 'required|exists:applications,id',
             'status' => 'required|in:yes,no',
         ]);
 
@@ -78,29 +75,41 @@ class ApplicationController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
-        $validated    = $validator->validated();
-        $application  = Application::findOrFail($validated['id']);
+        $validated = $validator->validated();
+        try {
+            DB::beginTransaction();
+            $application = Application::findOrFail($validated['id']);
 
-        // Check exam date & venue
-        if ($this->examDateCheck($application) !== true) {
-            return $this->sendError('Exam date mismatch.', [], 403);
+            // Check exam date & venue
+            if ($this->examDateCheck($application) !== true) {
+                return $this->sendError('Exam date mismatch.', [], 403);
+            }
+            if ($this->venueCheck($application) !== true) {
+                return $this->sendError('Venue mismatch.', [], 403);
+            }
+
+            // Update based on status
+            if (user()->role_id == 7) {
+                $updateData = $validated['status'] === 'yes'
+                    ? ['user_id' => user()->id, 'scanned_at' => now()]
+                    : ['user_id' => null, 'scanned_at' => null];
+
+                $application->update($updateData);
+
+                $message = $validated['status'] === 'yes'
+                    ? 'Application accepted.'
+                    : 'Application rejected.';
+                DB::commit();
+
+                return $this->sendResponse($validated, $message);
+            }
+
+            return $this->sendError($validated, [], 200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return $this->sendError('Something went wrong.', [$e->getMessage()], 500);
         }
-        if ($this->venueCheck($application) !== true) {
-            return $this->sendError('Venue mismatch.', [], 403);
-        }
-
-        // Update based on status
-        $updateData = $validated['status'] === 'yes'
-            ? ['user_id' => user()->id, 'scanned_at' => now()]
-            : ['user_id' => null, 'scanned_at' => null];
-
-        $application->update($updateData);
-
-        $message = $validated['status'] === 'yes'
-            ? 'Application accepted.'
-            : 'Application rejected.';
-
-        return $this->sendResponse($validated, $message);
     }
 
     // public function show($serialNo)
@@ -165,7 +174,6 @@ class ApplicationController extends BaseController
     //     return $this->sendResponse($validated, $message);
     // }
 
-
     public function count()
     {
         if (user()->exam_type == ExamType::SAILOR) {
@@ -185,7 +193,6 @@ class ApplicationController extends BaseController
         // $data['allUnfitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 0)->count();
         // $data['todayFitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 1)->whereDate('scanned_at', now())->count();
         // $data['todayUnfitByUser'] = Application::where('user_id', user()->id)->where('is_medical_pass', 0)->whereDate('scanned_at', now())->count();
-
 
         $teams = [
             'A' => team('a'),
