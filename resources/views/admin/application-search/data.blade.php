@@ -37,9 +37,14 @@
                 @endif
             </span>
         </td>
-        <td>
-            <button data-route="{{ route('admin.application-search.edit', $applicant->id) }}" data-value="{{ $applicant->id }}" onclick="ajaxEdit(this)"
-                class='text-primary _btn'>
+        <td class="text-center">
+            @if (!is_null($applicant->scanned_at))
+                <span class="badge bg-success fs-6">Yes</span>
+            @else
+                <span class="badge bg-danger fs-6">No</span>
+            @endif
+            <button data-route="{{ route('admin.application-search.edit', $applicant->id) }}"
+                data-value="{{ $applicant->id }}" onclick="ajaxEdit(this)" class='text-primary _btn'>
                 <i class='fa fa-edit'></i>
             </button>
         </td>
