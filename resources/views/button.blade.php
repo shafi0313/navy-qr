@@ -8,7 +8,8 @@
 @if ($type == 'ajax-add-by-id')
     <button data-route="{{ $route }}" data-value="{{ $row->id }}" onclick="ajaxEdit(this)"
         class='text-primary _btn' title="@lang('Add or Edit')">
-        <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-pen-to-square"></i>
+        {{-- <i class="fa-solid fa-plus"></i>  --}}
+        <i class="fa-solid fa-pen-to-square"></i>
     </button>
 @endif
 @if ($type == 'unfit')

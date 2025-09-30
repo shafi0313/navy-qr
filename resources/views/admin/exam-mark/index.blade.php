@@ -184,6 +184,7 @@
                             data: 'action',
                             name: 'action',
                             title: 'Action',
+                            className: 'text-center',
                             width: '60px',
                             orderable: false,
                             searchable: false

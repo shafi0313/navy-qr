@@ -108,31 +108,6 @@
                             title: 'written Mark',
                             className: 'written_mark',
                         },
-                        // {
-                        //     data: 'bangla',
-                        //     name: 'bangla',
-                        //     title: 'Bangla',
-                        // },
-                        // {
-                        //     data: 'english',
-                        //     name: 'english',
-                        //     title: 'english',
-                        // },
-                        // {
-                        //     data: 'math',
-                        //     name: 'math',
-                        //     title: 'math',
-                        // },
-                        // {
-                        //     data: 'science',
-                        //     name: 'science',
-                        //     title: 'science',
-                        // },
-                        // {
-                        //     data: 'general_knowledge',
-                        //     name: 'general_knowledge',
-                        //     title: 'general knowledge',
-                        // },
                         {
                             data: 'written',
                             name: 'written',
@@ -165,6 +140,7 @@
                             name: 'action',
                             title: 'Action',
                             width: '60px',
+                            className: 'text-center',
                             orderable: false,
                             searchable: false
                         },
