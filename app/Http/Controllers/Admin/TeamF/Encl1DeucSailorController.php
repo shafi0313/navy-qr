@@ -22,17 +22,16 @@ class Encl1DeucSailorController extends Controller
         }
         $applications = $this->encl1();
 
-        if ($applications->isEmpty()) {
-            Alert::info('No data found');
+        // if ($applications->isEmpty()) {
+        //     Alert::info('No data found');
+        //     return back();
+        // }
 
-            return back();
-        }
+        // if ($type && $type == 'pdf') {
+        //     $pdf = PDF::loadView('admin.team-f.encl1-deuc-sailor.pdf', compact('applications'));
 
-        if ($type && $type == 'pdf') {
-            $pdf = PDF::loadView('admin.team-f.encl1-deuc-sailor.pdf', compact('applications'));
-
-            return $pdf->stream('Encl1.pdf');
-        }
+        //     return $pdf->stream('Encl1.pdf');
+        // }
 
         return view('admin.team-f.encl1-deuc-sailor.report', compact('applications'));
     }

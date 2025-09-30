@@ -15,7 +15,7 @@
             margin-left: 2rem;
         }
     </style>
-    @if (!in_array(user()->role_id, [8]))
+    {{-- @if (!in_array(user()->role_id, [8]))
         <div class="row gy-2 justify-content-between">
             <div class="col-md-6">
                 <div class="card">
@@ -42,9 +42,6 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <form onsubmit="ajaxStoreModal(event, this, 'createModal')" --}}
-                        {{-- action="{{ route('admin.team_f.data_imports.single_store') }}" method="POST"> --}}
-                        {{-- @csrf --}}
                         <div style="display: flex;">
                             <div style="flex-grow: 1">
                                 <label for="application_id" class="form-label required">Single Entry </label>
@@ -54,12 +51,11 @@
                                 <button type="submit" class="btn btn-primary" onclick="ajaxEdit(this)">Add</button>
                             </div>
                         </div>
-                        {{-- </form> --}}
                     </div>
                 </div>
             </div>
         </div>
-    @endif
+    @endif --}}
 
 
     <div class="row">

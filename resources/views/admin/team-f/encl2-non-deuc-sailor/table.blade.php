@@ -1,6 +1,6 @@
 <div class="text-center mb-4">
     <h5>{{ strtoupper('Confidential') }}</h5>
-    <h4>NOMINAL LIST OF SAILORS (EXCEPT DEUC) - B-{{ Carbon\Carbon::parse($applications->first()->exam_date)->format('Y') }} BATCH</h4>
+    <h4>NOMINAL LIST OF SAILORS (EXCEPT DEUC) - B-{{ Carbon\Carbon::parse($applications?->first()?->exam_date)->format('Y') ?? '' }} BATCH</h4>
     <h4>CENTER: BNS DHAKA, KHILKHET, DHAKA</h4>
 </div>
 <table class="table table-bordered mb-0 w-100">
@@ -25,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($applications as $application)
+        @forelse ($applications as $application)
             <tr>
                 <td>{{ @$i += 1 }}</td>
                 <td>{{ ucfirst($application->eligible_district) }}</td>
@@ -41,6 +41,10 @@
                 <td></td>
                 <td></td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="15" class="text-center">No data available</td>
+            </tr>
+        @endforelse
     </tbody>
 </table>
