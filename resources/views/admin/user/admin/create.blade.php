@@ -31,8 +31,7 @@
                         <div class="col-md-6">
                             <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
                             <select name="is_2fa" id="is_2fa" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="0">No</option>
+                                <option value="0" selected>No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>

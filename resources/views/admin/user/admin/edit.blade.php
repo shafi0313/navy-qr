@@ -32,9 +32,8 @@
                         <div class="col-md-6">
                             <label for="is_2fa" class="form-label required">2 Factor Authentication (OTP Login) </label>
                             <select name="is_2fa" id="is_2fa" class="form-select" required>
-                                <option value="">Select</option>
-                                <option value="0" @selected($admin_user->is_2fa == 1)>No</option>
-                                <option value="1" @selected($admin_user->is_2fa == 2)>Yes</option>
+                                <option value="0" @selected($admin_user->is_2fa == 0)>No</option>
+                                <option value="1" @selected($admin_user->is_2fa == 1)>Yes</option>
                             </select>
                         </div>
                         <div class="col-md-6">

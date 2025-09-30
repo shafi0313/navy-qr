@@ -64,22 +64,19 @@
                         {
                             data: 'team',
                             name: 'team',
-                            title: 'Team'
+                            title: 'Team',
+                            className: 'text-center',
                         },
                         {
                             data: 'mobile',
                             name: 'mobile',
                             title: 'mobile',
                         },
-                        // {
-                        //     data: 'image',
-                        //     name: 'image',
-                        //     title: 'Image'
-                        // },
                         {
                             data: 'is_active',
                             name: 'is_active',
-                            title: 'Status'
+                            title: 'Status',
+                            className: 'text-center',
                         },
                         {
                             data: 'action',

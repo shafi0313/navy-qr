@@ -23,7 +23,7 @@ class StoreAdminUserRequest extends FormRequest
     {
         return [
             'role_id' => ['required', 'integer', 'exists:roles,id'],
-            'team' => ['string', 'in:A,B,C', 'required_unless:role_id,1', 'nullable'],
+            'team' => ['nullable', 'in:A,B,C'],
             'name' => ['required', 'string', 'min:1', 'max:100'],
             'email' => ['required', 'string', 'min:1', 'max:64', 'unique:users,email'],
             'mobile' => ['nullable', 'phone:BD', 'required_if:is_2fa,1'],
