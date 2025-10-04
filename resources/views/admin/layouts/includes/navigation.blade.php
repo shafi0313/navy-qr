@@ -75,7 +75,7 @@
                         </a>
                     </li>
                 @endif
-                @if (in_array($roleId, [1, 2,4, 6]))
+                @if (in_array($roleId, [1, 2, 4, 6]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.primary_medicals.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-stethoscope"></i>
@@ -135,9 +135,11 @@
                         </a>
                         <div class="collapse {{ openNav($teamF) }}" id="sidebarTeamF">
                             <ul class="side-nav-second-level">
-                                <li class="{{ activeNav('admin.team-f-data-imports.*') }}">
-                                    <a href="{{ route('admin.team-f-data-imports.index') }}">7.1 - Import Data</a>
-                                </li>
+                                @if (in_array($roleId, [1]))
+                                    <li class="{{ activeNav('admin.team-f-data-imports.*') }}">
+                                        <a href="{{ route('admin.team-f-data-imports.index') }}">7.1 - Import Data</a>
+                                    </li>
+                                @endif
                                 <li class="{{ activeNav('admin.team-f-datum.*') }}">
                                     <a href="{{ route('admin.team-f-datum.index') }}">7.2 - Candidates Data</a>
                                 </li>
