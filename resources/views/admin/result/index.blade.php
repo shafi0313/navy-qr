@@ -293,7 +293,7 @@
                     buttons: [{
                             extend: 'excelHtml5',
                             title: null,
-                            text: 'Export to Excel',
+                            text: 'Export Result/Merit List Only',
                             className: 'btn btn-success',
                             exportOptions: {
                                 columns: ':visible',
@@ -304,7 +304,7 @@
                                 }
                             },
                             action: function(e, dt, button, config) {
-                                if ('{{ user()->role_id }}' != 1) {
+                                if (@json(!in_array(user()->role_id, [1, 2]))) {
                                     swal({
                                         icon: "error",
                                         title: "Oops...",
@@ -332,49 +332,49 @@
                                 });
                             }
                         },
-                        {
-                            extend: 'pdfHtml5',
-                            title: null,
-                            text: 'Export to PDF',
-                            exportOptions: {
-                                columns: ':visible',
-                                modifier: {
-                                    search: 'applied',
-                                    order: 'applied',
-                                    page: 'all'
-                                }
-                            },
-                            orientation: 'landscape',
-                            pageSize: 'A4',
-                            action: function(e, dt, button, config) {
-                                if ('{{ user()->role_id }}' != 1) {
-                                    swal({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: "You are not authorized to perform this action",
-                                    });
-                                    return false;
-                                }
-                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
-                                dt.settings()[0].oFeatures.bServerSide = false;
+                        // {
+                        //     extend: 'pdfHtml5',
+                        //     title: null,
+                        //     text: 'Export to PDF',
+                        //     exportOptions: {
+                        //         columns: ':visible',
+                        //         modifier: {
+                        //             search: 'applied',
+                        //             order: 'applied',
+                        //             page: 'all'
+                        //         }
+                        //     },
+                        //     orientation: 'landscape',
+                        //     pageSize: 'A4',
+                        //     action: function(e, dt, button, config) {
+                        //         if ('{{ user()->role_id }}' != 1) {
+                        //             swal({
+                        //                 icon: "error",
+                        //                 title: "Oops...",
+                        //                 text: "You are not authorized to perform this action",
+                        //             });
+                        //             return false;
+                        //         }
+                        //         const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                        //         dt.settings()[0].oFeatures.bServerSide = false;
 
-                                $.ajax({
-                                    url: dt.ajax.url(),
-                                    data: dt.ajax.params(),
-                                    success: (json) => {
-                                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
-                                            this, e, dt, button, config);
-                                        dt.settings()[0].oFeatures.bServerSide =
-                                            originalServerSide;
-                                        dt.ajax.reload(null, false);
-                                    },
-                                    error: function(xhr, error, thrown) {
-                                        console.error('Error fetching data for export:',
-                                            error);
-                                    }
-                                });
-                            }
-                        }
+                        //         $.ajax({
+                        //             url: dt.ajax.url(),
+                        //             data: dt.ajax.params(),
+                        //             success: (json) => {
+                        //                 $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
+                        //                     this, e, dt, button, config);
+                        //                 dt.settings()[0].oFeatures.bServerSide =
+                        //                     originalServerSide;
+                        //                 dt.ajax.reload(null, false);
+                        //             },
+                        //             error: function(xhr, error, thrown) {
+                        //                 console.error('Error fetching data for export:',
+                        //                     error);
+                        //             }
+                        //         });
+                        //     }
+                        // }
                     ]
                 });
 

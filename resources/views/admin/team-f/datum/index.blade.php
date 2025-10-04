@@ -371,41 +371,41 @@
                                 });
                             }
                         },
-                        {
-                            extend: 'pdfHtml5',
-                            title: null,
-                            text: 'Export to PDF',
-                            exportOptions: {
-                                columns: ':visible',
-                                modifier: {
-                                    search: 'applied',
-                                    order: 'applied',
-                                    page: 'all'
-                                }
-                            },
-                            orientation: 'landscape',
-                            pageSize: 'A4',
-                            action: function(e, dt, button, config) {
-                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
-                                dt.settings()[0].oFeatures.bServerSide = false;
+                        // {
+                        //     extend: 'pdfHtml5',
+                        //     title: null,
+                        //     text: 'Export to PDF',
+                        //     exportOptions: {
+                        //         columns: ':visible',
+                        //         modifier: {
+                        //             search: 'applied',
+                        //             order: 'applied',
+                        //             page: 'all'
+                        //         }
+                        //     },
+                        //     orientation: 'landscape',
+                        //     pageSize: 'A4',
+                        //     action: function(e, dt, button, config) {
+                        //         const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                        //         dt.settings()[0].oFeatures.bServerSide = false;
 
-                                $.ajax({
-                                    url: dt.ajax.url(),
-                                    data: dt.ajax.params(),
-                                    success: (json) => {
-                                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
-                                            this, e, dt, button, config);
-                                        dt.settings()[0].oFeatures.bServerSide =
-                                            originalServerSide;
-                                        dt.ajax.reload(null, false);
-                                    },
-                                    error: function(xhr, error, thrown) {
-                                        console.error('Error fetching data for export:',
-                                            error);
-                                    }
-                                });
-                            }
-                        }
+                        //         $.ajax({
+                        //             url: dt.ajax.url(),
+                        //             data: dt.ajax.params(),
+                        //             success: (json) => {
+                        //                 $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
+                        //                     this, e, dt, button, config);
+                        //                 dt.settings()[0].oFeatures.bServerSide =
+                        //                     originalServerSide;
+                        //                 dt.ajax.reload(null, false);
+                        //             },
+                        //             error: function(xhr, error, thrown) {
+                        //                 console.error('Error fetching data for export:',
+                        //                     error);
+                        //             }
+                        //         });
+                        //     }
+                        // }
                     ]
                 });
 

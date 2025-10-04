@@ -16,10 +16,9 @@
                     <div class="card-body row justify-content-center">
                         <div class="form-group col-sm-4">
                             <label for="file">File
-                                <span class="t_r"> *
-                                    {{-- <a href="{{ asset('uploads/written-mark-import.xlsx') }}" download>Download Excel Format</a> --}}
-                                </span>
+                                <span class="t_r"> *</span>
                             </label>
+                            <a href="{{ asset('uploads/written-exam-import.xlsx') }}" download>Download Sample File</a>
                             <input type="file" name="file" class="form-control" required>
                         </div>
 

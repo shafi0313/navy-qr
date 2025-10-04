@@ -16,7 +16,7 @@ class PrimaryMedicalController extends Controller
 
     public function index(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 2, 6])) {
+        if (! in_array(user()->role_id, [1, 2, 4, 6])) {
             Alert::error('Access Denied', 'You are not authorized to perform this action');
 
             return back();
@@ -129,7 +129,7 @@ class PrimaryMedicalController extends Controller
     public function modalShow(Request $request, $applicantId)
     {
         if ($request->ajax()) {
-            if (! in_array(user()->role_id, [1, 2, 5])) {
+            if (! in_array(user()->role_id, [1, 4, 5])) {
                 return response()->json(['message' => 'You are not authorized to perform this action'], 403);
             }
 
@@ -144,7 +144,7 @@ class PrimaryMedicalController extends Controller
 
     public function store(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 2, 6])) {
+        if (! in_array(user()->role_id, [1, 4, 6])) {
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
 
