@@ -293,7 +293,7 @@
                     buttons: [{
                             extend: 'excelHtml5',
                             title: null,
-                            text: 'Export Result/Merit List Only',
+                            text: 'Export Result (Merit List Only)',
                             className: 'btn btn-success',
                             exportOptions: {
                                 columns: ':visible',
