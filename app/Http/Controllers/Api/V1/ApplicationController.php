@@ -181,37 +181,37 @@ class ApplicationController extends BaseController
     {
 
         if (user()->exam_type == ExamType::SAILOR) {
-            // $data['allApplicationsByUser'] = Application::where('user_id', user()->id)->count();
-            // $data['todayApplicationsByUser'] = Application::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
-            $teams = [
-                'A' => team('a'),
-                'B' => team('b'),
-                'C' => team('c'),
-            ];
-            if (user()->team == 'A' && isset($teams['A'])) {
-                $data[] = [
-                    'team' => 'A',
-                    'todayApplicants' => $this->todayApplicant($teams['A']),
-                    'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['A']),
-                ];
-            } elseif (user()->team == 'B' && isset($teams['B'])) {
-                $data[] = [
-                    'team' => 'B',
-                    'todayApplicants' => $this->todayApplicant($teams['B']),
-                    'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['B']),
-                ];
-            } elseif (user()->team == 'C' && isset($teams['C'])) {
-                $data[] = [
-                    'team' => 'C',
-                    'todayApplicants' => $this->todayApplicant($teams['C']),
-                    'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['C']),
-                ];
-            }
+            $data['allApplicationsByUser'] = Application::where('user_id', user()->id)->count();
+            $data['todayApplicationsByUser'] = Application::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
+        //     $teams = [
+        //         'A' => team('a'),
+        //         'B' => team('b'),
+        //         'C' => team('c'),
+        //     ];
+        //     if (user()->team == 'A' && isset($teams['A'])) {
+        //         $data[] = [
+        //             'team' => 'A',
+        //             'todayApplicants' => $this->todayApplicant($teams['A']),
+        //             'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['A']),
+        //         ];
+        //     } elseif (user()->team == 'B' && isset($teams['B'])) {
+        //         $data[] = [
+        //             'team' => 'B',
+        //             'todayApplicants' => $this->todayApplicant($teams['B']),
+        //             'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['B']),
+        //         ];
+        //     } elseif (user()->team == 'C' && isset($teams['C'])) {
+        //         $data[] = [
+        //             'team' => 'C',
+        //             'todayApplicants' => $this->todayApplicant($teams['C']),
+        //             'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['C']),
+        //         ];
+        //     }
 
-        } elseif (user()->exam_type == ExamType::OFFICER) {
-            $data['allApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->count();
-            $data['todayApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
-        }
+        // } elseif (user()->exam_type == ExamType::OFFICER) {
+        //     $data['allApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->count();
+        //     $data['todayApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
+        // }
 
         return $this->sendResponse($data, 'Applicants count.');
     }
