@@ -208,7 +208,6 @@ class ApplicationController extends BaseController
                     'todayScannedApplicantsByUser' => $this->todayScannedApplicant($teams['C']),
                 ];
             }
-
         } elseif (user()->exam_type == ExamType::OFFICER) {
             $data['allApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->count();
             $data['todayApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
