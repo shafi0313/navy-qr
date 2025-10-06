@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\File;
 
 class ApplicationSeeder extends Seeder
 {
+    protected function clean($value)
+    {
+        if (is_null($value)) {
+            return null;
+        }
+        return strtolower(trim($value));
+    }
+
     public function run()
     {
         // Define the directory where your JSON files are stored
@@ -54,9 +62,9 @@ class ApplicationSeeder extends Seeder
                 $batchData[] = [
                     'candidate_designation' => $application['candidate_designation'],
                     'exam_date' => $application['exam_date'],
-                    'serial_no' => $application['serial_no'],
-                    'eligible_district' => $application['eligible_district'],
-                    'district' => $application['district'],
+                    'serial_no' => $this->clean($application['serial_no']),
+                    'eligible_district' => $this->clean($application['eligible_district']),
+                    'district' => $this->clean($application['district']),
                     'name' => $application['name'],
                     'father_name' => $application['father_name'],
                     'father_nid' => $application['father_nid'],
