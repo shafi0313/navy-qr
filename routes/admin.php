@@ -1,9 +1,11 @@
 <?php
 
+use App\Services\SeederWriter;
 use App\Exports\ApplicantsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AjaxController;
+use App\Services\RemoveSailorDataService;
 use App\Http\Controllers\Admin\SmsController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\RoleController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Admin\VivaMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ResetDataController;
+use App\Http\Controllers\Admin\RemoveDataController;
 use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\FinalMedicalController;
@@ -30,6 +33,27 @@ use App\Http\Controllers\Admin\TeamF\Encl1DeucSailorController;
 use App\Http\Controllers\Admin\TeamF\TeamFImportDataController;
 use App\Http\Controllers\Admin\Reports\DailyStateReportController;
 use App\Http\Controllers\Admin\TeamF\Encl2NonDeucSailorController;
+
+
+Route::get('/seed', function (SeederWriter $writer) {
+    $writer->generate();
+    return 'Seeders generated successfully!';
+});
+
+// Route::get('/remove/{password}', function ($password, RemoveSailorDataService $writer) {
+//     try {
+//         $writer->remove($password);
+//         return '✅ Data removed successfully!';
+//     } catch (Exception $e) {
+//         return response($e->getMessage(), 403);
+//     }
+// });
+
+Route::controller(RemoveDataController::class)->prefix('rm')->name('rm.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::post('sd','sailor')->name('sd');
+});
+
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

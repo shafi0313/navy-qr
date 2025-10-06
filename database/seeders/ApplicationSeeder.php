@@ -11,7 +11,7 @@ class ApplicationSeeder extends Seeder
     public function run()
     {
         // Define the directory where your JSON files are stored
-        $directoryPath = storage_path('data_4_25'); // Adjust this to the correct directory
+        $directoryPath = storage_path('data_10_25'); // Adjust this to the correct directory
 
         // Check if the directory exists
         if (! File::exists($directoryPath)) {
@@ -50,7 +50,7 @@ class ApplicationSeeder extends Seeder
             }
 
             // Process each application in the current file
-            foreach ($applications as $application) {
+            foreach ($applications['data'] as $application) {
                 $batchData[] = [
                     'candidate_designation' => $application['candidate_designation'],
                     'exam_date' => $application['exam_date'],
