@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
 
             // Basic Candidate Info
-            $table->string('team', 16)->nullable();
+            $table->string('team', 8)->nullable();
             $table->string('candidate_designation', 64);
             $table->date('exam_date');
             $table->string('serial_no', 64)->index();
@@ -78,6 +78,11 @@ return new class extends Migration
             $table->string('ssc_roll_no', 64)->nullable();
             $table->string('ssc_passing_year', 20)->nullable();
             $table->string('ssc_gpa', 64)->nullable();
+            $table->string('ssc_bangla')->nullable();
+            $table->string('ssc_english')->nullable();
+            $table->string('ssc_math')->nullable();
+            $table->string('ssc_physics')->nullable();
+            $table->string('ssc_biology')->nullable();
 
             $table->string('hsc_dip_institute', 191)->nullable();
             $table->string('hsc_dip_group', 64)->nullable();
@@ -106,10 +111,12 @@ return new class extends Migration
             // Pass Info
             $table->boolean('is_important')->default(0)->nullable();
             $table->boolean('is_medical_pass')->index()->nullable();
-            $table->boolean('is_final_pass')->index()->nullable();
-
             $table->string('p_m_remark', 160)->nullable();
+            $table->boolean('is_final_pass')->index()->nullable();
             $table->string('f_m_remark', 160)->nullable();
+            $table->string('height')->nullable();
+            $table->boolean('is_team_f')->index()->nullable();
+            $table->unsignedTinyInteger('br_code')->nullable();
             $table->string('remark')->nullable();
             $table->dateTime('scanned_at')->nullable();
             $table->timestamps();

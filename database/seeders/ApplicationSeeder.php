@@ -13,6 +13,7 @@ class ApplicationSeeder extends Seeder
         if (is_null($value)) {
             return null;
         }
+
         return strtolower(trim($value));
     }
 
@@ -137,6 +138,8 @@ class ApplicationSeeder extends Seeder
                     'is_khudro_jati_gosti' => $application['is_khudro_jati_gosti'],
                     'batch' => $application['batch'],
                     'center' => $application['center'],
+                    'team' => str_replace(['Team', ' '], '', $application['team']),
+                    'created_at' => now(),
                     // Add more fields if necessary
                 ];
 
