@@ -59,7 +59,7 @@ class ApplicationSeeder extends Seeder
             }
 
             // Process each application in the current file
-            foreach ($applications['data'] as $application) {
+            foreach ($applications as $application) {
                 $batchData[] = [
                     'candidate_designation' => $application['candidate_designation'],
                     'exam_date' => $application['exam_date'],
