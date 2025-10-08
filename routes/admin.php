@@ -40,33 +40,13 @@ Route::get('/seed', function (SeederWriter $writer) {
     return 'Seeders generated successfully!';
 });
 
-// Route::get('/remove/{password}', function ($password, RemoveSailorDataService $writer) {
-//     try {
-//         $writer->remove($password);
-//         return '✅ Data removed successfully!';
-//     } catch (Exception $e) {
-//         return response($e->getMessage(), 403);
-//     }
-// });
-
-Route::controller(RemoveDataController::class)->prefix('rm')->name('rm.')->group(function () {
+Route::controller(RemoveDataController::class)->prefix('rm-remove')->name('rm.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::post('sd','sailor')->name('sd');
 });
 
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-// App DB Backup
-Route::controller(AppDbBackupController::class)->prefix('app-db-backup')->group(function () {
-    Route::get('/password', 'password')->name('backup.password');
-    Route::post('/checkPassword', 'checkPassword')->name('backup.checkPassword');
-    Route::get('/confirm', 'index')->name('backup.index');
-    Route::post('/backup-file', 'backupFiles')->name('backup.files');
-    Route::post('/backup-db', 'backupDb')->name('backup.db');
-    Route::post('/backup-download/{name}/{ext}', 'downloadBackup')->name('backup.download');
-    Route::post('/backup-delete/{name}/{ext}', 'deleteBackup')->name('backup.delete');
-});
 
 // Global Ajax Route
 Route::get('select-2-ajax', [AjaxController::class, 'select2'])->name('select2');

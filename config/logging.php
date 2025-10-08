@@ -52,6 +52,12 @@ return [
 
     'channels' => [
 
+        'application_reset' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/application_reset.log'),
+            'level' => 'info',
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', env('LOG_STACK', 'single')),

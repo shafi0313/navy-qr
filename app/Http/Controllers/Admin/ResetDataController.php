@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
-use App\Models\ExamMark;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ResetDataController extends Controller
@@ -28,73 +28,94 @@ class ResetDataController extends Controller
 
     public function store(Request $request)
     {
-        $application = Application::with('examMark')->findOrFail($request->id);
-
-        // Simple checkboxes → null
-        $simpleCheckboxes = [
-            'scanned_at',
-            'is_important',
-        ];
-
-        foreach ($simpleCheckboxes as $field) {
-            if ($request->has($field)) {
-                $application->$field = null;
-            }
-        }
-
-        // Checkboxes with remarks → null
-        $checkboxesWithRemarks = [
-            'is_medical_pass' => 'p_m_remark',
-            'is_final_pass' => 'f_m_remark',
-        ];
-
-        $application->user_id = null;
-
-        foreach ($checkboxesWithRemarks as $field => $remark) {
-            if ($request->has($field)) {
-                $application->$field = null;
-                $application->$remark = null;
-            }
-        }
-
-        // Delete ExamMark if all checkboxes present
-        if ($request->has(['written_exam', 'viva', 'dup_test']) && $application->examMark->exists) {
-            $application->examMark->delete();
-        }
-
-        // Reset ExamMark fields if record exists
-        if ($application->examMark->exists) {
+        try {
+            $application = Application::with('examMark')->findOrFail($request->id);
             $examMark = $application->examMark;
 
-            if ($request->has('written_exam')) {
-                $examMark->fill([
-                    'bangla' => null,
-                    'english' => null,
-                    'math' => null,
-                    'science' => null,
-                    'general_knowledge' => null,
-                    'total' => null,
-                ]);
+            // লগ রাখার জন্য JSON array তৈরি
+            $logData = [
+                'application_id' => $application->id,
+                'user_id' => auth()->id(),
+                'time' => now()->toDateTimeString(),
+                'resets' => [], // এখানে শুধুমাত্র নির্বাচিত ফিল্ডগুলা আসবে
+            ];
+
+            // 🟢 Simple checkbox reset
+            $simpleCheckboxes = ['scanned_at', 'is_important'];
+            foreach ($simpleCheckboxes as $field) {
+                if ($request->boolean($field)) {
+                    $logData['resets'][$field] = $application->$field; // পুরনো মান রাখো
+                    $application->$field = null;
+                }
             }
 
-            if ($request->has('viva')) {
-                $examMark->fill([
-                    'viva' => null,
-                    'viva_remark' => null,
-                ]);
+            // 🟢 Checkbox + remark reset
+            $checkboxesWithRemarks = [
+                'is_medical_pass' => 'p_m_remark',
+                'is_final_pass' => 'f_m_remark',
+            ];
+
+            foreach ($checkboxesWithRemarks as $field => $remark) {
+                if ($request->boolean($field)) {
+                    $logData['resets'][$field] = $application->$field;
+                    $logData['resets'][$remark] = $application->$remark;
+
+                    $application->$field = null;
+                    $application->$remark = null;
+                }
             }
 
-            if ($request->has('dup_test')) {
-                $examMark->dup_test = null;
+            // 🟢 ExamMark reset
+            if ($examMark) {
+                $examResetData = [];
+
+                // যদি সবগুলো exam checkbox select করা হয়
+                if ($request->has(['written_exam', 'viva', 'dup_test'])) {
+                    $examResetData = $examMark->only([
+                        'bangla', 'english', 'math', 'science', 'general_knowledge', 'viva', 'dup_test', 'total',
+                    ]);
+                    $examMark->delete();
+                    $logData['resets']['exam_mark_deleted'] = $examResetData;
+                } else {
+                    // আলাদা আলাদা ফিল্ড reset
+                    if ($request->boolean('written_exam')) {
+                        $examResetData = array_merge($examResetData, $examMark->only([
+                            'bangla', 'english', 'math', 'science', 'general_knowledge', 'total',
+                        ]));
+                        $examMark->fill(array_fill_keys(array_keys($examResetData), null));
+                    }
+
+                    if ($request->boolean('viva')) {
+                        $examResetData = array_merge($examResetData, $examMark->only(['viva', 'viva_remark']));
+                        $examMark->viva = null;
+                        $examMark->viva_remark = null;
+                    }
+
+                    if ($request->boolean('dup_test')) {
+                        $examResetData['dup_test'] = $examMark->dup_test;
+                        $examMark->dup_test = null;
+                    }
+
+                    if (! empty($examResetData)) {
+                        $logData['resets']['exam_mark'] = $examResetData;
+                        $examMark->save();
+                    }
+                }
             }
 
-            $examMark->save();
+            $application->save();
+
+            // ✅ যদি অন্তত ১টা checkbox সিলেক্ট করা হয় তাহলে লগ লিখো
+            if (! empty($logData['resets'])) {
+                Log::channel('application_reset')->info(json_encode($logData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            }
+            Alert::success('Success', 'The information has been updated');
+
+            return back();
+        } catch (\Throwable $e) {
+            Log::error('Application Update Error: '.$e->getMessage());
+
+            return back()->withErrors('Something went wrong. Please try again.');
         }
-
-        $application->save();
-
-        Alert::success('Success', 'The information has been updated');
-
-        return back();
     }
 }

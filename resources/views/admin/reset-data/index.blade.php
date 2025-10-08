@@ -47,57 +47,73 @@
                             </thead>
                             <tbody></tbody>
                         </table>
-                        <div class="row">
+                        <div class="row mt-3">
+                            <!-- All Check / Uncheck -->
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="scanned_at" class="form-check-input" id="scanned_at">
+                                    <input type="checkbox" class="form-check-input" id="check_all">
+                                    <label class="form-check-label" for="check_all"><strong>All Check /
+                                            Uncheck</strong></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="scanned_at" class="form-check-input single-check"
+                                        id="scanned_at">
                                     <label class="form-check-label" for="scanned_at">Scan</label>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-2">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" name="is_gate_entry" class="form-check-input" id="is_gate_entry">
-                                    <label class="form-check-label" for="is_gate_entry">Gate Entry</label>
-                                </div>
-                            </div> --}}
+
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="is_medical_pass" class="form-check-input"
+                                    <input type="checkbox" name="is_medical_pass" class="form-check-input single-check"
                                         id="is_medical_pass">
                                     <label class="form-check-label" for="is_medical_pass">Primary Medical</label>
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="is_final_pass" class="form-check-input" id="is_final_pass">
+                                    <input type="checkbox" name="is_final_pass" class="form-check-input single-check"
+                                        id="is_final_pass">
                                     <label class="form-check-label" for="is_final_pass">Final Medical</label>
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="is_important" class="form-check-input" id="is_important">
+                                    <input type="checkbox" name="is_important" class="form-check-input single-check"
+                                        id="is_important">
                                     <label class="form-check-label" for="is_important">Important</label>
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="written_exam" class="form-check-input" id="written_exam">
+                                    <input type="checkbox" name="written_exam" class="form-check-input single-check"
+                                        id="written_exam">
                                     <label class="form-check-label" for="written_exam">Written Exam</label>
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="viva" class="form-check-input" id="viva">
+                                    <input type="checkbox" name="viva" class="form-check-input single-check"
+                                        id="viva">
                                     <label class="form-check-label" for="viva">Viva</label>
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="form-group form-check">
-                                    <input type="checkbox" name="dup_test" class="form-check-input" id="dup_test">
+                                    <input type="checkbox" name="dup_test" class="form-check-input single-check"
+                                        id="dup_test">
                                     <label class="form-check-label" for="dup_test">Dop Test</label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+
+                            <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
@@ -159,6 +175,18 @@
                 $('#filter_btn').click(function() {
                     const id = $('#application_id').val();
                     getDataById(id);
+                });
+            });
+            $(document).ready(function() {
+                // When "All Check / Uncheck" is clicked
+                $('#check_all').on('click', function() {
+                    $('.single-check').prop('checked', this.checked);
+                });
+
+                // When any single checkbox changes, update "All Check"
+                $('.single-check').on('change', function() {
+                    $('#check_all').prop('checked', $('.single-check:checked').length === $('.single-check')
+                        .length);
                 });
             });
 
