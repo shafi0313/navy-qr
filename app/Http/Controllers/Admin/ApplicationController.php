@@ -42,7 +42,7 @@ class ApplicationController extends Controller
                     ->selectRaw(
                         $this->examSumColumns()
                     )
-                    ->where('team', user()->team)
+                    ->where('users.team', user()->team)
                     ->orderBy('total_marks', 'desc');
             }
             $applications = $query;

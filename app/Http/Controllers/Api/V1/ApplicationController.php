@@ -38,7 +38,7 @@ class ApplicationController extends BaseController
                 )
                 ->selectRaw(
                     $this->examSumColumns()
-                )->where('team', user()->team);
+                )->where('users.team', user()->team);
         }
         $applications = $query->paginate(20);
 

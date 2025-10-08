@@ -24,7 +24,7 @@ trait DailyStateReportTrait
         //     }
         // } else {
         //     $applicantsBaseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
-        //         ->where('team', user()->team);
+        //         ->where('users.team', user()->team);
         // }
         $applicantsBaseQuery->groupBy('candidate_designation');
         $data['applicants'] = (clone $applicantsBaseQuery)->whereBetween('exam_date', [$startDate, $endDate])->get();
@@ -38,7 +38,7 @@ trait DailyStateReportTrait
             }
         } else {
             $baseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                ->where('team', user()->team);
+                ->where('users.team', user()->team);
         }
         $baseQuery->groupBy('candidate_designation');
 
@@ -59,7 +59,7 @@ trait DailyStateReportTrait
                 $wQuery->where('team', $team);
             }
         } else {
-            $wQuery->where('team', user()->team);
+            $wQuery->where('users.team', user()->team);
         }
         $wQuery->where('applications.is_medical_pass', 1);
 

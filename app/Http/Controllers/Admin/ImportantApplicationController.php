@@ -42,7 +42,7 @@ class ImportantApplicationController extends Controller
                             $this->examSumColumns()
                         )
                         ->where('is_important', 1)
-                        ->where('team', user()->team)
+                        ->where('users.team', user()->team)
                         ->orderBy('total_marks', 'desc');
                     break;
             }

@@ -57,7 +57,7 @@ class PrimaryMedicalController extends Controller
                     'scanned_at',
                 )->whereNotNull('scanned_at')
                     ->whereHas('user', function ($query) {
-                        $query->where('team', user()->team);
+                        $query->where('users.team', user()->team);
                     });
             }
 

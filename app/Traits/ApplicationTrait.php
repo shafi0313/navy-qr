@@ -8,7 +8,7 @@ trait ApplicationTrait
     {
         return [
             'users.id as user_id',
-            'users.team as team',
+            'users.team as user_team',
         ];
     }
 

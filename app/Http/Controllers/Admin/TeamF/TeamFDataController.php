@@ -39,7 +39,7 @@ class TeamFDataController extends Controller
                     )
                 );
             if ($roleId != 1) {
-                $query->where('team', user()->team);
+                $query->where('users.team', user()->team);
             }
 
             $applications = $query;

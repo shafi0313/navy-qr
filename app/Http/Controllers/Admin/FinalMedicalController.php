@@ -57,7 +57,7 @@ class FinalMedicalController extends Controller
                             ->where('science', '>=', 8)
                             ->where('general_knowledge', '>=', 8);
                     })
-                    ->where('team', user()->team);
+                    ->where('users.team', user()->team);
             }
 
             return DataTables::eloquent($applications)

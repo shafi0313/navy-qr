@@ -58,7 +58,7 @@ class ResultController extends Controller
                     )
                     ->where('exam_marks.viva', '>=', 5)
                     ->where('is_final_pass', 1)
-                    ->where('team', user()->team)
+                    ->where('users.team', user()->team)
                     ->orderBy('is_medical_pass', 'desc')
                     ->orderBy('is_final_pass', 'desc')
                     ->orderBy('total_marks', 'desc')

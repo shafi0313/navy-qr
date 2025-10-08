@@ -37,7 +37,7 @@ trait EnclTrait
                 )
             )->cursor();
         // if ($roleId != 1) {
-        //     $query->where('team', user()->team);
+        //     $query->where('users.team', user()->team);
         // }
         // $applications = $query->cursor();
     }
@@ -70,7 +70,7 @@ trait EnclTrait
             )->cursor();
 
         // if ($roleId != 1) {
-        //     $query->where('team', user()->team);
+        //     $query->where('users.team', user()->team);
         // }
         // $applications = $query->cursor();
     }
