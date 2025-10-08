@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\VivaMarkController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ResetDataController;
+use App\Http\Controllers\Admin\ActiveUserController;
 use App\Http\Controllers\Admin\RemoveDataController;
 use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Admin\ApplicationController;
@@ -44,6 +45,10 @@ Route::controller(RemoveDataController::class)->prefix('rm-remove')->name('rm.')
     Route::get('/', 'index')->name('index');
     Route::post('sd','sailor')->name('sd');
 });
+
+
+Route::get('/active-users', [ActiveUserController::class, 'activeUsers'])->name('active_users.index');
+Route::post('/logout-user/{id}', [ActiveUserController::class, 'logoutUser'])->name('active_users.logout');
 
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

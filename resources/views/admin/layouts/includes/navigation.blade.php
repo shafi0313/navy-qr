@@ -222,6 +222,9 @@
                     </a>
                     <div class="collapse {{ openNav($admin) }}" id="sidebarAdmin">
                         <ul class="side-nav-second-level">
+                            <li class="{{ activeNav('admin.active_users.*') }}">
+                                <a href="{{ route('admin.active_users.index') }}">Active User</a>
+                            </li>
                             <li class="{{ activeNav('admin.roles.*') }}">
                                 <a href="{{ route('admin.roles.index') }}">User Role</a>
                             </li>

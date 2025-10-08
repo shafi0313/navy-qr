@@ -15,10 +15,19 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AdminUserController extends Controller
 {
+    public function __construct()
+    {
+        if (! in_array(user()->role_id, [1])) {
+            abort(403, 'You are not authorized to perform this action');
+        }
+    }
+    
+
     public function index(Request $request)
     {
         if (! in_array(user()->role_id, [1])) {
             Alert::error('You are not authorized to perform this action');
+
             return back();
         }
         if ($request->ajax()) {

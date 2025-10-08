@@ -91,7 +91,6 @@ class AppInstructionController extends Controller
         }
 
         return abort(403, 'Unauthorized action.');
-        // return view('admin.app-instruction.show', compact('instruction'));
     }
 
     /**
