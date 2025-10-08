@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class ActiveUserController extends Controller
@@ -25,6 +25,7 @@ class ActiveUserController extends Controller
 
             return [
                 'type' => 'web',
+                'id' => $session->id,
                 'user_id' => $session->user_id,
                 'name' => $user?->name,
                 'email' => $user?->email,
@@ -40,6 +41,7 @@ class ActiveUserController extends Controller
 
             return [
                 'type' => 'api',
+                'id' => $token->id,
                 'user_id' => $token->tokenable_id,
                 'name' => $user?->name,
                 'email' => $user?->email,
@@ -58,10 +60,10 @@ class ActiveUserController extends Controller
     public function logoutUser($id)
     {
         // 🔹 Logout from Fortify sessions
-        DB::table('sessions')->where('user_id', $id)->delete();
+        DB::table('sessions')->where('id', $id)->delete();
 
         // 🔹 Logout from Sanctum tokens
-        PersonalAccessToken::where('tokenable_id', $id)->delete();
+        PersonalAccessToken::where('id', $id)->delete();
 
         return back()->with('success', 'User logged out successfully!');
     }

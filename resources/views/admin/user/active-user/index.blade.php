@@ -44,7 +44,7 @@
                                     </td>
                                     <td class="text-center">{{ $activeUser['last_activity'] ?? '-' }}</td>
                                     <td class="text-center">
-                                        <form action="{{ route('admin.active_users.logout', $activeUser['user_id']) }}"
+                                        <form action="{{ route('admin.active_users.logout', $activeUser['id']) }}"
                                             method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-danger btn-sm">Logout</button>
