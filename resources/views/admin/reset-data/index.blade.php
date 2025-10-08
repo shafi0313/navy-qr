@@ -48,7 +48,6 @@
                             <tbody></tbody>
                         </table>
                         <div class="row mt-3">
-                            <!-- All Check / Uncheck -->
                             <div class="col-md-2">
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="check_all">
@@ -176,8 +175,7 @@
                     const id = $('#application_id').val();
                     getDataById(id);
                 });
-            });
-            $(document).ready(function() {
+
                 // When "All Check / Uncheck" is clicked
                 $('#check_all').on('click', function() {
                     $('.single-check').prop('checked', this.checked);
