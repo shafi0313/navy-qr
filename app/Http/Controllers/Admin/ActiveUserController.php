@@ -61,9 +61,14 @@ class ActiveUserController extends Controller
     {
         // 🔹 Logout from Fortify sessions
         DB::table('sessions')->where('id', $id)->delete();
-
         // 🔹 Logout from Sanctum tokens
         PersonalAccessToken::where('id', $id)->delete();
+
+        // // 🔹 Logout from Fortify sessions
+        // DB::table('sessions')->where('user_id', $id)->delete();
+
+        // // 🔹 Logout from Sanctum tokens
+        // PersonalAccessToken::where('tokenable_id', $id)->delete();
 
         return back()->with('success', 'User logged out successfully!');
     }
