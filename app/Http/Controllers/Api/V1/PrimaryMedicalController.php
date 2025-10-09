@@ -23,7 +23,7 @@ class PrimaryMedicalController extends BaseController
         }
         try {
             DB::beginTransaction();
-            $application = Application::select('id', 'is_gate_entry', 'exam_date', 'district', 'is_medical_pass', 'p_m_remark', 'scanned_at')->findOrFail($request->id);
+            $application = Application::select('id', 'exam_date', 'district', 'is_medical_pass', 'p_m_remark', 'scanned_at')->findOrFail($request->id);
 
             // Check gate entry, exam date & venue
             if (is_null($application->scanned_at)) {
