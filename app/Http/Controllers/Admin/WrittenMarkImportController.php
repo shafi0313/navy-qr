@@ -7,7 +7,9 @@ use App\Imports\WrittenMarkImport;
 use App\Models\Application;
 use App\Models\ExamMark;
 use App\Models\WrittenMark;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -27,57 +29,85 @@ class WrittenMarkImportController extends Controller
             'file' => 'required|mimes:xlsx',
         ]);
 
+        DB::beginTransaction();
+
         try {
             Excel::import(new WrittenMarkImport, $request->file('file'));
-            Alert::success('Mark imported successfully!');
-        } catch (\Exception $e) {
-            Alert::error('Something went wrong!, Please try again.');
+            DB::commit();
+            Alert::success('Marks imported successfully!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Alert::error('Import failed: '.nl2br($e->getMessage()));
         }
 
         return back();
     }
+
+    // public function import(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|mimes:xlsx',
+    //     ]);
+
+    //     try {
+    //         Excel::import(new WrittenMarkImport, $request->file('file'));
+    //         Alert::success('Mark imported successfully!');
+    //     } catch (\Exception $e) {
+    //         Alert::error('Something went wrong!, Please try again.');
+    //     }
+
+    //     return back();
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
         $writtenMarks = WrittenMark::all();
-
-        foreach ($writtenMarks as $writtenMark) {
-            $application = Application::where('serial_no', $writtenMark->serial_no)->first();
-
-            // If the question already exists, skip to the next iteration
-            if (! $application) {
-                continue;
-            }
-
-            $examMark = ExamMark::where('application_id', $application->id)->first();
-            $markData = [
-                'application_id' => $application->id,
-                'bangla' => $writtenMark->bangla,
-                'english' => $writtenMark->english,
-                'math' => $writtenMark->math,
-                'science' => $writtenMark->science,
-                'general_knowledge' => $writtenMark->general_knowledge,
-            ];
-            if ($examMark) {
-                $examMark->update($markData);
-            } else {
-                $examMark = ExamMark::create($markData);
-            }
-
-            WrittenMark::findOrFail($writtenMark->id)->delete();
-        }
-
         try {
-            Alert::success('Written marks added successfully!');
-        } catch (\Exception $e) {
-            Alert::error('Something went wrong!, Please try again.');
+            foreach ($writtenMarks as $writtenMark) {
+                $application = Application::select('id')->where('serial_no', $writtenMark->serial_no)->first();
+
+                if (! $application) {
+                    \Log::warning('Application not found: '.$writtenMark->serial_no);
+
+                    continue;
+                }
+
+                $examMark = ExamMark::find($application->id);
+                if ($examMark) {
+
+                    $examMark->update([
+                        'bangla' => $writtenMark->bangla,
+                        'english' => $writtenMark->english,
+                        'math' => $writtenMark->math,
+                        'science' => $writtenMark->science,
+                        'general_knowledge' => $writtenMark->general_knowledge,
+                    ]);
+                } else {
+                    ExamMark::create(
+                        [
+                            'application_id' => $application->id,
+                            'bangla' => $writtenMark->bangla,
+                            'english' => $writtenMark->english,
+                            'math' => $writtenMark->math,
+                            'science' => $writtenMark->science,
+                            'general_knowledge' => $writtenMark->general_knowledge,
+                        ]
+                    );
+                }
+
+                $writtenMark->delete();
+
+            }
+            Alert::success('Written marks processed successfully!');
+
+            return back();
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
 
-        return back();
     }
 
     public function allDelete()

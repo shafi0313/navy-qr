@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('exam_marks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('application_id')->constrained()->cascadeOnDelete();
-            $table->float('bangla');
-            $table->float('english');
-            $table->float('math');
-            $table->float('science');
-            $table->float('general_knowledge');
-            $table->float('viva')->nullable();
+            $table->foreignId('application_id')->constrained('applications')->cascadeOnDelete();
+            $table->unsignedTinyInteger('bangla')->default(0);
+            $table->unsignedTinyInteger('english')->default(0);
+            $table->unsignedTinyInteger('math')->default(0);
+            $table->unsignedTinyInteger('science')->default(0);
+            $table->unsignedTinyInteger('general_knowledge')->default(0);
+            $table->unsignedTinyInteger('viva')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
-            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 

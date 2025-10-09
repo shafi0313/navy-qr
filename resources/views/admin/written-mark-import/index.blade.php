@@ -31,6 +31,20 @@
             @if ($writtenMarks->count() > 0)
                 <div class="card">
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <form action="{{ route('admin.written-mark-imports.store') }}" method="post">
+                                    @csrf @method('POST')
+                                    <a href="{{ route('admin.written_mark_imports.all_deletes') }}"
+                                        onclick="return confirm('Do you want to delete all data on this page?')"
+                                        class="btn btn-danger">Delete All</a>
+
+                                    <button type="submit" onclick="return confirm('Are you sure?')"
+                                        class="btn btn-primary">Post</button>
+                                </form>
+                            </div>
+                        </div>
+
                         <div class="table-responsive mt-3">
                             <table class="display table table-striped table-hover">
                                 <thead>
@@ -61,7 +75,7 @@
                                                     method="post"
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger">
+                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger btn-sm px-1 py-0">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </form>
@@ -72,21 +86,6 @@
                             </table>
                         </div>
                     </div>
-                    <form action="{{ route('admin.written-mark-imports.store') }}" method="post">
-                        @csrf @method('POST')
-                        <div class="card-body">
-                            <div class="row mt-5">
-                                <div class="col-md-12 text-right">
-                                    <a href="{{ route('admin.written_mark_imports.all_deletes') }}"
-                                        onclick="return confirm('Do you want to delete all data on this page?')"
-                                        class="btn btn-danger">Delete All</a>
-
-                                    <button type="submit" onclick="return confirm('Are you sure?')"
-                                        class="btn btn-primary">Post</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             @else
                 <div class="card">
