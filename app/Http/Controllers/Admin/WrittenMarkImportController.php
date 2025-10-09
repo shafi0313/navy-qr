@@ -39,7 +39,6 @@ class WrittenMarkImportController extends Controller
             DB::rollBack();
             Alert::error('Import failed: '.nl2br($e->getMessage()));
         }
-
         return back();
     }
 
