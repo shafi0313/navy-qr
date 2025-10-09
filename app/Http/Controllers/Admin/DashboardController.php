@@ -67,7 +67,7 @@ class DashboardController extends Controller
                 }
             }
 
-            return$data = ['data' => $data];
+            $data = ['data' => $data];
         }
         $menuOrder = implode(',', config('var.menuNameOrder'));
         $data['appInstructions'] = AppInstruction::orderByRaw("FIELD(menu_name, $menuOrder)")->get();
