@@ -36,10 +36,10 @@ class DashboardController extends Controller
                 'B' => team('b'),
                 'C' => team('c'),
             ];
-
+            
             $data = [];
-
             if (user()->role_id == 1) {
+                $this->getTeamData($teams['A']);
                 // Role 1: Show all teams
                 foreach ($teams as $teamName => $districts) {
                     $data[] = [
@@ -67,7 +67,7 @@ class DashboardController extends Controller
                 }
             }
 
-            $data = ['data' => $data];
+            return$data = ['data' => $data];
         }
         $menuOrder = implode(',', config('var.menuNameOrder'));
         $data['appInstructions'] = AppInstruction::orderByRaw("FIELD(menu_name, $menuOrder)")->get();
@@ -77,12 +77,11 @@ class DashboardController extends Controller
 
     public function getTeamData(array $districts)
     {
-        // COUNT(*) as total,
         $query = Application::selectRaw('
-            COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
-            COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
-            COUNT(CASE WHEN DATE(scanned_at) = CURRENT_DATE THEN 1 END) as today
-        ')
+        COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
+        COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
+        COUNT(CASE WHEN DATE(scanned_at) = CURRENT_DATE THEN 1 END) as today
+    ')
             ->whereIn('eligible_district', $districts);
 
         if (user()->role_id == 7) {
