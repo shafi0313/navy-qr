@@ -36,10 +36,9 @@ class DashboardController extends Controller
                 'B' => team('b'),
                 'C' => team('c'),
             ];
-            
+
             $data = [];
             if (user()->role_id == 1) {
-                $this->getTeamData($teams['A']);
                 // Role 1: Show all teams
                 foreach ($teams as $teamName => $districts) {
                     $data[] = [
@@ -77,17 +76,34 @@ class DashboardController extends Controller
 
     public function getTeamData(array $districts)
     {
-        $query = Application::selectRaw('
-        COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
-        COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
-        COUNT(CASE WHEN DATE(scanned_at) = CURRENT_DATE THEN 1 END) as today
-    ')
+        $query = Application::query()
+            ->selectRaw('
+            SUM(CASE WHEN DATE(exam_date) = ? THEN 1 ELSE 0 END) as todayApplicants,
+            SUM(CASE WHEN scanned_at IS NOT NULL THEN 1 ELSE 0 END) as present,
+            SUM(CASE WHEN DATE(scanned_at) = ? THEN 1 ELSE 0 END) as today
+        ', [now()->toDateString(), now()->toDateString()])
             ->whereIn('eligible_district', $districts);
 
         if (user()->role_id == 7) {
             $query->where('user_id', user()->id);
         }
 
-        return $query->first();
+        return $query->first() ?? (object) [
+            'todayApplicants' => 0,
+            'present' => 0,
+            'today' => 0,
+        ];
+        //     $query = Application::selectRaw('
+        //     COUNT(CASE WHEN DATE(exam_date) = CURRENT_DATE THEN 1 END) as todayApplicants,
+        //     COUNT(CASE WHEN scanned_at IS NOT NULL THEN 1 END) as present,
+        //     COUNT(CASE WHEN DATE(scanned_at) = CURRENT_DATE THEN 1 END) as today
+        // ')
+        //         ->whereIn('eligible_district', $districts);
+
+        //     if (user()->role_id == 7) {
+        //         $query->where('user_id', user()->id);
+        //     }
+
+        //     return $query->first();
     }
 }
