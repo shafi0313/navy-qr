@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'User')
+@section('title', 'Active User')
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => 'Users', 'insId' => 2])
 
@@ -8,10 +8,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <h4 class="card-title">List of Users</h4>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                            <i class="fa-solid fa-plus"></i> Add New
-                        </button>
+                        <h4 class="card-title">List of Active Users</h4>
+                        <form action="{{ route('admin.active_users.logout_all') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">Logout All Users</button>
+                        </form>
                     </div>
                     <table id="data_table" class="table table-bordered bordered table-centered mb-0 w-100">
                         <thead>
@@ -22,6 +23,7 @@
                                 <th class="text-center">Team</th>
                                 {{-- <th>IP Address</th> --}}
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Time</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>

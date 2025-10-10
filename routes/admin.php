@@ -46,10 +46,11 @@ Route::controller(RemoveDataController::class)->prefix('rm-remove')->name('rm.')
     Route::post('sd','sailor')->name('sd');
 });
 
-
-Route::get('/active-users', [ActiveUserController::class, 'activeUsers'])->name('active_users.index');
-Route::post('/logout-user/{id}', [ActiveUserController::class, 'logoutUser'])->name('active_users.logout');
-
+Route::controller(ActiveUserController::class)->prefix('active-users')->name('active_users.')->group(function () {
+    Route::get('/', 'activeUsers')->name('index');
+    Route::post('/logout-user/{id}', 'logoutUser')->name('logout');
+    Route::post('/logout-all-users', 'logoutAllUsers')->name('logout_all');
+});
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

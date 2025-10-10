@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Laravel\Sanctum\PersonalAccessToken;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ActiveUserController extends Controller
 {
@@ -70,6 +71,18 @@ class ActiveUserController extends Controller
         // // 🔹 Logout from Sanctum tokens
         // PersonalAccessToken::where('tokenable_id', $id)->delete();
 
-        return back()->with('success', 'User logged out successfully!');
+        Alert::success('Success', 'User logged out successfully!');
+        return back();
+    }
+
+    public function logoutAllUsers()
+    {
+        // 🔹 Logout from Fortify sessions
+        DB::table('sessions')->delete();
+        // 🔹 Logout from Sanctum tokens
+        PersonalAccessToken::query()->delete();
+
+        Alert::success('Success', 'All users logged out successfully!');
+        return back();
     }
 }
