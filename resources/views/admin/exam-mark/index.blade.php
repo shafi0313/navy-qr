@@ -195,7 +195,7 @@
                         {
                             data: 'medical',
                             name: 'medical',
-                            title: 'medical',
+                            title: 'Primary medical',
                             className: 'text-center',
                         },
                         {
