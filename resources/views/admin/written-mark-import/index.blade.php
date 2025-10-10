@@ -40,7 +40,7 @@
                                         class="btn btn-danger">Remove All</a>
 
                                     <button type="submit" onclick="return confirm('Are you sure?')"
-                                        class="btn btn-primary">Post</button>
+                                        class="btn btn-primary">Add to Database</button>
                                 </form>
                             </div>
                         </div>
