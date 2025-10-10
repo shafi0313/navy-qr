@@ -37,7 +37,7 @@
                                     @csrf @method('POST')
                                     <a href="{{ route('admin.written_mark_imports.all_deletes') }}"
                                         onclick="return confirm('Do you want to delete all data on this page?')"
-                                        class="btn btn-danger">Delete All</a>
+                                        class="btn btn-danger">Remove All</a>
 
                                     <button type="submit" onclick="return confirm('Are you sure?')"
                                         class="btn btn-primary">Post</button>
