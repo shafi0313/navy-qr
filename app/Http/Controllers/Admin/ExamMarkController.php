@@ -92,6 +92,15 @@ class ExamMarkController extends Controller
                     if ($request->filled('team')) {
                         $query->where('users.team', $request->team);
                     }
+                    if ($request->filled('written_exam')) {
+                        if ($request->written_exam == 'pending') {
+                            $query->whereNull('exam_marks.id');
+                        } elseif ($request->written_exam == 'passed') {
+                            $query->whereRaw('(exam_marks.bangla >= 8 AND exam_marks.english >= 8 AND exam_marks.math >= 8 AND exam_marks.science >= 8 AND exam_marks.general_knowledge >= 8)');
+                        } elseif ($request->written_exam == 'failed') {
+                            $query->whereRaw('(exam_marks.bangla < 8 OR exam_marks.english < 8 OR exam_marks.math < 8 OR exam_marks.science < 8 OR exam_marks.general_knowledge < 8)');
+                        }
+                    }
                     if ($search = $request->get('search')['value']) {
                         $query->search($search);
                     }

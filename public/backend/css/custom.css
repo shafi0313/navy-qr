@@ -41,6 +41,7 @@ table tr td {
     line-height: 35px;
 }
 
+.compact,
 .is_medical_pass,
 .team,
 .is_important {
