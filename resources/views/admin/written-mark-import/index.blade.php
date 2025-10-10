@@ -50,7 +50,7 @@
                                 <thead>
                                     <tr>
                                         <th>SL</th>
-                                        <th>From Number</th>
+                                        <th>Roll Number</th>
                                         <th>Bangla</th>
                                         <th>English</th>
                                         <th>Math</th>

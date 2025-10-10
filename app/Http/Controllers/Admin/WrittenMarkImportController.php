@@ -39,6 +39,7 @@ class WrittenMarkImportController extends Controller
             DB::rollBack();
             Alert::error('Import failed: '.nl2br($e->getMessage()));
         }
+
         return back();
     }
 
@@ -64,49 +65,47 @@ class WrittenMarkImportController extends Controller
     public function store(Request $request)
     {
         $writtenMarks = WrittenMark::all();
+
+        DB::beginTransaction();
+
         try {
             foreach ($writtenMarks as $writtenMark) {
-                $application = Application::select('id')->where('serial_no', $writtenMark->serial_no)->first();
+                $application = Application::select('id')
+                    ->where('serial_no', $writtenMark->serial_no)
+                    ->first();
 
                 if (! $application) {
-                    \Log::warning('Application not found: '.$writtenMark->serial_no);
-
                     continue;
                 }
 
-                $examMark = ExamMark::find($application->id);
-                if ($examMark) {
+                $examMark = ExamMark::where('application_id', $application->id)->first();
+                $data = [
+                    'bangla' => $writtenMark->bangla,
+                    'english' => $writtenMark->english,
+                    'math' => $writtenMark->math,
+                    'science' => $writtenMark->science,
+                    'general_knowledge' => $writtenMark->general_knowledge,
+                ];
 
-                    $examMark->update([
-                        'bangla' => $writtenMark->bangla,
-                        'english' => $writtenMark->english,
-                        'math' => $writtenMark->math,
-                        'science' => $writtenMark->science,
-                        'general_knowledge' => $writtenMark->general_knowledge,
-                    ]);
+                if ($examMark) {
+                    $examMark->update($data);
                 } else {
-                    ExamMark::create(
-                        [
-                            'application_id' => $application->id,
-                            'bangla' => $writtenMark->bangla,
-                            'english' => $writtenMark->english,
-                            'math' => $writtenMark->math,
-                            'science' => $writtenMark->science,
-                            'general_knowledge' => $writtenMark->general_knowledge,
-                        ]
-                    );
+                    $data['application_id'] = $application->id;
+                    ExamMark::create($data);
                 }
 
+                // delete after successful move
                 $writtenMark->delete();
-
             }
-            Alert::success('Written marks processed successfully!');
 
-            return back();
-        } catch (Exception $e) {
-            return $e->getMessage();
+            DB::commit();
+            Alert::success('Written marks processed successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Alert::error('Processing failed: '.$e->getMessage());
         }
 
+        return back();
     }
 
     public function allDelete()

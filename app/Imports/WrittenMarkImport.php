@@ -29,7 +29,7 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
             }
 
             // Required columns
-            $required = ['from_number', 'bangla', 'english', 'math', 'science', 'gk'];
+            $required = ['roll_number', 'bangla', 'english', 'math', 'science', 'gk'];
 
             foreach ($required as $field) {
                 if (! array_key_exists($field, $normalized)) {
@@ -44,7 +44,7 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
                     continue;
                 }
 
-                if ($field !== 'from_number' && ((int) $normalized[$field]) % 2 !== 0) {
+                if ($field !== 'roll_number' && ((int) $normalized[$field]) % 2 !== 0) {
                     $errors[] = "Row {$rowNumber}: Value in '{$field}' must be even";
                 }
             }
@@ -52,7 +52,7 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
             // Save validated row only if no error for this row
             if (! in_array(true, array_map(fn ($e) => str_starts_with($e, "Row {$rowNumber}"), $errors))) {
                 $validatedData[] = [
-                    'serial_no' => (int) $normalized['from_number'],
+                    'serial_no' => (int) $normalized['roll_number'],
                     'bangla' => (int) $normalized['bangla'],
                     'english' => (int) $normalized['english'],
                     'math' => (int) $normalized['math'],
@@ -70,7 +70,15 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
         }
 
         // Insert all validated data
-        WrittenMark::insert($validatedData);
+        // WrittenMark::insert($validatedData);
+
+        // Insert or update each valid row
+        foreach ($validatedData as $data) {
+            WrittenMark::updateOrInsert(
+                ['serial_no' => $data['serial_no']], // Match condition
+                $data                               // Data to update/insert
+            );
+        }
     }
 }
 
@@ -87,7 +95,7 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
 //     {
 //         // dd($row);
 //         return WrittenMark::create([
-//             'serial_no' => $row['from_number'] ?? null,
+//             'serial_no' => $row['roll_number'] ?? null,
 //             'bangla' => $row['bangla'] ?? null,
 //             'english' => $row['english'] ?? null,
 //             'math' => $row['math'] ?? null,
