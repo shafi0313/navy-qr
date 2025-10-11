@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\ApplicationUrl;
 use App\Traits\ApplicationTrait;
 use App\Traits\ApplicationValidationTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -284,12 +285,13 @@ class ApplicationController extends BaseController
 
     public function getTeamData(array $districts)
     {
-        // COUNT(*) as total,
+        $today = Carbon::today()->format('Y-m-d');
         $query = Application::selectRaw('
-            COUNT(CASE WHEN is_medical_pass = 1 THEN 1 END) as fit,
-            COUNT(CASE WHEN is_medical_pass = 0 THEN 1 END) as unfit
-        ')
-            ->whereIn('eligible_district', $districts);
+        COUNT(CASE WHEN is_medical_pass = 1 THEN 1 END) as fit,
+        COUNT(CASE WHEN is_medical_pass = 0 THEN 1 END) as unfit
+    ')
+            ->whereIn('eligible_district', $districts)
+            ->whereDate('scanned_at', $today);
 
         if (user()->role_id == 7) {
             $query->where('user_id', user()->id);
