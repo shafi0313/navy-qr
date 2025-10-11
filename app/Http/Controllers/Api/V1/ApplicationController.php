@@ -287,9 +287,9 @@ class ApplicationController extends BaseController
     {
         $today = Carbon::today()->format('Y-m-d');
         $query = Application::selectRaw('
-        COUNT(CASE WHEN is_medical_pass = 1 THEN 1 END) as fit,
-        COUNT(CASE WHEN is_medical_pass = 0 THEN 1 END) as unfit
-    ')
+            COUNT(CASE WHEN is_medical_pass = 1 THEN 1 END) as fit,
+            COUNT(CASE WHEN is_medical_pass = 0 THEN 1 END) as unfit
+        ')
             ->whereIn('eligible_district', $districts)
             ->whereDate('scanned_at', $today);
 
