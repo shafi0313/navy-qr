@@ -71,15 +71,15 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
         }
 
         // Insert all validated data
-        // WrittenMark::insert($validatedData);
+        WrittenMark::insert($validatedData);
 
         // Insert or update each valid row
-        foreach ($validatedData as $data) {
-            WrittenMark::updateOrInsert(
-                ['serial_no' => $data['serial_no']], // Match condition
-                $data                               // Data to update/insert
-            );
-        }
+        // foreach ($validatedData as $data) {
+        //     WrittenMark::updateOrInsert(
+        //         ['serial_no' => $data['serial_no']], // Match condition
+        //         $data                               // Data to update/insert
+        //     );
+        // }
     }
 }
 

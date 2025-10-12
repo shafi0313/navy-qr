@@ -56,6 +56,7 @@
                                         <th>Math</th>
                                         <th>Science</th>
                                         <th>GK</th>
+                                        <th>Remark</th>
                                         <th class="no-sort" width="60px">Action</th>
                                     </tr>
                                 </thead>
@@ -69,6 +70,7 @@
                                             <td>{{ $writtenMark->math }}</td>
                                             <td>{{ $writtenMark->science }}</td>
                                             <td>{{ $writtenMark->general_knowledge }}</td>
+                                            <td>{{ $writtenMark->remark ?? '' }}</td>
                                             <td class="text-center">
                                                 <form
                                                     action="{{ route('admin.written-mark-imports.destroy', $writtenMark->id) }}"

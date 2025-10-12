@@ -75,6 +75,7 @@ class WrittenMarkImportController extends Controller
                     ->first();
 
                 if (! $application) {
+                    $writtenMark->update(['remark' => 'Application not found']);
                     continue;
                 }
 
@@ -88,11 +89,16 @@ class WrittenMarkImportController extends Controller
                 ];
 
                 if ($examMark) {
-                    $examMark->update($data);
-                } else {
-                    $data['application_id'] = $application->id;
-                    ExamMark::create($data);
+                    $writtenMark->update(['remark' => 'Duplicate entry']);
+                    // $examMark->update($data);
+                    continue;
                 }
+                // else {
+                // $data['application_id'] = $application->id;
+                // ExamMark::create($data);
+                // }
+                $data['application_id'] = $application->id;
+                ExamMark::create($data);
 
                 // delete after successful move
                 $writtenMark->delete();
