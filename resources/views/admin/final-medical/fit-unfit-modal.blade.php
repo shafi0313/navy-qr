@@ -49,7 +49,7 @@
                         <div class="col-md-12">
                             <label for="name" class="form-label">Remark </label>
                             <input type="text" name="f_m_remark" class="form-control"
-                                value="{{ $applicant->p_m_remark ?? old('p_m_remark') }}">
+                                value="{{ $applicant->f_m_remark ?? old('f_m_remark') }}">
                         </div>
                     </div>
                 </div>

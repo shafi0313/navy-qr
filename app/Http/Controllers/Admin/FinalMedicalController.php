@@ -75,7 +75,7 @@ class FinalMedicalController extends Controller
                     return $this->written($roleId, $row);
                 })
                 ->addColumn('final', function ($row) use ($roleId) {
-                    return $this->finalMedical($roleId, $row).' Height:'.$row->height;
+                    return $this->finalMedical($roleId, $row);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
