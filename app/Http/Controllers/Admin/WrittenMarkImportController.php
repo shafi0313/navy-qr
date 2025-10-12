@@ -17,8 +17,15 @@ class WrittenMarkImportController extends Controller
 {
     public function index()
     {
-        $writtenMarks = WrittenMark::all();
-        // $writtenMarks = WrittenMark::paginate(30);
+        if (user()->role_id == 1) {
+            $writtenMarks = WrittenMark::all();
+        } else {
+            $writtenMarks = WrittenMark::with(['user:id,team'])
+                ->whereHas('user', function ($q) {
+                    $q->where('team', user()->team);
+                })
+                ->get();
+        }
 
         return view('admin.written-mark-import.index', compact('writtenMarks'));
     }
@@ -64,7 +71,8 @@ class WrittenMarkImportController extends Controller
      */
     public function store(Request $request)
     {
-        $writtenMarks = WrittenMark::all();
+
+       $writtenMarks = WrittenMark::whereIn('id', explode(',', $request->written_marks))->get();
 
         DB::beginTransaction();
 
@@ -76,6 +84,7 @@ class WrittenMarkImportController extends Controller
 
                 if (! $application) {
                     $writtenMark->update(['remark' => 'Application not found']);
+
                     continue;
                 }
 
@@ -90,6 +99,7 @@ class WrittenMarkImportController extends Controller
 
                 if ($examMark) {
                     $writtenMark->update(['remark' => 'Duplicate entry']);
+
                     // $examMark->update($data);
                     continue;
                 }

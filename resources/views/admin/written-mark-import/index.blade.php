@@ -35,6 +35,7 @@
                             <div class="col-md-12 text-end">
                                 <form action="{{ route('admin.written-mark-imports.store') }}" method="post">
                                     @csrf @method('POST')
+                                    <input type="hidden" name="written_marks" value="{{ $writtenMarks->pluck('id')->implode(',') }}">
                                     <a href="{{ route('admin.written_mark_imports.all_deletes') }}"
                                         onclick="return confirm('Do you want to delete all data on this page?')"
                                         class="btn btn-danger">Remove All</a>
