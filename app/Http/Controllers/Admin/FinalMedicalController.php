@@ -145,7 +145,7 @@ class FinalMedicalController extends Controller
             $application->update([
                 'is_final_pass' => $request->final_medical,
                 'height' => $request->height.'\''.$request->height2.'"',
-                'p_m_remark' => $request->final_medical == 0 ? $request->f_m_remark : null,
+                'f_m_remark' => $request->final_medical == 0 ? $request->f_m_remark : null,
             ]);
 
             // // Send SMS notification
