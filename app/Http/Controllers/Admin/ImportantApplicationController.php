@@ -105,7 +105,7 @@ class ImportantApplicationController extends Controller
                             </br></br>Passed in written exam. </br></br>Medically Fit. Recommended for Merit List. </br></br>With profound regards… </br>DPS';
                         } else {
                             return 'Assalamulaikum Sir,</br></br>Roll No:'.$row->serial_no.', Name:'.$row->name.',  Branch:'.$row->candidate_designation.'</br></br>Candidate passed through preliminary medical, screening and appeared written exam.
- </br></br>Passed in written exam. </br></br>Medically Not Fit. </br></br>Result: Not Qualified for Viva. </br></br>With profound regards… </br>DPS';
+ </br></br>Passed in written exam. </br></br>Medically Not Fit('.$row->f_m_remark.') </br></br>Result: Not Qualified for Viva. </br></br>With profound regards… </br>DPS';
                         }
                     }
 
