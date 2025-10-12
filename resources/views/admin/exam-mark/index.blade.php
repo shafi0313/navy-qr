@@ -7,6 +7,11 @@
 @section('title', $pageTitle)
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle, 'menuName' => 6])
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <!-- DataTables Buttons CSS -->
+    <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
     {{-- @include('admin.layouts.includes.table-option') --}}
 
     {{-- <div class="row">
@@ -130,6 +135,19 @@
         }
     </style>
     @push('scripts')
+    <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
+        <!-- DataTables Buttons JS and Dependencies -->
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <!-- JSZip for Excel export -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -140,6 +158,10 @@
                     responsive: true,
                     scrollY: 400,
                     scrollX: true,
+                    lengthMenu: [
+                        [10, 25, 50, 100, 200, 500, 1000, 10000, -1],
+                        [10, 25, 50, 100, 200, 500, 1000, 10000, 'All']
+                    ],
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -241,10 +263,98 @@
                     ],
                     scroller: {
                         loadingIndicator: true
-                    },
+                    },                    
                     order: [
                         [1, 'asc']
                     ],
+                    // Adjusted DOM structure
+                    dom: '<"top"lfB>rt<"bottom"ip>',
+                    buttons: [{
+                            extend: 'excelHtml5',
+                            title: null,
+                            text: 'Export',
+                            className: 'btn btn-success',
+                            exportOptions: {
+                                columns: ':visible',
+                                modifier: {
+                                    search: 'applied',
+                                    order: 'applied',
+                                    page: 'all'
+                                }
+                            },
+                            action: function(e, dt, button, config) {
+                                if (@json(!in_array(user()->role_id, [1, 2]))) {
+                                    swal({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "You are not authorized to perform this action",
+                                    });
+                                    return false;
+                                }
+                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                                dt.settings()[0].oFeatures.bServerSide = false;
+
+                                $.ajax({
+                                    url: dt.ajax.url(),
+                                    data: dt.ajax.params(),
+                                    success: (json) => {
+                                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(
+                                            this, e, dt, button, config);
+                                        dt.settings()[0].oFeatures.bServerSide =
+                                            originalServerSide;
+                                        dt.ajax.reload(null, false);
+                                    },
+                                    error: function(xhr, error, thrown) {
+                                        console.error('Error fetching data for export:',
+                                            error);
+                                    }
+                                });
+                            }
+                        },
+                        // {
+                        //     extend: 'pdfHtml5',
+                        //     title: null,
+                        //     text: 'Export to PDF',
+                        //     exportOptions: {
+                        //         columns: ':visible',
+                        //         modifier: {
+                        //             search: 'applied',
+                        //             order: 'applied',
+                        //             page: 'all'
+                        //         }
+                        //     },
+                        //     orientation: 'landscape',
+                        //     pageSize: 'A4',
+                        //     action: function(e, dt, button, config) {
+                        //         if ('{{ user()->role_id }}' != 1) {
+                        //             swal({
+                        //                 icon: "error",
+                        //                 title: "Oops...",
+                        //                 text: "You are not authorized to perform this action",
+                        //             });
+                        //             return false;
+                        //         }
+                        //         const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                        //         dt.settings()[0].oFeatures.bServerSide = false;
+
+                        //         $.ajax({
+                        //             url: dt.ajax.url(),
+                        //             data: dt.ajax.params(),
+                        //             success: (json) => {
+                        //                 $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
+                        //                     this, e, dt, button, config);
+                        //                 dt.settings()[0].oFeatures.bServerSide =
+                        //                     originalServerSide;
+                        //                 dt.ajax.reload(null, false);
+                        //             },
+                        //             error: function(xhr, error, thrown) {
+                        //                 console.error('Error fetching data for export:',
+                        //                     error);
+                        //             }
+                        //         });
+                        //     }
+                        // }
+                    ]
                 });
                 $(".filter").find('select').on('change', function() {
                     table.draw();
