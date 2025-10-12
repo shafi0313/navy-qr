@@ -52,6 +52,7 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
             // Save validated row only if no error for this row
             if (! in_array(true, array_map(fn ($e) => str_starts_with($e, "Row {$rowNumber}"), $errors))) {
                 $validatedData[] = [
+                    'user_id' => user()->id,
                     'serial_no' => (int) $normalized['roll_number'],
                     'bangla' => (int) $normalized['bangla'],
                     'english' => (int) $normalized['english'],
