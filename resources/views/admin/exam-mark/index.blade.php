@@ -283,7 +283,7 @@
                                 }
                             },
                             action: function(e, dt, button, config) {
-                                if (@json(!in_array(user()->role_id, [1, 2]))) {
+                                if (@json(!in_array(user()->role_id, [1]))) {
                                     swal({
                                         icon: "error",
                                         title: "Oops...",
