@@ -14,7 +14,13 @@
                 <form action="{{ route('admin.written_mark_imports.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body row justify-content-center">
-                        <div class="form-group col-sm-4">
+                        <div class="col-sm-3">
+                            <label for="" class="mb-1">Today's Written Exam Applicants</label>
+                            @foreach ($todayWrittenApplicantCount as $team => $count)
+                                <h4 class="">{{ user()->role_id == 1 ? $team . ': ' : '' }}{{ $count }}</h4>
+                            @endforeach
+                        </div>
+                        <div class="col-sm-4">
                             <label for="file">File
                                 <span class="t_r"> *</span>
                             </label>
@@ -22,7 +28,7 @@
                             <input type="file" name="file" class="form-control" required>
                         </div>
 
-                        <div class="col-md-3" style="margin-top: 30px">
+                        <div class="col-sm-3" style="margin-top: 20px">
                             <button type="submit" class="btn btn-primary">Import</button>
                         </div>
                     </div>
@@ -31,19 +37,35 @@
             @if ($writtenMarks->count() > 0)
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 text-end">
-                                <form action="{{ route('admin.written-mark-imports.store') }}" method="post">
-                                    @csrf @method('POST')
-                                    <input type="hidden" name="written_marks" value="{{ $writtenMarks->pluck('id')->implode(',') }}">
-                                    <a href="{{ route('admin.written_mark_imports.all_deletes') }}"
-                                        onclick="return confirm('Do you want to delete all data on this page?')"
-                                        class="btn btn-danger">Remove All</a>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <form action="{{ route('admin.written_mark_imports.check') }}" method="post">
+                                @csrf @method('POST')
+                                <input type="hidden" name="written_marks"
+                                    value="{{ $writtenMarks->pluck('id')->implode(',') }}">
 
-                                    <button type="submit" onclick="return confirm('Are you sure?')"
-                                        class="btn btn-primary">Add to Database</button>
-                                </form>
-                            </div>
+                                <button type="submit" onclick="return confirm('Are you sure?')"
+                                    class="btn btn-warning">Check Data</button>
+                            </form>
+
+                            <form action="{{ route('admin.written_mark_imports.all_deletes') }}" method="post">
+                                @csrf @method('POST')
+                                <input type="hidden" name="written_marks"
+                                    value="{{ $writtenMarks->pluck('id')->implode(',') }}">
+
+                                <button type="submit"
+                                    onclick="return confirm('Do you want to delete all data on this page')"
+                                    class="btn btn-danger mx-2">Remove All</button>
+                            </form>
+
+                            <form action="{{ route('admin.written-mark-imports.store') }}" method="post">
+                                @csrf @method('POST')
+                                <input type="hidden" name="written_marks"
+                                    value="{{ $writtenMarks->pluck('id')->implode(',') }}">
+
+
+                                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary">Add
+                                    to Database</button>
+                            </form>
                         </div>
 
                         <div class="table-responsive mt-3">
@@ -78,7 +100,8 @@
                                                     method="post"
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
-                                                    <button type="submit" title="Delete" class="btn btn-link btn-danger btn-sm px-1 py-0">
+                                                    <button type="submit" title="Delete"
+                                                        class="btn btn-link btn-danger btn-sm px-1 py-0">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </form>

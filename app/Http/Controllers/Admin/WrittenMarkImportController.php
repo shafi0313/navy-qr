@@ -19,15 +19,34 @@ class WrittenMarkImportController extends Controller
     {
         if (user()->role_id == 1) {
             $writtenMarks = WrittenMark::all();
+
+            $teams = ['A', 'B', 'C'];
+            $todayWrittenApplicantCount = collect($teams)->mapWithKeys(function ($team) {
+                $count = Application::where('team', $team)
+                    ->where('is_medical_pass', 1)
+                    ->whereDate('exam_date', now()->toDateString())
+                    ->whereDoesntHave('examMark')
+                    ->count();
+
+                return [$team => $count];
+            });
         } else {
             $writtenMarks = WrittenMark::with(['user:id,team'])
                 ->whereHas('user', function ($q) {
                     $q->where('team', user()->team);
                 })
                 ->get();
+
+            $todayWrittenApplicantCount = [
+                user()->team => Application::where('team', user()->team)
+                    ->where('is_medical_pass', 1)
+                    ->whereDate('exam_date', now()->toDateString())
+                    ->whereDoesntHave('examMark')
+                    ->count(),
+            ];
         }
 
-        return view('admin.written-mark-import.index', compact('writtenMarks'));
+        return view('admin.written-mark-import.index', compact('writtenMarks', 'todayWrittenApplicantCount'));
     }
 
     public function import(Request $request)
@@ -50,30 +69,78 @@ class WrittenMarkImportController extends Controller
         return back();
     }
 
-    // public function import(Request $request)
-    // {
-    //     $request->validate([
-    //         'file' => 'required|mimes:xlsx',
-    //     ]);
-
-    //     try {
-    //         Excel::import(new WrittenMarkImport, $request->file('file'));
-    //         Alert::success('Mark imported successfully!');
-    //     } catch (\Exception $e) {
-    //         Alert::error('Something went wrong!, Please try again.');
-    //     }
-
-    //     return back();
-    // }
-
     /**
      * Store a newly created resource in storage.
      */
+    public function check(Request $request)
+    {
+        $writtenMarkIds = explode(',', $request->written_marks);
+
+        $writtenMarks = WrittenMark::whereIn('id', $writtenMarkIds)->get();
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($writtenMarks as $writtenMark) {
+                $application = Application::select('id', 'is_medical_pass', 'exam_date')
+                    ->where('serial_no', $writtenMark->serial_no)
+                    ->first();
+
+                // 1️⃣ No application found
+                if (! $application) {
+                    $writtenMark->update(['remark' => 'Roll No not in database']);
+
+                    continue;
+                }
+
+                // 2️⃣ Candidate failed medical
+                if ($application->is_medical_pass != 1) {
+                    $writtenMark->update(['remark' => 'Not medically passed']);
+
+                    continue;
+                }
+
+                // 3️⃣ Exam date mismatch
+                if ($application->exam_date !== now()->toDateString()) {
+                    $writtenMark->update(['remark' => 'Candidate of another Exam Date']);
+
+                    continue;
+                }
+
+                // 4️⃣ Already has exam mark
+                $alreadyExists = ExamMark::where('application_id', $application->id)->exists();
+
+                if ($alreadyExists) {
+                    $writtenMark->update(['remark' => 'Already added in database']);
+
+                    continue;
+                }
+
+                // ✅ Everything passed (you could add your insert logic here)
+                $writtenMark->update(['remark' => null]);
+            }
+
+            DB::commit();
+
+            Alert::success('Written marks processed successfully!');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Alert::error('Processing failed: '.$e->getMessage());
+        }
+
+        return back();
+    }
+
     public function store(Request $request)
     {
+        $remarkCheck = WrittenMark::whereIn('id', explode(',', $request->written_marks))->whereNotNull('remark')->exists();
+        if ($remarkCheck) {
+            Alert::error('Some data could not be added due to errors. Please check the remarks.');
 
-       $writtenMarks = WrittenMark::whereIn('id', explode(',', $request->written_marks))->get();
+            return back();
+        }
 
+        $writtenMarks = WrittenMark::whereIn('id', explode(',', $request->written_marks))->get();
         DB::beginTransaction();
 
         try {
@@ -82,13 +149,36 @@ class WrittenMarkImportController extends Controller
                     ->where('serial_no', $writtenMark->serial_no)
                     ->first();
 
+                // 1️⃣ No application found
                 if (! $application) {
-                    $writtenMark->update(['remark' => 'Application not found']);
+                    $writtenMark->update(['remark' => 'Roll No not in database']);
 
                     continue;
                 }
 
-                $examMark = ExamMark::where('application_id', $application->id)->first();
+                // 2️⃣ Candidate failed medical
+                if ($application->is_medical_pass != 1) {
+                    $writtenMark->update(['remark' => 'Not medically passed']);
+
+                    continue;
+                }
+
+                // 3️⃣ Exam date mismatch
+                if ($application->exam_date !== now()->toDateString()) {
+                    $writtenMark->update(['remark' => 'Candidate of another Exam Date']);
+
+                    continue;
+                }
+
+                // 4️⃣ Already has exam mark
+                $alreadyExists = ExamMark::where('application_id', $application->id)->exists();
+
+                if ($alreadyExists) {
+                    $writtenMark->update(['remark' => 'Already added in database']);
+
+                    continue;
+                }
+
                 $data = [
                     'bangla' => $writtenMark->bangla,
                     'english' => $writtenMark->english,
@@ -96,32 +186,26 @@ class WrittenMarkImportController extends Controller
                     'science' => $writtenMark->science,
                     'general_knowledge' => $writtenMark->general_knowledge,
                 ];
-
-                if ($examMark) {
-                    $writtenMark->update(['remark' => 'Duplicate entry']);
-
-                    // $examMark->update($data);
-                    continue;
-                }
-                // else {
-                // $data['application_id'] = $application->id;
-                // ExamMark::create($data);
-                // }
                 $data['application_id'] = $application->id;
                 ExamMark::create($data);
 
                 // delete after successful move
                 $writtenMark->delete();
+
             }
 
             DB::commit();
             Alert::success('Written marks processed successfully!');
+
+            return back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Alert::error('Processing failed: '.$e->getMessage());
+            Alert::error('Some data could not be added due to errors. Please check the remarks.');
+
+            return back();
+            // Alert::error('Processing failed: '.$e->getMessage());
         }
 
-        return back();
     }
 
     public function allDelete()

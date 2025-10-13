@@ -96,7 +96,8 @@ Route::get('/exam-marks/modal-store/{applicantId}', [ExamMarkController::class, 
 Route::resource('/written-mark-imports', WrittenMarkImportController::class)->except(['create', 'show']);
 Route::controller(WrittenMarkImportController::class)->prefix('written-mark-import')->name('written_mark_imports.')->group(function () {
     Route::post('/imports', 'import')->name('import');
-    Route::get('/imports/all-delete', 'allDelete')->name('all_deletes');
+    Route::post('/check', 'check')->name('check');
+    Route::post('/all-delete', 'allDelete')->name('all_deletes');
 });
 
 Route::get('primary-medicals', [PrimaryMedicalController::class, 'index'])->name('primary_medicals.index');
