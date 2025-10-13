@@ -138,7 +138,7 @@ class PermissionController extends Controller
         }
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        //default permission cannot be deleted
+        // default permission cannot be deleted
         if (! $permission->removable) {
             return redirect()->back()->withErrors('This permission cannot be deleted');
         }

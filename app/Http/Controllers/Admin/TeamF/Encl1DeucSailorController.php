@@ -18,6 +18,7 @@ class Encl1DeucSailorController extends Controller
     {
         if (! in_array(user()->role_id, [1, 2, 8])) {
             Alert::error('You are not authorized to perform this action');
+
             return back();
         }
         $applications = $this->encl1();
@@ -40,8 +41,10 @@ class Encl1DeucSailorController extends Controller
     {
         if (! in_array(user()->role_id, [1, 2, 8])) {
             Alert::error('You are not authorized to perform this action');
+
             return back();
         }
+
         return $excel->download(new Encl1Export, 'Encl1.xlsx');
     }
 }

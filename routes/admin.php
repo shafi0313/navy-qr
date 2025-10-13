@@ -1,49 +1,47 @@
 <?php
 
-use App\Services\SeederWriter;
 use App\Exports\ApplicantsExport;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AjaxController;
-use App\Services\RemoveSailorDataService;
-use App\Http\Controllers\Admin\SmsController;
-use App\Http\Controllers\MyProfileController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\ResultController;
-use App\Http\Controllers\Admin\ExamMarkController;
-use App\Http\Controllers\Admin\VivaMarkController;
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ResetDataController;
 use App\Http\Controllers\Admin\ActiveUserController;
-use App\Http\Controllers\Admin\RemoveDataController;
-use App\Http\Controllers\Admin\SpecialityController;
-use App\Http\Controllers\Admin\ApplicationController;
-use App\Http\Controllers\Admin\FinalMedicalController;
-use App\Http\Controllers\Setting\AppDbBackupController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AppInstructionController;
 use App\Http\Controllers\Admin\ApplicantCountController;
-use App\Http\Controllers\Admin\ApplicationUrlController;
-use App\Http\Controllers\Admin\PrimaryMedicalController;
-use App\Http\Controllers\Admin\TeamF\TeamFDataController;
-use App\Http\Controllers\Admin\ApplicationSearchController;
-use App\Http\Controllers\Admin\WrittenMarkImportController;
+use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\ApplicationImportantController;
+use App\Http\Controllers\Admin\ApplicationSearchController;
+use App\Http\Controllers\Admin\ApplicationUrlController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ExamMarkController;
+use App\Http\Controllers\Admin\FinalMedicalController;
 use App\Http\Controllers\Admin\ImportantApplicationController;
-use App\Http\Controllers\Admin\TeamF\Encl1DeucSailorController;
-use App\Http\Controllers\Admin\TeamF\TeamFImportDataController;
+use App\Http\Controllers\Admin\PrimaryMedicalController;
+use App\Http\Controllers\Admin\RemoveDataController;
 use App\Http\Controllers\Admin\Reports\DailyStateReportController;
+use App\Http\Controllers\Admin\ResetDataController;
+use App\Http\Controllers\Admin\ResultController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SmsController;
+use App\Http\Controllers\Admin\SpecialityController;
+use App\Http\Controllers\Admin\TeamF\Encl1DeucSailorController;
 use App\Http\Controllers\Admin\TeamF\Encl2NonDeucSailorController;
-
+use App\Http\Controllers\Admin\TeamF\TeamFDataController;
+use App\Http\Controllers\Admin\TeamF\TeamFImportDataController;
+use App\Http\Controllers\Admin\VivaMarkController;
+use App\Http\Controllers\Admin\WrittenMarkImportController;
+use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\MyProfileController;
+use App\Services\SeederWriter;
+use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/seed', function (SeederWriter $writer) {
     $writer->generate();
+
     return 'Seeders generated successfully!';
 });
 
 Route::controller(RemoveDataController::class)->prefix('rm-remove')->name('rm.')->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::post('sd','sailor')->name('sd');
+    Route::post('sd', 'sailor')->name('sd');
 });
 
 Route::controller(ActiveUserController::class)->prefix('active-users')->name('active_users.')->group(function () {
@@ -79,7 +77,6 @@ Route::resource('/applications', ApplicationController::class)->except(['show'])
 Route::resource('/application-search', ApplicationSearchController::class)->only(['index', 'store', 'edit']);
 Route::get('/application-search/show/{id}', [ApplicationSearchController::class, 'show'])->name('application_search.show');
 // Route::post('application-search/store', [ApplicationSearchController::class, 'store'])->name('primary_medicals.store');
-
 
 Route::resource('/reset-data', ResetDataController::class)->only(['index', 'store']);
 Route::get('/reset-data/show/{id}', [ResetDataController::class, 'show'])->name('reset_data.show');
@@ -147,7 +144,6 @@ Route::prefix('team-f')->name('team_f.')->group(function () {
     Route::get('encl2-non-deuc-sailor/{type?}', [Encl2NonDeucSailorController::class, 'report'])->name('encl2_non_deuc_sailor.report');
     Route::get('encl2-non-deuc-sailor/export/excel', [Encl2NonDeucSailorController::class, 'exportExcel'])->name('encl2_non_deuc_sailor.export_excel');
 });
-
 
 // Reports Route
 Route::prefix('reports')->name('reports.')->group(function () {

@@ -23,6 +23,7 @@ class ApplicationSearchController extends Controller
             return response()->json(['success' => false, 'message' => 'No applicants found'], 404);
         }
         $modal = view('admin.application-search.data')->with(['applicants' => $applicants])->render();
+
         return response()->json(['success' => true, 'modal' => $modal], 200);
     }
 
@@ -32,9 +33,11 @@ class ApplicationSearchController extends Controller
         try {
             if ($request->yes_no == 1) {
                 $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
+
                 return response()->json(['message' => 'The information has been accepted'], 200);
-            }else{
+            } else {
                 $application->update(['scanned_at' => null]);
+
                 return response()->json(['message' => 'The information has been rejected'], 200);
             }
         } catch (\Exception $e) {

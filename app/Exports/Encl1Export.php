@@ -5,11 +5,11 @@ namespace App\Exports;
 use App\Traits\EnclTrait;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Encl1Export implements FromArray, WithHeadings, WithTitle, WithStyles
+class Encl1Export implements FromArray, WithHeadings, WithStyles, WithTitle
 {
     use EnclTrait;
 
@@ -47,7 +47,7 @@ class Encl1Export implements FromArray, WithHeadings, WithTitle, WithStyles
         // We’ll build multi-row headings
         return [
             ['CONFIDENTIAL'], // row 1
-            ['NOMINAL LIST OF DEUC SAILORS - B-' . now()->year . ' BATCH'], // row 2
+            ['NOMINAL LIST OF DEUC SAILORS - B-'.now()->year.' BATCH'], // row 2
             ['CENTER: BNS DHAKA, KHILKHET, DHAKA'], // row 3
             [], // blank row 4
             [ // row 5 - first header row
@@ -62,14 +62,14 @@ class Encl1Export implements FromArray, WithHeadings, WithTitle, WithStyles
                 'SSC Result', '', '', // merged later
                 'Mobile No',
                 'HSC Pass', '', // merged later
-                'Documents to be Submitted to BNS SHER-E-BANGLA'
+                'Documents to be Submitted to BNS SHER-E-BANGLA',
             ],
             [ // row 6 - second header row
                 '', '', '', '', '', '', '', '',
                 'Eng', 'Math', 'Phy',
                 '',
                 'Yes/No', 'GPA (If Applicable)',
-                ''
+                '',
             ],
         ];
     }

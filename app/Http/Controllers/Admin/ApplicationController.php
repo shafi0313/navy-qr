@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -17,6 +17,7 @@ class ApplicationController extends Controller
     {
         if (! in_array(user()->role_id, [1, 2, 6, 7])) {
             Alert::error('You are not authorized to perform this action');
+
             return back();
         }
         if ($request->ajax()) {

@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 
 trait EnclTrait
 {
@@ -74,5 +73,4 @@ trait EnclTrait
         // }
         // $applications = $query->cursor();
     }
-
 }

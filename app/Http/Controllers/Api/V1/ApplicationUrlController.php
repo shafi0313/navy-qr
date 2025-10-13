@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Api\V1\BaseController as BaseController;
 use App\Http\Resources\ApplicationUrlResource;
 use App\Models\ApplicationUrl;
 use Illuminate\Http\Request;

@@ -31,18 +31,18 @@ return [
         16 => '7.0 - Team F',
     ],
 
-    'menuNameOrder' => [1,2,3,4,5,6,7,8,9,16,10,14,11,12,14],
+    'menuNameOrder' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 10, 14, 11, 12, 14],
 
     'brCodes' => [
-        1 => "DE/UC",
-        2 => "Regualting",
-        3 => "Writer",
-        4 => "Store",
-        5 => "Medical",
-        6 => "Musician",
-        7 => "Cook",
-        8 => "Steward",
-        9 => "Topass",
-        10 => "MODC(N)"
+        1 => 'DE/UC',
+        2 => 'Regualting',
+        3 => 'Writer',
+        4 => 'Store',
+        5 => 'Medical',
+        6 => 'Musician',
+        7 => 'Cook',
+        8 => 'Steward',
+        9 => 'Topass',
+        10 => 'MODC(N)',
     ],
 ];

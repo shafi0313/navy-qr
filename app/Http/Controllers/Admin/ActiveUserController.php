@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -72,6 +72,7 @@ class ActiveUserController extends Controller
         // PersonalAccessToken::where('tokenable_id', $id)->delete();
 
         Alert::success('Success', 'User logged out successfully!');
+
         return back();
     }
 
@@ -83,6 +84,7 @@ class ActiveUserController extends Controller
         PersonalAccessToken::query()->delete();
 
         Alert::success('Success', 'All users logged out successfully!');
+
         return back();
     }
 }

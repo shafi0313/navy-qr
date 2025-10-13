@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Api\V1\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -30,7 +29,7 @@ class AuthController extends BaseController
                 6 => 'Primary Medical ',
                 7 => 'Gate Entry ',
             ];
-            $role = ($roleMap[$user->role_id] ?? '') . $user->team . $userNameLastDigit;
+            $role = ($roleMap[$user->role_id] ?? '').$user->team.$userNameLastDigit;
 
             $success['token'] = $user->createToken('auto_token')->plainTextToken;
             $success['name'] = $user->name;

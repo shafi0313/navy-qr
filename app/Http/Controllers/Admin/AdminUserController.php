@@ -21,7 +21,6 @@ class AdminUserController extends Controller
             abort(403, 'You are not authorized to perform this action');
         }
     }
-    
 
     public function index(Request $request)
     {

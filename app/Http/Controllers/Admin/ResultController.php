@@ -80,13 +80,13 @@ class ResultController extends Controller
                 })
                 ->addColumn('ssc_result', function ($row) {
                     return '<span>'
-                        . 'GPA: ' . $row->ssc_gpa . '<br>'
-                        . $row->ssc_bangla . '<br>'
-                        . $row->ssc_english . '<br>'
-                        . ($row->ssc_math !== null ? $row->ssc_math . '<br>' : '')
-                        . ($row->ssc_physics !== null ? $row->ssc_physics . '<br>' : '')
-                        . $row->ssc_biology
-                        . '</span>';
+                        .'GPA: '.$row->ssc_gpa.'<br>'
+                        .$row->ssc_bangla.'<br>'
+                        .$row->ssc_english.'<br>'
+                        .($row->ssc_math !== null ? $row->ssc_math.'<br>' : '')
+                        .($row->ssc_physics !== null ? $row->ssc_physics.'<br>' : '')
+                        .$row->ssc_biology
+                        .'</span>';
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
@@ -101,7 +101,7 @@ class ResultController extends Controller
                     return $this->viva($roleId, $row);
                 })
                 ->addColumn('viva_remark', function ($row) {
-                    return ($row->is_important == 1 ? '<span class="badge text-bg-primary">All doc. held</span>' : '') . $row->viva_remark;
+                    return ($row->is_important == 1 ? '<span class="badge text-bg-primary">All doc. held</span>' : '').$row->viva_remark;
                 })
                 // ->addColumn('specialty', function ($row) {
                 //     return '';

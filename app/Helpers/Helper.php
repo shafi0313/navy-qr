@@ -47,7 +47,7 @@ if (! function_exists('result')) {
 
             return match ($data) {
                 1 => '<span class="btn btn-success btn-rem">Fit</span>',
-                0 => '<span class="btn btn-danger btn-rem">Unfit </span> ' . ($remark ? '(' . $remark . ')' : ''),
+                0 => '<span class="btn btn-danger btn-rem">Unfit </span> '.($remark ? '('.$remark.')' : ''),
             };
         } else {
             return '<span class="btn btn-warning btn-rem">Pending</span>';
@@ -215,12 +215,12 @@ if (! function_exists('imgWebpStore')) {
             });
         }
 
-        $dir = public_path('/uploads/images/' . $path);
+        $dir = public_path('/uploads/images/'.$path);
         if (! is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
-        $imageName = $path . '-' . uniqueId(10) . '.webp';
-        $image->encode('webp', 70)->save($dir . '/' . $imageName);
+        $imageName = $path.'-'.uniqueId(10).'.webp';
+        $image->encode('webp', 70)->save($dir.'/'.$imageName);
 
         return $imageName;
     }
@@ -240,14 +240,14 @@ if (! function_exists('imgWebpUpdate')) {
             });
         }
 
-        $dir = public_path('/uploads/images/' . $path);
+        $dir = public_path('/uploads/images/'.$path);
         if (! is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
-        $imageName = $path . '-' . uniqueId(10) . '.webp';
-        $image->encode('webp', 70)->save($dir . '/' . $imageName);
+        $imageName = $path.'-'.uniqueId(10).'.webp';
+        $image->encode('webp', 70)->save($dir.'/'.$imageName);
 
-        $checkPath = $dir . '/' . $oldImage;
+        $checkPath = $dir.'/'.$oldImage;
         if ($oldImage && file_exists($checkPath)) {
             unlink($checkPath);
         }
@@ -258,7 +258,7 @@ if (! function_exists('imgWebpUpdate')) {
 if (! function_exists('imgUnlink')) {
     function imgUnlink($folder, $image)
     {
-        $path = public_path('uploads/images/' . $folder . '/' . $image);
+        $path = public_path('uploads/images/'.$folder.'/'.$image);
         if ($image && file_exists($path)) {
             return unlink($path);
         }
@@ -269,13 +269,13 @@ if (! function_exists('imageStore')) {
     function imageStore(Request $request, $request_name, string $name, string $path)
     {
         if ($request->hasFile($request_name)) {
-            $pathCreate = public_path() . '/uploads/images/' . $path . '/';
+            $pathCreate = public_path().'/uploads/images/'.$path.'/';
             ! file_exists($pathCreate) ?? File::makeDirectory($pathCreate, 0777, true, true);
 
             $image = $request->file($request_name);
-            $imageName = $name . uniqueId(10) . '.' . $image->getClientOriginalExtension();
+            $imageName = $name.uniqueId(10).'.'.$image->getClientOriginalExtension();
             if ($image->isValid()) {
-                $request->$request_name->move(public_path() . '/uploads/images/' . $path . '/', $imageName);
+                $request->$request_name->move(public_path().'/uploads/images/'.$path.'/', $imageName);
 
                 return $imageName;
             }
@@ -299,7 +299,7 @@ if (! function_exists('imageUpdate')) {
             }
 
             $image = $request->file($request_name);
-            $imageName = "{$name}_" . uniqueId(10) . '.' . $image->getClientOriginalExtension();
+            $imageName = "{$name}_".uniqueId(10).'.'.$image->getClientOriginalExtension();
 
             if ($image->isValid()) {
                 $image->move(public_path("uploads/images/{$path}/"), $imageName);
@@ -315,7 +315,7 @@ if (! function_exists('imageUpdate')) {
 if (! function_exists('imagePath')) {
     function imagePath($folder, $image)
     {
-        $path = 'uploads/images/' . $folder . '/' . $image;
+        $path = 'uploads/images/'.$folder.'/'.$image;
         if (@getimagesize($path)) {
             return asset($path);
         } else {
@@ -327,8 +327,8 @@ if (! function_exists('imagePath')) {
 if (! function_exists('profileImg')) {
     function profileImg()
     {
-        if (file_exists(asset('uploads/images/user/' . user()->image))) {
-            return asset('uploads/images/user/' . user()->image);
+        if (file_exists(asset('uploads/images/user/'.user()->image))) {
+            return asset('uploads/images/user/'.user()->image);
         } else {
             return asset('uploads/images/user/avatar.png');
             // if(user()->gender && user()->gender == 'Female'){
@@ -365,7 +365,7 @@ if (! function_exists('transaction_id')) {
             throw new \Exception('no cryptographically secure random function available');
         }
         if ($src != '') {
-            return strtoupper($src . '_' . substr(bin2hex($bytes), 0, $length));
+            return strtoupper($src.'_'.substr(bin2hex($bytes), 0, $length));
         }
 
         return strtoupper(substr(bin2hex($bytes), 0, $length));
@@ -494,11 +494,11 @@ if (! function_exists('written')) {
             }
             // If no subject failed and all marks are >= 8, it's a pass
             if ($failCount == 0) {
-                return '<span class="badge bg-success">Pass</span>' . ' (' . $total_marks . ')';
+                return '<span class="badge bg-success">Pass</span>'.' ('.$total_marks.')';
             }
             // If there are any fails, it's a fail
             elseif ($failCount > 0) {
-                return '<span class="badge bg-danger">Failed</span> (' . $failCount . ' subject(s) failed)';
+                return '<span class="badge bg-danger">Failed</span> ('.$failCount.' subject(s) failed)';
             } else {
                 return 'Pending';
             }

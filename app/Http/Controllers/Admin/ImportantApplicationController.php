@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
 use App\Models\ImportantApplication;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ImportantApplicationController extends Controller

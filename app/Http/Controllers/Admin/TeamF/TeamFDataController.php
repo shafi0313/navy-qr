@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\TeamF;
 
-use App\Models\TeamFData;
-use App\Models\Application;
-use Illuminate\Http\Request;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Models\TeamFData;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,6 +18,7 @@ class TeamFDataController extends Controller
     {
         if (! in_array(user()->role_id, [1, 2, 8])) {
             Alert::error('You are not authorized to perform this action');
+
             return back();
         }
         if ($request->ajax()) {
@@ -55,6 +56,7 @@ class TeamFDataController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.team-f-datum.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
+
                     return $btn;
                 })
                 ->filter(function ($query) use ($request) {
@@ -78,6 +80,7 @@ class TeamFDataController extends Controller
                 ->make(true);
         }
         $teamFDatum = TeamFData::paginate(20);
+
         return view('admin.team-f.datum.index', compact('teamFDatum'));
     }
 
@@ -85,11 +88,13 @@ class TeamFDataController extends Controller
     {
         if (! in_array(user()->role_id, [1, 2, 8])) {
             Alert::error('You are not authorized to perform this action');
+
             return back();
         }
         try {
             $application = Application::findOrFail($id);
             $application->update(['is_team_f' => 0]);
+
             return response()->json(['message' => 'The information has been deleted'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
