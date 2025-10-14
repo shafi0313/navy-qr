@@ -103,7 +103,8 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="written_exam">Result Filter</label>
-                                    <select name="written_exam" class="form-control w-100 compact written_exam" id="written_exam">
+                                    <select name="written_exam" class="form-control w-100 compact written_exam"
+                                        id="written_exam">
                                         <option value="">All</option>
                                         <option value="pending">Pending</option>
                                         <option value="passed">Passed</option>
@@ -135,7 +136,7 @@
         }
     </style>
     @push('scripts')
-    <!-- DataTables JS -->
+        <!-- DataTables JS -->
         <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 
         <!-- DataTables Buttons JS and Dependencies -->
@@ -174,6 +175,11 @@
                             });
                         },
                     },
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -263,10 +269,8 @@
                     ],
                     scroller: {
                         loadingIndicator: true
-                    },                    
-                    order: [
-                        [1, 'asc']
-                    ],
+                    },
+                    order: [],
                     // Adjusted DOM structure
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{

@@ -46,7 +46,11 @@
                                 exam_date: $('.exam_date').val()
                             });
                         },
-                    },
+                    }, columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -108,9 +112,7 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [
-                        [1, 'asc']
-                    ]
+                    order: []
                 });
                 $(".filter").find('select').on('change', function() {
                     table.draw();
