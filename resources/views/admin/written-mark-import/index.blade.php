@@ -53,8 +53,8 @@
                                     value="{{ $writtenMarks->pluck('id')->implode(',') }}">
 
                                 <button type="submit"
-                                    onclick="return confirm('Do you want to delete all data on this page')"
-                                    class="btn btn-danger mx-2">Remove All</button>
+                                    onclick="return confirm('Do you want to remove all data on this page')"
+                                    class="btn btn-danger mx-2">Clear This List</button>
                             </form>
 
                             <form action="{{ route('admin.written-mark-imports.store') }}" method="post">

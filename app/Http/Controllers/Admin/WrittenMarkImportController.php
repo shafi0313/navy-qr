@@ -212,7 +212,7 @@ class WrittenMarkImportController extends Controller
     {
         try {
             WrittenMark::truncate();
-            Alert::success('Written marks deleted successfully!');
+            Alert::success('Data cleared successfully!');
         } catch (\Exception $e) {
             Alert::error('Something went wrong!, Please try again.');
         }
