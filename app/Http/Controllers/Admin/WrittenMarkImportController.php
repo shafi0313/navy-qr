@@ -95,7 +95,7 @@ class WrittenMarkImportController extends Controller
 
                 // 2️⃣ Candidate failed medical
                 if ($application->is_medical_pass != 1) {
-                    $writtenMark->update(['remark' => 'Not medically passed']);
+                    $writtenMark->update(['remark' => 'Unfit in primary medical']);
 
                     continue;
                 }
@@ -158,7 +158,7 @@ class WrittenMarkImportController extends Controller
 
                 // 2️⃣ Candidate failed medical
                 if ($application->is_medical_pass != 1) {
-                    $writtenMark->update(['remark' => 'Not medically passed']);
+                    $writtenMark->update(['remark' => 'Unfit in primary medical']);
 
                     continue;
                 }
@@ -227,7 +227,7 @@ class WrittenMarkImportController extends Controller
     {
         try {
             WrittenMark::findOrFail($writtenMarkId)->delete();
-            Alert::success('All question deleted successfully!');
+            Alert::success('Single question removed successfully!');
         } catch (\Exception $e) {
             Alert::error('Something went wrong!, Please try again.');
         }

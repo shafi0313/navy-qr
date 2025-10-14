@@ -15,7 +15,7 @@
                     @csrf
                     <div class="card-body row justify-content-center">
                         <div class="col-sm-3">
-                            <label for="" class="mb-1">Today's Written Exam Applicants</label>
+                            <label for="" class="mb-1">Today's Written Exam Applicants (Pending)</label>
                             @foreach ($todayWrittenApplicantCount as $team => $count)
                                 <h4 class="">{{ user()->role_id == 1 ? $team . ': ' : '' }}{{ $count }}</h4>
                             @endforeach
