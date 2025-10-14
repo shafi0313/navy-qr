@@ -161,6 +161,7 @@
         </div><!-- end col -->
     </div><!-- end row -->
 
+
     @push('scripts')
         <!-- DataTables JS -->
         <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
@@ -245,29 +246,10 @@
                             className: 'text-center'
                         },
                         {
-                            data: 'bangla',
-                            name: 'bangla',
-                            title: 'Bangla'
-                        },
-                        {
-                            data: 'english',
-                            name: 'english',
-                            title: 'English'
-                        },
-                        {
-                            data: 'math',
-                            name: 'math',
-                            title: 'Math'
-                        },
-                        {
-                            data: 'science',
-                            name: 'science',
-                            title: 'Science'
-                        },
-                        {
-                            data: 'general_knowledge',
-                            name: 'general_knowledge',
-                            title: 'GK'
+                            data: 'written_mark',
+                            name: 'written_mark',
+                            title: 'Written Mark',
+                            className: 'written_mark'
                         },
                         {
                             data: 'total_marks',

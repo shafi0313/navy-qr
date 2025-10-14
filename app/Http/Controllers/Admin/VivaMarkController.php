@@ -82,13 +82,7 @@ class VivaMarkController extends Controller
                     return $this->primaryMedical($roleId, $row);
                 })
                 ->addColumn('written_mark', function ($row) {
-                    return '<span>'
-                            .'Bangla: '.$row->bangla.'<br>'
-                            .'English: '.$row->english.'<br>'
-                            .'Math: '.$row->math.'<br>'
-                            .'Science: '.$row->science.'<br>'
-                            .'GK: '.$row->general_knowledge
-                        .'</span>';
+                    return $this->writtenMark($row);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);

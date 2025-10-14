@@ -16,10 +16,6 @@
         .dt-buttons {
             margin-left: 2rem;
         }
-
-        .ssc_result {
-            min-width: 70px !important;
-        }
     </style>
     <div class="row">
         <div class="col-12">
@@ -210,11 +206,6 @@
                             name: 'candidate_designation',
                             title: 'Branch'
                         },
-                        // {
-                        //     data: 'specialty',
-                        //     name: 'specialty',
-                        //     title: 'Specialty'
-                        // },
                         {
                             data: 'medical',
                             name: 'medical',
@@ -224,7 +215,8 @@
                         {
                             data: 'written_mark',
                             name: 'written_mark',
-                            title: 'written_mark'
+                            title: 'Written Mark',
+                            className: 'written_mark'
                         },
                         {
                             data: 'total_marks',

@@ -50,6 +50,9 @@ class ImportantApplicationController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
+                ->addColumn('candidate_designation', function ($row) {
+                    return str_replace('/', "/\n", $row->candidate_designation);
+                })
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
@@ -61,6 +64,9 @@ class ImportantApplicationController extends Controller
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
+                })
+                ->addColumn('written_mark', function ($row) {
+                    return $this->writtenMark($row);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);
@@ -136,7 +142,7 @@ class ImportantApplicationController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['medical', 'written', 'final', 'viva', 'remark'])
+                ->rawColumns(['medical', 'written_mark', 'final', 'viva', 'remark'])
                 ->make(true);
         }
         $writtenMarks = ImportantApplication::paginate(20);

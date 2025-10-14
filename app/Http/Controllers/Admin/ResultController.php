@@ -94,13 +94,12 @@ class ResultController extends Controller
                 ->addColumn('medical', function ($row) use ($roleId) {
                     return $this->primaryMedical($roleId, $row);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
-                    return $this->written($roleId, $row);
-                })
                 ->addColumn('written_mark', function ($row) {
-
                     return $this->writtenMark($row);
                 })
+                ->addColumn('written', function ($row) use ($roleId) {
+                    return $this->written($roleId, $row);
+                })            
                 ->addColumn('final', function ($row) use ($roleId) {
                     return $this->finalMedical($roleId, $row);
                 })

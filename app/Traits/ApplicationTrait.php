@@ -115,6 +115,15 @@ trait ApplicationTrait
             ->implode('');
 
         return $marks ?: '';
+
+        // return '<span>'
+        //         .'Bangla: '.$row->bangla.'<br>'
+        //         .'English: '.$row->english.'<br>'
+        //         .'Math: '.$row->math.'<br>'
+        //         .'Science: '.$row->science.'<br>'
+        //         .'GK: '.$row->general_knowledge
+        //     .'</span>';
+
     }
 
     protected function written($roleId, $row)
