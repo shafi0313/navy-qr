@@ -201,14 +201,17 @@
                             });
                         },
                     },
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
                             className: 'text-center',
                             width: '60px',
                             title: 'SL',
-                            orderable: false,
-                            searchable: false,
                         },
                         {
                             data: 'serial_no',
@@ -305,9 +308,7 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [
-                        [1, 'asc']
-                    ],
+                    order: [],
                     // Adjusted DOM structure
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{
