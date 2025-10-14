@@ -61,13 +61,15 @@
 
             {{-- 1=sailor --}}
             @if (user()->exam_type == 1)
-                @if (in_array($roleId, [1, 2, 6, 7]))
+                @if (in_array($roleId, [1]))
                     <li class="side-nav-item">
                         <a href="{{ route('admin.applications.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-id-card"></i>
                             <span> Applicants </span>
                         </a>
                     </li>
+                @endif
+                @if (in_array($roleId, [1, 2, 6, 7]))
                     <li class="side-nav-item" title="1.0 - Exam Status & Gate Entry">
                         <a href="{{ route('admin.application-search.index') }}" class="side-nav-link">
                             <i class="fa-solid fa-magnifying-glass"></i>

@@ -15,7 +15,7 @@ class ApplicationController extends Controller
 
     public function index(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 2, 6, 7])) {
+        if (! in_array(user()->role_id, [1])) {
             Alert::error('You are not authorized to perform this action');
 
             return back();
