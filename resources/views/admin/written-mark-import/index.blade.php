@@ -44,7 +44,7 @@
                                     value="{{ $writtenMarks->pluck('id')->implode(',') }}">
 
                                 <button type="submit" onclick="return confirm('Are you sure?')"
-                                    class="btn btn-warning">Check Data</button>
+                                    class="btn btn-success">Check Data</button>
                             </form>
 
                             <form action="{{ route('admin.written_mark_imports.all_deletes') }}" method="post">
@@ -73,6 +73,7 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Roll Number</th>
+                                        <th>Exam Date</th>
                                         <th>Bangla</th>
                                         <th>English</th>
                                         <th>Math</th>
@@ -87,12 +88,13 @@
                                         <tr>
                                             <td>{{ @$x += 1 }}</td>
                                             <td>{{ $writtenMark->serial_no }}</td>
+                                            <td>{{ bdDate($writtenMark->application?->exam_date) }}</td>
                                             <td>{{ $writtenMark->bangla }}</td>
                                             <td>{{ $writtenMark->english }}</td>
                                             <td>{{ $writtenMark->math }}</td>
                                             <td>{{ $writtenMark->science }}</td>
                                             <td>{{ $writtenMark->general_knowledge }}</td>
-                                            <td>{{ $writtenMark->remark ?? '' }}</td>
+                                            <td class="text-danger">{{ $writtenMark->remark ?? '' }}</td>
                                             <td class="text-center">
                                                 <form
                                                     action="{{ route('admin.written-mark-imports.destroy', $writtenMark->id) }}"
@@ -100,7 +102,7 @@
                                                     onclick="return confirm('Do you want to delete this data?')">
                                                     @csrf @method('DELETE')
                                                     <button type="submit" title="Delete"
-                                                        class="btn btn-link btn-danger btn-sm px-1 py-0">
+                                                        class="btn btn-link btn-danger text-white btn-sm px-1 py-0">
                                                         <i class="fa fa-times"></i>
                                                     </button>
                                                 </form>

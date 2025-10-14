@@ -18,7 +18,7 @@ class WrittenMarkImportController extends Controller
     public function index()
     {
         if (user()->role_id == 1) {
-            $writtenMarks = WrittenMark::all();
+            $writtenMarks = WrittenMark::with(['application:id,serial_no,exam_date'])->get();
 
             $teams = ['A', 'B', 'C'];
             $todayWrittenApplicantCount = collect($teams)->mapWithKeys(function ($team) {
@@ -31,7 +31,10 @@ class WrittenMarkImportController extends Controller
                 return [$team => $count];
             });
         } else {
-            $writtenMarks = WrittenMark::with(['user:id,team'])
+            $writtenMarks = WrittenMark::with([
+                'user:id,team',
+                'application:id,serial_no,exam_date',
+            ])
                 ->whereHas('user', function ($q) {
                     $q->where('team', user()->team);
                 })

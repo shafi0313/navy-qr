@@ -22,9 +22,20 @@ class WrittenMarkImport implements ToCollection, WithHeadingRow
             $data = $row->toArray();
 
             // Normalize headers
+            // $normalized = [];
+            // foreach ($data as $key => $value) {
+            //     $key = trim(Str::lower($key));
+            //     $normalized[$key] = $value;
+            // }
+
             $normalized = [];
             foreach ($data as $key => $value) {
                 $key = trim(Str::lower($key));
+
+                if (is_string($value) && preg_match('/^\d+$/', $value)) {
+                    $value = (int) $value;
+                }
+
                 $normalized[$key] = $value;
             }
 
