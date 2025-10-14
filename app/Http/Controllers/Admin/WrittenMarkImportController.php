@@ -96,16 +96,16 @@ class WrittenMarkImportController extends Controller
                     continue;
                 }
 
-                // 2️⃣ Candidate failed medical
-                if ($application->is_medical_pass != 1) {
-                    $writtenMark->update(['remark' => 'Unfit in primary medical']);
+                // 3️⃣ Exam date mismatch
+                if ($application->exam_date !== now()->toDateString()) {
+                    $writtenMark->update(['remark' => 'Candidate of another Exam Date']);
 
                     continue;
                 }
 
-                // 3️⃣ Exam date mismatch
-                if ($application->exam_date !== now()->toDateString()) {
-                    $writtenMark->update(['remark' => 'Candidate of another Exam Date']);
+                // 2️⃣ Candidate failed medical
+                if ($application->is_medical_pass != 1) {
+                    $writtenMark->update(['remark' => 'Unfit in primary medical']);
 
                     continue;
                 }
@@ -148,20 +148,12 @@ class WrittenMarkImportController extends Controller
 
         try {
             foreach ($writtenMarks as $writtenMark) {
-                $application = Application::select('id')
+                $application = Application::select('id', 'is_medical_pass', 'exam_date')
                     ->where('serial_no', $writtenMark->serial_no)
                     ->first();
 
-                // 1️⃣ No application found
                 if (! $application) {
                     $writtenMark->update(['remark' => 'Roll No not in database']);
-
-                    continue;
-                }
-
-                // 2️⃣ Candidate failed medical
-                if ($application->is_medical_pass != 1) {
-                    $writtenMark->update(['remark' => 'Unfit in primary medical']);
 
                     continue;
                 }
@@ -169,6 +161,13 @@ class WrittenMarkImportController extends Controller
                 // 3️⃣ Exam date mismatch
                 if ($application->exam_date !== now()->toDateString()) {
                     $writtenMark->update(['remark' => 'Candidate of another Exam Date']);
+
+                    continue;
+                }
+
+                // 2️⃣ Candidate failed medical
+                if ($application->is_medical_pass != 1) {
+                    $writtenMark->update(['remark' => 'Unfit in primary medical']);
 
                     continue;
                 }
