@@ -27,7 +27,7 @@
     </div><!-- end row -->
     <style>
         .ssc_result {
-            min-width: 50px !important;
+            min-width: 70px !important;
         }
 
         .written_mark {

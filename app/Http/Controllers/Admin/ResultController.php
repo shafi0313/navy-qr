@@ -69,6 +69,9 @@ class ResultController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
+                ->addColumn('candidate_designation', function ($row) {
+                    return str_replace('/', "/\n", $row->candidate_designation);
+                })
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
@@ -93,6 +96,10 @@ class ResultController extends Controller
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);
+                })
+                ->addColumn('written_mark', function ($row) {
+
+                    return $this->writtenMark($row);
                 })
                 ->addColumn('final', function ($row) use ($roleId) {
                     return $this->finalMedical($roleId, $row);
@@ -138,7 +145,7 @@ class ResultController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['ssc_result', 'medical', 'written', 'final', 'viva', 'viva_remark', 'action'])
+                ->rawColumns(['ssc_result', 'medical', 'written_mark', 'written', 'final', 'viva', 'viva_remark', 'action'])
                 ->make(true);
         }
 

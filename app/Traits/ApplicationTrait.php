@@ -97,6 +97,26 @@ trait ApplicationTrait
         }
     }
 
+    protected function writtenMark($row)
+    {
+        // Subjects with display labels
+        $subjects = [
+            'bangla' => 'Bangla',
+            'english' => 'English',
+            'math' => 'Math',
+            'science' => 'Science',
+            'general_knowledge' => 'GK',
+        ];
+
+        // Generate HTML only for subjects that have a value
+        $marks = collect($subjects)
+            ->filter(fn ($label, $subject) => ! empty($row->$subject))
+            ->map(fn ($label, $subject) => "<div>{$label}: {$row->$subject}</div>")
+            ->implode('');
+
+        return $marks ?: '';
+    }
+
     protected function written($roleId, $row)
     {
         if (in_array($roleId, [1, 2, 3, 4, 5]) && ($row->bangla || $row->english || $row->math || $row->science || $row->general_knowledge)) {

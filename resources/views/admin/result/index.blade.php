@@ -18,7 +18,7 @@
         }
 
         .ssc_result {
-            min-width: 50px !important;
+            min-width: 70px !important;
         }
     </style>
     <div class="row">
@@ -164,7 +164,8 @@
                                 is_important: $('.is_important').val()
                             });
                         },
-                    },columnDefs: [{
+                    },
+                    columnDefs: [{
                         orderable: false,
                         searchable: false,
                         targets: '_all'
@@ -221,29 +222,9 @@
                             className: 'text-center'
                         },
                         {
-                            data: 'bangla',
-                            name: 'bangla',
-                            title: 'Bangla'
-                        },
-                        {
-                            data: 'english',
-                            name: 'english',
-                            title: 'English'
-                        },
-                        {
-                            data: 'math',
-                            name: 'math',
-                            title: 'Math'
-                        },
-                        {
-                            data: 'science',
-                            name: 'science',
-                            title: 'Science'
-                        },
-                        {
-                            data: 'general_knowledge',
-                            name: 'general_knowledge',
-                            title: 'GK'
+                            data: 'written_mark',
+                            name: 'written_mark',
+                            title: 'written_mark'
                         },
                         {
                             data: 'total_marks',
@@ -274,12 +255,12 @@
                             title: 'SSC Group',
                             className: 'text-center'
                         },
-                        {
-                            data: 'ssc_gpa',
-                            name: 'ssc_gpa',
-                            title: 'SSC GPA',
-                            className: 'text-center'
-                        },
+                        // {
+                        //     data: 'ssc_gpa',
+                        //     name: 'ssc_gpa',
+                        //     title: 'SSC GPA',
+                        //     className: 'text-center'
+                        // },
                         {
                             data: 'viva_remark',
                             name: 'viva_remark',
