@@ -1,8 +1,12 @@
+15/10/25
+1. In 3.1 build new logic when click Add To Database then check all error if found any error then rollback all data
+
 14/10/25
 1. exam mark in one column on 6.0, 8.0 menus
 
 13/10/25
-1. New validation add on 3.1 Written Exam Import 
+1. In 3.1 Today's pending candidate for written exam status show
+2. New validation add on 3.1 Written Exam Import 
     Duplicate in this upload list
     Roll No not in database
     Candidate of another Exam Date

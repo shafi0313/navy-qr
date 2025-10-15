@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="table-responsive mt-3">
-                            <table class="display table table-striped table-hover">
+                            <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>SL</th>
@@ -123,7 +123,4 @@
             @endif
         </div><!-- end col -->
     </div><!-- end row -->
-
-    @push('scripts')
-    @endpush
 @endsection
