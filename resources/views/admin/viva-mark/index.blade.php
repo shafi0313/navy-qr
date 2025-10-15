@@ -99,7 +99,7 @@
                         {
                             data: 'medical',
                             name: 'medical',
-                            title: 'Pre. Medical',
+                            title: 'Primary Medical',
                             className: 'text-center',
                         },
                         {

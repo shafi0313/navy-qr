@@ -37,13 +37,13 @@ div.dataTables_wrapper div.dataTables_filter {
     position: relative !important;
 }
 
-.datepicker.dropdown-menu {
+/* .datepicker.dropdown-menu {
     min-width: 220px !important;
     top: 210px !important;
     left: 50% !important;
     right: 50% !important;
     transform: translate(-50%, -50%) !important;
-}
+} */
 /* Bootstrap Date Picker End */
 
 /* Form CSS Start */
@@ -75,6 +75,12 @@ table thead tr th,
 table tbody tr td,
 table tr td {
     vertical-align: middle !important;
+}
+table tbody tr th,
+table tr th,
+table tbody tr td,
+table tr td {
+    padding: 4px 5px !important;
 }
 /* Table End */
 

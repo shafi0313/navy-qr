@@ -12,6 +12,7 @@ if (! function_exists('bdDate')) {
         if (! $date) {
             return '';
         }
+
         return Carbon::parse($date)->format('d/m/Y');
     }
 }
@@ -22,6 +23,7 @@ if (! function_exists('bdDateTime')) {
         if (! $date) {
             return '';
         }
+
         return Carbon::parse($date)->format('d/m/Y h:i A');
     }
 }
@@ -32,6 +34,7 @@ if (! function_exists('stringToDate')) {
         if (! $date) {
             return '';
         }
+
         // return Carbon::parse($date)->format('Y-m-d');
         // 'js_date_format'        => "dd/mm/yy",
         // 'frontend_date_format'  => 'd/m/Y',
@@ -55,7 +58,7 @@ if (! function_exists('result')) {
             $data = (int) $data;
 
             return match ($data) {
-                1 => '<span class="btn btn-success btn-rem">Fit</span>',
+                1 => '<span class="btn btn-success btn-rem">Fit</span>'.($remark ? '('.$remark.')' : ''),
                 0 => '<span class="btn btn-danger btn-rem">Unfit </span> '.($remark ? '('.$remark.')' : ''),
             };
         } else {

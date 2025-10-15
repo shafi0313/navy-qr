@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Traits\ApplicationTrait;
 use App\Traits\SmsTrait;
+use DB;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -62,6 +63,9 @@ class FinalMedicalController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
+                ->addColumn('candidate_designation', function ($row) {
+                    return str_replace('/', "/\n", $row->candidate_designation);
+                })
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
@@ -89,6 +93,13 @@ class FinalMedicalController extends Controller
                     if ($request->filled('district')) {
                         $query->where('applications.eligible_district', $request->district);
                     }
+                    if ($request->filled('is_final_pass')) {
+                        if ($request->is_final_pass == 'null') {
+                            $query->whereNull('applications.is_final_pass');
+                        } else {
+                            $query->where('applications.is_final_pass', $request->is_final_pass);
+                        }
+                    }
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
                     }
@@ -113,7 +124,7 @@ class FinalMedicalController extends Controller
                 return response()->json(['message' => 'You are not authorized to perform this action'], 403);
             }
 
-            $applicant = Application::select('id', 'candidate_designation', 'serial_no', 'name', 'is_final_pass', 'p_m_remark')->whereId($applicantId)->first();
+            $applicant = Application::select('id', 'candidate_designation', 'serial_no', 'name', 'is_final_pass', 'f_m_remark')->whereId($applicantId)->first();
             $modal = view('admin.final-medical.fit-unfit-modal')->with(['applicant' => $applicant])->render();
 
             return response()->json(['modal' => $modal], 200);
@@ -124,40 +135,116 @@ class FinalMedicalController extends Controller
 
     public function store(Request $request)
     {
-        if (! in_array(user()->role_id, [1, 4, 6])) {
-            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-        }
+        // Authorization check
 
-        if ($request->final_medical == 0 && empty($request->f_m_remark)) {
-            return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
-        }
+        // Validation
+        $validated = $request->validate([
+            'application_id' => 'required|exists:applications,id',
+            'final_medical' => 'required|in:0,1',
+            'height' => 'nullable|string|min:0',
+            'height2' => 'nullable|string|min:0',
+            'f_m_remark' => 'nullable|string|max:255',
+        ]);
 
-        $application = Application::findOrFail($request->application_id);
-
-        // if ($application->is_final_pass == 1) {
-        //     return response()->json(['message' => 'The status has been updated'], 200);
-        // }
+        DB::beginTransaction();
 
         try {
-            if ($application->user_id == null) {
-                $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
+            if (! in_array(user()->role_id, [1, 4, 6])) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'You are not authorized to perform this action'], 403);
             }
+            
+            if ($request->final_medical == 0 && empty($request->f_m_remark)) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
+            }
+
+            if ($request->final_medical == 1 && $request->height2 == null) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'Please input height for fit status'], 422);
+            }
+            $application = Application::findOrFail($request->application_id);
+
+            if (is_null($application->user_id)) {
+                $application->update([
+                    'user_id' => user()->id,
+                    'scanned_at' => now(),
+                ]);
+            }
+
+            // Update final medical status
             $application->update([
                 'is_final_pass' => $request->final_medical,
-                'height' => $request->height.'\''.$request->height2.'"',
-                'f_m_remark' => $request->final_medical == 0 ? $request->f_m_remark : null,
+                'height' => trim($request->height)."'".trim($request->height2).'"',
+                'f_m_remark' => $request->f_m_remark ?? null,
             ]);
 
-            // // Send SMS notification
-            if ($request->final_medical == 0) {
-                $this->fail($application->current_phone, 'Final Medical');
-            }
+            // Send SMS if failed
+            // if ($request->final_medical == 0) {
+            //     $this->fail($application->current_phone, 'Final Medical');
+            // }
+
+            DB::commit();
 
             return response()->json(['message' => 'The status has been updated'], 200);
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
     }
+
+    // public function store(Request $request)
+    // {
+    //     if (! in_array(user()->role_id, [1, 4, 6])) {
+    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+    //     }
+
+    //     return$request->validate([
+    //         'application_id' => 'required|exists:applications,id',
+    //         'final_medical' => 'required|in:0,1',
+    //         'height' => 'nullable|string|min:0',
+    //         'height2' => 'nullable|string|min:0',
+    //         'f_m_remark' => 'nullable|string|max:255',
+    //     ]);
+    //     DB::beginTransaction();
+
+    //     try {
+    //         if ($request->final_medical == 0 && empty($request->f_m_remark)) {
+    //             return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
+    //         }
+
+    //         if ($request->final_medical == 1 && empty($request->height) && empty($request->height2)) {
+    //             return response()->json(['message' => 'Please input height for fit status'], 422);
+    //         }
+
+    //         $application = Application::findOrFail($request->application_id);
+
+    //         if ($application->user_id == null) {
+    //             $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
+    //         }
+    //         $application->update([
+    //             'is_final_pass' => $request->final_medical,
+    //             'height' => $request->height.'\''.$request->height2.'"',
+    //             'f_m_remark' => $request->f_m_remark ?? null,
+    //         ]);
+
+    //         // // Send SMS notification
+    //         if ($request->final_medical == 0) {
+    //             $this->fail($application->current_phone, 'Final Medical');
+    //         }
+    //         DB::commit();
+
+    //         return response()->json(['message' => 'The status has been updated'], 200);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+
+    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
+    //     }
+    // }
 
     // public function fitModal(Request $request, Application $application)
     // {

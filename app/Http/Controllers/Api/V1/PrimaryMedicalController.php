@@ -16,6 +16,7 @@ class PrimaryMedicalController extends BaseController
     {
         $validator = \Validator::make($request->all(), [
             'id' => 'required|exists:applications,id',
+            'p_m_remark' => 'nullable|string|max:160',
         ]);
 
         if ($validator->fails()) {
@@ -36,7 +37,7 @@ class PrimaryMedicalController extends BaseController
                 return $this->sendError('Venue mismatch.', [], 403);
             }
 
-            $application->update(['is_medical_pass' => 1, 'p_m_remark' => null]);
+            $application->update(['is_medical_pass' => 1, 'p_m_remark' => $request->p_m_remark]);
             DB::commit();
 
             return $this->sendResponse(new ApplicationResource($application), 'Primary medical status updated.');
