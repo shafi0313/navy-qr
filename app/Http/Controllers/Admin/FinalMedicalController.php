@@ -154,7 +154,7 @@ class FinalMedicalController extends Controller
 
                 return response()->json(['message' => 'You are not authorized to perform this action'], 403);
             }
-            
+
             if ($request->final_medical == 0 && empty($request->f_m_remark)) {
                 DB::rollBack();
 
