@@ -48,6 +48,11 @@
                             });
                         },
                     },
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -82,30 +87,6 @@
                             name: 'eligible_district',
                             title: 'District',
                         },
-                        // {
-                        //     data: 'medical',
-                        //     name: 'medical',
-                        //     title: 'Primary Medical',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'written',
-                        //     name: 'written',
-                        //     title: 'Written',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'final',
-                        //     name: 'final',
-                        //     title: 'Final Medical',
-                        //     className: 'text-center',
-                        // },
-                        // {
-                        //     data: 'total_viva',
-                        //     name: 'total_viva',
-                        //     title: 'Viva',
-                        //     className: 'text-center',
-                        // },
                         {
                             data: 'remark',
                             name: 'remark',
@@ -115,9 +96,7 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [
-                        [1, 'asc']
-                    ]
+                    order: []
                 });
 
                 $(".filter").find('select').on('change', function() {

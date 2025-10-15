@@ -22,30 +22,18 @@ class ApplicationController extends Controller
         }
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            $query = Application::query();
-
-            if ($roleId == 1) {
-                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                    ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-                    )
-                    ->selectRaw(
-                        $this->examSumColumns()
-                    )
-                    ->orderBy('total_marks', 'desc');
-            } else {
-                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                    ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-                    )
-                    ->selectRaw(
-                        $this->examSumColumns()
-                    )
-                    ->where('users.team', user()->team)
-                    ->orderBy('total_marks', 'desc');
+            $query = Application::orderBy('exam_date')->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                ->select(
+                    array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                )
+                ->selectRaw(
+                    $this->examSumColumns()
+                );
+            if ($roleId != 1) {
+                $query->where('users.team', user()->team);
             }
+            $query->orderBy('total_marks', 'desc');
             $applications = $query;
 
             return DataTables::eloquent($applications)

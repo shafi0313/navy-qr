@@ -17,7 +17,7 @@
                         <div class="col-sm-3">
                             <label for="" class="mb-1">Today's Written Exam Applicants (Pending)</label>
                             @foreach ($todayWrittenApplicantCount as $team => $count)
-                                <h4 class="">{{ user()->role_id == 1 ? $team . ': ' : '' }}{{ $count }}</h4>
+                                <h5 class="">{{ user()->role_id == 1 ? $team . ': ' : '' }}{{ $count }}</h5>
                             @endforeach
                         </div>
                         <div class="col-sm-4">
