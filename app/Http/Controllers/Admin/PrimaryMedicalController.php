@@ -73,9 +73,6 @@ class PrimaryMedicalController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    // $btn .= "<button type='button' class='btn btn-primary btn-rem me-1' onclick='pMPass(" . $row->id . ")'>Fit</button>";
-                    // $btn .= "<button type='button' class='btn btn-danger btn-rem' onclick='pMFail(" . $row->id . ")'>Unfit</button>";
-                    // $btn .= view('button', ['type' => 'unfit', 'route' => route('admin.primary_medicals.unfit', $row->id), 'row' => $row]);
                     $btn .= view('button', ['type' => 'ajax-add-by-id', 'route' => route('admin.primary_medicals.modal_show', $row->id), 'row' => $row]);
 
                     return $btn;
@@ -106,7 +103,6 @@ class PrimaryMedicalController extends Controller
                 ->rawColumns(['medical', 'written', 'final', 'viva', 'action'])
                 ->make(true);
         }
-        // return response()->json(['is_medical_pass' => $request->is_medical_pass]);
 
         return view('admin.primary-medical.index');
     }
@@ -133,15 +129,7 @@ class PrimaryMedicalController extends Controller
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
 
-        // if ($request->primary_medical == 0 && empty($request->p_m_remark)) {
-        //     return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
-        // }
-
         $application = Application::findOrFail($request->application_id);
-
-        // if ($application->is_medical_pass == 1) {
-        //     return response()->json(['message' => 'The status has been updated'], 200);
-        // }
 
         try {
             if ($application->user_id == null) {
@@ -162,74 +150,4 @@ class PrimaryMedicalController extends Controller
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
     }
-
-    // public function pass(Request $request)
-    // {
-    //     if (! in_array(user()->role_id, [1, 2, 6])) {
-    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //     }
-
-    //     $application = Application::findOrFail($request->id);
-    //     if ($application->is_medical_pass == 1) {
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     }
-
-    //     if ($application->user_id == null) {
-    //         $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
-    //     }
-
-    //     $application->is_medical_pass = 1;
-    //     $application->save();
-    //     try {
-    //         $application->save();
-
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
-    //     }
-    // }
-
-    // public function unfitModal(Request $request, Application $application)
-    // {
-    //     if ($request->ajax()) {
-    //         if (! in_array(user()->role_id, [1, 2, 6])) {
-    //             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //         }
-
-    //         $modal = view('admin.primary-medical.unfit')->with(['application' => $application])->render();
-
-    //         return response()->json(['modal' => $modal], 200);
-    //     }
-
-    //     return abort(500);
-    // }
-
-    // public function unfitStore(Request $request)
-    // {
-    //     if (! in_array(user()->role_id, [1, 2, 6])) {
-    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //     }
-
-    //     $application = Application::find($request->id);
-
-    //     // if (!empty($application->is_medical_pass) && $application->is_medical_pass == 0) {
-    //     //     return response()->json(['message' => 'The status has been updated'], 200);
-    //     // }
-
-    //     try {
-    //         if ($application->user_id == null) {
-    //             $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
-    //         }
-    //         $application->update([
-    //             'is_medical_pass' => 0,
-    //             'p_m_remark' => $request->p_m_remark,
-    //         ]);
-
-    //         $this->fail($application->current_phone, 'Primary Medical');
-
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
-    //     }
-    // }
 }
