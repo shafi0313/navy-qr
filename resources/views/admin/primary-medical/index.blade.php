@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     {{-- /Filter HTML --}}
-                    
+
                     <table id="data_table" class="table table-bordered table-centered mb-0 w-100">
                         <thead></thead>
                         <tbody></tbody>
@@ -122,6 +122,11 @@
                             });
                         },
                     },
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -172,9 +177,7 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [
-                        [1, 'asc']
-                    ],
+                    order: [],
                     // Adjusted DOM structure
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{

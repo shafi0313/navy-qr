@@ -62,6 +62,9 @@ class VivaMarkController extends Controller
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()
+                ->addColumn('candidate_designation', function ($row) {
+                    return str_replace('/', "/\n", $row->candidate_designation);
+                })
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })

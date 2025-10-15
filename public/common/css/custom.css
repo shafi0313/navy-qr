@@ -22,7 +22,7 @@ div.dataTables_wrapper div.dataTables_filter {
 } */
 /* Data table search option right to left */
 .ssc_result, .written_mark {
-    min-width: 70px !important;
+    min-width: 75px !important;
 }
 
 .status_label {

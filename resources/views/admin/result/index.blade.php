@@ -226,7 +226,7 @@
                         {
                             data: 'final',
                             name: 'final',
-                            title: 'Final M.',
+                            title: 'Final Medical',
                             className: 'text-center'
                         },
                         {

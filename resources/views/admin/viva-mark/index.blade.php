@@ -73,15 +73,6 @@
             </div> <!-- end card -->
         </div><!-- end col -->
     </div><!-- end row -->
-    <style>
-        .ssc_result {
-            min-width: 70px !important;
-        }
-
-        .written_mark {
-            min-width: 50px !important;
-        }
-    </style>
     @push('scripts')
         <script>
             $(function() {
@@ -105,6 +96,11 @@
                             });
                         },
                     },
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -166,7 +162,7 @@
                         {
                             data: 'final',
                             name: 'final',
-                            title: 'Final M.',
+                            title: 'Final Medical',
                             className: 'text-center',
                         },
                         {
@@ -197,9 +193,7 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [
-                        [1, 'asc']
-                    ]
+                    order: []
                 });
                 $(".filter").find('select').on('change', function() {
                     table.draw();
