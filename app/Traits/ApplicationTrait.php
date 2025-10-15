@@ -174,7 +174,7 @@ trait ApplicationTrait
     protected function viva($roleId, $row)
     {
         if (in_array($roleId, [1, 2, 3])) {
-            return $row->total_viva;
+            return $row->total_viva !== null ? $row->total_viva : 'Pending';
         } else {
             return '';
         }

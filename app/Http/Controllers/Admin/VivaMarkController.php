@@ -112,6 +112,15 @@ class VivaMarkController extends Controller
                     if ($request->filled('exam_date')) {
                         $query->where('applications.exam_date', $request->exam_date);
                     }
+                    if ($request->filled('viva')) {
+                        if($request->viva == 'null'){
+                            $query->whereNull('exam_marks.viva');
+                        } elseif($request->viva == 'pass'){
+                            $query->where('exam_marks.viva', '>=', 5);
+                        }elseif($request->viva == 'fail'){
+                            $query->where('exam_marks.viva', '<', 5);
+                        }
+                    }
                     if ($request->filled('team')) {
                         $query->where('users.team', $request->team);
                     }
