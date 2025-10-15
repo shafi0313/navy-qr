@@ -34,7 +34,7 @@ trait DailyStateReportTrait
         if (user()->role_id == 1) {
             if ($team != 'all') {
                 $baseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->where('team', $team);
+                    ->where('users.team', $team);
             }
         } else {
             $baseQuery->leftJoin('users', 'applications.user_id', '=', 'users.id')
@@ -56,7 +56,7 @@ trait DailyStateReportTrait
             ->whereBetween('exam_date', [$startDate, $endDate]);
         if (user()->role_id == 1) {
             if ($team != 'all') {
-                $wQuery->where('team', $team);
+                $wQuery->where('users.team', $team);
             }
         } else {
             $wQuery->where('users.team', user()->team);
