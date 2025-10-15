@@ -23,43 +23,28 @@ class PrimaryMedicalController extends Controller
         }
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            if ($roleId == 1) {
-                $applications = Application::with([
-                    'examMark:id,application_id',
-                    'user:id,team',
-                ])->select(
-                    'id',
-                    'user_id',
-                    'candidate_designation',
-                    'exam_date',
-                    'serial_no',
-                    'name',
-                    'eligible_district',
-                    'is_important',
-                    'is_medical_pass',
-                    'p_m_remark',
-                    'scanned_at',
-                )->whereNotNull('scanned_at');
-            } else {
-                $applications = Application::with([
-                    'examMark:id,application_id',
-                    'user:id,team',
-                ])->select(
-                    'id',
-                    'candidate_designation',
-                    'exam_date',
-                    'serial_no',
-                    'name',
-                    'eligible_district',
-                    'is_important',
-                    'is_medical_pass',
-                    'p_m_remark',
-                    'scanned_at',
-                )->whereNotNull('scanned_at')
-                    ->whereHas('user', function ($query) {
-                        $query->where('users.team', user()->team);
-                    });
+
+            $applications = Application::with([
+                'examMark:id,application_id',
+                'user:id,team',
+            ])->select(
+                'id',
+                'candidate_designation',
+                'exam_date',
+                'serial_no',
+                'name',
+                'eligible_district',
+                'is_important',
+                'is_medical_pass',
+                'p_m_remark',
+                'scanned_at',
+            )->whereNotNull('scanned_at');
+            if ($roleId != 1) {
+                $applications->whereHas('user', function ($query) {
+                    $query->where('users.team', user()->team);
+                });
             }
+            $applications->orderBy('exam_date')->orderBy('serial_no', 'asc');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()

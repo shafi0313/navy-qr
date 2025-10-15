@@ -97,6 +97,7 @@
         <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
 
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -127,40 +128,8 @@
                         searchable: false,
                         targets: '_all'
                     }],
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            className: 'text-center',
-                            width: '60px',
-                            title: 'SL',
-                            orderable: false,
-                            searchable: false,
-                        },
-                        {
-                            data: 'exam_date',
-                            name: 'exam_date',
-                            title: 'exam date',
-                        },
-                        {
-                            data: 'serial_no',
-                            name: 'serial_no',
-                            title: 'Roll no',
-                        },
-                        {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'Branch',
-                        },
-                        {
-                            data: 'name',
-                            name: 'name',
-                            title: 'Name',
-                        },
-                        {
-                            data: 'eligible_district',
-                            name: 'eligible_district',
-                            title: 'district',
-                        },
+                    columns: [
+                        ...commonColumns,
                         {
                             data: 'medical',
                             name: 'medical',
@@ -222,49 +191,6 @@
                                 });
                             }
                         },
-                        // {
-                        //     extend: 'pdfHtml5',
-                        //     title: 'Application Data',
-                        //     text: 'Export to PDF',
-                        //     exportOptions: {
-                        //         columns: ':visible',
-                        //         modifier: {
-                        //             search: 'applied',
-                        //             order: 'applied',
-                        //             page: 'all'
-                        //         }
-                        //     },
-                        //     orientation: 'landscape',
-                        //     pageSize: 'A4',
-                        //     action: function(e, dt, button, config) {
-                        //         if ('{{ user()->role_id }}' != 1) {
-                        //             swal({
-                        //                 icon: "error",
-                        //                 title: "Oops...",
-                        //                 text: "You are not authorized to perform this action",
-                        //             });
-                        //             return false;
-                        //         }
-                        //         const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
-                        //         dt.settings()[0].oFeatures.bServerSide = false;
-
-                        //         $.ajax({
-                        //             url: dt.ajax.url(),
-                        //             data: dt.ajax.params(),
-                        //             success: (json) => {
-                        //                 $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
-                        //                     this, e, dt, button, config);
-                        //                 dt.settings()[0].oFeatures.bServerSide =
-                        //                     originalServerSide;
-                        //                 dt.ajax.reload(null, false);
-                        //             },
-                        //             error: function(xhr, error, thrown) {
-                        //                 console.error('Error fetching data for export:',
-                        //                     error);
-                        //             }
-                        //         });
-                        //     }
-                        // }
                     ],
                 });
                 $(".filter").find('select').on('change', function() {

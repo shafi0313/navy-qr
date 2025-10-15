@@ -15,48 +15,6 @@
             margin-left: 2rem;
         }
     </style>
-    {{-- @if (!in_array(user()->role_id, [8]))
-        <div class="row gy-2 justify-content-between">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{ route('admin.team_f.data_imports.import') }}" method="post"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div style="display: flex;">
-                                <div style="flex-grow: 1">
-                                    <label for="file" class="form-label required">Bulk Import </label>
-                                    <a href="{{ asset('uploads/Final-selection.xlsx') }}" download>(Download
-                                        Format)</a>
-                                    <input type="file" name="file" class="form-control" required>
-                                </div>
-
-                                <div style="margin-top: 28px; margin-left: 10px;">
-                                    <button type="submit" class="btn btn-success">Import</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div style="display: flex;">
-                            <div style="flex-grow: 1">
-                                <label for="application_id" class="form-label required">Single Entry </label>
-                                <select name="application_id" id="application_id" class="form-select"></select>
-                            </div>
-                            <div style="margin-top: 25px; margin-left: 10px;">
-                                <button type="submit" class="btn btn-primary" onclick="ajaxEdit(this)">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif --}}
-
 
     <div class="row">
         <div class="col-12">
@@ -168,13 +126,6 @@
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="ssc_gpa">GPA</label>
-                                    <select name="ssc_gpa" class="form-control w-100 ssc_gpa" id="ssc_gpa">
-                                    </select>
-                                </div>
-                            </div> --}}
                         <div class="col">
                             <div class="form-group">
                                 <label class="form-label" for="candidate_designation">Branch</label>
@@ -183,38 +134,7 @@
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="dob">DOB</label>
-                                    <select name="dob" class="form-control w-100 dob" id="dob">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="height">Height</label>
-                                    <select name="height" class="form-control w-100 height" id="height">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="exam_date">@lang('Exam Date')</label>
-                                    <select name="exam_date" class="form-control w-100 exam_date" id="exam_date">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="form-label" for="is_important">All doc. held</label>
-                                    <select name="is_important" class="form-control w-100 is_important" id="is_important">
-                                        <option value="">Select</option>
-                                        <option value="">All</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div> --}}
+
                         @if (user()->role_id == 1)
                             <div class="col">
                                 <div class="form-group">
@@ -287,6 +207,11 @@
                             });
                         },
                     },
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -307,14 +232,14 @@
                             title: 'Name'
                         },
                         {
-                            data: 'ssc_group',
-                            name: 'ssc_group',
-                            title: 'SSC Group',
-                        },
-                        {
                             data: 'eligible_district',
                             name: 'eligible_district',
                             title: 'District'
+                        },
+                        {
+                            data: 'ssc_group',
+                            name: 'ssc_group',
+                            title: 'SSC Group',
                         },
                         {
                             data: 'br_code',

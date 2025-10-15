@@ -233,7 +233,7 @@
                             <li class="{{ activeNav('admin.admin-users.*') }}">
                                 <a href="{{ route('admin.admin-users.index') }}">User</a>
                             </li>
-                            <li class="{{ activeNav('admin.admin-users.*') }}">
+                            <li class="{{ activeNav('admin.app-instructions.*') }}">
                                 <a href="{{ route('admin.app-instructions.index') }}">App Instruction</a>
                             </li>
                             {{-- <li class="{{ activeNav('admin.specialities.*') }}">

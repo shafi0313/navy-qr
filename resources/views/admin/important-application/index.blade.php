@@ -176,6 +176,7 @@
         <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
 
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -207,37 +208,20 @@
                         searchable: false,
                         targets: '_all'
                     }],
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            className: 'text-center',
-                            width: '60px',
-                            title: 'SL',
+                    columns: [
+                        ...commonColumns,
+                        
+                        {
+                            data: 'ssc_group',
+                            name: 'ssc_group',
+                            title: 'SSC Group',
+                            className: 'text-center'
                         },
                         {
-                            data: 'serial_no',
-                            name: 'serial_no',
-                            title: 'Roll No'
-                        },
-                        {
-                            data: 'eligible_district',
-                            name: 'eligible_district',
-                            title: 'District'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name',
-                            title: 'Name'
-                        },
-                        {
-                            data: 'dob',
-                            name: 'dob',
-                            title: 'Date of Birth'
-                        },
-                        {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'Branch'
+                            data: 'ssc_gpa',
+                            name: 'ssc_gpa',
+                            title: 'SSC GPA',
+                            className: 'text-center'
                         },
                         {
                             data: 'medical',
@@ -266,18 +250,6 @@
                             data: 'total_viva',
                             name: 'total_viva',
                             title: 'Viva',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'ssc_group',
-                            name: 'ssc_group',
-                            title: 'SSC Group',
-                            className: 'text-center'
-                        },
-                        {
-                            data: 'ssc_gpa',
-                            name: 'ssc_gpa',
-                            title: 'SSC GPA',
                             className: 'text-center'
                         },
                         {

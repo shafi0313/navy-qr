@@ -149,6 +149,7 @@
         <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
 
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -180,45 +181,13 @@
                         searchable: false,
                         targets: '_all'
                     }],
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            className: 'text-center',
-                            width: '60px',
-                            title: 'SL',
-                            orderable: false,
-                            searchable: false,
-                        },
-                        {
-                            data: 'exam_date',
-                            name: 'exam_date',
-                            title: 'Exam Date',
-                        },
-                        {
-                            data: 'serial_no',
-                            name: 'serial_no',
-                            title: 'Roll no',
-                        },
-                        {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'Branch',
-                        },
-                        {
-                            data: 'name',
-                            name: 'name',
-                            title: 'Name',
-                        },
+                    columns: [
+                        ...commonColumns,
                         {
                             data: 'ssc_result',
                             name: 'ssc_result',
                             title: 'SSC GPA',
                             className: 'ssc_result',
-                        },
-                        {
-                            data: 'eligible_district',
-                            name: 'eligible_district',
-                            title: 'district',
                         },
                         {
                             data: 'medical',

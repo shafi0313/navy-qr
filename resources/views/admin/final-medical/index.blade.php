@@ -32,7 +32,8 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label class="form-label" for="is_final_pass">Final Medical Filter</label>
-                                    <select name="is_final_pass" class="form-control w-100 is_final_pass compact" id="is_final_pass">
+                                    <select name="is_final_pass" class="form-control w-100 is_final_pass compact"
+                                        id="is_final_pass">
                                         <option value="">All</option>
                                         <option value="null">Pending</option>
                                         <option value="1">Fit</option>
@@ -73,6 +74,7 @@
     </div><!-- end row -->
 
     @push('scripts')
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 let table = $('#data_table').DataTable({
@@ -99,40 +101,8 @@
                         searchable: false,
                         targets: '_all'
                     }],
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            className: 'text-center',
-                            width: '60px',
-                            title: 'SL',
-                            orderable: false,
-                            searchable: false,
-                        },
-                        {
-                            data: 'exam_date',
-                            name: 'exam_date',
-                            title: 'exam date',
-                        },
-                        {
-                            data: 'serial_no',
-                            name: 'serial_no',
-                            title: 'Roll no',
-                        },
-                        {
-                            data: 'candidate_designation',
-                            name: 'candidate_designation',
-                            title: 'Branch',
-                        },
-                        {
-                            data: 'name',
-                            name: 'name',
-                            title: 'Name',
-                        },
-                        {
-                            data: 'eligible_district',
-                            name: 'eligible_district',
-                            title: 'District',
-                        },
+                    columns: [
+                        ...commonColumns,
                         {
                             data: 'medical',
                             name: 'medical',

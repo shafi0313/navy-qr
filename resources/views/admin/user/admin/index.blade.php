@@ -26,6 +26,7 @@
     @include('admin.user.admin.create')
 
     @push('scripts')
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 $('#data_table').DataTable({
@@ -88,10 +89,10 @@
                             searchable: false,
                         },
                     ],
-                    // fixedColumns: false,
                     scroller: {
                         loadingIndicator: true
-                    }
+                    },
+                    order: [],
                 });
             });
         </script>

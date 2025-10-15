@@ -33,6 +33,7 @@
     @include('admin.' . $folder . '.create', ['pageTitle' => $pageTitle, 'route' => $route])
 
     @push('scripts')
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 $('#data_table').DataTable({
@@ -44,6 +45,11 @@
                     scrollX: true,
                     scrollY: 400,
                     ajax: "{{ route('admin.' . $route . '.index') }}",
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -80,7 +86,8 @@
                     ],
                     scroller: {
                         loadingIndicator: true
-                    }
+                    },
+                    order: [],
                 });
             });
         </script>

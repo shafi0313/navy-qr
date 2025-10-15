@@ -37,6 +37,11 @@
                     scrollX: true,
                     scrollY: 400,
                     ajax: "{{ route('admin.app-instructions.index') }}",
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -74,7 +79,8 @@
                     // fixedColumns: false,
                     scroller: {
                         loadingIndicator: true
-                    }
+                    },
+                    order: [],
                 });
             });
         </script>

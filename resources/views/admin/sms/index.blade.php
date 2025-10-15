@@ -24,7 +24,8 @@
                             <div class="card widget-flat bg-primary text-white">
                                 <div class="card-body">
                                     <div class="float-end">
-                                        <i class="ri-shopping-basket-line widget-icon bg-light-subtle rounded-circle text-primary"></i>
+                                        <i
+                                            class="ri-shopping-basket-line widget-icon bg-light-subtle rounded-circle text-primary"></i>
                                     </div>
                                     <h5 class="fw-normal mt-0">Send SMS All Time</h5>
                                     <h3 class="my-3 text-white">{{ $allTime }}</h3>
@@ -48,6 +49,7 @@
     </div><!-- end row -->
 
     @push('scripts')
+        @include('admin.includes.table-common-column')
         <script>
             $(function() {
                 $('#data_table').DataTable({
@@ -59,6 +61,11 @@
                     scrollX: true,
                     scrollY: 400,
                     ajax: "{{ route('admin.sms.index') }}",
+                    columnDefs: [{
+                        orderable: false,
+                        searchable: false,
+                        targets: '_all'
+                    }],
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -97,7 +104,8 @@
                     // fixedColumns: false,
                     scroller: {
                         loadingIndicator: true
-                    }
+                    },
+                    order: [],
                 });
             });
         </script>
