@@ -155,11 +155,11 @@ class FinalMedicalController extends Controller
                 return response()->json(['message' => 'You are not authorized to perform this action'], 403);
             }
 
-            if ($request->final_medical == 0 && empty($request->f_m_remark)) {
-                DB::rollBack();
+            // if ($request->final_medical == 0 && empty($request->f_m_remark)) {
+            //     DB::rollBack();
 
-                return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
-            }
+            //     return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
+            // }
 
             if ($request->final_medical == 1 && $request->height2 == null) {
                 DB::rollBack();
@@ -196,129 +196,4 @@ class FinalMedicalController extends Controller
             return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
         }
     }
-
-    // public function store(Request $request)
-    // {
-    //     if (! in_array(user()->role_id, [1, 4, 6])) {
-    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //     }
-
-    //     return$request->validate([
-    //         'application_id' => 'required|exists:applications,id',
-    //         'final_medical' => 'required|in:0,1',
-    //         'height' => 'nullable|string|min:0',
-    //         'height2' => 'nullable|string|min:0',
-    //         'f_m_remark' => 'nullable|string|max:255',
-    //     ]);
-    //     DB::beginTransaction();
-
-    //     try {
-    //         if ($request->final_medical == 0 && empty($request->f_m_remark)) {
-    //             return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
-    //         }
-
-    //         if ($request->final_medical == 1 && empty($request->height) && empty($request->height2)) {
-    //             return response()->json(['message' => 'Please input height for fit status'], 422);
-    //         }
-
-    //         $application = Application::findOrFail($request->application_id);
-
-    //         if ($application->user_id == null) {
-    //             $application->update(['user_id' => user()->id, 'scanned_at' => now()]);
-    //         }
-    //         $application->update([
-    //             'is_final_pass' => $request->final_medical,
-    //             'height' => $request->height.'\''.$request->height2.'"',
-    //             'f_m_remark' => $request->f_m_remark ?? null,
-    //         ]);
-
-    //         // // Send SMS notification
-    //         if ($request->final_medical == 0) {
-    //             $this->fail($application->current_phone, 'Final Medical');
-    //         }
-    //         DB::commit();
-
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-
-    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
-    //     }
-    // }
-
-    // public function fitModal(Request $request, Application $application)
-    // {
-    //     if ($request->ajax()) {
-    //         if (! in_array(user()->role_id, [1, 2, 4])) {
-    //             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //         }
-    //         $modal = view('admin.final-medical.fit')->with(['application' => $application])->render();
-
-    //         return response()->json(['modal' => $modal], 200);
-    //     }
-
-    //     return abort(500);
-    // }
-
-    // public function fitStore(Request $request)
-    // {
-    //     if (! in_array(user()->role_id, [1, 2, 4])) {
-    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //     }
-    //     $application = Application::select('id', 'is_final_pass', 'height', 'f_m_remark')->find($request->id);
-
-    //     // if ($application->is_final_pass == 1) {
-    //     //     return response()->json(['message' => 'The status has been updated'], 200);
-    //     // }
-
-    //     try {
-    //         $application->update([
-    //             'is_final_pass' => 1,
-    //             'height' => $request->height.'\''.$request->height2.'"',
-    //             'f_m_remark' => null,
-    //         ]);
-
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
-    //     }
-    // }
-
-    // public function unfitModal(Request $request, Application $application)
-    // {
-    //     if ($request->ajax()) {
-    //         if (! in_array(user()->role_id, [1, 2, 4])) {
-    //             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //         }
-    //         $modal = view('admin.final-medical.unfit')->with(['application' => $application])->render();
-
-    //         return response()->json(['modal' => $modal], 200);
-    //     }
-
-    //     return abort(500);
-    // }
-
-    // public function unfitStore(Request $request)
-    // {
-    //     if (! in_array(user()->role_id, [1, 2, 4])) {
-    //         return response()->json(['message' => 'You are not authorized to perform this action'], 403);
-    //     }
-    //     $application = Application::find($request->id);
-    //     // if ($application->is_final_pass == 0) {
-    //     //     return response()->json(['message' => 'The status has been updated'], 200);
-    //     // }
-    //     try {
-    //         $application->update([
-    //             'is_final_pass' => 0,
-    //             'f_m_remark' => $request->f_m_remark,
-    //         ]);
-
-    //         // SMS Trait Function
-    //         $this->fail($application->current_phone, 'Final Medical');
-
-    //         return response()->json(['message' => 'The status has been updated'], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['message' => 'Oops something went wrong, Please try again.'], 500);
-    //     }
-    // }
 }
