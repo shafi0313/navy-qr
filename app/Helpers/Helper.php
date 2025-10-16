@@ -62,7 +62,7 @@ if (! function_exists('result')) {
                 0 => '<span class="btn btn-danger btn-rem">Unfit </span> '.($remark ? '('.$remark.')' : ''),
             };
         } else {
-            return '<span class="btn btn-warning btn-rem">Pending</span>';
+            return '<span class="btn btn-warning btn-rem">Pending</span> '.($remark ? '('.$remark.')' : '');
         }
     }
 }

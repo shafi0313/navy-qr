@@ -140,7 +140,7 @@ class FinalMedicalController extends Controller
         // Validation
         $validated = $request->validate([
             'application_id' => 'required|exists:applications,id',
-            'final_medical' => 'required|in:0,1',
+            'final_medical' => 'nullable|in:0,1',
             'height' => 'nullable|string|min:0',
             'height2' => 'nullable|string|min:0',
             'f_m_remark' => 'nullable|string|max:255',
@@ -155,11 +155,11 @@ class FinalMedicalController extends Controller
                 return response()->json(['message' => 'You are not authorized to perform this action'], 403);
             }
 
-            // if ($request->final_medical == 0 && empty($request->f_m_remark)) {
-            //     DB::rollBack();
+            if ($request->final_medical == 0 && empty($request->f_m_remark)) {
+                DB::rollBack();
 
-            //     return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
-            // }
+                return response()->json(['message' => 'Please provide a remark for unfit status'], 422);
+            }
 
             if ($request->final_medical == 1 && $request->height2 == null) {
                 DB::rollBack();
@@ -178,7 +178,7 @@ class FinalMedicalController extends Controller
             // Update final medical status
             $application->update([
                 'is_final_pass' => $request->final_medical,
-                'height' => trim($request->height)."'".trim($request->height2).'"',
+                'height' => $request->final_medical == 1 ? trim($request->height)."'".trim($request->height2).'"' : null,
                 'f_m_remark' => $request->f_m_remark ?? null,
             ]);
 

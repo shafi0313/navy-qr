@@ -146,6 +146,6 @@
 
         {{-- Filter Get JS --}}
         @include('admin.layouts.includes.applicant-get-filter-js')
-        {{-- /Filter Get JS --}}
+        {{-- /Filter Get JS --}}        
     @endpush
 @endsection
