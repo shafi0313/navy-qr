@@ -117,7 +117,7 @@ function ajaxStoreModal(e, form, modal) {
         contentType: false,
         processData: false,
         success: (res) => {
-            $("#data_table").DataTable().ajax.reload();
+            $("#data_table").DataTable().ajax.reload(null, false);
             $("#" + modal).modal("hide");
             $(form).trigger("reset");
             hideLoadingAnimation();

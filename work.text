@@ -1,6 +1,7 @@
 20/10/25
 1. Add passed, failed status in 1.0
 2. add all document held status in 1.0
+3. changed DataTable reload issue — it now stays on the same page after refresh.
 
 15/10/25
 1. In 3.1 build new logic when click Add To Database then check all error if found any error then rollback all data

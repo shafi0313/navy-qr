@@ -203,6 +203,7 @@
                             });
                         },
                     },
+                    stateSave: true,
                     columnDefs: [{
                         orderable: false,
                         searchable: false,
