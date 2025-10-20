@@ -3,7 +3,10 @@
         <td>{{ bdDate($applicant->exam_date) }}</td>
         <td>{{ $applicant->serial_no }}</td>
         <td>{{ $applicant->candidate_designation }}</td>
-        <td>{{ $applicant->name }}</td>
+        <td>
+            {{ $applicant->name }} <br>
+            {{ $applicant->is_important == 1 ? 'All Document Held' : '' }}
+        </td>
         <td>{{ $applicant->eligible_district }}</td>
         <td>
             <span>Med:
@@ -28,12 +31,10 @@
             <span>Viva Mark:
                 @if (empty($applicant->examMark->viva))
                     Pending
-                @else
-                    {{ $applicant->examMark->viva }}
-                    {{-- @elseif ($applicant->examMark->viva == 1)
-                    Fit
-                @elseif ($applicant->examMark->viva == 0)
-                    Unfit --}}
+                @elseif($applicant->examMark->viva < 5)
+                    Failed ({{ $applicant->examMark->viva }})
+                @elseif ($applicant->examMark->viva >= 5)
+                    Passed ({{ $applicant->examMark->viva }})
                 @endif
             </span>
         </td>

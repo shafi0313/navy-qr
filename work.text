@@ -1,3 +1,7 @@
+20/10/25
+1. Add passed, failed status in 1.0
+2. add all document held status in 1.0
+
 15/10/25
 1. In 3.1 build new logic when click Add To Database then check all error if found any error then rollback all data
 2. Add new logic in 4.0 final medical. if input data is fit then height is required
