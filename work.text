@@ -1,33 +1,34 @@
-20/10/25
-1. Add passed, failed status in 1.0
-2. add all document held status in 1.0
-3. changed DataTable reload issue — it now stays on the same page after refresh.
+✅ QR Code Update Summary
+📅 20/10/25
+1. New Feature: Added Passed / Failed Status in Module 1.0.
+2. New Feature: Added All Document Held Status in Module 1.0.
+3. Improvement: Fixed DataTable Reload Issue — now the table stays on the same page after refresh instead of going back to page 1.
 
-15/10/25
-1. In 3.1 build new logic when click Add To Database then check all error if found any error then rollback all data
-2. Add new logic in 4.0 final medical. if input data is fit then height is required
-3. Final medical filter add in 4.0 menu's
-4. Viva filter add in 5.0 menu's
-5. Remove sort option from all menus
-6. Daily state fix
+📅 15/10/25
+1. New Logic (3.1): When clicking “Add To Database”, the system now checks for all possible errors. If any error is found, the entire data import is rolled back to keep data consistent.
+2. New Logic (4.0 Final Medical): When input data is marked as “Fit”, Height becomes a required field.
+3. New Feature: Added Final Medical Filter in the 4.0 Menu.
+4. New Feature: Added Viva Filter in the 5.0 Menu.
+5. UI Update: Removed sorting options from all menus for a cleaner interface.
+6. Fix: Daily State Report issue resolved.
 
-14/10/25
-1. exam mark in one column on 6.0, 8.0 menus
+📅 14/10/25
+1. Update: Added Exam Mark Column in both 6.0 and 8.0 Menus — all marks now appear in a single column for clarity.
 
-13/10/25
-1. In 3.1 Today's pending candidate for written exam status show
-2. New validation add on 3.1 Written Exam Import 
-    Duplicate in this upload list
-    Roll No not in database
-    Candidate of another Exam Date
-    Unfit in primary medical
-    Already added in database
+📅 13/10/25
+1. New Feature (3.1): Added Today’s Pending Candidate display for Written Exam Status.
+2. New Validation (3.1 Written Exam Import):
+3. Prevents duplicates in the same upload.
+4. Detects Roll Numbers not found in database.
+5. Checks for Candidates of another Exam Date.
+6. Blocks entries Unfit in Primary Medical.
+7. Detects candidates already added in the database.
 
-11/10/25
-1. 8.0 menu's message change
+📅 11/10/25
+1. Update: Message updated in 8.0 Menu for better clarity.
 
-10/10//2025
-1. 3.1 Written Exam Import - Excel file import update and add validation
+📅 10/10/25
+1. Improvement (3.1 Written Exam Import): Updated Excel Import System and added new validation checks for cleaner and more accurate data uploads.
 
 ___________________________________________
 24/09/25
