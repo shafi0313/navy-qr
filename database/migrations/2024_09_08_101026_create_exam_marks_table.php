@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedTinyInteger('science')->default(0);
             $table->unsignedTinyInteger('general_knowledge')->default(0);
             $table->unsignedTinyInteger('viva')->nullable();
+            $table->string('viva_remark')->nullable();
+            $table->string('dup_test', 8)->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });

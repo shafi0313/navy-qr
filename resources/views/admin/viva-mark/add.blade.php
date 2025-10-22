@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-md-12">
                             <label for="viva_remark" class="form-label">Remark </label>
-                            <textarea name="viva_remark" id="viva_remark" class="form-control" rows="3"></textarea>
+                            <textarea name="viva_remark" id="viva_remark" class="form-control" rows="3">{{ $applicant->examMark?->viva_remark }}</textarea>
                         </div>
                     </div>
                 </div>
