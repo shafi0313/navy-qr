@@ -84,6 +84,10 @@
                     ordering: true,
                     responsive: true,
                     scrollY: 400,
+                    lengthMenu: [
+                        [10, 100, 500, 5000, 10000, -1],
+                        [10, 100, 500, 5000, 10000, 'All']
+                    ],
                     ajax: {
                         url: "{{ route('admin.' . $route . '.index') }}",
                         type: "get",
@@ -131,7 +135,7 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: []
+                    order: [],
                 });
                 $(".filter").find('select').on('change', function() {
                     table.draw();

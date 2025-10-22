@@ -24,42 +24,28 @@ class FinalMedicalController extends Controller
         }
         if ($request->ajax()) {
             $roleId = user()->role_id;
-            if ($roleId == 1) {
-                $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                    ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-                    )
-                    ->selectRaw(
-                        $this->examSumColumns()
-                    )
-                    ->where('applications.is_medical_pass', 1)
-                    ->where(function ($query) {
-                        $query->where('bangla', '>=', 8)
-                            ->where('english', '>=', 8)
-                            ->where('math', '>=', 8)
-                            ->where('science', '>=', 8)
-                            ->where('general_knowledge', '>=', 8);
-                    });
-            } else {
-                $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                    ->select(
-                        array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
-                    )
-                    ->selectRaw(
-                        $this->examSumColumns()
-                    )
-                    ->where('applications.is_medical_pass', 1)
-                    ->where(function ($query) {
-                        $query->where('bangla', '>=', 8)
-                            ->where('english', '>=', 8)
-                            ->where('math', '>=', 8)
-                            ->where('science', '>=', 8)
-                            ->where('general_knowledge', '>=', 8);
-                    })
-                    ->where('users.team', user()->team);
+            $applications = Application::leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                ->select(
+                    array_merge($this->userColumns(), $this->applicationColumns(), $this->examColumns())
+                )
+                ->selectRaw(
+                    $this->examSumColumns()
+                )
+                ->where('applications.is_medical_pass', 1)
+                ->where(function ($query) {
+                    $query->where('bangla', '>=', 8)
+                        ->where('english', '>=', 8)
+                        ->where('math', '>=', 8)
+                        ->where('science', '>=', 8)
+                        ->where('general_knowledge', '>=', 8);
+                });
+
+            if ($roleId != 1) {
+                $applications->where('users.team', user()->team);
             }
+
+            $applications->orderBy('exam_date')->orderBy('serial_no', 'asc');
 
             return DataTables::eloquent($applications)
                 ->addIndexColumn()

@@ -7,9 +7,6 @@
 @section('title', $pageTitle)
 @section('content')
     @include('admin.layouts.includes.breadcrumb', ['title' => $pageTitle, 'menuName' => 6])
-    <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
-
     <!-- DataTables Buttons CSS -->
     <link href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" rel="stylesheet" />
     {{-- @include('admin.layouts.includes.table-option') --}}
@@ -136,9 +133,6 @@
         }
     </style>
     @push('scripts')
-        <!-- DataTables JS -->
-        <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-
         <!-- DataTables Buttons JS and Dependencies -->
         <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
