@@ -24,11 +24,6 @@ class AdminUserController extends Controller
 
     public function index(Request $request)
     {
-        if (! in_array(user()->role_id, [1])) {
-            Alert::error('You are not authorized to perform this action');
-
-            return back();
-        }
         if ($request->ajax()) {
             $admin_users = User::with(['role:id,name'])->whereExamType(user()->exam_type)->orderBy('name');
 

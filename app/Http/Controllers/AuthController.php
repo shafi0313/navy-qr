@@ -25,7 +25,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
-        if($user->is_active == 0){
+        if ($user->is_active == 0) {
             return back()->with('error', 'Your account is deactivated. Please contact support.');
         }
 
