@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminUserController extends Controller
@@ -25,7 +24,7 @@ class AdminUserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $admin_users = User::with(['role:id,name'])->whereExamType(user()->exam_type)->orderBy('name');
+            $admin_users = User::with(['role:id,name'])->whereExamType(user()->exam_type);
 
             if (user()->role_id == 2) {
                 $admin_users->where('team', user()->team);
@@ -35,11 +34,11 @@ class AdminUserController extends Controller
 
             return DataTables::of($admin_users)
                 ->addIndexColumn()
-                ->addColumn('image', function ($row) {
-                    $path = imagePath('user', $row->image);
+                // ->addColumn('image', function ($row) {
+                //     $path = imagePath('user', $row->image);
 
-                    return '<img src="'.$path.'" width="70px" alt="image">';
-                })
+                //     return '<img src="'.$path.'" width="70px" alt="image">';
+                // })
                 ->addColumn('is_active', function ($row) {
                     return view('button', ['type' => 'is_active', 'route' => route('admin.admin_users.is_active', $row->id), 'row' => $row->is_active]);
                 })
@@ -50,7 +49,16 @@ class AdminUserController extends Controller
 
                     return $btn;
                 })
-                ->rawColumns(['image', 'is_active', 'action'])
+                ->filter(function ($query) use ($request) {
+                    if ($request->has('team')) {
+                        if ($request->team == 'all') {
+                            // $query; --- IGNORE ---
+                        } else {
+                            $query->where('team', $request->team);
+                        }
+                    }
+                })
+                ->rawColumns(['is_active', 'action'])
                 ->make(true);
         }
         $data['roles'] = Role::select('id', 'name')->get();
@@ -60,9 +68,6 @@ class AdminUserController extends Controller
 
     public function status(User $user)
     {
-        if (! in_array(user()->role_id, [1, 2])) {
-            return response()->json(['message' => 'You can not edit'], 500);
-        }
         $user->is_active = $user->is_active == 1 ? 0 : 1;
         try {
             $user->save();

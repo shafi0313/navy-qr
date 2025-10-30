@@ -52,7 +52,7 @@
                             @if (user()->role_id == 1)
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="form-label" for="team">@lang('Team')</label>
+                                        <label class="form-label" for="team">Team</label>
                                         <select name="team" class="form-control w-100 team" id="team">
                                             <option value="">All</option>
                                             <option value="A">A</option>

@@ -7,12 +7,34 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
+                    <div class="d-flex justify-content-between">
                         <h4 class="card-title">List of Users</h4>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
                             <i class="fa-solid fa-plus"></i> Add New
                         </button>
                     </div>
+                    {{-- Filter HTML --}}
+                    <div class="row justify-content-center filter align-items-end">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-label" for="team">Team</label>
+                                <select name="team" class="form-control w-100 team" id="team">
+                                    <option value="all">All</option>
+                                    <option value="">Without Team</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <a href="" class="btn btn-danger">Clear</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- /Filter HTML --}}
+
                     <table id="data_table" class="table table-bordered bordered table-centered mb-0 w-100">
                         <thead></thead>
                         <tbody></tbody>
@@ -26,10 +48,9 @@
     @include('admin.user.admin.create')
 
     @push('scripts')
-        @include('admin.includes.table-common-column')
         <script>
             $(function() {
-                $('#data_table').DataTable({
+                let table = $('#data_table').DataTable({
                     processing: true,
                     serverSide: true,
                     deferRender: true,
@@ -37,7 +58,15 @@
                     // responsive: true,
                     scrollX: true,
                     scrollY: 400,
-                    ajax: "{{ route('admin.admin-users.index') }}",
+                    ajax: {
+                        url: "{{ route('admin.admin-users.index') }}",
+                        type: "get",
+                        data: function(d) {
+                            return $.extend(d, {
+                                team: $('.team').val(),
+                            });
+                        },
+                    },
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -92,7 +121,19 @@
                     scroller: {
                         loadingIndicator: true
                     },
-                    order: [],
+                    order: [
+                        [4, 'asc'],
+                        [1, 'asc']
+                    ],
+                });
+                $(".filter").find('select').on('change', function() {
+                    table.draw();
+                });
+
+                $(".filter").find('a').on('click', function(e) {
+                    e.preventDefault();
+                    $(".filter").find('select').val('all').trigger('change');
+                    table.draw();
                 });
             });
         </script>
