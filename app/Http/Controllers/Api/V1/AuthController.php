@@ -23,7 +23,7 @@ class AuthController extends BaseController
             $user = Auth::user();
             if($user->is_active == 0){
                 return $this->sendError('Your account is inactive. Please contact admin.', ['error' => 'Unauthorized']);
-                exit;
+                // exit;
             }
             $userNameLastDigit = preg_match('/\d$/', $user->name, $matches) ? "-{$matches[0]}" : '';
             $roleMap = [
