@@ -22,7 +22,7 @@ class AuthController extends BaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             if($user->is_active == 0){
-                return $this->sendError('Your account is inactive. Please contact admin.', ['error' => 'Unauthorized']);
+                return $this->sendError('Your account is deactivated. Please contact admin.', ['error' => 'Unauthorized']);
                 // exit;
             }
             $userNameLastDigit = preg_match('/\d$/', $user->name, $matches) ? "-{$matches[0]}" : '';
