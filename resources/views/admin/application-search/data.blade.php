@@ -20,7 +20,7 @@
             </span> <br>
             <span>Written Mark: {!! written($applicant->examMark) !!}</span> <br>
             <span>Final Med:
-                @if (empty($applicant->is_final_pass))
+                @if (is_null($applicant->is_final_pass))
                     Pending
                 @elseif ($applicant->is_final_pass == 1)
                     Fit
