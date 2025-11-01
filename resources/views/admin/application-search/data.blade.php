@@ -1,6 +1,7 @@
 @foreach ($applicants as $applicant)
     <tr>
         <td>{{ bdDate($applicant->exam_date) }}</td>
+        <td class="text-center">{{ $applicant->team ?? '' }}</td>
         <td>{{ $applicant->serial_no }}</td>
         <td>{{ $applicant->candidate_designation }}</td>
         <td>

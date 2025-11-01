@@ -36,6 +36,7 @@
                         <thead>
                             <tr>
                                 <th>Exam Date</th>
+                                <th>Team</th>
                                 <th>Roll No</th>
                                 <th>Branch</th>
                                 <th>Name</th>

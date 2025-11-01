@@ -16,6 +16,7 @@ trait ApplicationTrait
     {
         return [
             'applications.id',
+            'applications.team',
             'applications.candidate_designation',
             'applications.exam_date',
             'applications.serial_no',

@@ -68,6 +68,12 @@
                             title: 'Exam Date',
                         },
                         {
+                            data: 'team',
+                            name: 'team',
+                            title: 'Team',
+                            className: 'text-center',
+                        },
+                        {
                             data: 'serial_no',
                             name: 'serial_no',
                             title: 'Roll No',
