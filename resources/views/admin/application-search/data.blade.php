@@ -6,7 +6,7 @@
         <td>{{ $applicant->candidate_designation }}</td>
         <td>
             {{ $applicant->name }} <br>
-            {{ $applicant->is_important == 1 ? '(All Document Held)' : '' }}
+            <span class="text-success">{{ $applicant->is_important == 1 ? '(All Document Held)' : '' }}</span>            
         </td>
         <td>{{ $applicant->eligible_district }}</td>
         <td>
