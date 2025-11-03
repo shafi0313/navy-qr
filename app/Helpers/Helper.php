@@ -121,10 +121,10 @@ if (! function_exists('team')) {
                 'munshiganj',
                 'narayanganj',
                 'tangail',
-                'sylhet',
-                'sunamganj',
-                'habiganj',
-                'moulvibazar',
+                // 'sylhet',
+                // 'sunamganj',
+                // 'habiganj',    for team c
+                // 'moulvibazar',
             ]; // Dhaka
         } elseif ($team == 'b') {
             return [
@@ -171,6 +171,10 @@ if (! function_exists('team')) {
                 'khagrachhari',
                 'rangamati',
                 'bandarban',
+                'sylhet',
+                'sunamganj',
+                'habiganj',
+                'moulvibazar',
             ]; // Chattogram
         }
     }
