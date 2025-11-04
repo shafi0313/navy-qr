@@ -60,6 +60,7 @@ class PrimaryMedicalController extends Controller
                         if ($data == '1' || $data == '0') {
                             $data = (int) $data;
 
+                            // ($row->is_important == 1 ? '(All documents held)' : '')
                             return match ($data) {
                                 1 => '<span class="btn btn-success btn-rem">Fit</span><br> '.($row->is_important == 1 ? '(All documents held)' : ''),
                                 0 => '<span class="btn btn-danger btn-rem">Unfit </span><br> '.($row->is_important == 1 ? '(All documents held)' : '').($row->p_m_remark ? '('.$row->p_m_remark.')' : ''),

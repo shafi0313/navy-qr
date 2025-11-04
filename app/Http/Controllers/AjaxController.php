@@ -20,7 +20,7 @@ class AjaxController extends Controller
                         ->where('name', 'like', "%{$request->q}%")
                         ->orWhere('serial_no', 'like', "%{$request->q}%")
                         ->orderBy('serial_no')
-                        ->limit(100)
+                        ->limit(10)
                         ->get()->map(function ($data) {
                             return [
                                 'id' => $data->id,
@@ -37,7 +37,7 @@ class AjaxController extends Controller
                         ->get()
                         ->map(function ($data) {
                             return [
-                                'id' => $data->eligible_district, // Using the first (min) id for each district
+                                'id' => $data->eligible_district,
                                 'text' => Str::ucfirst($data->eligible_district),
                             ];
                         })
@@ -54,7 +54,7 @@ class AjaxController extends Controller
                         ->get()
                         ->map(function ($data) {
                             return [
-                                'id' => $data->ssc_group, // Using the first (min) id for each district
+                                'id' => $data->ssc_group,
                                 'text' => Str::ucfirst($data->ssc_group),
                             ];
                         })
@@ -71,7 +71,7 @@ class AjaxController extends Controller
                         ->get()
                         ->map(function ($data) {
                             return [
-                                'id' => $data->candidate_designation, // Using the first (min) id for each district
+                                'id' => $data->candidate_designation,
                                 'text' => Str::ucfirst($data->candidate_designation),
                             ];
                         })
@@ -88,7 +88,7 @@ class AjaxController extends Controller
                         ->get()
                         ->map(function ($data) {
                             return [
-                                'id' => $data->dob, // Using the first (min) id for each district
+                                'id' => $data->dob,
                                 'text' => bdDate($data->dob),
                             ];
                         })
@@ -133,12 +133,12 @@ class AjaxController extends Controller
                     $response = Application::selectRaw('MIN(id) as id, exam_date')
                         ->where('exam_date', 'like', "%{$request->q}%")
                         ->groupBy('exam_date')
-                        ->orderBy('exam_date', 'desc')
+                        ->orderBy('exam_date')
                         // ->limit(20)
                         ->get()
                         ->map(function ($data) {
                             return [
-                                'id' => $data->exam_date, // Using the first (min) id for each district
+                                'id' => $data->exam_date,
                                 'text' => bdDate($data->exam_date),
                             ];
                         })

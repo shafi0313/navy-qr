@@ -523,3 +523,14 @@ if (! function_exists('written')) {
         }
     }
 }
+
+if (! function_exists('allDocHeld')) {
+    function allDocHeld($data)
+    {
+        if ($data && $data == 1) {
+            return '<span class="badge text-bg-primary">All doc. held</span>';
+        } else {
+            return '';
+        }
+    }
+}
