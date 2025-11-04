@@ -67,35 +67,6 @@ if (! function_exists('result')) {
     }
 }
 
-if (! function_exists('ageWithDays')) {
-    function ageWithDays($d_o_b)
-    {
-        return Carbon::parse($d_o_b)->diff(Carbon::now())->format('%y years, %m months and %d days');
-    }
-}
-if (! function_exists('ageWithMonths')) {
-    function ageWithMonths($d_o_b)
-    {
-        return Carbon::parse($d_o_b)->diff(Carbon::now())->format('%y years, %m months');
-    }
-}
-if (! function_exists('strPad4')) {
-    function strPad4($data)
-    {
-        return str_pad($data, 4, '0', STR_PAD_LEFT);
-    }
-}
-if (! function_exists('strPad6')) {
-    function strPad6($data)
-    {
-        if ($data) {
-            return str_pad($data, 6, '0', STR_PAD_LEFT);
-        } else {
-            return '';
-        }
-    }
-}
-
 if (! function_exists('team')) {
     function team($team)
     {
@@ -180,13 +151,6 @@ if (! function_exists('team')) {
     }
 }
 
-if (! function_exists('pad6')) {
-    function pad6($number)
-    {
-        return str_pad($number, 6, '0', STR_PAD_LEFT);
-    }
-}
-
 if (! function_exists('nF')) {
     function nF($number)
     {
@@ -207,13 +171,6 @@ if (! function_exists('nFA2')) {
         return number_format(abs($num), 2);
     }
 }
-
-// if (!function_exists('carbon')) {
-//     function carbon($d_o_b)
-//     {
-//         return Carbon::parse($d_o_b)->diff(Carbon::now())->format('%y years, %m months');
-//     }
-// }
 
 /************************** Image **************************/
 
