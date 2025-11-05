@@ -15,7 +15,7 @@
                             <div class="col-md-4">
                                 <div class="mb-3 mx-1 row">
                                     <div class="col-sm-4">
-                                        <label for="start_date" class="col-sm-2 col-form-label required text-nowrap">Date Form </label>
+                                        <label for="start_date" class="col-sm-2 col-form-label required text-nowrap">Date From</label>
                                     </div>                                    
                                     <div class="col-sm-8">
                                         <input type="date" name="start_date" class="form-control" id="start_date" required>

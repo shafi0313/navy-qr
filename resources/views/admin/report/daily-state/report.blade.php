@@ -9,14 +9,14 @@
                 <div class="card-body">
                     <form action="{{ route('admin.reports.daily_state.report') }}">
                         <div class="row justify-content-center">
-                            <div class="col-md-12 text-center my-3">
+                            <div class="col-md-12 text-center my-2">
                                 <h4>Daily Recruitment State Selection Page</h4>
                             </div>
                             <div class="col-md-3">
-                                <div class="mb-3 mx-1 row">
+                                <div class="mb-1 mx-1 row">
                                     <div class="col-sm-4">
                                         <label for="start_date" class="col-sm-2 col-form-label required text-nowrap">Date
-                                            Form </label>
+                                            From </label>
                                     </div>
                                     <div class="col-sm-8">
                                         <input type="date" name="start_date" value="{{ $startDate }}" class="form-control" id="start_date"
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="mb-3 mx-1 row">
+                                <div class="mb-1 mx-1 row">
                                     <div class="col-sm-4">
                                         <label for="end_date" class="col-sm-2 col-form-label required text-nowrap">Date To
                                         </label>
@@ -37,7 +37,7 @@
                             </div>
                             @if (user()->role_id == 1)
                                 <div class="col-md-3">
-                                    <div class="mb-3 mx-1 row">
+                                    <div class="mb-1 mx-1 row">
                                         <div class="col-sm-4">
                                             <label for="date" class="col-sm-2 col-form-label required text-nowrap">Team
                                             </label>
@@ -55,8 +55,8 @@
                                 </div>
                             @endif
                             <div class="col-md-2 text-center">
-                                <div class="mb-3 row justify-content-center">
-                                    <label for="date" class="visually-hidden">Team</label>
+                                <div class="mb-1 row justify-content-center">
+                                    <label class="visually-hidden">Team</label>
                                     <button type="submit" class="btn btn-primary" style="width: 100px">Submit</button>
                                 </div>
                             </div>
