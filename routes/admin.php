@@ -119,6 +119,7 @@ Route::get('/viva-marks/modal-store/{applicantId}', [VivaMarkController::class, 
 Route::resource('important-applications', ImportantApplicationController::class)->only(['index', 'store']);
 
 Route::resource('/results', ResultController::class)->only(['index']);
+Route::get('/results/export-excel', [ResultController::class, 'exportExcel'])->name('results.export_excel');
 
 Route::resource('/application-urls', ApplicationUrlController::class)->only(['index']);
 

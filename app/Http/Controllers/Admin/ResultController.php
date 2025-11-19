@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Application;
-use App\Traits\ApplicationTrait;
 use Illuminate\Http\Request;
+use App\Exports\ResultExport;
+use App\Traits\ApplicationTrait;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Excel;
+use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
 
 class ResultController extends Controller
@@ -18,51 +21,30 @@ class ResultController extends Controller
             $roleId = user()->role_id;
             $query = Application::whereHas('examMark', function ($query) {
                 $query->where('dup_test', '=', 'no');
-            });
+            })->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                ->select(
+                    array_merge(
+                        $this->userColumns(),
+                        $this->applicationColumnsForResult(),
+                        $this->examColumns(),
+                        $this->sscResultColumns(),
+                        ['applications.team'],
+                        ['applications.is_important']
+                    )
+                )
+                ->selectRaw(
+                    $this->examSumColumns()
+                )
+                ->where('exam_marks.viva', '>=', 5)
+                ->where('is_final_pass', 1)
+                ->orderBy('is_medical_pass', 'desc')
+                ->orderBy('is_final_pass', 'desc')
+                ->orderBy('total_marks', 'desc')
+                ->orderBy('total_viva', 'desc');
 
-            if ($roleId == 1) {
-                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                    ->select(
-                        array_merge(
-                            $this->userColumns(),
-                            $this->applicationColumnsForResult(),
-                            $this->examColumns(),
-                            $this->sscResultColumns(),
-                            ['applications.is_important']
-                        )
-                    )
-                    ->selectRaw(
-                        $this->examSumColumns()
-                    )
-                    ->where('exam_marks.viva', '>=', 5)
-                    ->where('is_final_pass', 1)
-                    ->orderBy('is_medical_pass', 'desc')
-                    ->orderBy('is_final_pass', 'desc')
-                    ->orderBy('total_marks', 'desc')
-                    ->orderBy('total_viva', 'desc');
-            } else {
-                $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                    ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                    ->select(
-                        array_merge(
-                            $this->userColumns(),
-                            $this->applicationColumnsForResult(),
-                            $this->examColumns(),
-                            $this->sscResultColumns(),
-                            ['applications.is_important']
-                        )
-                    )
-                    ->selectRaw(
-                        $this->examSumColumns()
-                    )
-                    ->where('exam_marks.viva', '>=', 5)
-                    ->where('is_final_pass', 1)
-                    ->where('users.team', user()->team)
-                    ->orderBy('is_medical_pass', 'desc')
-                    ->orderBy('is_final_pass', 'desc')
-                    ->orderBy('total_marks', 'desc')
-                    ->orderBy('total_viva', 'desc');
+            if ($roleId != 1) {
+                $query->where('users.team', user()->team);
             }
 
             $applications = $query;
@@ -99,7 +81,7 @@ class ResultController extends Controller
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);
-                })            
+                })
                 ->addColumn('final', function ($row) use ($roleId) {
                     return $this->finalMedical($roleId, $row);
                 })
@@ -149,5 +131,44 @@ class ResultController extends Controller
         }
 
         return view('admin.result.index');
+    }
+
+    public function exportExcel(Excel $excel)
+    {
+        $query = Application::whereHas('examMark', function ($query) {
+                $query->where('dup_test', '=', 'no');
+            })->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+                ->select(
+                    array_merge(
+                        $this->userColumns(),
+                        $this->applicationColumnsForResult(),
+                        $this->examColumns(),
+                        $this->sscResultColumns(),
+                        ['applications.team'],
+                        ['applications.is_important']
+                    )
+                )
+                ->selectRaw(
+                    $this->examSumColumns()
+                )
+                ->where('exam_marks.viva', '>=', 5)
+                ->where('is_final_pass', 1)
+                ->orderBy('is_medical_pass', 'desc')
+                ->orderBy('is_final_pass', 'desc')
+                ->orderBy('total_marks', 'desc')
+                ->orderBy('total_viva', 'desc');
+
+            
+
+            // return$applications = $query->get();
+
+        if (! in_array(user()->role_id, [1, 2])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
+
+        return $excel->download(new ResultExport, 'Merit list.xlsx');
     }
 }

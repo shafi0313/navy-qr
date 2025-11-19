@@ -164,6 +164,16 @@
                     }],
                     columns: [
                         ...commonColumns,
+                        // {
+                        //     data: 'dob',
+                        //     name: 'dob',
+                        //     title: 'DOB',
+                        // },
+                        // {
+                        //     data: 'team',
+                        //     name: 'team',
+                        //     title: 'Team',
+                        // },
                         {
                             data: 'ssc_result',
                             name: 'ssc_result',
@@ -224,90 +234,12 @@
                     // Adjusted DOM structure
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{
-                            extend: 'excelHtml5',
-                            title: null,
                             text: 'Export Result (Merit List Only)',
-                            className: 'btn btn-success',
-                            exportOptions: {
-                                columns: ':visible',
-                                modifier: {
-                                    search: 'applied',
-                                    order: 'applied',
-                                    page: 'all'
-                                }
-                            },
-                            action: function(e, dt, button, config) {
-                                if (@json(!in_array(user()->role_id, [1, 2]))) {
-                                    swal({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: "You are not authorized to perform this action",
-                                    });
-                                    return false;
-                                }
-                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
-                                dt.settings()[0].oFeatures.bServerSide = false;
-
-                                $.ajax({
-                                    url: dt.ajax.url(),
-                                    data: dt.ajax.params(),
-                                    success: (json) => {
-                                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(
-                                            this, e, dt, button, config);
-                                        dt.settings()[0].oFeatures.bServerSide =
-                                            originalServerSide;
-                                        dt.ajax.reload(null, false);
-                                    },
-                                    error: function(xhr, error, thrown) {
-                                        console.error('Error fetching data for export:',
-                                            error);
-                                    }
-                                });
+                            className: 'btn btn-success btn-sm',
+                            action: function() {
+                                window.location.href = "{{ route('admin.results.export_excel') }}";
                             }
                         },
-                        // {
-                        //     extend: 'pdfHtml5',
-                        //     title: null,
-                        //     text: 'Export to PDF',
-                        //     exportOptions: {
-                        //         columns: ':visible',
-                        //         modifier: {
-                        //             search: 'applied',
-                        //             order: 'applied',
-                        //             page: 'all'
-                        //         }
-                        //     },
-                        //     orientation: 'landscape',
-                        //     pageSize: 'A4',
-                        //     action: function(e, dt, button, config) {
-                        //         if ('{{ user()->role_id }}' != 1) {
-                        //             swal({
-                        //                 icon: "error",
-                        //                 title: "Oops...",
-                        //                 text: "You are not authorized to perform this action",
-                        //             });
-                        //             return false;
-                        //         }
-                        //         const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
-                        //         dt.settings()[0].oFeatures.bServerSide = false;
-
-                        //         $.ajax({
-                        //             url: dt.ajax.url(),
-                        //             data: dt.ajax.params(),
-                        //             success: (json) => {
-                        //                 $.fn.dataTable.ext.buttons.pdfHtml5.action.call(
-                        //                     this, e, dt, button, config);
-                        //                 dt.settings()[0].oFeatures.bServerSide =
-                        //                     originalServerSide;
-                        //                 dt.ajax.reload(null, false);
-                        //             },
-                        //             error: function(xhr, error, thrown) {
-                        //                 console.error('Error fetching data for export:',
-                        //                     error);
-                        //             }
-                        //         });
-                        //     }
-                        // }
                     ]
                 });
 
