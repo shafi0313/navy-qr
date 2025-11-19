@@ -1,23 +1,17 @@
 ✅ QR Code Update Summary
-19/11/25
-1. Merit list excel export (different with view)
+📅 19/11/25
+1. Merit List Excel Export — the exported file now has an improved structure that is different from the on-screen view.
 
-01/11/25
-1. Add team column in  Applicants & 1.0 - Exam Status & Gate Entry
-2. Fix Final medical status
+📅 01/11/25
+1. New Feature: Added Team Column in: Applicants & 1.0 – Exam Status Gate Entry menus
 
-30/10/25
-1. Fix: user active/deactivate login
-2. New Feature: add team filter in user menu
-
-22/10/25
-1. Viva remark update issue fix
-2. pop-up close issue fix
+📅 30/10/25
+2. New Feature: Added Team Filter in User Menu for easier user management.
 
 📅 20/10/25
 1. New Feature: Added Passed / Failed Status in Module 1.0.
 2. New Feature: Added All Document Held Status in Module 1.0.
-3. Improvement: Fixed DataTable Reload Issue — now the table stays on the same page after refresh instead of going back to page 1.
+3. Improvement: Changed DataTable Reload — now the table stays on the same page after refresh instead of going back to page 1.
 
 📅 15/10/25
 1. New Logic (3.1): When clicking “Add To Database”, the system now checks for all possible errors. If any error is found, the entire data import is rolled back to keep data consistent.
@@ -25,7 +19,6 @@
 3. New Feature: Added Final Medical Filter in the 4.0 Menu.
 4. New Feature: Added Viva Filter in the 5.0 Menu.
 5. UI Update: Removed sorting options from all menus for a cleaner interface.
-6. Fix: Daily State Report issue resolved.
 
 📅 14/10/25
 1. Update: Added Exam Mark Column in both 6.0 and 8.0 Menus — all marks now appear in a single column for clarity.
