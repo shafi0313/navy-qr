@@ -11,13 +11,12 @@
                 @csrf
                 <input type="hidden" name="application_id" value="{{ $applicant->id }}">
                 <div class="modal-body">
-                    <div class="row justify-content-center gy-2">
+                    <div class="row justify-content-center">
                         <div class="col-md-12 text-center">
                             <h5>{{ $applicant->candidate_designation }}</h5>
                             <h5>{{ $applicant->name }} ({{ $applicant->serial_no }})</h5>
                         </div>
-
-                        <div class="col-md-2">
+                        {{-- <div class="col-md-2">
                             <p>Do you want to add team F</p>
                             <div style="margin-top: 15px; display: flex; align-items: center;">
                                 <div class="form-check me-3">
@@ -35,8 +34,7 @@
                                     </label>
                                 </div>
                             </div>
-
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <label for="br_code" class="form-label required">Branch </label>
                             <select name="br_code" id="br_code" class="form-select">

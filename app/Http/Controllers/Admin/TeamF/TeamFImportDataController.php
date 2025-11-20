@@ -72,12 +72,12 @@ class TeamFImportDataController extends Controller
         }
         $request->validate([
             'application_id' => 'required|exists:applications,id',
-            'team_f' => 'required|in:0,1',
+            // 'team_f' => 'required|in:0,1',
         ]);
 
-        if ($request->team_f == 0) {
-            return response()->json(['message' => 'Application is not marked as Team F.'], 200);
-        }
+        // if ($request->team_f == 0) {
+        //     return response()->json(['message' => 'Application is not marked as Team F.'], 200);
+        // }
 
         $application = Application::find($request->application_id);
         $application->is_team_f = 1;

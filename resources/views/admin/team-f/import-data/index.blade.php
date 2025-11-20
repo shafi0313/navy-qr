@@ -42,7 +42,7 @@
                             <label for="application_id" class="form-label required">Single Entry </label>
                             <select name="application_id" id="application_id" class="form-select"></select>
                         </div>
-                        <div style="margin-top: 25px; margin-left: 10px;">
+                        <div style="margin-top: 20px; margin-left: 10px;">
                             <button type="submit" class="btn btn-primary" onclick="ajaxEdit(this)">Add</button>
                         </div>
                     </div>
