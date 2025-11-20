@@ -44,7 +44,7 @@
                                     <tr>
                                         <th>SL</th>
                                         <th>Roll No</th>
-                                        <th>Branch</th>
+                                        <th>Final Branch</th>
                                         <th>Name</th>
                                         <th>District</th>
                                         <th class="no-sort" width="60px">Action</th>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-label" for="candidate_designation">Branch</label>
+                                <label class="form-label" for="candidate_designation">Final Branch</label>
                                 <select name="candidate_designation" class="form-control w-100 candidate_designation"
                                     id="candidate_designation">
                                 </select>
@@ -239,7 +239,7 @@
                         {
                             data: 'br_code',
                             name: 'br_code',
-                            title: 'Branch'
+                            title: 'Final Branch'
                         },
                         {
                             data: 'action',
