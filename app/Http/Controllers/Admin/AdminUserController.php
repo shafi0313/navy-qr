@@ -9,7 +9,6 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminUserController extends Controller
@@ -68,6 +67,10 @@ class AdminUserController extends Controller
 
     public function status(User $user)
     {
+        if ($user->removable == 0) {
+            return response()->json(['message' => 'This is a default system user and its status cannot be changed.'], 403);
+        }
+
         $user->is_active = $user->is_active == 1 ? 0 : 1;
         try {
             $user->save();
@@ -146,6 +149,9 @@ class AdminUserController extends Controller
     {
         if (! in_array(user()->role_id, [1, 2])) {
             return response()->json(['message' => 'You can not edit'], 500);
+        }
+        if ($admin_user->removable == 0) {
+            return response()->json(['message' => 'This is a default system user and cannot be deleted.'], 403);
         }
         try {
             imgUnlink('user', $admin_user->image);
