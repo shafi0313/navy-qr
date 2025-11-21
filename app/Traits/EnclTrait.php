@@ -12,7 +12,8 @@ trait EnclTrait
     {
         // $roleId = user()->role_id;
         return $query = Application::where('is_team_f', 1)
-            ->where('candidate_designation', 'like', 'Sailor(DEUC%')
+            // ->where('candidate_designation', 'like', 'Sailor(DEUC%')
+            ->where('br_code', 1)
             ->leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->select(
                 array_merge(
@@ -44,7 +45,8 @@ trait EnclTrait
     protected function encl2()
     {
         return $query = Application::where('is_team_f', 1)
-            ->whereNot('candidate_designation', 'like', 'Sailor(DEUC%')
+            // ->whereNot('candidate_designation', 'like', 'Sailor(DEUC%')
+            ->whereIn('br_code', [2, 3, 4, 5, 6, 7, 8, 9, 10])
             ->leftJoin('users', 'applications.user_id', '=', 'users.id')
             ->select(
                 array_merge(
