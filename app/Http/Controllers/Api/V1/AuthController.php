@@ -16,13 +16,13 @@ class AuthController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendError('Validation error.', ['error' => $validator->errors()]);
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            if($user->is_active == 0){
-                return $this->sendError('Your account is deactivated. Please contact admin.', ['error' => 'Unauthorized']);
+            if ($user->is_active == 0) {
+                return $this->sendError('User deactivated', ['error' => 'Your account is deactivated. Please contact admin.']);
                 // exit;
             }
             $userNameLastDigit = preg_match('/\d$/', $user->name, $matches) ? "-{$matches[0]}" : '';
@@ -41,7 +41,7 @@ class AuthController extends BaseController
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {
-            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
+            return $this->sendError('Unauthorized.', ['error' => 'User id or password do not match.']);
         }
     }
 
