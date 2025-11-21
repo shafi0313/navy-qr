@@ -38,7 +38,6 @@ function ajaxDelete(arg, type) {
                         title: "Success",
                         text: res.message,
                     }).then((confirm) => {
-                        hideLoadingAnimation();
                         if (confirm) {
                             if (type == "dt") {
                                 $("#data_table").DataTable().ajax.reload();
@@ -49,6 +48,7 @@ function ajaxDelete(arg, type) {
                     });
                 },
                 error: (err) => {
+                    hideLoadingAnimation();
                     swal({
                         icon: "error",
                         title: "Oops...",
@@ -61,6 +61,7 @@ function ajaxDelete(arg, type) {
 }
 
 function ajaxEdit(arg, type) {
+    showLoadingAnimation();
     let args = $(arg);
     $.ajax({
         url: args.data("route"),
@@ -69,10 +70,12 @@ function ajaxEdit(arg, type) {
             id: args.data("value"),
         },
         success: (res) => {
+            hideLoadingAnimation();
             $("#ajax_modal_container").html(res.modal);
             $("#editModal").modal("show");
         },
         error: (err) => {
+            hideLoadingAnimation();
             swal({
                 icon: "error",
                 title: "Oops...",
@@ -84,6 +87,7 @@ function ajaxEdit(arg, type) {
 
 // app instruction show modal
 function insShow(arg, type) {
+    showLoadingAnimation();
     let args = $(arg);
     $.ajax({
         url: args.data("route"),
@@ -92,10 +96,12 @@ function insShow(arg, type) {
             id: args.data("value"),
         },
         success: (res) => {
+            hideLoadingAnimation();
             $("#ajax_modal_container").html(res.modal);
             $("#insShowModal").modal("show");
         },
         error: (err) => {
+            hideLoadingAnimation();
             swal({
                 icon: "error",
                 title: "Oops...",

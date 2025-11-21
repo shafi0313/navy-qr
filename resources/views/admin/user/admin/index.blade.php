@@ -14,7 +14,7 @@
                         </button>
                     </div>
                     {{-- Filter HTML --}}
-                    <div class="row justify-content-center filter align-items-end">
+                    <div class="row filter align-items-end">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-label" for="team">Team</label>
