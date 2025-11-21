@@ -210,8 +210,8 @@ class ApplicationController extends BaseController
                 ];
             }
         } elseif (user()->exam_type == ExamType::OFFICER) {
-            $data['allApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->count();
-            $data['todayScannedApplicantsByUser'] = ApplicationUrl::where('user_id', user()->id)->whereDate('scanned_at', now())->count();
+            $data['allApplicationsByUser'] = ApplicationUrl::where('user_id', user()->id)->count() ?? 0;
+            $data['todayScannedApplicantsByUser'] = ApplicationUrl::where('user_id', user()->id)->whereDate('scanned_at', now())->count() ?? 0;
         }
 
         return $this->sendResponse($data, 'Applicants count.');
