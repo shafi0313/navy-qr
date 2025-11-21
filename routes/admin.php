@@ -142,8 +142,14 @@ Route::prefix('team-f')->name('team_f.')->group(function () {
     Route::get('encl1-deuc-sailor/{type?}', [Encl1DeucSailorController::class, 'report'])->name('encl1_deuc_sailor.report');
     Route::get('encl1-deuc-sailor/export/excel', [Encl1DeucSailorController::class, 'exportExcel'])->name('encl1_deuc_sailor.export_excel');
 
-    Route::get('encl2-non-deuc-sailor/{type?}', [Encl2NonDeucSailorController::class, 'report'])->name('encl2_non_deuc_sailor.report');
-    Route::get('encl2-non-deuc-sailor/export/excel', [Encl2NonDeucSailorController::class, 'exportExcel'])->name('encl2_non_deuc_sailor.export_excel');
+    Route::controller(Encl2NonDeucSailorController::class)->prefix('encl2-non-deuc-sailor')->name('encl2_non_deuc_sailor.')->group(function () {
+        Route::get('{type?}', 'report')->name('report');
+        Route::get('export/excel', 'exportExcel')->name('export_excel');
+        // Route::get('edit/modal-show', 'enclEditModal')->name('edit_modal');
+        // Route::post('edit/update-encl-remark', 'updateEnclRemark')->name('update_encl_remark');
+    });
+    // Route::get('encl2-non-deuc-sailor/{type?}', [Encl2NonDeucSailorController::class, 'report'])->name('encl2_non_deuc_sailor.report');
+    // Route::get('encl2-non-deuc-sailor/export/excel', [Encl2NonDeucSailorController::class, 'exportExcel'])->name('encl2_non_deuc_sailor.export_excel');
 });
 
 // Reports Route

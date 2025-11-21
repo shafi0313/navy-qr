@@ -66,6 +66,7 @@ trait EnclTrait
                         'applications.ssc_physics',
                         'applications.current_phone',
                         'applications.hsc_dip_group',
+                        'applications.encl_remark',
                     ]
                 )
             )->cursor();

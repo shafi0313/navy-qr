@@ -1,6 +1,7 @@
 <div class="text-center mb-4">
     <h5>{{ strtoupper('Confidential') }}</h5>
-    <h4>NOMINAL LIST OF SAILORS (EXCEPT DEUC) - B-{{ Carbon\Carbon::parse($applications?->first()?->exam_date)->format('Y') ?? '' }} BATCH</h4>
+    <h4>NOMINAL LIST OF SAILORS (EXCEPT DEUC) -
+        B-{{ Carbon\Carbon::parse($applications?->first()?->exam_date)->format('Y') ?? '' }} BATCH</h4>
     <h4>CENTER: BNS DHAKA, KHILKHET, DHAKA</h4>
 </div>
 <table class="table table-bordered mb-0 w-100">
@@ -39,7 +40,11 @@
                 <td>{{ $application->current_phone }}</td>
                 <td>{{ $application->hsc_dip_group ? 'Yes' : 'No' }}</td>
                 <td></td>
-                <td></td>
+                <td>
+                    {{-- <span>{{ $application->encl_remark }} </span>
+                    <button type="button" class="btn btn-primary btn-sm"
+                        onclick="encl2Edit({{ $application->id }})">Edit</button> --}}
+                </td>
             </tr>
         @empty
             <tr>

@@ -1,5 +1,5 @@
 <div class="modal fade" id="teamFSingleStoreModal" tabindex="-1" aria-labelledby="teamFSingleStoreModalLabel"
-    aria-hidden="true">
+    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">

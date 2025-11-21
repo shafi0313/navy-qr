@@ -23,5 +23,39 @@
     </div><!-- end row -->
 
     @push('scripts')
+        {{-- <script>
+            function encl2Edit(applicationId) {
+                showLoadingAnimation();
+                if (!applicationId) {
+                    hideLoadingAnimation();
+                    swal({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
+                    return;
+                }
+                $.ajax({
+                    url: '{{ route('admin.team_f.encl2_non_deuc_sailor.edit_modal') }}',
+                    type: "get",
+                    data: {
+                        id: applicationId,
+                    },
+                    success: (res) => {
+                        hideLoadingAnimation();
+                        $("#ajax_modal_container").html(res.modal);
+                        $("#encl2EditModal").modal("show");
+                    },
+                    error: (err) => {
+                        hideLoadingAnimation();
+                        swal({
+                            icon: "error",
+                            title: "Oops...",
+                            text: err.responseJSON.message,
+                        });
+                    },
+                });
+            }
+        </script> --}}
     @endpush
 @endsection
