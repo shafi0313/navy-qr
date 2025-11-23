@@ -67,8 +67,8 @@
     <!-- END wrapper -->
 
     <!-- Theme Settings -->
-    @include('admin.layouts.includes.theme-settings')
-    @include('admin.layouts.includes.alert')
+    {{-- @include('admin.layouts.includes.theme-settings')
+    @include('admin.layouts.includes.alert') --}}
 
     <!-- Vendor js -->
     <script src="{{ asset('backend/js/vendor.min.js') }}"></script>
