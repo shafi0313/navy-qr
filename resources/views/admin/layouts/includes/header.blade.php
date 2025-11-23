@@ -2,9 +2,9 @@
     <div class="topbar container-fluid">
         <div class="d-flex align-items-center gap-lg-2 gap-1">
 
-            <!-- Topbar Brand Logo -->
+            {{-- <!-- Topbar Brand Logo --> --}}
             <div class="logo-topbar">
-                <!-- Logo light -->
+                {{-- <!-- Logo light --> --}}
                 <a href="{{ route('admin.dashboard') }}" class="logo-light">
                     <span class="logo-lg">
                         <img src="{{ imagePath('logo', 'navy.png') }}" alt="logo">
@@ -14,7 +14,7 @@
                     </span>
                 </a>
 
-                <!-- Logo Dark -->
+                {{-- <!-- Logo Dark --> --}}
                 <a href="{{ route('admin.dashboard') }}" class="logo-dark">
                     <span class="logo-lg">
                         <img src="{{ imagePath('logo', 'navy.png') }}" alt="dark logo">
@@ -25,12 +25,12 @@
                 </a>
             </div>
 
-            <!-- Sidebar Menu Toggle Button -->
+            {{-- <!-- Sidebar Menu Toggle Button --> --}}
             <button class="button-toggle-menu">
                 <i class="ri-menu-2-fill"></i>
             </button>
 
-            <!-- Horizontal Menu Toggle Button -->
+            {{-- <!-- Horizontal Menu Toggle Button --> --}}
             <button class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                 <div class="lines">
                     <span></span>
@@ -39,7 +39,7 @@
                 </div>
             </button>
 
-            <!-- Topbar Search Form -->
+            {{-- <!-- Topbar Search Form --> --}}
             {{-- <div class="app-search dropdown d-none d-lg-block">
                 <form>
                     <div class="input-group">
@@ -52,7 +52,7 @@
         </div>
 
         <ul class="topbar-menu d-flex align-items-center gap-3">
-            <li class="dropdown d-lg-none">
+            {{-- <li class="dropdown d-lg-none">
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <i class="ri-search-line fs-22"></i>
@@ -63,7 +63,7 @@
                             aria-label="Recipient's username">
                     </form>
                 </div>
-            </li>
+            </li> --}}
 
             <li class="d-none d-sm-inline-block">
                 <a class="nav-link" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
@@ -71,7 +71,7 @@
                 </a>
             </li>
 
-            <li class="d-none d-sm-inline-block">
+            <li class="d-sm-inline-block">
                 <div class="nav-link" id="light-dark-mode">
                     <i class="fa-solid fa-moon fs-20"></i>
                 </div>

@@ -8,10 +8,10 @@
     <meta content="Soft Giant BD" name="author" />
     <meta name="robots" content="noindex">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- App favicon -->
+    {{-- <!-- App favicon --> --}}
     <link rel="shortcut icon" href="{{ imagePath('logo', 'navy_fav.png') }}">
 
-    <!-- Theme Config Js -->
+    {{-- <!-- Theme Config Js --> --}}
     <script src="{{ asset('backend/js/config.js') }}"></script>
 
     <!-- App css -->
@@ -25,10 +25,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{ asset('backend/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <!-- Datatables css -->
+    {{-- <!-- Datatables css --> --}}
     {{-- <link href="{{ asset('backend/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"
         type="text/css" /> --}}
-        <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" rel="stylesheet" />
 
     {{-- summer note --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css"
@@ -42,15 +42,15 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Begin page -->
+    {{-- <!-- Begin page --> --}}
     <div class="wrapper">
-        <!-- ========== Topbar Start ========== -->
+        {{-- <!-- ========== Topbar Start ========== --> --}}
         @include('admin.layouts.includes.header')
-        <!-- ========== Topbar End ========== -->
+        {{-- <!-- ========== Topbar End ========== --> --}}
 
-        <!-- ========== Left Sidebar Start ========== -->
+        {{-- <!-- ========== Left Sidebar Start ========== --> --}}
         @include('admin.layouts.includes.navigation')
-        <!-- ========== Left Sidebar End ========== -->
+        {{-- <!-- ========== Left Sidebar End ========== --> --}}
 
         <div class="content-page">
             <div class="content">
@@ -59,20 +59,19 @@
                 </div>
             </div>
 
-            <!-- Footer Start -->
+            {{-- <!-- Footer Start --> --}}
             {{-- @include('admin.layouts.includes.footer') --}}
-            <!-- end Footer -->
+            {{-- <!-- end Footer --> --}}
         </div>
     </div>
-    <!-- END wrapper -->
+    {{-- <!-- END wrapper --> --}}
 
-    <!-- Theme Settings -->
-    {{-- @include('admin.layouts.includes.theme-settings')
-    @include('admin.layouts.includes.alert') --}}
+    {{-- <!-- Theme Settings --> --}}
+    @include('admin.layouts.includes.theme-settings')
+    {{-- @include('admin.layouts.includes.alert') --}}
 
-    <!-- Vendor js -->
+    {{-- <!-- Vendor js --> --}}
     <script src="{{ asset('backend/js/vendor.min.js') }}"></script>
-
     {{-- Sweet alert --}}
     <script src="{{ asset('common/plugins/sweet-alert/sweetalert-2.min.js') }}"></script>
     {{-- Cute alert --}}
@@ -88,7 +87,7 @@
     <!-- Datatables js -->
     {{-- <script src="{{ asset('backend/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('backend/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script> --}}
-    
+
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 
     {{-- Summer Note --}}
@@ -97,7 +96,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-    <!-- App js -->
+    {{-- <!-- App js --> --}}
     <script src="{{ asset('backend/js/app.min.js') }}"></script>
     @include('sweetalert::alert')
 

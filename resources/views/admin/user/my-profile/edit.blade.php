@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', 'My Profile')
 @section('content')
-    @include('admin.layouts.includes.breadcrumb', ['title' => ['My Profile', 'Edit', '']])
+    @include('admin.layouts.includes.breadcrumb', ['title' => 'My Profile'])
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">

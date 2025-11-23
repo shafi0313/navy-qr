@@ -17,7 +17,7 @@
 </style>
 @php $roleId = user()->role_id @endphp
 <div class="leftside-menu">
-    <!-- Brand Logo Light -->
+    {{-- <!-- Brand Logo Light --> --}}
     <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
         <span class="logo-lg">
             <img src="{{ imagePath('logo', 'navy.png') }}" alt="logo">
@@ -27,7 +27,7 @@
         </span>
     </a>
 
-    <!-- Brand Logo Dark -->
+    {{-- <!-- Brand Logo Dark --> --}}
     <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
         <span class="logo-lg">
             <img src="{{ imagePath('logo', 'navy.png') }}" alt="dark logo">
@@ -37,19 +37,19 @@
         </span>
     </a>
 
-    <!-- Sidebar Hover Menu Toggle Button -->
+    {{-- <!-- Sidebar Hover Menu Toggle Button --> --}}
     <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
         <i class="ri-checkbox-blank-circle-line align-middle"></i>
     </div>
 
-    <!-- Full Sidebar Menu Close Button -->
+    {{-- <!-- Full Sidebar Menu Close Button --> --}}
     <div class="button-close-fullsidebar">
         <i class="ri-close-fill align-middle"></i>
     </div>
 
-    <!-- Sidebar -left -->
+    {{-- <!-- Sidebar -left --> --}}
     <div class="h-100" id="leftside-menu-container" data-simplebar>
-        <!--- Sidemenu -->
+        {{-- <!--- Sidemenu --> --}}
         <ul class="side-nav">
             <li class="side-nav-title mt-1"> Main</li>
             <li class="side-nav-item">
@@ -260,7 +260,7 @@
                 </div>
             </li> --}}
         </ul>
-        <!--- End Sidemenu -->
+        {{-- <!--- End Sidemenu --> --}}
 
         <div class="clearfix"></div>
     </div>
