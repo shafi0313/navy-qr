@@ -25,9 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'isAdmin' => \App\Http\Middleware\IsAdmin::class,
-            'Image' => Intervention\Image\Facades\Image::class,
-            'abilities' => CheckAbilities::class,
-            'ability' => CheckForAnyAbility::class,
+            'abilities' => CheckAbilities::class, 
+            'ability' => CheckForAnyAbility::class, 
             'otp' => OtpMiddleware::class,
         ]);
     })
