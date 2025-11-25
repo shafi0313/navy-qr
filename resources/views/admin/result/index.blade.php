@@ -195,7 +195,8 @@
                         {
                             data: 'total_marks',
                             name: 'total_marks',
-                            title: 'GT'
+                            title: 'Total Written',
+                            className: 'text-center'
                         },
                         {
                             data: 'final',
