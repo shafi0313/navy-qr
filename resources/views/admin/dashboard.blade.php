@@ -15,24 +15,35 @@
                     <div class="col-md-6">
                         <div class="table-responsive-sm">
                             <table class="table table-bordered table-hover table-striped mb-0 w-100">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th>Team</th>
-                                        <th>Today's applicant</th>
-                                        <th>Today's Presence</th>
-                                        <th>Total Presence</th>
-                                    </tr>
-                                </thead>
+
+                                {{-- Office data --}}
                                 @if (user()->exam_type == 2)
+                                    <thead class="table-primary">
+                                        <tr>
+                                            {{-- <th>Team</th> --}}
+                                            <th>Today's applicant</th>
+                                            <th>Today's Presence</th>
+                                            <th>Total Presence</th>
+                                        </tr>
+                                    </thead>
                                     @foreach ($counts as $count)
                                         <tr>
-                                            <td>{{ $count->team }}</td>
+                                            {{-- <td>{{ $count->team }}</td> --}}
                                             <td class="text-end">{{ nF($count->count) }}</td>
                                             <td class="text-end">{{ nF($count->today_count) }}</td>
                                             <td class="text-end">{{ nF($count->count) }}</td>
                                         </tr>
                                     @endforeach
                                 @else
+                                    {{-- Sailor data --}}
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Team</th>
+                                            <th>Today's applicant</th>
+                                            <th>Today's Presence</th>
+                                            <th>Total Presence</th>
+                                        </tr>
+                                    </thead>
                                     @foreach ($data as $team)
                                         <tr>
                                             <td class="text-center">{{ $team['team'] }}</td>
