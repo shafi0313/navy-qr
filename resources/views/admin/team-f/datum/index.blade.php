@@ -236,12 +236,12 @@
                             name: 'ssc_group',
                             title: 'SSC Group',
                         },
-                        // {
-                        //     data: 'written_mark',
-                        //     name: 'written_mark',
-                        //     title: 'Written Mark',
-                        //     className: 'written_mark'
-                        // },
+                        {
+                            data: 'written_mark',
+                            name: 'written_mark',
+                            title: 'Written Mark',
+                            className: 'written_mark'
+                        },
                         {
                             data: 'total_marks',
                             name: 'total_marks',

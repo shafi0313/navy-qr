@@ -58,6 +58,9 @@ class TeamFDataController extends Controller
                 ->addColumn('br_code', function ($row) {
                     return config('var.brCodes')[$row->br_code] ?? '';
                 })
+                ->addColumn('written', function ($row) use ($roleId) {
+                    return $this->written($roleId, $row);
+                })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
@@ -87,7 +90,7 @@ class TeamFDataController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['written_mark','action'])
                 ->make(true);
         }
         $teamFDatum = TeamFData::paginate(20);
