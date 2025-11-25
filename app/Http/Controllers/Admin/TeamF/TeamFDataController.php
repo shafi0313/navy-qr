@@ -25,9 +25,12 @@ class TeamFDataController extends Controller
             $roleId = user()->role_id;
             $query = Application::where('is_team_f', 1);
             $query->leftJoin('users', 'applications.user_id', '=', 'users.id')
+                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
                 ->select(
                     array_merge(
                         $this->userColumns(),
+                        $this->examColumns(),
+                        $this->sscResultColumns(),
                         [
                             'applications.id',
                             'applications.br_code',
@@ -38,6 +41,8 @@ class TeamFDataController extends Controller
                             'applications.ssc_group',
                         ]
                     )
+                )->selectRaw(
+                    $this->examSumColumns()
                 );
             if ($roleId != 1) {
                 $query->where('users.team', user()->team);
@@ -52,6 +57,12 @@ class TeamFDataController extends Controller
                 })
                 ->addColumn('br_code', function ($row) {
                     return config('var.brCodes')[$row->br_code] ?? '';
+                })
+                ->addColumn('written_mark', function ($row) {
+                    return $this->writtenMark($row);
+                })
+                ->addColumn('total_viva', function ($row) use ($roleId) {
+                    return $this->viva($roleId, $row);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
