@@ -24,7 +24,7 @@ class Encl1Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 $i++,
                 ucfirst($app->eligible_district),
                 $app->serial_no,
-                '', // Local No
+                $app->local_no,
                 $app->name,
                 config('var.brCodes')[$app->br_code] ?? '',
                 $app->ssc_gpa,
@@ -35,7 +35,9 @@ class Encl1Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 $app->current_phone,
                 $app->hsc_dip_group ? 'Yes' : 'No',
                 $app->hsc_gpa ?? '',
-                '', // Documents column
+                $app->doc_submitted ?? '',
+                $app->doc_submitted_to_bns ?? '',
+                // '', // Documents column
             ];
         }
 
@@ -62,6 +64,7 @@ class Encl1Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 'SSC Result', '', '', // merged later
                 'Mobile No',
                 'HSC Pass', '', // merged later
+                'Documents Submitted',
                 'Documents to be Submitted to BNS SHER-E-BANGLA',
             ],
             [ // row 6 - second header row
@@ -99,19 +102,20 @@ class Encl1Export implements FromArray, WithHeadings, WithStyles, WithTitle
         $sheet->mergeCells('L5:L6'); // Mobile
         $sheet->mergeCells('M5:N5'); // HSC Pass (2 cols)
         $sheet->mergeCells('O5:O6'); // Documents
+        $sheet->mergeCells('P5:P6'); // Documents
 
         // Title styling
         $sheet->getStyle('A1:O3')->getAlignment()->setHorizontal('center')->setVertical('center');
         $sheet->getStyle('A1:O3')->getFont()->setBold(true);
 
         // Header styling
-        $sheet->getStyle('A5:O6')->getFont()->setBold(true);
-        $sheet->getStyle('A5:O6')->getAlignment()->setHorizontal('center')->setVertical('center');
+        $sheet->getStyle('A5:P6')->getFont()->setBold(true);
+        $sheet->getStyle('A5:P6')->getAlignment()->setHorizontal('center')->setVertical('center');
         $sheet->getRowDimension(5)->setRowHeight(25);
         $sheet->getRowDimension(6)->setRowHeight(20);
 
         // Borders
-        $sheet->getStyle('A5:O6')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A5:P6')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
         return [];
     }

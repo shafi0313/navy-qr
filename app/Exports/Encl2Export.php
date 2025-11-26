@@ -57,6 +57,7 @@ class Encl2Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 'Height (Inch)',
                 'Mobile No',
                 'HSC Pass', '', // merged later
+                'Documents Submitted',
                 'Documents to be Submitted to BNS SHER-E-BANGLA',
             ],
             [ // row 6 (second header row)
@@ -92,17 +93,18 @@ class Encl2Export implements FromArray, WithHeadings, WithStyles, WithTitle
         $sheet->mergeCells('I5:I6'); // Mobile No
         $sheet->mergeCells('J5:K5'); // HSC Pass
         $sheet->mergeCells('L5:L6'); // Documents
+        $sheet->mergeCells('M5:M6'); // Documents
 
         // Style titles
-        $sheet->getStyle('A1:L3')->getAlignment()->setHorizontal('center')->setVertical('center');
-        $sheet->getStyle('A1:L3')->getFont()->setBold(true);
+        $sheet->getStyle('A1:M3')->getAlignment()->setHorizontal('center')->setVertical('center');
+        $sheet->getStyle('A1:M3')->getFont()->setBold(true);
 
         // Style header
-        $sheet->getStyle('A5:L6')->getFont()->setBold(true);
-        $sheet->getStyle('A5:L6')->getAlignment()->setHorizontal('center')->setVertical('center');
+        $sheet->getStyle('A5:M6')->getFont()->setBold(true);
+        $sheet->getStyle('A5:M6')->getAlignment()->setHorizontal('center')->setVertical('center');
 
         // Borders
-        $sheet->getStyle('A5:L6')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A5:M6')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
         return [];
     }
