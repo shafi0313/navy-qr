@@ -276,48 +276,47 @@
                     // Adjusted DOM structure
                     dom: '<"top"lfB>rt<"bottom"ip>',
                     buttons: [{
-                            extend: 'excelHtml5',
-                            title: 'Application Data',
-                            text: 'Export to Excel',
-                            className: 'btn btn-success btn-sm',
-                            exportOptions: {
-                                columns: ':visible',
-                                modifier: {
-                                    search: 'applied',
-                                    order: 'applied',
-                                    page: 'all'
-                                }
-                            },
-                            action: function(e, dt, button, config) {
-                                if ('{{ user()->role_id }}' != 1) {
-                                    swal({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: "You are not authorized to perform this action",
-                                    });
-                                    return false;
-                                }
-                                const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
-                                dt.settings()[0].oFeatures.bServerSide = false;
-
-                                $.ajax({
-                                    url: dt.ajax.url(),
-                                    data: dt.ajax.params(),
-                                    success: (json) => {
-                                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(
-                                            this, e, dt, button, config);
-                                        dt.settings()[0].oFeatures.bServerSide =
-                                            originalServerSide;
-                                        dt.ajax.reload(null, false);
-                                    },
-                                    error: function(xhr, error, thrown) {
-                                        console.error('Error fetching data for export:',
-                                            error);
-                                    }
-                                });
+                        extend: 'excelHtml5',
+                        title: 'Application Data',
+                        text: 'Export to Excel',
+                        className: 'btn btn-success btn-sm',
+                        exportOptions: {
+                            columns: ':visible',
+                            modifier: {
+                                search: 'applied',
+                                order: 'applied',
+                                page: 'all'
                             }
                         },
-                    ],                    
+                        action: function(e, dt, button, config) {
+                            if ('{{ user()->role_id }}' != 1) {
+                                swal({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: "You are not authorized to perform this action",
+                                });
+                                return false;
+                            }
+                            const originalServerSide = dt.settings()[0].oFeatures.bServerSide;
+                            dt.settings()[0].oFeatures.bServerSide = false;
+
+                            $.ajax({
+                                url: dt.ajax.url(),
+                                data: dt.ajax.params(),
+                                success: (json) => {
+                                    $.fn.dataTable.ext.buttons.excelHtml5.action.call(
+                                        this, e, dt, button, config);
+                                    dt.settings()[0].oFeatures.bServerSide =
+                                        originalServerSide;
+                                    dt.ajax.reload(null, false);
+                                },
+                                error: function(xhr, error, thrown) {
+                                    console.error('Error fetching data for export:',
+                                        error);
+                                }
+                            });
+                        }
+                    }, ],
                 });
 
                 // Filter functionality
@@ -380,7 +379,9 @@
                     }
                 }
             })
+
+            
         </script>
-        @include('admin.team-f.ajax')
+        {{-- @include('admin.team-f.ajax') --}}
     @endpush
 @endsection

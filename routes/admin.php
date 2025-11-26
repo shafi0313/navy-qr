@@ -131,7 +131,7 @@ Route::get('/export-applicants', function () {
 
 // Team F Routes
 Route::resource('/team-f-data-imports', TeamFImportDataController::class)->except(['create', 'show']);
-Route::resource('/team-f-datum', TeamFDataController::class)->only(['index', 'destroy']);
+Route::resource('/team-f-datum', TeamFDataController::class)->only(['index', 'edit', 'update', 'destroy']);
 Route::prefix('team-f')->name('team_f.')->group(function () {
     Route::controller(TeamFImportDataController::class)->prefix('team-f-data-imports')->name('data_imports.')->group(function () {
         Route::post('/imports', 'import')->name('import');

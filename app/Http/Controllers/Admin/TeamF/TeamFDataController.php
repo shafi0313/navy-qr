@@ -69,6 +69,7 @@ class TeamFDataController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
+                    $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.team-f-datum.edit', $row->id), 'row' => $row]);
                     $btn .= view('button', ['type' => 'ajax-delete', 'route' => route('admin.team-f-datum.destroy', $row->id), 'row' => $row, 'src' => 'dt']);
 
                     return $btn;
@@ -90,12 +91,70 @@ class TeamFDataController extends Controller
                         $query->search($search);
                     }
                 })
-                ->rawColumns(['written_mark','action'])
+                ->rawColumns(['written_mark', 'action'])
                 ->make(true);
         }
         $teamFDatum = TeamFData::paginate(20);
 
         return view('admin.team-f.datum.index', compact('teamFDatum'));
+    }
+
+    public function edit(Request $request, $applicant_id)
+    {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            Alert::error('You are not authorized to perform this action');
+
+            return back();
+        }
+
+        $applicant = Application::with(['examMark'])->findOrFail($applicant_id);
+
+        if ($request->ajax()) {
+            $modal = view('admin.team-f.datum.edit', ['applicant' => $applicant])->render();
+
+            return response()->json(['modal' => $modal], 200);
+        }
+
+        return abort(403, 'Unauthorized action.');
+    }
+
+    public function update(Request $request, $applicant_id)
+    {
+        if (! in_array(user()->role_id, [1, 2, 8])) {
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
+        }
+
+        $application = Application::with('examMark')->findOrFail($applicant_id);
+
+        $request->validate([
+            'name' => 'required|string|max:128',
+            'permanent_phone' => 'required|string|max:20',
+            
+            'bangla' => 'required|numeric|min:0|max:20',
+            'english' => 'required|numeric|min:0|max:20',
+            'math' => 'required|numeric|min:0|max:20',
+            'science' => 'required|numeric|min:0|max:20',
+            'general_knowledge' => 'required|numeric|min:0|max:20',
+            'viva_mark' => 'required|numeric|min:0|max:30',
+        ]);
+
+        try {
+            $examMark = $application->examMark;
+            if (! $examMark) {
+                $examMark = $application->examMark()->create([]);
+            }
+            $examMark->bangla = $request->bangla;
+            $examMark->english = $request->english;
+            $examMark->math = $request->math;
+            $examMark->science = $request->science;
+            $examMark->general_knowledge = $request->general_knowledge;
+            $examMark->viva_mark = $request->viva_mark;
+            $examMark->save();
+
+            return response()->json(['message' => 'The information has been updated'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
+        }
     }
 
     public function destroy($id)
