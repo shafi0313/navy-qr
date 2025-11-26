@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-    @if (!in_array(user()->role_id, [4]))
+    @if (!in_array(user()->role_id, [4, 8]))
         <div class="card">
             <div class="card-body">
                 <div class="row">
