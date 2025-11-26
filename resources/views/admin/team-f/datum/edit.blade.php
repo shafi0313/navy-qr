@@ -22,7 +22,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label for="name" class="form-label required">Name</label>
+                                    <label for="name" class="form-label required">Name (English & Bangla)</label>
                                     <input type="text" name="name" value="{{ $applicant->name }}" required
                                         class="form-control">
                                 </div>

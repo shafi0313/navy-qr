@@ -156,13 +156,12 @@ class TeamFDataController extends Controller
     public function destroy($id)
     {
         if (! in_array(user()->role_id, [1])) {
-            Alert::error('You are not authorized to perform this action');
-
-            return back();
+            return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
+
         try {
             $application = Application::findOrFail($id);
-            $application->update(['is_team_f' => 0]);
+            $application->update(['is_team_f' => null]);
 
             return response()->json(['message' => 'The information has been deleted'], 200);
         } catch (\Exception $e) {
