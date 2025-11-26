@@ -45,9 +45,6 @@ class TeamFDataController extends Controller
                 )->selectRaw(
                     $this->examSumColumns()
                 );
-            if ($roleId != 1) {
-                $query->where('users.team', user()->team);
-            }
 
             $applications = $query;
 
@@ -151,6 +148,7 @@ class TeamFDataController extends Controller
             return response()->json(['message' => 'The information has been updated'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
+
             return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
         }
     }
