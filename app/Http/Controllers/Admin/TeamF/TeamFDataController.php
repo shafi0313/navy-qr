@@ -39,6 +39,7 @@ class TeamFDataController extends Controller
                             'applications.eligible_district',
                             'applications.name',
                             'applications.ssc_group',
+                            'applications.hsc_dip_group',
                         ]
                     )
                 )->selectRaw(
@@ -131,12 +132,13 @@ class TeamFDataController extends Controller
             'permanent_phone' => 'required|string|max:20',
             'eligible_district' => 'required|string|max:128',
 
-            'ssc_bangla' => 'required|string|min:0|max:191',
-            'ssc_english' => 'required|string|min:0|max:191',
-            'ssc_math' => 'required|string|min:0|max:191',
-            'ssc_physics' => 'nullable|string|min:0|max:191',
-            'ssc_biology' => 'nullable|string|min:0|max:191',
-            'ssc_gpa' => 'required|string|min:0|max:191',
+            'ssc_bangla' => 'required|string|min:0|max:64',
+            'ssc_english' => 'required|string|min:0|max:64',
+            'ssc_math' => 'required|string|min:0|max:64',
+            'ssc_physics' => 'nullable|string|min:0|max:64',
+            'ssc_biology' => 'nullable|string|min:0|max:64',
+            'ssc_gpa' => 'required|string|min:0|max:8',
+            'hsc_dip_gpa' => 'nullable|string|min:0|max:8',
 
             'local_no' => 'required|string|max:191',
             'doc_submitted' => 'nullable|string',

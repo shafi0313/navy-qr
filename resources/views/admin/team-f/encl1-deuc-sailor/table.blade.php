@@ -46,7 +46,7 @@
                 <td>{{ str_replace('Physics : ', '', $application->ssc_physics ?? '') }}</td>
                 <td>{{ $application->current_phone }}</td>
                 <td>{{ $application->hsc_dip_group ? 'Yes' : 'No' }}</td>
-                <td></td>
+                <td>{{ $application->hsc_dip_gpa ?? '' }}</td>
                 <td>{!! nl2br(e($application->doc_submitted)) !!}</td>
                 <td>{!! nl2br(e($application->doc_submitted_to_bns)) !!}</td>
             </tr>

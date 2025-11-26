@@ -48,39 +48,45 @@
                             <div class="row gy-2 mb-2">
                                 <div class="col">
                                     <label for="ssc_bangla" class="form-label required">SSC Bangla</label>
-                                    <input type="text" name="ssc_bangla" value="{{ $applicant->ssc_bangla ?? 0 }}"
+                                    <input type="text" name="ssc_bangla" value="{{ $applicant->ssc_bangla ?? null }}"
                                         class="form-control" required>
                                 </div>
                                 <div class="col">
                                     <label for="ssc_english" class="form-label required">SSC English</label>
-                                    <input type="text" name="ssc_english" value="{{ $applicant->ssc_english ?? 0 }}"
+                                    <input type="text" name="ssc_english" value="{{ $applicant->ssc_english ?? null }}"
                                         class="form-control" required>
                                 </div>
                                 <div class="col">
                                     <label for="ssc_math" class="form-label required">SSC Math</label>
-                                    <input type="text" name="ssc_math" value="{{ $applicant->ssc_math ?? 0 }}"
+                                    <input type="text" name="ssc_math" value="{{ $applicant->ssc_math ?? null }}"
                                         class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="row gy-2 mb-2">
                                 <div class="col">
-                                    <label for="ssc_physics" class="form-label required">SSC</label>
-                                    <input type="text" name="ssc_physics" value="{{ $applicant->ssc_physics ?? 0 }}"
+                                    <label for="ssc_physics" class="form-label required">SSC Physics</label>
+                                    <input type="text" name="ssc_physics" value="{{ $applicant->ssc_physics ?? null }}"
                                         class="form-control">
                                 </div>
                                 <div class="col">
                                     <label for="ssc_biology" class="form-label">SSC Biology</label>
-                                    <input type="text" name="ssc_biology" value="{{ $applicant->ssc_biology ?? 0 }}"
+                                    <input type="text" name="ssc_biology" value="{{ $applicant->ssc_biology ?? null }}"
                                         class="form-control">
                                 </div>
                                 <div class="col">
                                     <label for="ssc_gpa" class="form-label required">SSC GPA</label>
-                                    <input type="text" name="ssc_gpa" value="{{ $applicant->ssc_gpa ?? 0 }}"
+                                    <input type="text" name="ssc_gpa" value="{{ $applicant->ssc_gpa ?? null }}"
                                         class="form-control" required>
                                 </div>
                             </div>
-
+                            <div class="row gy-2">
+                                <div class="col-md-6">
+                                    <label for="hsc_dip_gpa" class="form-label {{ $applicant->hsc_dip_group != null ? ' required' : '' }}">HSC GPA</label>
+                                    <input type="text" name="hsc_dip_gpa" value="{{ $applicant->hsc_dip_gpa ?? null }}"
+                                        class="form-control" {{ $applicant->hsc_dip_group != null ? 'required' : '' }}>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Right Column -->
@@ -93,11 +99,11 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label">Documents Submitted</label>
-                                    <textarea name="doc_submitted" rows="5" class="form-control">{{ $applicant->doc_submitted ?? '' }}</textarea>
+                                    <textarea name="doc_submitted" rows="7" class="form-control">{{ $applicant->doc_submitted ?? '' }}</textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label">Documents to be Submitted to BNS SHER-E-BANGLA</label>
-                                    <textarea name="doc_submitted_to_bns" rows="8" class="form-control">{{ $applicant->doc_submitted_to_bns ?? '' }}</textarea>
+                                    <textarea name="doc_submitted_to_bns" rows="9" class="form-control">{{ $applicant->doc_submitted_to_bns ?? '' }}</textarea>
                                 </div>
                             </div>
                         </div>

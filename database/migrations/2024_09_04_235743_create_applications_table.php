@@ -77,12 +77,12 @@ return new class extends Migration
             $table->string('ssc_reg_no', 64)->nullable();
             $table->string('ssc_roll_no', 64)->nullable();
             $table->string('ssc_passing_year', 20)->nullable();
-            $table->string('ssc_gpa', 64)->nullable();
-            $table->string('ssc_bangla')->nullable();
-            $table->string('ssc_english')->nullable();
-            $table->string('ssc_math')->nullable();
-            $table->string('ssc_physics')->nullable();
-            $table->string('ssc_biology')->nullable();
+            $table->string('ssc_gpa', 8)->nullable();
+            $table->string('ssc_bangla', 64)->nullable();
+            $table->string('ssc_english', 64)->nullable();
+            $table->string('ssc_math', 64)->nullable();
+            $table->string('ssc_physics', 64)->nullable();
+            $table->string('ssc_biology', 64)->nullable();
 
             $table->string('hsc_dip_institute', 191)->nullable();
             $table->string('hsc_dip_group', 64)->nullable();
@@ -92,11 +92,11 @@ return new class extends Migration
             $table->string('hsc_dip_passing_year', 64)->nullable();
 
             // Special Categories
-            $table->string('is_freedom_fighter', 32)->nullable();
+            $table->string('is_freedom_fighter', 16)->nullable();
             $table->string('freedom_fighter_relation', 64)->nullable();
-            $table->string('is_child_of_naval_officer', 32)->nullable();
+            $table->string('is_child_of_naval_officer', 16)->nullable();
             $table->string('naval_father_name', 128)->nullable();
-            $table->string('is_departmental_candidate', 64)->nullable();
+            $table->string('is_departmental_candidate', 16)->nullable();
             $table->string('naval_office_no', 64)->nullable();
             $table->string('naval_rank', 64)->nullable();
             $table->string('is_anser_vdp', 8)->nullable();

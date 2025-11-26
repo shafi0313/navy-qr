@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('applications', function (Blueprint $table) {
             $table->string('local_no', 191)->nullable()->after('is_team_f');
+            $table->string('hsc_dip_gpa', 8)->nullable()->after('is_team_f');
             $table->text('doc_submitted')->nullable()->after('is_team_f');
             $table->text('doc_submitted_to_bns')->nullable()->after('is_team_f');
         });
@@ -24,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('applications', function (Blueprint $table) {
-            $table->dropColumn(['local_no', 'doc_submitted', 'doc_submitted_to_bns']);
+            $table->dropColumn(['local_no', 'doc_submitted', 'doc_submitted_to_bns', 'hsc_dip_gpa']);
         });
     }
 };
