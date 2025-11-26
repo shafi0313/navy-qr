@@ -124,42 +124,38 @@ class TeamFDataController extends Controller
             return response()->json(['message' => 'You are not authorized to perform this action'], 403);
         }
 
-        $application = Application::with('examMark')->findOrFail($applicant_id);
+        $application = Application::findOrFail($applicant_id);
 
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:128',
             'permanent_phone' => 'required|string|max:20',
-            
-            'bangla' => 'required|numeric|min:0|max:20',
-            'english' => 'required|numeric|min:0|max:20',
-            'math' => 'required|numeric|min:0|max:20',
-            'science' => 'required|numeric|min:0|max:20',
-            'general_knowledge' => 'required|numeric|min:0|max:20',
-            'viva_mark' => 'required|numeric|min:0|max:30',
+            'eligible_district' => 'required|string|max:128',
+
+            'ssc_bangla' => 'required|string|min:0|max:191',
+            'ssc_english' => 'required|string|min:0|max:191',
+            'ssc_math' => 'required|string|min:0|max:191',
+            'ssc_physics' => 'nullable|string|min:0|max:191',
+            'ssc_biology' => 'nullable|string|min:0|max:191',
+            'ssc_gpa' => 'required|string|min:0|max:191',
+
+            'local_no' => 'required|string|max:191',
+            'doc_submitted' => 'nullable|string',
+            'doc_submitted_to_bns' => 'nullable|string',
         ]);
 
         try {
-            $examMark = $application->examMark;
-            if (! $examMark) {
-                $examMark = $application->examMark()->create([]);
-            }
-            $examMark->bangla = $request->bangla;
-            $examMark->english = $request->english;
-            $examMark->math = $request->math;
-            $examMark->science = $request->science;
-            $examMark->general_knowledge = $request->general_knowledge;
-            $examMark->viva_mark = $request->viva_mark;
-            $examMark->save();
+            $application->update($data);
 
             return response()->json(['message' => 'The information has been updated'], 200);
         } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
             return response()->json(['message' => 'Oops something went wrong, Please try again'], 500);
         }
     }
 
     public function destroy($id)
     {
-        if (! in_array(user()->role_id, [1, 2, 8])) {
+        if (! in_array(user()->role_id, [1])) {
             Alert::error('You are not authorized to perform this action');
 
             return back();
