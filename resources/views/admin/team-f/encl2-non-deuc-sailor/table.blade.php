@@ -17,7 +17,8 @@
             <th rowspan="2">GPA (SSC)</th>
             <th rowspan="2">Hight (Inch)</th>
             <th rowspan="2">Mobile No</th>
-            <th colspan="2">HSC Pass</th>
+            <th colspan="2" class="text-center">HSC Pass</th>
+            <th rowspan="2">Documents Submitted</th>
             <th rowspan="2">Documents to be Submitted to BNS SHER-E-BANGLA</th>
         </tr>
         <tr>
@@ -31,20 +32,16 @@
                 <td>{{ @$i += 1 }}</td>
                 <td>{{ ucfirst($application->eligible_district) }}</td>
                 <td>{{ $application->serial_no }}</td>
-                <td></td>
+                <td>{{ $application->local_no }}</td>
                 <td>{{ $application->name }}</td>
                 <td>{{ config('var.brCodes')[$application->br_code] ?? '' }}</td>
-                {{-- <td></td> --}}
                 <td>{{ $application->ssc_gpa }}</td>
                 <td>{{ $application->height }}</td>
                 <td>{{ $application->current_phone }}</td>
                 <td>{{ $application->hsc_dip_group ? 'Yes' : 'No' }}</td>
                 <td></td>
-                <td>
-                    {{-- <span>{{ $application->encl_remark }} </span>
-                    <button type="button" class="btn btn-primary btn-sm"
-                        onclick="encl2Edit({{ $application->id }})">Edit</button> --}}
-                </td>
+                <td>{!! $application->doc_submitted !!}</td>
+                <td>{!! $application->doc_submitted_to_bns !!}</td>
             </tr>
         @empty
             <tr>

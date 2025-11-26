@@ -33,6 +33,9 @@ trait EnclTrait
                         'applications.ssc_physics',
                         'applications.current_phone',
                         'applications.hsc_dip_group',
+                        'applications.local_no',
+                        'applications.doc_submitted',
+                        'applications.doc_submitted_to_bns',
                     ]
                 )
             )->cursor();
@@ -66,6 +69,9 @@ trait EnclTrait
                         'applications.ssc_physics',
                         'applications.current_phone',
                         'applications.hsc_dip_group',
+                        'applications.local_no',
+                        'applications.doc_submitted',
+                        'applications.doc_submitted_to_bns',
                     ]
                 )
             )->cursor();
