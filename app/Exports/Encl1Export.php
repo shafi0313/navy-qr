@@ -37,7 +37,6 @@ class Encl1Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 $app->hsc_gpa ?? '',
                 $app->doc_submitted ?? '',
                 $app->doc_submitted_to_bns ?? '',
-                // '', // Documents column
             ];
         }
 

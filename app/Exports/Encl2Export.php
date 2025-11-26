@@ -24,7 +24,7 @@ class Encl2Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 $i++,
                 ucfirst($app->eligible_district),
                 $app->serial_no,
-                '', // Local No
+                $app->local_no,
                 $app->name,
                 config('var.brCodes')[$app->br_code] ?? '',
                 $app->ssc_gpa,
@@ -32,7 +32,8 @@ class Encl2Export implements FromArray, WithHeadings, WithStyles, WithTitle
                 $app->current_phone,
                 $app->hsc_dip_group ? 'Yes' : 'No',
                 $app->hsc_gpa ?? '',
-                '', // Documents column
+                $app->doc_submitted ?? '',
+                $app->doc_submitted_to_bns ?? '',
             ];
         }
 

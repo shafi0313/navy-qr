@@ -40,8 +40,8 @@
                 <td>{{ $application->current_phone }}</td>
                 <td>{{ $application->hsc_dip_group ? 'Yes' : 'No' }}</td>
                 <td></td>
-                <td>{!! $application->doc_submitted !!}</td>
-                <td>{!! $application->doc_submitted_to_bns !!}</td>
+                <td>{!! nl2br(e($application->doc_submitted)) !!}</td>
+                <td>{!! nl2br(e($application->doc_submitted_to_bns)) !!}</td>
             </tr>
         @empty
             <tr>
