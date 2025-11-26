@@ -81,10 +81,11 @@
                                 </div>
                             </div>
                             <div class="row gy-2">
+                                {{-- {{ $applicant->hsc_dip_group != null ? 'required' : '' }} --}}
                                 <div class="col-md-6">
-                                    <label for="hsc_dip_gpa" class="form-label {{ $applicant->hsc_dip_group != null ? ' required' : '' }}">HSC GPA</label>
+                                    <label for="hsc_dip_gpa" class="form-label">HSC GPA</label>
                                     <input type="text" name="hsc_dip_gpa" value="{{ $applicant->hsc_dip_gpa ?? null }}"
-                                        class="form-control" {{ $applicant->hsc_dip_group != null ? 'required' : '' }}>
+                                        class="form-control" >
                                 </div>
                             </div>
                         </div>
