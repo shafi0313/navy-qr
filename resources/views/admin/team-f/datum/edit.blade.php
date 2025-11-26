@@ -65,7 +65,7 @@
 
                             <div class="row gy-2 mb-2">
                                 <div class="col">
-                                    <label for="ssc_physics" class="form-label required">SSC Physics</label>
+                                    <label for="ssc_physics" class="form-label">SSC Physics</label>
                                     <input type="text" name="ssc_physics" value="{{ $applicant->ssc_physics ?? null }}"
                                         class="form-control">
                                 </div>
