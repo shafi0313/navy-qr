@@ -79,21 +79,23 @@
     {{-- /Officer Data --}}
 
     {{-- App Instructions --}}
-    <div>
-        <h4 class="p-1 mt-3">App Instructions</h4>
-    </div>
-    @foreach ($appInstructions as $instruction)
-        <div class="row">
-            <div class="col-12">
-                <div class="card p-2">
-                    <h4 class="card-header">{{ config('var.menuNames')[$instruction->menu_name] }}</h4>
-                    <div class="card-body">
-                        {!! $instruction->instruction !!}
+    @if (!in_array(user()->role_id, [8]))
+        <div>
+            <h4 class="p-1 mt-3">App Instructions</h4>
+        </div>
+        @foreach ($appInstructions as $instruction)
+            <div class="row">
+                <div class="col-12">
+                    <div class="card p-2">
+                        <h4 class="card-header">{{ config('var.menuNames')[$instruction->menu_name] }}</h4>
+                        <div class="card-body">
+                            {!! $instruction->instruction !!}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    @endif
     {{-- /App Instructions --}}
 
     @push('scripts')
