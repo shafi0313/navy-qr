@@ -25,42 +25,97 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
+
+        // Check if user exists
+        if (! $user) {
+            return back()->with('error', 'Invalid credentials.');
+        }
+
+        // Check active status
         if ($user->is_active == 0) {
             return back()->with('error', 'Your account is deactivated. Please contact support.');
         }
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            if (env('APP_DEBUG') == false && $user->is_2fa == true) {
-                // Generate OTP
-                $otp = rand(1000, 9999);
-                $user->otp = $otp;
-                $user->otp_expires_at = now()->addMinutes(5);
-                $user->save();
-
-                SendOtpSmsJob::dispatch($user->id, $user->mobile, $otp)->onQueue('high');
-                // if (! $isSent) {
-                //     return back()->with('error', 'Failed to send OTP.');
-                // }
-
-                // Store session and redirect to OTP form
-                session(['login.id' => $user->id, 'otp_required' => true]);
-
-                if (session('login.id')) {
-                    return redirect()->route('otp.form');
-                } else {
-                    return redirect()->route('login')->with('error', 'Session expired. Please login again.');
-                }
-
-                return redirect()->route('otp.form');
-            } else {
-                Auth::login($user);
-
-                return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully.');
-            }
+        // Verify password
+        if (! Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Invalid credentials.');
         }
 
-        return back()->with('error', 'Invalid credentials.');
+        // If 2FA enabled and app is not in debug mode
+        if (! config('app.debug') && $user->is_2fa) {
+
+            // Generate OTP
+            $otp = random_int(1000, 9999); // more secure than rand()
+
+            $user->update([
+                'otp' => $otp,
+                'otp_expires_at' => now()->addMinutes(5),
+            ]);
+
+            SendOtpSmsJob::dispatch($user->id, $user->mobile, $otp)
+                ->onQueue('high');
+
+            // Set required session flags
+            session([
+                'login.id' => $user->id,
+                'otp_required' => true,
+            ]);
+
+            return redirect()->route('otp.form');
+        }
+
+        // Login without 2FA
+        Auth::login($user);
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'Logged in successfully.');
     }
+
+    // public function login(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $user = User::where('email', $request->email)->first();
+    //     if ($user->is_active == 0) {
+    //         return back()->with('error', 'Your account is deactivated. Please contact support.');
+    //     }
+
+    //     if ($user && Hash::check($request->password, $user->password)) {
+    //         if (env('APP_DEBUG') == false && $user->is_2fa == true) {
+    //             // Generate OTP
+    //             $otp = rand(1000, 9999);
+    //             $user->otp = $otp;
+    //             $user->otp_expires_at = now()->addMinutes(5);
+    //             $user->save();
+
+    //             SendOtpSmsJob::dispatch($user->id, $user->mobile, $otp)->onQueue('high');
+    //             // if (! $isSent) {
+    //             //     return back()->with('error', 'Failed to send OTP.');
+    //             // }
+
+    //             // Store session and redirect to OTP form
+    //             session(['login.id' => $user->id, 'otp_required' => true]);
+
+    //             if (session('login.id')) {
+    //                 return redirect()->route('otp.form');
+    //             } else {
+    //                 return redirect()->route('login')->with('error', 'Session expired. Please login again.');
+    //             }
+
+    //             return redirect()->route('otp.form');
+    //         } else {
+    //             Auth::login($user);
+
+    //             return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully.');
+    //         }
+    //     }
+
+    //     return back()->with('error', 'Invalid credentials.');
+    // }
 
     // Show OTP form
     public function showOtpForm()
