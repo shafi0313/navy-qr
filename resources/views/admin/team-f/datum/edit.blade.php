@@ -34,13 +34,16 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label class="form-label required" for="eligible_district">District</label>
-                                    <select name="eligible_district" class="form-control eligible_district"
-                                        id="eligible_district" required>
+                                    <label class="form-label" for="eligible_district">District</label>
+                                    <input type="text" name="eligible_district"
+                                        value="{{ ucfirst($applicant->eligible_district) }}" class="form-control"
+                                        readonly>
+                                    {{-- <select name="eligible_district" class="form-control eligible_district"
+                                        id="eligible_district" readonly>
                                         <option value="{{ $applicant->eligible_district }}" selected>
                                             {{ $applicant->eligible_district }}
                                         </option>
-                                    </select>
+                                    </select> --}}
                                 </div>
                             </div>
 
@@ -53,8 +56,8 @@
                                 </div>
                                 <div class="col">
                                     <label for="ssc_english" class="form-label required">SSC English</label>
-                                    <input type="text" name="ssc_english" value="{{ $applicant->ssc_english ?? null }}"
-                                        class="form-control" required>
+                                    <input type="text" name="ssc_english"
+                                        value="{{ $applicant->ssc_english ?? null }}" class="form-control" required>
                                 </div>
                                 <div class="col">
                                     <label for="ssc_math" class="form-label required">SSC Math</label>
@@ -66,13 +69,13 @@
                             <div class="row gy-2 mb-2">
                                 <div class="col">
                                     <label for="ssc_physics" class="form-label">SSC Physics</label>
-                                    <input type="text" name="ssc_physics" value="{{ $applicant->ssc_physics ?? null }}"
-                                        class="form-control">
+                                    <input type="text" name="ssc_physics"
+                                        value="{{ $applicant->ssc_physics ?? null }}" class="form-control">
                                 </div>
                                 <div class="col">
                                     <label for="ssc_biology" class="form-label">SSC Biology</label>
-                                    <input type="text" name="ssc_biology" value="{{ $applicant->ssc_biology ?? null }}"
-                                        class="form-control">
+                                    <input type="text" name="ssc_biology"
+                                        value="{{ $applicant->ssc_biology ?? null }}" class="form-control">
                                 </div>
                                 <div class="col">
                                     <label for="ssc_gpa" class="form-label required">SSC GPA</label>
@@ -84,8 +87,8 @@
                                 {{-- {{ $applicant->hsc_dip_group != null ? 'required' : '' }} --}}
                                 <div class="col-md-6">
                                     <label for="hsc_dip_gpa" class="form-label">HSC GPA</label>
-                                    <input type="text" name="hsc_dip_gpa" value="{{ $applicant->hsc_dip_gpa ?? null }}"
-                                        class="form-control" >
+                                    <input type="text" name="hsc_dip_gpa"
+                                        value="{{ $applicant->hsc_dip_gpa ?? null }}" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -201,7 +204,7 @@
         </div>
     </div>
 </div>
-<script>
+{{-- <script>
     $('.eligible_district').select2({
         width: '100%',
         placeholder: 'Select...',
@@ -225,4 +228,4 @@
             }
         }
     })
-</script>
+</script> --}}
