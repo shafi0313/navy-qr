@@ -33,6 +33,7 @@ class TeamFDataController extends Controller
                         $this->sscResultColumns(),
                         [
                             'applications.id',
+                            'applications.exam_date',
                             'applications.br_code',
                             'applications.candidate_designation',
                             'applications.serial_no',
@@ -55,6 +56,9 @@ class TeamFDataController extends Controller
                 })
                 ->addColumn('br_code', function ($row) {
                     return config('var.brCodes')[$row->br_code] ?? '';
+                })
+                ->addColumn('exam_date', function ($row) {
+                    return bdDate($row->exam_date);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
                     return $this->written($roleId, $row);
