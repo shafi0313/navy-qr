@@ -260,6 +260,12 @@
                             className: 'text-center'
                         },
                         {
+                            data: 'written_viva_sum',
+                            name: 'written_viva_sum',
+                            title: 'Total Mark',
+                            className: 'text-center'
+                        },
+                        {
                             data: 'br_code',
                             name: 'br_code',
                             title: 'Final Branch'

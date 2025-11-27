@@ -69,6 +69,12 @@ class TeamFDataController extends Controller
                 ->addColumn('total_viva', function ($row) use ($roleId) {
                     return $this->viva($roleId, $row);
                 })
+                ->addColumn('written_viva_sum', function ($row) use ($roleId) {
+                    $written = floatval($row->total_marks);
+                    $viva = floatval($this->viva($roleId, $row));
+
+                    return $written + $viva;
+                })
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     $btn .= view('button', ['type' => 'ajax-edit', 'route' => route('admin.team-f-datum.edit', $row->id), 'row' => $row]);
