@@ -82,19 +82,19 @@ class VivaMarkController extends Controller
                         .'</span>';
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    return $this->primaryMedical($roleId, $row);
+                    return $this->primaryMedical($row);
                 })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
-                    return $this->written($roleId, $row);
+                    return $this->written($row);
                 })
                 ->addColumn('final', function ($row) use ($roleId) {
-                    return $this->finalMedical($roleId, $row).' Height:'.$row->height;
+                    return $this->finalMedical($row).' Height:'.$row->height;
                 })
                 ->addColumn('total_viva', function ($row) use ($roleId) {
-                    return $this->viva($roleId, $row);
+                    return $this->viva($row);
                 })
                 ->addColumn('dup_test', function ($row) {
                     if ($row->examMark->dup_test) {

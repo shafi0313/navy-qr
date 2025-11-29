@@ -89,13 +89,9 @@ trait ApplicationTrait
                 exam_marks.viva as total_viva';
     }
 
-    protected function primaryMedical($roleId, $row)
+    protected function primaryMedical($row)
     {
-        if (in_array($roleId, [1, 2, 3, 4, 5, 6])) {
             return result($row->is_medical_pass, $row->p_m_remark);
-        } else {
-            return '';
-        }
     }
 
     protected function writtenMark($row)
@@ -127,57 +123,64 @@ trait ApplicationTrait
 
     }
 
-    protected function written($roleId, $row)
+    protected function written($row)
     {
-        if (in_array($roleId, [1, 2, 3, 4, 5]) && ($row->bangla || $row->english || $row->math || $row->science || $row->general_knowledge)) {
-            $row->bangla + $row->english + $row->math + $row->science + $row->general_knowledge;
-            $failCount = 0;
-            // Check each subject mark and count fails
-            if ($row->bangla < 8) {
-                $failCount++;
+        // If there are no exam marks at all, treat as Pending
+        $subjects = ['bangla', 'english', 'math', 'science', 'general_knowledge'];
+        $hasAnyMark = false;
+        foreach ($subjects as $s) {
+            if (! is_null($row->$s)) {
+                $hasAnyMark = true;
+                break;
             }
-            if ($row->english < 8) {
-                $failCount++;
-            }
-            if ($row->math < 8) {
-                $failCount++;
-            }
-            if ($row->science < 8) {
-                $failCount++;
-            }
-            if ($row->general_knowledge < 8) {
-                $failCount++;
-            }
-            // If no subject failed and all marks are >= 8, it's a pass
-            if ($failCount == 0) {
-                return '<span class="badge bg-success">Pass</span>'.' ('.$row->total_marks.')';
-            }
-            // If there are any fails, it's a fail
-            elseif ($failCount > 0) {
-                return '<span class="badge bg-danger">Failed</span> ('.$failCount.' subject(s) failed)';
-            } else {
-                return '';
-            }
-        } else {
-            return '';
         }
+
+        if (! $hasAnyMark) {
+            return '<span class="badge bg-warning">Pending</span>';
+        }
+
+        $failCount = 0;
+
+        $bangla = $row->bangla ?? 0;
+        $english = $row->english ?? 0;
+        $math = $row->math ?? 0;
+        $science = $row->science ?? 0;
+        $gk = $row->general_knowledge ?? 0;
+
+        if ($bangla < 8) {
+            $failCount++;
+        }
+        if ($english < 8) {
+            $failCount++;
+        }
+        if ($math < 8) {
+            $failCount++;
+        }
+        if ($science < 8) {
+            $failCount++;
+        }
+        if ($gk < 8) {
+            $failCount++;
+        }
+
+        $totalMarks = $row->total_marks ?? ($bangla + $english + $math + $science + $gk);
+
+        if ($failCount == 0) {
+            return '<span class="badge bg-success">Pass</span>'.' ('.$totalMarks.')';
+        } elseif ($failCount > 0) {
+            return '<span class="badge bg-danger">Failed</span> ('.$failCount.' subject(s) failed)';
+        }
+
+        return '';
     }
 
-    protected function finalMedical($roleId, $row)
+    protected function finalMedical($row)
     {
-        if (in_array($roleId, [1, 2, 3, 4])) {
-            return result($row->is_final_pass, $row->f_m_remark);
-        } else {
-            return '';
-        }
+        return result($row->is_final_pass, $row->f_m_remark);
     }
 
-    protected function viva($roleId, $row)
+    protected function viva($row)
     {
-        if (in_array($roleId, [1, 2, 3])) {
-            return $row->total_viva !== null ? $row->total_viva : 'Pending';
-        } else {
-            return '';
-        }
+        return $row->total_viva !== null ? $row->total_viva : 'Pending';
     }
 }

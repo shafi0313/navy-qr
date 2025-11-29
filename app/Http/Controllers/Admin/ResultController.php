@@ -74,19 +74,19 @@ class ResultController extends Controller
                         .'</span>';
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    return $this->primaryMedical($roleId, $row);
+                    return $this->primaryMedical($row);
                 })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
-                    return $this->written($roleId, $row);
+                    return $this->written($row);
                 })
                 ->addColumn('final', function ($row) use ($roleId) {
-                    return $this->finalMedical($roleId, $row);
+                    return $this->finalMedical($row);
                 })
                 ->addColumn('total_viva', function ($row) use ($roleId) {
-                    return $this->viva($roleId, $row);
+                    return $this->viva($row);
                 })
                 ->addColumn('viva_remark', function ($row) {
                     return ($row->is_important == 1 ? '<span class="badge text-bg-primary">All doc. held</span>' : '').$row->viva_remark;

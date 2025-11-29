@@ -71,10 +71,10 @@ class ExamMarkController extends Controller
                         .'</span>';
                 })
                 ->addColumn('medical', function ($row) use ($roleId) {
-                    return $this->primaryMedical($roleId, $row);
+                    return $this->primaryMedical($row);
                 })
                 ->addColumn('written', function ($row) use ($roleId) {
-                    return $this->written($roleId, $row);
+                    return $this->written($row);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
