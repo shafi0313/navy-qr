@@ -60,16 +60,16 @@ class TeamFDataController extends Controller
                 ->addColumn('exam_date', function ($row) {
                     return bdDate($row->exam_date);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
+                ->addColumn('written', function ($row) {
                     return $this->written($row);
                 })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
-                ->addColumn('total_viva', function ($row) use ($roleId) {
+                ->addColumn('total_viva', function ($row) {
                     return $this->viva($row);
                 })
-                ->addColumn('written_viva_sum', function ($row) use ($roleId) {
+                ->addColumn('written_viva_sum', function ($row) {
                     $written = floatval($row->total_marks);
                     $viva = floatval($this->viva($row));
 

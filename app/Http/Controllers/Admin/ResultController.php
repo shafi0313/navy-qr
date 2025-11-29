@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Application;
-use Illuminate\Http\Request;
 use App\Exports\ResultExport;
-use App\Traits\ApplicationTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
+use App\Traits\ApplicationTrait;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\Facades\DataTables;
@@ -73,19 +73,19 @@ class ResultController extends Controller
                         .$row->ssc_biology
                         .'</span>';
                 })
-                ->addColumn('medical', function ($row) use ($roleId) {
+                ->addColumn('medical', function ($row) {
                     return $this->primaryMedical($row);
                 })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
+                ->addColumn('written', function ($row) {
                     return $this->written($row);
                 })
-                ->addColumn('final', function ($row) use ($roleId) {
+                ->addColumn('final', function ($row) {
                     return $this->finalMedical($row);
                 })
-                ->addColumn('total_viva', function ($row) use ($roleId) {
+                ->addColumn('total_viva', function ($row) {
                     return $this->viva($row);
                 })
                 ->addColumn('viva_remark', function ($row) {
@@ -136,32 +136,30 @@ class ResultController extends Controller
     public function exportExcel(Excel $excel)
     {
         $query = Application::whereHas('examMark', function ($query) {
-                $query->where('dup_test', '=', 'no');
-            })->leftJoin('users', 'applications.user_id', '=', 'users.id')
-                ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
-                ->select(
-                    array_merge(
-                        $this->userColumns(),
-                        $this->applicationColumnsForResult(),
-                        $this->examColumns(),
-                        $this->sscResultColumns(),
-                        ['applications.team'],
-                        ['applications.is_important']
-                    )
+            $query->where('dup_test', '=', 'no');
+        })->leftJoin('users', 'applications.user_id', '=', 'users.id')
+            ->leftJoin('exam_marks', 'applications.id', '=', 'exam_marks.application_id')
+            ->select(
+                array_merge(
+                    $this->userColumns(),
+                    $this->applicationColumnsForResult(),
+                    $this->examColumns(),
+                    $this->sscResultColumns(),
+                    ['applications.team'],
+                    ['applications.is_important']
                 )
-                ->selectRaw(
-                    $this->examSumColumns()
-                )
-                ->where('exam_marks.viva', '>=', 5)
-                ->where('is_final_pass', 1)
-                ->orderBy('is_medical_pass', 'desc')
-                ->orderBy('is_final_pass', 'desc')
-                ->orderBy('total_marks', 'desc')
-                ->orderBy('total_viva', 'desc');
+            )
+            ->selectRaw(
+                $this->examSumColumns()
+            )
+            ->where('exam_marks.viva', '>=', 5)
+            ->where('is_final_pass', 1)
+            ->orderBy('is_medical_pass', 'desc')
+            ->orderBy('is_final_pass', 'desc')
+            ->orderBy('total_marks', 'desc')
+            ->orderBy('total_viva', 'desc');
 
-            
-
-            // return$applications = $query->get();
+        // return$applications = $query->get();
 
         if (! in_array(user()->role_id, [1, 2])) {
             Alert::error('You are not authorized to perform this action');

@@ -62,19 +62,19 @@ class ImportantApplicationController extends Controller
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
-                ->addColumn('medical', function ($row) use ($roleId) {
+                ->addColumn('medical', function ($row) {
                     return $this->primaryMedical($row);
                 })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
+                ->addColumn('written', function ($row) {
                     return $this->written($row);
                 })
-                ->addColumn('final', function ($row) use ($roleId) {
+                ->addColumn('final', function ($row) {
                     return $this->finalMedical($row);
                 })
-                ->addColumn('total_viva', function ($row) use ($roleId) {
+                ->addColumn('total_viva', function ($row) {
                     return $this->viva($row);
                 })
                 ->addColumn('remark', function ($row) {

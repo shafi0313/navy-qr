@@ -91,7 +91,7 @@ trait ApplicationTrait
 
     protected function primaryMedical($row)
     {
-            return result($row->is_medical_pass, $row->p_m_remark);
+        return result($row->is_medical_pass, $row->p_m_remark);
     }
 
     protected function writtenMark($row)

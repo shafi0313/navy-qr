@@ -81,19 +81,19 @@ class VivaMarkController extends Controller
                         .$row->ssc_biology
                         .'</span>';
                 })
-                ->addColumn('medical', function ($row) use ($roleId) {
+                ->addColumn('medical', function ($row) {
                     return $this->primaryMedical($row);
                 })
                 ->addColumn('written_mark', function ($row) {
                     return $this->writtenMark($row);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
+                ->addColumn('written', function ($row) {
                     return $this->written($row);
                 })
-                ->addColumn('final', function ($row) use ($roleId) {
+                ->addColumn('final', function ($row) {
                     return $this->finalMedical($row).' Height:'.$row->height;
                 })
-                ->addColumn('total_viva', function ($row) use ($roleId) {
+                ->addColumn('total_viva', function ($row) {
                     return $this->viva($row);
                 })
                 ->addColumn('dup_test', function ($row) {
@@ -116,11 +116,11 @@ class VivaMarkController extends Controller
                         $query->where('applications.exam_date', $request->exam_date);
                     }
                     if ($request->filled('viva')) {
-                        if($request->viva == 'null'){
+                        if ($request->viva == 'null') {
                             $query->whereNull('exam_marks.viva');
-                        } elseif($request->viva == 'pass'){
+                        } elseif ($request->viva == 'pass') {
                             $query->where('exam_marks.viva', '>=', 5);
-                        }elseif($request->viva == 'fail'){
+                        } elseif ($request->viva == 'fail') {
                             $query->where('exam_marks.viva', '<', 5);
                         }
                     }

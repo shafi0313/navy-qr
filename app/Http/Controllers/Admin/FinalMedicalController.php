@@ -58,13 +58,13 @@ class FinalMedicalController extends Controller
                 ->addColumn('eligible_district', function ($row) {
                     return ucfirst($row->eligible_district);
                 })
-                ->addColumn('medical', function ($row) use ($roleId) {
+                ->addColumn('medical', function ($row) {
                     return $this->primaryMedical($row);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
+                ->addColumn('written', function ($row) {
                     return $this->written($row);
                 })
-                ->addColumn('final', function ($row) use ($roleId) {
+                ->addColumn('final', function ($row) {
                     return $this->finalMedical($row);
                 })
                 ->addColumn('action', function ($row) {

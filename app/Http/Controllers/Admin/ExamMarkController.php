@@ -70,10 +70,10 @@ class ExamMarkController extends Controller
                         .$row->ssc_biology
                         .'</span>';
                 })
-                ->addColumn('medical', function ($row) use ($roleId) {
+                ->addColumn('medical', function ($row) {
                     return $this->primaryMedical($row);
                 })
-                ->addColumn('written', function ($row) use ($roleId) {
+                ->addColumn('written', function ($row) {
                     return $this->written($row);
                 })
                 ->addColumn('action', function ($row) {

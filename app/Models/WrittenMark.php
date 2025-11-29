@@ -20,6 +20,7 @@ class WrittenMark extends Model
             ]
         );
     }
+
     public function application()
     {
         return $this->belongsTo(Application::class, 'serial_no', 'serial_no');
